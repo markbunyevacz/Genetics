@@ -1,122 +1,162 @@
-# A melléklet — Intended purpose és modul-minősítés
+# A melléklet — Intended purpose, modul-minősítés, legális hibrid
 
 | | |
 | --- | --- |
-| **Dokumentum** | PCE-SPEC-v1.1 Appendix A |
+| **Dokumentum** | PCE-SPEC-v1.2 Appendix A |
 | **Dátum** | 2026-08-12 |
 | **Jogalap** | MDCG 2019-11 Rev.1 (2025-06-17); MDR Annex VIII Rule 11 |
 | **Státusz** | Tényalap OQ-05-höz — **nem** jogi állásfoglalás |
 
-A MDCG Rev.1 szerint a minősítés és az osztályozás az **intended purpose**-ön áll vagy dől. A gyártónak minden modult önállóan kell minősítenie, a határokat és a függőségeket dokumentálnia, és a felhasználónak egyértelműen közölnie, mely modul MDSW.
+A MDCG Rev.1 szerint a minősítés és az osztályozás az **intended purpose**-ön áll vagy dől. A gyártónak minden modult önállóan kell minősítenie. A hatóság a termék **tényleges funkcióját és hatását** nézi, nem a disclaimer szövegét.
 
-Ez a melléklet két, **egymást kizáró** szándéknyilatkozatot rögzít. Egyszerre mindkettő nem lehet igaz ugyanarra a kiadott szoftververzióra.
+Ez a melléklet **három**, egymást követő (nem egyszerre élő klinikai) üzemmódot rögzít. Ugyanarra a kiadott *klinikai* szoftververzióra nem lehet F1+ és F2 intended purpose.
+
+```
+[ F1+  Okos laborriport ] ──► [ F1s  Shadow HITL ] ──► [ F2 in-house / F3 CE IIa ]
+  statikus CPIC/FDA/DPWG         algoritmus fut,            élő felírás-pillanatú CDSS
+  társítás, aláíró = labor       kezelőorvos NEM látja      Rule 11a
+```
 
 ---
 
-## A.1 F1 intended purpose — laboratóriumi riport-előállítás
+## A.0 Elutasított stratégia — „Regulatory Bypass”
+
+**Elutasítva (NG-07).** Az F2/F3 kimenet (betegre szabott, aktuális gyógyszerhez kötött terápiás javaslat, interruptive riasztás, dózisszám) **nem** szállítható F1 köntösben azzal a védelemmel, hogy „a végső gombot az orvos nyomja meg” / „HITL majd igazolja”.
+
+| Állítás | EU MDR valóság `[V]` Rule 11a |
+| --- | --- |
+| „Az orvos dönt, tehát nem eszköz” | Ha a szoftver információt ad, amelyet diagnosztikai vagy **terápiás döntéshez** használnak, az **IIa** (kivéve 11a felminősítés). Az orvos gombja nem minősít ki. |
+| FDA 2022 CDS „az orvos le tudja vezetni a nyers adatból” | Az MDR-ben **nincs** FDA-típusú enforcement discretion. |
+| Disclaimer a PDF alján | Nem változtatja meg a rendeltetést. A hatóság a hatást nézi. |
+| Élő F2-kimenet + „később CE-zünk” | Forgalomba hozatal / használatba vétel CE nélkül, ha MDSW. |
+
+A HITL **nem** mentesít, ha a kezelőorvos a napi ellátásban látja a gép javaslatát. A HITL a **shadow** üzemre van fenntartva (A.2, E melléklet).
+
+---
+
+## A.1 F1+ intended purpose — statikus tudástársítás (klinikai kimenet)
 
 **Rendeltetés (tervezet, counsel előtt):**
 
-A PCE F1 a partnerlaboratórium — mint a 2008. évi XXI. tv. 12. § (1) szerinti engedélyezett egészségügyi szolgáltató — számára white-label **riport-előállító** szoftver. A bemenet a labor aláíró orvosa által **már megállapított** diplotípus (és opcionálisan fenotípus) + a beteg aktuális gyógyszerlistája és szervfunkciós adatai. A kimenet verziózott CPIC / DPWG / FDA-címke **szövegének** a diplotípushoz rendelése, callability-jelöléssel, fenokonverzió-minősítéssel (nem dózisszámmal), PDF és FHIR formában. Az aláíró a labor orvosa. A szoftver **nem** ad utasítást a felírásra, **nem** jelenik meg a felírási workflow interruptive riasztásaként, **nem** számít dózist.
+A PCE F1+ a partnerlaboratórium — mint a 2008. évi XXI. tv. 12. § (1) szerinti engedélyezett egészségügyi szolgáltató — számára white-label **adminisztratív adatkezelő és riport-előállító** szoftver.
 
-**Amit szándékosan nem állít:**
+Célja a külső partnerlaboratórium által **már validált** diplotípus-eredmények strukturált megjelenítése, valamint a nyilvánosan elérhető, **verziózott** nemzetközi farmakogenetikai irányelvek (CPIC, DPWG, FDA-címke) **szöveges kivonatainak** automatizált hozzárendelése a laboratóriumi jelentéshez.
 
-- diagnózis, prognózis, predikció, kezelés vagy annak enyhítése mint a szoftver saját orvosi célja;
-- „a rendszer javasolja a gyógyszert / dózist”;
-- order-sign / order-select CDS;
-- nyers labor-adatból (FASTQ, IDAT, intensity) genotípus-hívás.
+A szoftver **nem** végez egyedi betegre szabott klinikai értékelést a aktuális gyógyszerlista vagy szervfunkció alapján, **nem** javasol terápiát, **nem** számít dózist, **nem** jelenik meg a felírási workflow interruptive riasztásaként, és **nem** helyettesíti a képzett egészségügyi szakember független orvosi döntését. Az aláíró a labor orvosa.
 
-**MDSW-indoklás (gyártói, nem tanácsadói):** L0–L2 adminisztráció, tárolás, kommunikáció, adatátalakítás. L3 a labor felelőssége (outside-call). L4 a v1-ben „irodalmi szöveg hozzárendelése aláírásra”, nem terápiás döntéstámogatás. Ez a mondat **OQ-05 tárgya**. Ha a counsel szerint a gyógyszerajánlás-szöveg önmagában Rule 11a, az F1 intended purpose érvénytelen, és az F1 build F3-ba esik.
+**Szabad (F1+ klinikai kimenet):**
 
-**Konfigurációs tilalom F1-ben:**
+- Diplotípus + callability a laborhívásból (FR-240).
+- Statikus, verziózott guideline-szöveg a **meghívott génhez** (nem a felírt gyógyszerhez kötött pop-up): pl. „A beteg CYP2D6 diplotípusa a labor szerint \*1/\*1 (NM). A CPIC vX szerint a CYP2D6 NM státuszhoz tartozó gyógyszer–stratégia párok a következők: [táblázat, forrás, URL].”
+- Enciklopédia-nézet (FR-480): az orvos a génre kattint, a szoftver kilistázza a hivatalos útmutatókat; a beteg aktuális receptjéhez **nem** párosít proaktívan.
+- Fenokonverzió **oktató** bekezdés: általános, guideline-ból vett lista (mely inhibitorok *általában* módosíthatnak), **anélkül**, hogy a rendszer a beteg aktuális gyógyszerlistájára alkalmazná (FR-410-EDU).
 
-- FR-300 `NamedAlleleMatcher` default **OFF**. Bekapcsolás = intended purpose változás = REG-010 újra.
-- FR-520/530 **OFF**.
-- FR-410 kimenet: `functional_phenotype` minősítés, `dose_mg` mező tilos.
+**Tilos (F1+ klinikai kimenet) — ez már F2/F3 vagy shadow:**
+
+- Order-select / order-sign: „Ennél a betegnél a most felírt X-et Y-ra cseréld / a dózist 50%-kal csökkentsd.”
+- `functional_phenotype` a **aktuális** gyógyszerlistából a aláírt leleten (FR-410-LIVE).
+- `dose_mg`, „optimális dózis”, „mellékhatás megelőzése a szoftver által”.
+- A shadow-motor kimenetének megjelenítése a kezelőorvosnak.
+
+**❌ Tiltott intended purpose példa:** „A szoftver célja a farmakogenetikai adatok elemzése a betegre szabott optimális gyógyszerdózis meghatározása és a mellékhatások megelőzése érdekében.”
+
+**MDSW-indoklás (gyártói, nem tanácsadói):** L0–L2 adminisztráció. L3 = labor. L4 F1+-ban **könyvtári társítás** (gén → publikált szöveg), nem a felírás pillanatának döntéstámogatása. **OQ-05 továbbra is nyitott:** a génhez rendelt CPIC terápiás szöveg önmagában lehet Rule 11a. A hibrid **szűkíti** a v1.1 F1-et (kivette a élő fenokonverziót és a gyógyszerlista-alapú kiemelést a klinikai kimenetből); nem szünteti meg az OQ-05-öt.
+
+**Konfigurációs tilalom F1+ klinikai buildben:**
+
+- FR-300 matcher default **OFF**.
+- FR-410-LIVE, FR-520, FR-530 interruptive path **OFF**.
 - FR-430 PRS: nincs hívás.
+- Shadow kimenet soha nem íródik a Report entitásba (FR-470).
+
+### A.1.1 Jogi nyilatkozat sablon (lelet / FHIR `DocumentReference.description`)
+
+Counsel-review tárgy. **Nem** minősít ki MDSW-ből.
+
+> Ez a lelet a partnerlaboratórium által megállapított diplotípus-eredmények, valamint a nyilvánosan elérhető nemzetközi farmakogenetikai irányelvek (CPIC, DPWG, FDA) aktuális, verziózott szövegkivonatainak automatizált párosításával készült.
+>
+> A jelentésben szereplő irányelv-szövegek általános, publikált tudományos források. A szoftver nem végez egyedi, a beteg aktuális gyógyszerlistájára vagy szervfunkciójára szabott klinikai értékelést, nem módosítja a laboratóriumi alapadatokat, és nem tesz javaslatot egyedi terápiára vagy konkrét gyógyszeradagolásra.
+>
+> Az információ nem helyettesíti a kezelőorvos vagy gyógyszerész független szakmai döntését. Terápiás módosítás kizárólag a kezelőorvos felelőssége, a beteg klinikai képének figyelembevételével.
+>
+> Aláíró orvos: \[laboratóriumi szakorvos neve és pecsétszáma\]
+
+A „fejlesztő minden felelősséget kizár” formula **nincs** a sablonban: a termékfelelősség / MDR GSPR nem disclaimerezhető el; a counsel tölti ki a felelősségi bekezdést.
 
 ---
 
-## A.2 F2/F3 intended purpose — PGx-CDSS
+## A.2 F1s — Shadow HITL (nem klinikai kimenet)
 
-**Rendeltetés (tervezet):**
+**Rendeltetés:** a CDSS-motor (FR-410-LIVE, beteg–gyógyszer párosítás, opcionális dózis-*jelölt*) **háttérben** fut, zárt kutatási/validációs tárba ír. A kezelőorvos az ellátásban **ebből semmit nem lát**. A HITL egy külön, kutatási UI-n vagy szakértői bizottságban történik, utólag: „A motor szerint itt stratégia-váltás lett volna. Egyetért?” (igen/nem + indok).
 
-A PCE F2/F3 farmakogenetikai **klinikai döntéstámogató** szoftver. A felírás vagy medication review pillanatában a beteg diplotípusa, aktuális gyógyszerlistája és szervfunkciója alapján információt szolgáltat, amelyet a klinikus **terápiás döntéshez** használ: actionable gén–gyógyszer interakció, forrásolt alternatíva, fenokonverzió-minősítés. Kimenet: CDS Hooks Card (`order-select` / `order-sign`) és/vagy SMART on FHIR nézet az EHR-en belül.
+Ez **klinikai értékelési / vizsgálati** tevékenység, nem „titkos CDSS az F1-ben”. Lásd E melléklet, REG-090, OQ-15.
 
-**Minősítés:** MDSW. **Osztály:** Rule **11a → IIa** default (információ terápiás döntéshez). IIb/III akkor, ha a döntés hatása a Rule 11a kivételekbe esik — PGx-dózis/alternatíva jellemzően IIa, de a DPYD–fluoropirimidin típusú, életveszélyes toxicitású párok **külön kockázatelemzést** igényelnek (D melléklet R-007). Nem Class I.
-
-**F2 vs F3:** F2 in-house, egy intézmény, REG-011. F3 CE-jelölt, Notified Body, piaci forgalomba hozatal.
+Ha a shadow kimenet bármely klinikai képernyőre kerül, az üzemmód **F2**, és az A.1 intended purpose hamis.
 
 ---
 
-## A.3 L0–L7 modul-minősítési mátrix
+## A.3 F2/F3 intended purpose — PGx-CDSS (élő)
 
-MDCG Rev.1: a nem-MDSW modul interfészét akkor is dokumentálni kell, ha az MDSW rá támaszkodik. A host UI (EHR) nem MDSW attól, hogy MDSW-t futtat — de a gyártó a host interfészt usability/clinical performance részeként értékeli.
+**Rendeltetés (tervezet):** farmakogenetikai klinikai döntéstámogatás. A felírás vagy medication review pillanatában a diplotípus + aktuális gyógyszerlista + szervfunkció alapján információ, amelyet a klinikus **terápiás döntéshez** használ. Kimenet: CDS Hooks Card és/vagy SMART on FHIR.
 
-| Modul | Tartalom | F1 intended purpose | MDSW? | Osztály (ha MDSW) | Felelős | Függőségek |
-| --- | --- | --- | --- | --- | --- | --- |
-| **L0** Identity & Consent | Azonosítás, 6. § (2)/8. § kapu, granuláris consent, 30 éves napló, visszavonás | Adminisztráció, jogi kapu | **Nem** | — | PCE | — |
-| **L1** Ingestion | VCF/gVCF, outside-call, (P1) FHIR/HL7 | Tárolás / kommunikáció | **Nem** | — | PCE fogad, labor küld | L0 kapu |
-| **L2** Normalization | HGVS/VRS, ATC/LOINC/SNOMED mapping | Adatátalakítás | **Nem** | — | PCE | L1 |
-| **L3** Genotype→Phenotype | PharmCAT matcher/phenotyper **vagy** outside-call echo | F1: labor hívása, PCE csak befogad. VCF-matcher = határ. | **Határ** | Ha a PCE hív nyers/variáns adatból diplotípust: MDSW-kockázat (OQ-05) | **Labor** (F1 default); PCE csak ha matcher ON | L2; SOUP PharmCAT |
-| **L4** Knowledge & Rules | CPIC/DPWG/FDA szabálybázis, fenokonverzió, szervfunkció-flag | F1: szöveghozzárendelés aláírásra. F2/F3: terápiás információ. | **Igen, ha 11a** | **IIa** default | PCE | L3 diplotípus; L1 gyógyszerlista |
-| **L5** PRS | Partner score → percentilis / abszolút kockázat | F1: nincs. F4: prediktív. | **Igen** | **IIa** (predikció/prognózis) | Partner gyártó + PCE mint integrator | L1 genom; ancestry |
-| **L6** Delivery | PDF/FHIR riport; CDS Hooks; SMART | F1: riport = L4 kiterjesztése. F2: CDS = L4 kiterjesztése. | L4-gyel együtt | L4 osztálya | PCE; EHR host nem MDSW | L4, (L5) |
-| **L7** Observability | Override, PMS/PMCF, drift | Post-market / AI Act Art. 12/72 | Nem önálló MDSW | — | PCE | L4/L6 események |
+**Minősítés:** MDSW. **Osztály:** Rule **11a → IIa** default. DPYD–fluoropirimidin: D melléklet R-007. Nem Class I. Nem FDA CDS-kiskapu.
 
-### L3 határ — YouScript vs Translational Software
-
-A brief és a v1.0 szerint a Translational Software 510(k) azon bukott, hogy nyers labor-adatból genotípus- és fenotípus-hívást végzett; a YouScript laborriportból (már jóváhagyott hívás) indult. `[R]` — egy szaklap-forrás, I-01.
-
-**F1 default:** FR-240 outside-call. A PCE nem állítja, hogy ő hívta a diplotípust.
-
-**Ha FR-300 matcher ON:** a PCE VCF-ből allélt/diplotípust állít elő. Ez a MDCG döntési fán közelebb van az MDSW-hez, még akkor is, ha a labor orvosa aláír. **Bekapcsolás = OQ-05 újra + REG-010.**
+**F2 vs F3:** F2 in-house (REG-011). F3 CE, Notified Body, piaci forgalomba hozatal. Az F1s HITL-adatok a clinical evaluation inputjai, nem helyettesítik a CE-t.
 
 ---
 
-## A.4 Modul-függőségek (dokumentálandó a technical file-ban)
+## A.4 L0–L7 modul-minősítési mátrix
+
+| Modul | Tartalom | F1+ klinikai | F1s shadow | F2/F3 | MDSW? |
+| --- | --- | --- | --- | --- | --- |
+| **L0** | Consent, 30 év, kutatási hozzájárulás (FR-115) | Admin | Admin + research consent | Admin | Nem |
+| **L1** | VCF, outside-call, FHIR | Tárolás | + Subscription a gatewayen át | Tárolás | Nem |
+| **L2** | Normalizálás | Adatátalakítás | u.a. | u.a. | Nem |
+| **L3** | Matcher vs outside-call | Labor; matcher OFF | u.a. | Határ, ha matcher ON | Határ |
+| **L4-static** | Gén → verziózott guideline-szöveg | **Be** | — | Be (plusz élő) | OQ-05 |
+| **L4-live** | Gyógyszerlista → functional phenotype, order-alert | **Ki** | **Be**, klinikai UI-ra **nem** | **Be**, klinikai UI-ra **igen** | IIa ha klinikai UI |
+| **L5** | PRS | Ki | Ki | F4 | IIa |
+| **L6-report** | PDF/FHIR aláírt lelet | Be | Nem ír shadowot a leletbe | Be | L4-static-cal |
+| **L6-cds** | CDS Hooks / SMART interruptive | Ki | Ki | Be | IIa |
+| **L6-hitl** | Kutatási review UI | Ki | Be | PMS | Nem klinikai eszköz-UI |
+| **L7** | Audit, PMS | Be | Shadow log elkülönítve | Be | Nem önálló MDSW |
+
+### L3 határ
+
+F1+ default: FR-240 outside-call. FR-300 matcher ON = OQ-05 + REG-010 újra.
+
+---
+
+## A.5 Modul-függőségek
 
 ```
-L0 ──► L1 ──► L2 ──► L3 ──► L4 ──► L6
-              │              ▲
-              │              │
-              └──────────────┘  (gyógyszerlista, Observation → fenokonverzió)
-Partnerlabor ──► L1 (outside-call | VCF)
-L5 (F4) ─ ─ ► L6
-L4/L6 ──► L7
-EHR host UI ──► L6 (SMART / CDS Hooks); a host nem MDSW, az interfész igen, értékelendő
+Klinikai path (F1+):
+  L0 ──► L1 ──► L2 ──► L3(outside) ──► L4-static ──► L6-report
+  (gyógyszerlista NEM bemenet az L4-static-hoz)
+
+Shadow path (F1s) — külön store, külön IAM:
+  [HIS esemény] ──► [Gateway a intézmény zónájában] ──► L4-live ──► HITL DB
+  L6-report ──X── L4-live   (FR-470 tiltott él)
+
+F2/F3: L4-live ──► L6-cds  (kapcsoló csak CE / in-house után)
 ```
 
-A gyártó közli a felhasználóval:
+---
 
-1. mely modulok alkotják a terméket;
-2. mely modulok esnek MDR/IVDR vagy más jog (EHDS, 2008/XXI.) alá;
-3. hogy a labor aláírása mit fed és mit nem (REG-020).
+## A.6 Class I
+
+`[CORRECTED]` VC-04. Class I létezik (11c). PGx élő terápiás információ **nem** 11c. F1+ menekülés = **nem-MDSW könyvtári társítás** (OQ-05), nem Class I.
 
 ---
 
-## A.5 Class I — mit állítunk és mit nem
+## A.7 In-house (F2)
 
-`[CORRECTED]` VC-04.
-
-- Az MDCG Rev.1 IMDRF-táblája: „This table does not take into account MDSW which is Class I.”
-- Rule 11c: minden egyéb MDSW Class I.
-- Rev.1 Annex IV: új Class I példa.
-
-**Következtetés, amit ez a melléklet levon:** Class I MDSW **létezik**, de a PGx-ajánlást / terápiás információt adó szoftver **nem** 11c. A „Class I-re menekülés” F2/F3-ra nem stratégia. Az F1 menekülés **nem-MDSW** (admin/riport), nem Class I.
+REG-011. Nem mentesít 2008/XXI. és GDPR alól. Intézményen kívül = F3.
 
 ---
 
-## A.6 In-house (F2) — feltételek, nem kiskapu
+## A.8 OQ-05 — szűkített kérdés
 
-REG-011. Az in-house (MDR Art. 5(5) szellemében, egészségügyi intézmény) **nem** mentesít a 2008/XXI. alól, **nem** mentesít a GDPR alól, és csak akkor kerüli el a magas kockázatú AI-t (MDCG 2025-6), ha nincs NB a megfelelőségértékelésben **és** a szoftver kizárólag az intézményben fut.
+> Védhető-e az A.1 F1+ pozíció, ha a kimenet a labor-diplotípushoz verziózott CPIC/DPWG/FDA **gén-szintű** szövegkivonatot rendel, **nincs** aktuális-gyógyszer párosítás, **nincs** fenokonverzió-alkalmazás, **nincs** CDS Hooks, és az aláíró a labor orvosa?
 
-Ha az in-house eszköz kikerül az intézményből (más kórház, SaaS, white-label laborhálózat), az F2 intended purpose megszűnik → F3.
-
----
-
-## A.7 OQ-05 — a kérdés, amit ez a dokumentum *nem* válaszol meg
-
-> Védhető-e az A.1 F1 pozíció az MDCG 2019-11 Rev.1 alatt, ha a PDF/FHIR kimenet CPIC/DPWG/FDA gyógyszerajánlás-szöveget tartalmaz, az aláíró pedig a partnerlabor orvosa, és nincs CDS Hooks?
-
-A counsel brief **nem** ennek a csomagnak a része. A counselnek adandó csomag: A.1 szöveg, A.3 mátrix, FR-400/410/500, REG-010/020, MDCG Rev.1 modules fejezet (S005).
+A v1.1 kérdés tágabb volt (gyógyszerajánlás-szöveg általában). A v1.2 szűkít. A válasz továbbra is **külső counsel**. Csomag: A.1, A.1.1, A.4, FR-400-STATIC, FR-470, REG-010, MDCG Rev.1.

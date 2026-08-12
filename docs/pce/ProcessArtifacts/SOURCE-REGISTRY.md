@@ -1,4 +1,4 @@
-# SOURCE-REGISTRY — PCE-SPEC-v1.1
+# SOURCE-REGISTRY — PCE-SPEC-v1.2
 
 Hozzáférés dátuma: 2026-08-12, kivéve ahol jelezve. Authority: L1 hivatalos/kormányzati · L2 peer-reviewed · L3 vendor · L4 hír/blog · L5 nem ellenőrizhető.
 
@@ -26,5 +26,16 @@ Hozzáférés dátuma: 2026-08-12, kivéve ahol jelezve. Authority: L1 hivatalos
 | S020 | MDR (EU) 2017/745 Art. 15, Annex I GSPR, Annex VIII Rule 11 | Jogszabály | L1 | EUR-Lex | REG-031, D melléklet |
 | S021 | AI Act (EU) 2024/1689 Art. 4, 6(1), 9–15, 17, 72 | Jogszabály | L1 | EUR-Lex | FR-700, REG-060/061 |
 | S022 | IEC 62304, ISO 13485, ISO 14971 | Szabvány | L1 | ISO/IEC | NFR-070, REG-030, D melléklet |
+| S023 | I-10 hibrid-brief [1] meddeviceguide MMA/CDS | Blog | L4 | https://meddeviceguide.com/blog/mobile-medical-applications-regulatory-guide | I-10 kontextus; **nem** Rule 11a primer |
+| S024 | I-10 hibrid-brief [2] meddeviceguide wearable | Blog | L4 | https://meddeviceguide.com/blog/wearable-medical-devices-regulatory-pathway-guide | I-10 kontextus; **nem** Rule 11a primer |
+| S025 | I-10 hibrid-brief [3] PMC MDSW/Rule 11 | Folyóirat (ellenőrizendő) | L2 ha a PMC cikk a hivatkozott | https://pmc.ncbi.nlm.nih.gov/articles/PMC10105190/ | I-10 [3]; Rule 11a **S004/S005/S020**-ra támaszkodik |
+| S026 | I-10 hibrid-brief [4] pharmadocx SaMD CE | Vendor blog | L4 | https://pharmadocx.com/a-guide-on-ce-mark-process-for-samd/ | I-10 kontextus |
+| S027 | I-10 hibrid-brief [5] monterail digital health MDSW | Blog | L4 | https://www.monterail.com/blog/is-your-digital-health-product-a-medical-device | Disclaimer ≠ intended purpose (A.0); primer = S004 |
+| S028 | I-10 hibrid-brief [6] arXiv 2603.14876 | Preprint | L5 | https://arxiv.org/html/2603.14876v1 | I-10 [6]; nem L1 |
+| S029 | I-10 hibrid-brief [7] PMC shadow/HITL | Folyóirat (ellenőrizendő) | L2 ha a PMC cikk a hivatkozott | https://pmc.ncbi.nlm.nih.gov/articles/PMC12482788/ | Shadow-mode analógia; E melléklet műszaki, nem ez a cikk a jogalap |
+| S030 | CPIC guidelines | Hivatalos guideline | L2 | https://cpicpgx.org/ | FR-400-STATIC; enciklopédia-analógia I-10 |
+| S031 | GDPR (EU) 2016/679 Art. 6, 9, 17, 32, 35 | Jogszabály | L1 | EUR-Lex | FR-115, REG-050/091, E.5 |
 
 **Nem került a registrybe (szándékos):** Fortune/Mordor/Straits TAM-számok (egymásnak ellentmondó L4/L5); Allelica ACC/AHA idézés (céges PR, `[C]`); YouScript 39%/71% kórházi csökkenés (céges közlés).
+
+**v1.2 megjegyzés:** az I-10 [1]–[7] URL-ek **L4/L5** (kivéve ha a PMC cikk peer-reviewednek bizonyul). A Rule 11a / „nincs FDA enforcement discretion” állítás **S004, S005, S020** `[V]`, nem a blogokra.

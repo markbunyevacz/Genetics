@@ -3,20 +3,23 @@
 | | |
 | --- | --- |
 | **Státusz** | Draft — review-ra kész |
-| **Verzió** | v1.1 |
+| **Verzió** | v1.2 |
 | **Dátum** | 2026-08-12 |
 | **Nyelv** | magyar (követelmény-ID-k angolul) |
 | **Repo** | [markbunyevacz/genetics](https://github.com/markbunyevacz/genetics) |
 
 Ez a csomag a PCE farmakogenetikai (PGx) platform **követelménylistája és szoftverspecifikációja**. Write-spec PRD-struktúra, IEC 62304 / MDR technical file-ba vihető SRS-kiterjesztéssel. **Nem** jogi állásfoglalás, **nem** üzleti terv, **nem** implementáció.
 
+v1.2 a **legális hibrid**: F1+ statikus, verziózott guideline-társítás aláírt laborleleten; F1s shadow HITL a kezelőorvos nélkül; élő F2/F3 CDSS csak minősítés után. Az „F2 képesség F1 minőségben, mert az orvos dönt” útvonal **elutasítva** (NG-07).
+
 ## Olvasási sorrend
 
-1. **[PCE-SPEC-v1.1.md](PCE-SPEC-v1.1.md)** — kanonikus PRD + SRS. Innen indulj.
-2. **[A-intended-purpose-and-modules.md](A-intended-purpose-and-modules.md)** — F1 vs F2/F3 intended purpose, L0–L7 modul-minősítés. Az OQ-05 tényalapja, nem a válasza.
-3. **[B-architecture-and-interfaces.md](B-architecture-and-interfaces.md)** — adatmodell, API/FHIR/VCF, hibakatalógus, SOUP, fenokonverzió.
+1. **[PCE-SPEC-v1.2.md](PCE-SPEC-v1.2.md)** — kanonikus PRD + SRS. Innen indulj.
+2. **[A-intended-purpose-and-modules.md](A-intended-purpose-and-modules.md)** — F1+ / F1s / F2 intended purpose, L0–L7 modul-minősítés, A.0 bypass elutasítás. Az OQ-05 tényalapja, nem a válasza.
+3. **[B-architecture-and-interfaces.md](B-architecture-and-interfaces.md)** — két path (klinikai vs shadow), adatmodell, API/FHIR/VCF, hibakatalógus, SOUP, fenokonverzió EDU/LIVE.
 4. **[C-eeszt-f0-checklist.md](C-eeszt-f0-checklist.md)** — 29/2022. 4. melléklet 1.1–1.9 + ISO 9001, 2026-09-30.
-5. **[D-risk-and-traceability.md](D-risk-and-traceability.md)** — ISO 14971 kezdeti kockázat + FR→forrás→teszt→GSPR mátrix.
+5. **[D-risk-and-traceability.md](D-risk-and-traceability.md)** — ISO 14971 kezdeti kockázat (R-015–R-019) + FR→forrás→teszt→GSPR mátrix.
+6. **[E-shadow-hitl.md](E-shadow-hitl.md)** — shadow pipeline, intézményi gateway, HITL UI, GDPR két út, kutatási hozzájárulás váz, REG-090 / OQ-15.
 
 ## Process artifacts
 
@@ -24,7 +27,7 @@ Ez a csomag a PCE farmakogenetikai (PGx) platform **követelménylistája és sz
 | --- | --- |
 | [ProcessArtifacts/SOURCE-INVENTORY.md](ProcessArtifacts/SOURCE-INVENTORY.md) | Felhasznált forrásdokumentumok |
 | [ProcessArtifacts/SOURCE-REGISTRY.md](ProcessArtifacts/SOURCE-REGISTRY.md) | Külső források L1–L5 besorolással |
-| [ProcessArtifacts/VALIDATED-CLAIMS.md](ProcessArtifacts/VALIDATED-CLAIMS.md) | Korrekciók a v1.0 vázlathoz képest |
+| [ProcessArtifacts/VALIDATED-CLAIMS.md](ProcessArtifacts/VALIDATED-CLAIMS.md) | Korrekciók a v1.0 vázlathoz + VC-11 REFUTED |
 | [ProcessArtifacts/PROCESS-HISTORY.md](ProcessArtifacts/PROCESS-HISTORY.md) | Fázis- és döntésnapló |
 | [Sources/PCE-SPEC-v1.0.md](Sources/PCE-SPEC-v1.0.md) | Előző vázlat (nem kanonikus) |
 
@@ -34,11 +37,12 @@ A gyártó neve ebben a csomagban **nincs kitalálva**. A9 feltevés: a gyártó
 
 ## Ami szándékosan nincs itt
 
-- OQ-05 jogi vélemény (külső counsel)
+- OQ-05 / OQ-15 jogi vélemény (külső counsel)
 - Engineering ticket-bontás, gold-set annotációs SOP
 - Saját PRS-motor, B2C VCF-upload, EESZT írás, onkológiai szomatikus panel
 - TAM / piackutató-számok (5,7× szórás; nem SRS-anyag)
+- DPA, DPIA, etikai kérelem végleges szövege (E melléklet váz)
 
 ## Következő gate
 
-P01 — source coverage audit + independent build-readiness review. A blokkoló üzleti kérdés: **OQ-05** (lásd spec §10 és A melléklet).
+P01 — source coverage audit + independent build-readiness review. Blokkoló kérdések: **OQ-05** (szűkített F1+ nem-MDSW), **OQ-15** (shadow = Art. 62 vizsgálat-e). Lásd spec §10, A és E melléklet.

@@ -1,4 +1,4 @@
-# PROCESS-HISTORY — PCE-SPEC-v1.1
+# PROCESS-HISTORY — PCE-SPEC-v1.2
 
 LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 
@@ -12,8 +12,11 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P03 | Claim validation | 2026-08-12 | 2026-08-12 | DONE | CQ a P02-ből | VCT | VC-09, VC-10 UNVERIFIABLE |
 | P05 | Deliverable generation | 2026-08-12 | 2026-08-12 | DONE | Plan + VCT | PCE-SPEC-v1.1 + A–D mellékletek | — |
 | P06 | Plan-vs-content | 2026-08-12 | 2026-08-12 | DONE | Plan checklist | README + ez a napló | — |
+| P01b | Source ingestion (hibrid) | 2026-08-12 | 2026-08-12 | DONE | I-10 hibrid-brief | Inventory + registry S023–S031 | — |
+| P05b | Deliverable restart (v1.2) | 2026-08-12 | 2026-08-12 | DONE | I-10 + D-07 | PCE-SPEC-v1.2; A rewrite; B/D align; E új | — |
+| P06b | Plan-vs-content (hibrid) | 2026-08-12 | 2026-08-12 | DONE | I-10 tiltott/szabad + GDPR + FHIR | D.3 v1.2 sorok; VC-11 | — |
 
-**Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A10 explicit feltevés).
+**Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
 ## 2. Decision log
 
@@ -25,6 +28,10 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-04 | P05 | F1 default L3 | PharmCAT VCF-en / outside-call | Outside-call default; VCF+PharmCAT kockázatként dokumentálva | YouScript-minta; OQ-05 gyengülés | plan |
 | D-05 | P05 | Üzleti TAM/versenytárs | Be / ki | Ki a SRS-ből | Plan: nem SRS | plan |
 | D-06 | P02 | OQ-02 | Nyitva hagyni / lezárni primerrel | Lezárni: 12 vs 14 | Lancet + CPT 2019 | — |
+| D-07 | P05b | F2-in-F1 „bypass” | Élő CDSS F1 köntösben + HITL / elutasítás + hibrid | **Elutasítva** (NG-07); F1+ static + F1s shadow + F2 CE után | I-10 + MDR Rule 11a; nincs FDA kiskapu | user brief |
+| D-08 | P05b | Fenokonverzió a leleten | Élő (v1.1) / csak EDU / teljesen ki | FR-410-EDU a leleten; FR-410-LIVE shadow/F2 | Beteg-gyógyszer párosítás = Rule 11a | I-10 |
+| D-09 | P05b | Shadow GDPR | Anonim / álnevesített | Default anonim (A12); FR-115 ha longitudinális | I-10 két út; A13 re-ID | I-10 |
+| D-10 | P05b | Disclaimer „minden felelősség kizárva” | Be / ki | **Ki** a sablonból | Termékfelelősség / GSPR nem disclaimerezhető | I-10 korrekció A.1.1 |
 
 ## 3. Error log
 
@@ -35,15 +42,19 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | E-03 | P02 | Scope / overclaim | Class I „meg sem jelenik” | Retry: MDCG PDF | VC-04 |
 | E-04 | P03 | Silent verification risk | Digital Omnibus OJ nem fetch-elve | Mark [NEEDS VERIFICATION] | VC-09; dátum tervezési órának marad |
 | E-05 | P00 | Tool | Notion MCP needsAuth | Skip Notion; git repo | docs/pce/ |
+| E-06 | P05b | Scope / regulatory bypass | v1.1 F1 tartalmazott élő fenokonverziót a leleten — I-10 szerint ez F2-hatás | Restart P05: szűkítés F1+-ra; shadow külön | D-07, D-08; VC-11 |
+| E-07 | P01b | Authority | I-10 [1]–[7] blog/preprint mint Rule 11a bizonyíték | Nem L1-ként használni | S023–S029 L4/L5; primer S004/S020 |
 
 ## 4. File timeline
 
 | Fájl | Létrehozva | Módosítva | Státusz |
 | --- | --- | --- | --- |
-| docs/pce/README.md | P00/P05 | P06 | DRAFT |
-| docs/pce/PCE-SPEC-v1.1.md | P05 | P06 | DRAFT |
-| docs/pce/A-intended-purpose-and-modules.md | P05 | — | DRAFT |
-| docs/pce/B-architecture-and-interfaces.md | P05 | — | DRAFT |
-| docs/pce/C-eeszt-f0-checklist.md | P05 | — | DRAFT |
-| docs/pce/D-risk-and-traceability.md | P05 | — | DRAFT |
-| docs/pce/ProcessArtifacts/* | P01–P06 | live | DRAFT |
+| docs/pce/README.md | P00/P05 | P06b | DRAFT v1.2 |
+| docs/pce/PCE-SPEC-v1.1.md | P05 | — | **átnevezve** → v1.2 |
+| docs/pce/PCE-SPEC-v1.2.md | P05b (git mv) | P06b | DRAFT kanonikus |
+| docs/pce/A-intended-purpose-and-modules.md | P05 | P05b | DRAFT v1.2 |
+| docs/pce/B-architecture-and-interfaces.md | P05 | P05b | DRAFT v1.2 |
+| docs/pce/C-eeszt-f0-checklist.md | P05 | P05b (verzió + OQ-15 sor) | DRAFT v1.2 |
+| docs/pce/D-risk-and-traceability.md | P05 | P05b | DRAFT v1.2 |
+| docs/pce/E-shadow-hitl.md | P05b | P06b | DRAFT v1.2 |
+| docs/pce/ProcessArtifacts/* | P01–P06 | P01b/P05b/P06b | DRAFT |

@@ -2,13 +2,13 @@
 
 | | |
 | --- | --- |
-| **Dokumentum-ID** | PCE-SPEC-v1.1 |
+| **Dokumentum-ID** | PCE-SPEC-v1.2 |
 | **Státusz** | Draft — review-ra kész |
 | **Dátum** | 2026-08-12 |
-| **Hatókör** | PGx clinical decision support platform, magyar/EU piac |
-| **Előző** | PCE-SPEC-v1.0 (2026-08-09) — váz; ez a kanonikus |
-| **Mellékletek** | [A](A-intended-purpose-and-modules.md) · [B](B-architecture-and-interfaces.md) · [C](C-eeszt-f0-checklist.md) · [D](D-risk-and-traceability.md) |
-| **Következő gate** | P01 — independent build-readiness review; blokkoló: **OQ-05** |
+| **Hatókör** | PGx platform, magyar/EU piac; F1+ statikus lelet + F1s shadow HITL + F2/F3 CDSS |
+| **Előző** | PCE-SPEC-v1.1 — F1 passzív L4 + élő fenokonverzió a leleten; v1.2 ezt szűkíti |
+| **Mellékletek** | [A](A-intended-purpose-and-modules.md) · [B](B-architecture-and-interfaces.md) · [C](C-eeszt-f0-checklist.md) · [D](D-risk-and-traceability.md) · [E](E-shadow-hitl.md) |
+| **Következő gate** | OQ-05 (szűkített) + OQ-15 (shadow = vizsgálat-e) |
 
 Jelölések: `[V]` primerben verifikált · `[R]` egy forrás · `[C]` céges közlés · `[CORRECTED]` a v1.0-hoz képest javítva · `[ASSUMPTION]` · `[NEEDS VERIFICATION]`.
 
@@ -20,7 +20,7 @@ Kérdés helyett rögzítve. Ha bármelyik hamis, a jelzett szakasz újraírand�
 
 | # | Feltevés | Ha hamis, érintett szakasz |
 | --- | --- | --- |
-| A1 | A v1 célja **bevételtermelő F1 réteg** 9 hónapon belül; a szabályozott CDSS (IIa) a v2 (F2/F3). Az F1 nem-MDSW státusz **OQ-05-től függ**, nem előfeltétel. | Teljes §6, §11, A melléklet |
+| A1 | A v1 klinikai termék **F1+**: statikus, verziózott guideline-társítás aláírt laborleleten. Az élő CDSS (F2/F3) CE/in-house után. A nem-MDSW státusz **OQ-05-től függ**. Az F2/F3 kimenet F1 köntösben **tilos** (NG-07). | §3, §6, §11, A, E |
 | A2 | Nincs saját ISO 15189 / CLIA labor; a genotípus-hívás **partnerlabor felelőssége**. Az F1 default útvonal: **outside-call** (FR-240), nem nyers VCF→allélhívás. | FR-240, FR-300, REG-020, A melléklet L3 |
 | A3 | Nincs jelenleg érvényes EESZT fejlesztői regisztráció. | §11, REG-040a, C melléklet |
 | A4 | A PRS-motor **nem** saját fejlesztés, hanem beszállítói integráció (F4). | §6.5, NG-02, FR-430 |
@@ -30,6 +30,9 @@ Kérdés helyett rögzítve. Ha bármelyik hamis, a jelzett szakasz újraírand�
 | A8 | EESZT-útvonal F1-ben: **modul** az engedélyezett medikai rendszerben, nem saját EESZT-csatlakozás (NG-05). A 2026-09-30 ISO 9001 akkor is F0, ha a vevő a vendor. | REG-040a, C melléklet |
 | A9 | A gyártó a `genetics` repo tulajdonos szervezete. **Név ebben a dokumentumban nincs kitalálva.** | Fejléc, REG-031 |
 | A10 | `[ASSUMPTION]` A hozzájárulás-visszavonás kaszkádjának **üzemi SLA-ja 72 óra**. A 2008/XXI. 26. § (1) határidőt nem ad. | FR-110 |
+| A11 | A v1.2 kanonikus szabályozási stratégia a **legális hibrid** (A.0–A.2): F1+ statikus lelet; F1s shadow HITL a kezelőorvos nélkül; F2/F3 csak minősítés után. | A, E, FR-440–470 |
+| A12 | Shadow default: **irreverzibilis anonimizálás** a intézményi gatewayen. Álnevesítés + FR-115 csak ha longitudinális követés kell. | E.5, FR-460 |
+| A13 | `[ASSUMPTION]` A gateway ritka gén–gyógyszer kombinációt elnyom vagy az álnevesített utat választják (re-ID kockázat). | E.5, DPIA |
 
 **Nem feltevés, hanem verifikált korlát:** a hazai jogi és EESZT-korlátok (§4) nem tárgyalhatók terméktervezéssel.
 
@@ -50,7 +53,7 @@ A gyógyszerelési döntés pillanatában a rendelkezésre álló genetikai info
 
 A nem-megoldás költsége: a hazai laborok és klinikák statikus riportot adnak el prémium áron, klinikai hatás nélkül; a nemzetközi PGx-CDSS szállítók EU-jelenléte szűk; az AI Act Annex I tervezési óra (`[NEEDS VERIFICATION]` 2028-08-02, lásd §4.4) után az utólagos megfelelés drágább, mint a beépített.
 
-A differenciátor **nem** a VCF+PRS dashboard, hanem a **fenokonverzió**: a genotípus-alapú fenotípus mellett a aktuális gyógyszerlista (inhibitor/induktor) és a szervfunkció alapján jelzett funkcionális fenotípus. A v1 ezt minősítésként adja, dózisszám nélkül (FR-410).
+A v1 **fizető** differenciátor a skálázható, verziózott, white-label laborlelet (callability + CPIC/DPWG/FDA szövegtársítás). A **fenokonverzió** (aktuális gyógyszerlista → funkcionális fenotípus) a tudományos rés, de a v1.2-ben **nem** a aláírt lelet része: F1s shadow + HITL méri (G3), F2/F3 viszi élőbe. Az „F2 képesség F1 minőségben, mert az orvos dönt” útvonal **elutasítva** (A.0, NG-07).
 
 ---
 
@@ -62,9 +65,10 @@ Outcome-ok, nem output-ok.
 | --- | --- | --- | --- |
 | **G1** | A partnerlabor PGx-riport előállítási ideje csökkenjen | Kézi/félautomata baseline → **p95 < 10 perc** outside-call-tól vagy VCF-től aláírásra kész riportig | Pipeline-telemetria, `ingest→report_ready` |
 | **G2** | Az actionable találatok ne vesszenek el | A **PREPARE 12-génes** panel + aktuális CPIC/DPWG szerint actionable gén–gyógyszer párok **100%-a** megjelenik, 0 silent drop | Gold set (§9), minden release |
-| **G3** | Fenokonverzió-detektálás mint differenciátor | Fenokonverzió-gyanús esetek **≥ 90% recall** a gold seten | Gold set, §9.2 |
+| **G3** | Fenokonverzió-motor készen áll az F2-re | Shadow/HITL gold seten **≥ 90% recall**; a **aláírt F1+ leleten 0** élő fenokonverzió-alkalmazás | Gold set §9.2; FR-470 CI |
 | **G4** | Bevétel a szabályozott réteg előtt | **≥ 3 fizető labor/klinikai partner** és ≥ 1 dokumentált case study a v1 végéig | Aláírt szerződések |
-| **G5** | A v2 (IIa) útvonal ne igényeljen újraírást | QMS-artefaktumok (ISO 13485 / IEC 62304 / ISO 14971) **a v1-gyel párhuzamosan** keletkeznek | RA gap-analysis, §8 REG-030 |
+| **G5** | A v2 (IIa) útvonal ne igényeljen újraírást | QMS + ugyanaz a L4-live motor shadowban, mint F3-on; klinikai UI-kapcsoló külön | REG-030; FR-470 flag |
+| **G6** | Nincs szabályozási bypass | 0 shadow/CDSS inferencia a klinikai pathen F1+ buildben | FR-470 CI |
 
 **Üzleti goal, amit nem a termék teljesít:** az MKIK-akkreditációhoz szükséges referenciák. G4 ezt szolgálja.
 
@@ -77,7 +81,8 @@ Outcome-ok, nem output-ok.
 | Riport p95 átfutás | < 10 min | < 5 min | telemetria | első 30 nap / partner |
 | Callability false-NORMAL | **0** | 0 | gold set FR-210 | minden release |
 | Unsourced claim | **0** | 0 | CI `unsourced_claims` | minden release |
-| Fenokonverzió recall | ≥ 90% | ≥ 95% | gold set | minden release |
+| Fenokonverzió recall (shadow) | ≥ 90% | ≥ 95% | gold set FR-410-LIVE | minden release |
+| Shadow szivárgás a leletre | **0** | 0 | FR-470 CI | minden release |
 
 **Lagging (hónapok):**
 
@@ -99,6 +104,8 @@ Outcome-ok, nem output-ok.
 | **NG-04** | Onkológiai szomatikus variáns-interpretáció | Külön IVDR-domain. |
 | **NG-05** | EESZT írási művelet (eRecept, eProfil rögzítés) | BM-engedélyezett medikai rendszer nélkül nem lehetséges. A v1 modul, nem helyettesítő. |
 | **NG-06** | LLM-alapú szabad szöveges klinikai tanácsadás | Nem determinisztikus; IIa dossziét megölné. FR-700. |
+| **NG-07** | F2/F3 élő kimenet F1 intended purpose alatt („az orvos dönt” / disclaimer-kiskapu) | MDR Rule 11a; nincs FDA enforcement discretion. A.0. |
+| **NG-08** | Shadow/HITL inferencia megjelenítése a kezelőorvos ellátási UI-ján | Az A.1 rendeltetést hamissá tenné; azonnal F2. |
 
 ---
 
@@ -109,7 +116,7 @@ Outcome-ok, nem output-ok.
 - **MDCG 2019-11 Rev.1** (2025-06-17) `[V]`: a szoftvert a **intended purpose** alapján kell minősíteni; a prognózis/predikció a Rule 11 hatókörébe esik; **minden modult önállóan** kell minősíteni, a modulok közti függőségeket dokumentálni.
 - Rule **11a**: információ diagnosztikai vagy terápiás döntéshez → **IIa**, kivéve ha a döntés halált / irreverzibilis romlást (III) vagy súlyos romlást / sebészi beavatkozást (IIb) okozhat.
 - `[CORRECTED]` Az IMDRF-leképező tábla **nem** tartalmazza a Class I-et; ez **nem** jelenti, hogy Class I MDSW ne létezne. Rule **11c** („all other software”) Class I; a Rev.1 Annex IV új Class I példát adott. PGx-ajánlást / terápiás információt adó kimenet **11a → IIa default**.
-- Az „a végső döntést az orvos hozza” érvelés az FDA 2022 CDS guidance logikája, az MDR-ben **nem** minősít ki.
+- Az „a végső döntést az orvos hozza” érvelés az FDA 2022 CDS guidance logikája, az MDR-ben **nem** minősít ki. **NG-07.**
 
 Részlet: [A melléklet](A-intended-purpose-and-modules.md).
 
@@ -175,16 +182,16 @@ Részlet: [C melléklet](C-eeszt-f0-checklist.md).
 
 **P2 — Klinikus**
 
-6. Felíró klinikusként a felírás pillanatában akarok figyelmeztetést, ha a beteg genotípusa a tervezett gyógyszerrel ütközik — nem külön portálon. *(F2; v1-ben P1)*
-7. Felíró klinikusként konkrét, forrásolt alternatívát akarok látni, nem csak tiltást.
+6. Felíró klinikusként a felírás pillanatában akarok figyelmeztetést, ha a beteg genotípusa a tervezett gyógyszerrel ütközik — nem külön portálon. *(F2/F3; F1+-ban tilos — NG-07)*
+7. Felíró klinikusként F2-n konkrét, forrásolt alternatívát akarok látni, nem csak tiltást.
 8. Felíró klinikusként el akarom tudni utasítani a figyelmeztetést indoklással, hogy a rendszer ne blokkolja a megítélésemet.
 9. Felíró klinikusként a hivatkozást (CPIC/DPWG/FDA) akarom látni.
 10. Felíró klinikusként nem akarok riasztást nem-actionable párra.
 
 **P3 — Klinikai farmakológus**
 
-11. Klinikai farmakológusként a beteg aktuális gyógyszerlistája alapján akarom látni a gyógyszer-indukált fenokonverziót, hogy ne NM-ként kezeljek egy funkcionálisan lassú metabolizálót.
-12. Klinikai farmakológusként egy oldalon akarom látni a genotípust, a DDI-t és a szervfunkciós módosítókat.
+11. Klinikai farmakológusként a HITL/F2 felületen a beteg aktuális gyógyszerlistája alapján akarom látni a fenokonverziót. *(F1+ leleten csak FR-410-EDU)*
+12. Klinikai farmakológusként F2-n egy oldalon akarom látni a genotípust, a DDI-t és a szervfunkciós módosítókat.
 
 **P4 — Genetikai tanácsadó**
 
@@ -211,7 +218,7 @@ Részlet: [C melléklet](C-eeszt-f0-checklist.md).
 
 ## 6. Funkcionális követelmények
 
-Rétegek: L0 Identity & Consent · L1 Ingestion · L2 Normalization · L3 Genotype→Phenotype · L4 Knowledge & Rules · L5 PRS · L6 Delivery · L7 Observability. Minősítés: [A melléklet](A-intended-purpose-and-modules.md). Interfészek: [B melléklet](B-architecture-and-interfaces.md). Tesztek: [D melléklet](D-risk-and-traceability.md).
+Rétegek: L0 Identity & Consent · L1 Ingestion · L2 Normalization · L3 Genotype→Phenotype · L4 Knowledge & Rules · L5 PRS · L6 Delivery · L7 Observability. Minősítés: [A](A-intended-purpose-and-modules.md). Interfészek: [B](B-architecture-and-interfaces.md). Shadow/HITL: [E](E-shadow-hitl.md). Tesztek: [D](D-risk-and-traceability.md).
 
 ### 6.1 L0 — Identity & Consent
 
@@ -236,7 +243,7 @@ Hozzájárulás gén/génpanel és felhasználási cél szintjén; 6. § (7) nem
 
 - [ ] Given a beteg lemondott egy adott gén eredményének megismeréséről, When riport generálódik, Then az adott gén a **beteg-példányból** kimarad. A klinikus-példányban csak akkor jelenhet meg, ha a klinikus hozzáférése külön, konfigurált jogalapon engedélyezett — kódmódosítás nélkül.
 - [ ] Given hozzájárulás-visszavonás, When rögzítésre kerül, Then a rendszer kaszkádolva töröl minden érintett genetikai adatot és nyilvántartási bejegyzést, és visszavonhatatlan törlési tanúsítványt állít ki. Az üzemi cél: **72 órán belül** `[ASSUMPTION]` A10. A törvényi minimum: megsemmisítés a 26. § (1) szerint, határidő nélkül.
-- [ ] A kaszkád **derived** adatra is kiterjed: diplotípus, fenotípus, riportok, cache, PRS-eredmény (ha van).
+- [ ] A kaszkád **derived** adatra is kiterjed: diplotípus, fenotípus, riportok, cache, PRS-eredmény (ha van), **és** a shadow/HITL store rekordja (E melléklet).
 - [ ] Negatív teszt: visszavonás után a korábbi riport URL **410 Gone**, nem 200 cache-ből.
 - [ ] A 30 éves **audit** napló a törlés *eseményét* megőrzi személyazonosító genetikai tartalom nélkül (ki, mikor, milyen jogalapon, milyen objektum-azonosítók semmisültek meg) — a genetikai tartalom nem marad.
 
@@ -254,6 +261,14 @@ Jogalap: 26. § (1). `[CORRECTED]` A hash-chain nem törvényi P0.
 
 - [ ] A genetikai adat L2–L5-ben kizárólag pszeudonim azonosítóval szerepel; az újraazonosító kulcs külön, szigorúbb ACL-ű store-ban van (2008/XXI. kódkulcs-elkülönítés szellemében, 24. § / 25. §).
 - [ ] Given L4 szabálykiértékelés, When a motor logol, Then a logban nincs név, TAJ, születési dátum. Negatív teszt: CI log-scanner PII-mintákra.
+
+#### FR-115 · Kutatási / shadow hozzájárulás (álnevesített út) — **Compliance P0 ha A12 ≠ anonim**
+
+Külön a 6. § (2)/8. § klinikai kaputól. Sablon: E.6.
+
+- [ ] Given álnevesített shadow-út, When nincs `research_consent` a case-hez, Then a gateway **nem** küld csomagot a PCE shadow store-ba (`E-CONSENT-006`).
+- [ ] Given anonim út (A12 default) és a DPIA szerint a kimenet nem személyes adat, When shadow fut, Then FR-115 nem blokkol — a klinikai FR-100 továbbra is igen.
+- [ ] A kutatási hozzájárulás visszavonása a HITL rekordot törli (FR-110 kaszkád).
 
 ---
 
@@ -279,14 +294,15 @@ A VCF-útvonal támogatott, de az F1 **default** a FR-240 outside-call. VCF akko
 - [ ] Negatív teszt: a gold setben ≥ 3 eset, ahol a missing-to-ref klinikailag ellentétes ajánlást adna; a rendszer `INDETERMINATE`.
 - [ ] A PharmCAT `--absent-to-ref` és `--unspecified-to-ref` **nem** hívható vakon; esetenként, dokumentált indokkal, change-control alatt.
 
-#### FR-220 · Klinikai kontextus (gyógyszerlista, labor) — kézi **Product P0** / FHIR **P1**
+#### FR-220 · Klinikai kontextus (gyógyszerlista, labor) — **P0 a shadow/F2 pathen**; F1+ leleten **nem L4-bemenet**
 
-A fenokonverzió (FR-410) inputja. FHIR nem kell a mag use case-hez, ha van kézi bevitel.
+Az F1+ aláírt lelet **nem** párosítja a aktuális gyógyszerlistát a diplotípushoz (A.1). A lista a **F1s/F2** L4-live inputja.
 
-- [ ] **P0** Kézi bevitel: aktuális gyógyszerlista (ATC vagy OGYÉI/PHARMINDEX azonosító) + opcionális eGFR/kreatinin, ALT/AST/bilirubin.
-- [ ] **P0** Given nincs sem FHIR, sem kézi klinikai adat, When riport, Then a fenokonverzió- és szervfunkciós kimenet explicit „nem értékelhető — hiányzó klinikai adat”, nem hallgatólagos kihagyás. A riport `clinical_context = ABSENT`.
-- [ ] **P1** FHIR R4 `Observation` (eGFR/kreatinin, ALT/AST/bilirubin, albumin), `MedicationRequest` / `MedicationStatement`.
-- [ ] **P1** Given FHIR-forrás nem elérhető, When feldolgozás, Then fallback kézi bevitelre; a riport jelzi `clinical_context = MANUAL`.
+- [ ] **P0 F1s/F2** Kézi vagy FHIR gyógyszerlista (ATC / OGYÉI) + opcionális eGFR, ALT/AST/bilirubin.
+- [ ] **P0 F1+** A Report `medications_applied_to_recommendations: false`.
+- [ ] **P0 F1s** Given nincs gyógyszerlista a shadowban, Then `clinical_context = ABSENT` a HITL kártyán, nem hallgatólagos NM.
+- [ ] **P1** FHIR R4 `Observation` / `MedicationRequest` a gatewayen (E.3).
+- [ ] Given F1+ riport és a case-hez van gyógyszerlista, When PDF/JSON készül, Then **nincs** `functional_phenotype` és nincs ATC-szűrt riasztás (FR-470).
 
 #### FR-230 · HL7 v2 LRI — **P1**
 
@@ -343,38 +359,86 @@ A v1 default gene set = PREPARE 12, `config_id = pgx-prepare-12@<version>`. HLA-
 
 ### 6.5 L4 / L5 — Knowledge, Rules, PRS
 
-> L4/L5 **MDSW IIa**, ha a kimenet terápiás/diagnosztikai döntéshez ad információt (Rule 11a). Az F1 intended purpose (A melléklet) ezt szűkíti: passzív, aláíró orvos, nincs order-sign, nincs dózisszám. **OQ-05** dönti el, védhető-e. Ha nem, F1 = F3.
+> L4 **két üzemmód**. L4-static = F1+ klinikai kimenet. L4-live = F1s shadow vagy F2/F3. Keverésük a klinikai UI-n = NG-07.
 
-#### FR-400 · Szabálymotor — **Product P0 (passzív)** / **P1 (aktív CDSS)**
+#### FR-400-STATIC · Gén → verziózott guideline-szöveg — **Product P0 (F1+)**
 
-- [ ] **P0** CPIC, ClinPGx-annotált DPWG és ClinPGx-annotált FDA-címke ajánlások kiértékelése diplotípus alapján; kimenet a riportban, nem a felírási workflow-ban.
-- [ ] Given azonos gén–gyógyszer párra eltérő CPIC és DPWG, When kiértékelés, Then **mindkettő** forrásmegjelöléssel; a rendszer **nem** szintetizál harmadik ajánlást.
-- [ ] Minden kimeneti állítás mellett: forrás, guideline-verzió, evidencia-szint, mély link.
-- [ ] Negatív teszt: `assert unsourced_claims == 0` CI-ben.
-- [ ] **P1** Ugyanez a motor CDS Hooks Card-ként (FR-520).
+- [ ] CPIC, ClinPGx-annotált DPWG és FDA-címke **szövegkivonat** a meghívott **génhez**, diplotípus/fenotípus-kategória szerint, ahogy a publikált táblázatban szerepel.
+- [ ] A társítás **nem** a HIS-ben éppen felírt gyógyszerhez kötött riasztás.
+- [ ] Given azonos génre eltérő CPIC és DPWG, When riport, Then **mindkettő** forrásmegjelöléssel; nincs szintetizált harmadik ajánlás.
+- [ ] Minden kivonat: forrás, verzió, evidencia-szint, URL.
+- [ ] `assert unsourced_claims == 0`.
+- [ ] Nincs `dose_mg`, nincs „csökkentsd 50%-kal ennél a betegnél”.
 
-#### FR-410 · Fenokonverzió-modul — **Product P0** *(differenciátor)*
+#### FR-400-LIVE · Beteg–gyógyszer párosítás — **P0 shadow / P0 F2** ; **tilos F1+ leleten**
 
-- [ ] A beteg aktuális gyógyszerlistája alapján a rendszer detektálja a CYP-inhibitor/induktor együttadást, és jelzi a genotípus-alapútól eltérő **funkcionális** fenotípust.
-- [ ] Given CYP2D6 NM genotípus + erős CYP2D6-inhibitor (paroxetin, fluoxetin) egyidejű szedése, When kiértékelés, Then `genotype_phenotype = NM`, `functional_phenotype = PM` vagy `IM` (a szabálybázis szerint), a különbség explicit.
-- [ ] A fenokonverzió **soha nem írja felül** a genotípus-fenotípust.
-- [ ] Given eGFR < 30 vagy dokumentáltan emelkedett bilirubin, When kiértékelés, Then jelzés: PGx mellett szervfunkciós módosítás is indokolt **lehet** — nem dózisszám.
-- [ ] A kimenet **minősítés, nem dózisszám**. Konkrét mg-ajánlás v1-ben tilos.
-- [ ] A fenokonverzió-szabálybázis verziózott, mint FR-310.
+- [ ] Diplotípus + aktuális `MedicationEntry` → actionable finding lista.
+- [ ] F1s: csak HITL store (FR-440). F2: CDS Card (FR-520).
+- [ ] Negatív teszt F1+ build: a report-renderer nem hívja FR-400-LIVE-ot.
 
-#### FR-420 · Alert-relevancia szűrés — **Product P0**
+#### FR-410-EDU · Fenokonverzió oktató szöveg — **Product P0 (F1+)**
 
-F1-ben „riasztás” = a riport első oldalának kiemelése, nem interruptive EHR-alert.
+- [ ] A lelet tartalmazhat **általános**, verziózott bekezdést: mely inhibitor/induktor osztályok *a szakirodalom/guideline szerint* módosíthatják a funkcionális fenotípust.
+- [ ] A bekezdés **nem** állítja, hogy *ez a beteg* jelenleg fenokonvertált, és **nem** olvassa a `MedicationEntry` listát.
 
-- [ ] Csak actionable gén–gyógyszer pár kerül a kiemelésbe; a nem-actionable a függelékbe.
-- [ ] Kategóriák: `CRITICAL` (alternatíva a forrás szerint), `WARNING` (monitorozás), `INFO` (nincs teendő).
-- [ ] Given 40 gén–gyógyszer pár, When riport, Then a `CRITICAL` + `WARNING` a első oldalon, részletek mögötte.
+#### FR-410-LIVE · Fenokonverzió-alkalmazás — **Product P0 (F1s/F2)** ; **tilos F1+ leleten**
+
+A tudományos differenciátor. G3 a shadow gold seten.
+
+- [ ] Aktuális gyógyszerlista → `functional_phenotype` a `genotype_phenotype` **mellett**, soha nem fölötte.
+- [ ] Given CYP2D6 NM + erős CYP2D6-inhibitor (paroxetin, fluoxetin), When shadow/F2, Then `genotype_phenotype = NM`, `functional_phenotype = PM` vagy `IM` a tábla szerint.
+- [ ] Nincs `dose_mg` a v1 shadowban (stratégia-kategória megengedett: pl. `CONSIDER_ALTERNATIVE`).
+- [ ] Given hiányzó gyógyszerlista a shadowban, Then `clinical_context = ABSENT`, nem hallgatólagos NM.
+- [ ] Szervfunkció (eGFR < 30 stb.): `reason: organ` flag, nem számított dózis.
+
+#### FR-420 · Kiemelés — **Product P0 F1+-ban guideline-struktúra** / **F2-n alert**
+
+- [ ] **F1+:** a lelet génenként / guideline-táblázat szerint tagolt; `CRITICAL` **nem** jelenti „most cseréld a felírt szert”.
+- [ ] **F2:** csak actionable pár a interruptive cardon; nem-actionable függelék.
+- [ ] Given 40 gén–gyógyszer pár az F2 motorban, When Card, Then a `CRITICAL`+`WARNING` a card címe, részlet a linkben.
 
 #### FR-430 · PRS interfész — **P2** (nem épül)
 
 - [ ] Interfész definiált: `POST /prs/score` → `{score, percentile, absolute_risk, ancestry_calibration, provider, model_version}` — stub, nincs implementáció.
 - [ ] Beszállítói minimum: ISO 13485, dokumentált ancestry-kalibráció, eMERGE-típusú klinikai pipeline.
 - [ ] Indoklás: Kullo et al., Nat Rev Genet 2026;27:246–263 `[V]`; portabilitási / túlbecslési irodalom. Magyar referencia-genom hiányában saját modell nem kalibrálható.
+
+#### FR-440 · Shadow CDSS futtatás — **Product P0 (F1s)**
+
+- [ ] HIS/LIS esemény (lelet aláírás vagy recept lezárás) → aszinkron feldolgozás; a HIS **nem** vár a válaszra.
+- [ ] A motor FR-400-LIVE + FR-410-LIVE kimenete csak a HITL store-ba íródik.
+- [ ] A kimenet tartalmazza a `config_id` / guideline-verziókat (reprodukálhatóság).
+
+#### FR-450 · HITL review UI — **Product P0 (F1s)**
+
+- [ ] Szerep `hitl_reviewer` elválasztva a felíró `clinician` tenancytől (E.4).
+- [ ] Kártya: diplotípus, gyógyszerlista, motor-kimenet, guideline-verzió; válasz `AGREE` / `DISAGREE` / `INSUFFICIENT_DATA` + indok.
+- [ ] Nem a vizit alatt; batch vagy bizottság.
+
+#### FR-460 · Intézményi anonimizáló gateway — **Compliance P0 (F1s)**
+
+- [ ] A gateway a kórház/labor zónájában fut; a PCE felhő **nem** kap TAJ/nevet (E.3).
+- [ ] Anonim út: nincs re-ID kulcs a gyártónál. Álnevesített út: kulcs csak az adatkezelőnél + FR-115.
+
+#### FR-470 · Csatorna-izoláció — **Compliance P0**
+
+G6. E.8 invariánsok.
+
+- [ ] F1+ Report/PDF/FHIR nem tartalmaz shadow mezőt.
+- [ ] `clinician` klinikai API-n `/shadow/**` és `/hitl/**` → 403/404.
+- [ ] `LIVE_CDS` compile-time false az F1+ buildben.
+- [ ] CI call-graph: report-renderer nem olvassa a shadow kimeneti táblát.
+
+#### FR-480 · Enciklopédia-nézet — **P1**
+
+- [ ] Az orvos génre / hatóanyagra keres; a rendszer verziózott CPIC/DPWG/FDA szöveget listáz.
+- [ ] Given a HIS-ben nyitott `MedicationRequest`, When enciklopédia, Then **nincs** automatikus „ehhez a recepthez ez a riasztás” Card (az F2).
+- [ ] A keresés naplózott, de nem döntéstámogató kimenet.
+
+#### FR-490 · Intended purpose + nyilatkozat a leleten — **Compliance P0**
+
+- [ ] Minden F1+ PDF/FHIR tartalmazza az A.1 mondatot és az A.1.1 sablont (counsel-véglegesítve).
+- [ ] A nyilatkozat **nem** kapcsolja ki FR-100-at és **nem** minősít ki MDSW-ből.
 
 ---
 
@@ -384,7 +448,7 @@ F1-ben „riasztás” = a riport első oldalának kiemelése, nem interruptive 
 
 - [ ] Kimenet: PDF (aláírásra kész), FHIR Bundle (Genomics Reporting IG), strukturált JSON.
 - [ ] FHIR: IG **v3.0.0 STU3**, FHIR R4; mapping-réteg STU4-re (`GenomicStudy`, új operations) — szállít STU3-on.
-- [ ] PDF minden oldalán: guideline-verziók, pipeline-verzió, callability-összefoglaló, aláíró orvos helye, intended purpose egy mondatban (F1 vs F2).
+- [ ] PDF minden oldalán: guideline-verziók, pipeline-verzió, callability-összefoglaló, aláíró orvos helye, **F1+ intended purpose** (A.1) + FR-490 nyilatkozat. F2 buildben a mondat az A.3 CDSS rendeltetés.
 - [ ] Given white-label partner, When riport, Then partner arculata és aláírója; PCE a kolofonban mint technológiai szállító.
 
 #### FR-510 · Riport-újragenerálás guideline-frissítéskor — **P1**
@@ -392,16 +456,18 @@ F1-ben „riasztás” = a riport első oldalának kiemelése, nem interruptive 
 - [ ] Given új CPIC/DPWG verzió, When admin újraértékelést indít, Then a rendszer listázza azokat az eseteket, ahol az ajánlás **megváltozott**, riportonkénti deltával.
 - [ ] Az eredeti riport immutábilis; új verzió jön létre.
 
-#### FR-520 · CDS Hooks — **P1** (F2-ben Product P0)
+#### FR-520 · CDS Hooks — **tilos F1+**; **Product P0 F2/F3**
 
-- [ ] `order-select` és `order-sign`; válasz `Card`, `suggestion` az alternatívára, `link` az evidenciára.
-- [ ] Given a szolgáltatás > 2 s alatt nem válaszol, Then a felírás **nem blokkolódik** (fail-open). Klinikai biztonság, nem perf-preferencia.
-- [ ] Given nincs PGx-adat, When hook, Then explicit „nincs elérhető PGx-eredmény” card, nem üres válasz.
+- [ ] F1+ buildben a CDS endpoint nincs kitéve (FR-470).
+- [ ] F2: `order-select` / `order-sign`; `Card` + `suggestion` + evidencia-`link`.
+- [ ] Given a szolgáltatás > 2 s, Then a felírás **nem blokkolódik** (fail-open).
+- [ ] Given nincs PGx-adat F2-n, When hook, Then explicit „nincs elérhető PGx-eredmény” card.
 
-#### FR-530 · SMART on FHIR — **P1**
+#### FR-530 · SMART on FHIR — **P1 F2**; F1+-ban csak enciklopédia (FR-480)
 
-- [ ] EHR-launch context (`patient`, `encounter`, `user`); a nézet a felírási workflow-ba illeszkedik, nem önálló portál.
-- [ ] A v1 webes labor-UI **átmeneti**, nem végállapot.
+- [ ] F2: EHR-launch a felírási workflow-ban, interruptive CDSS a A.3 szerint.
+- [ ] F1+: ha van SMART, az **csak** FR-480 (kereső), nem a nyitott recepthez párosított riasztás.
+- [ ] A v1 labor-UI átmeneti.
 
 #### FR-540 · Beteg-példány riport — **P1**
 
@@ -414,7 +480,7 @@ F1-ben „riasztás” = a riport első oldalának kiemelése, nem interruptive 
 
 #### FR-600 · Alert-fatigue és override telemetria — **P1**
 
-F1-ben a „riasztás” riport-kiemelés; az override F2-n értelmes. P1, hogy a séma meglegyen a PMS/PMCF-hez.
+F1+-ban nincs interruptive riasztás. Az override F2-n és a HITL `DISAGREE` F1s-en értelmes. P1 a séma.
 
 - [ ] Minden kiemelés/riasztás megjelenítése, elfogadása, elutasítása naplózott; elutasítás kötelező indoklás-kategóriával.
 - [ ] Override-ráta gén–gyógyszer szinten aggregálható; > 80% automatikus review-lista.
@@ -467,7 +533,7 @@ Jogalap: **6. § (6)** `[V]`.
 
 | ID | Követelmény | Pri | Határidő |
 | --- | --- | --- | --- |
-| **REG-010** | Intended purpose írásban, modulonként, MDCG 2019-11 Rev.1 szerint. Két változat: F1 vs F2/F3 — [A melléklet](A-intended-purpose-and-modules.md). Az F1 nem-MDSW **indoklás**, nem tény, amíg OQ-05. | Compliance P0 | v1 előtt |
+| **REG-010** | Intended purpose írásban, modulonként, MDCG 2019-11 Rev.1 szerint. Három üzemmód: F1+ / F1s / F2–F3 — [A melléklet](A-intended-purpose-and-modules.md). Az F1+ nem-MDSW **indoklás**, nem tény, amíg OQ-05. | Compliance P0 | v1 előtt |
 | **REG-011** | F2 in-house: intézményen belül, kizárólag ott; NB nincs a megfelelőségértékelésben; feltételek dokumentálva | Compliance P0 | F2 indulás |
 | **REG-020** | Írásos határvonal a partnerlaborral: diplotípus/fenotípus-hívás a labor aláíró orvosáé | Compliance P0 | Első partner előtt |
 | **REG-021** | Írásos határvonal a medikai szállítóval: ki a gyártó, ki a distributor | Compliance P0 | Első integráció előtt |
@@ -480,6 +546,8 @@ Jogalap: **6. § (6)** `[V]`.
 | **REG-061** | AI literacy Art. 4 — 2025-02-02 óta | Compliance P0 | Azonnal |
 | **REG-070** | ISO/IEC 27001 (opcionálisan 42001) — enterprise / biztonság, **nem** EESZT 9/C. § `[CORRECTED]` | P1 | enterprise előtt |
 | **REG-080** | SPDX SBOM; PharmCAT MPL 2.0 + hívott programok licencei külön | Compliance P0 | v1 előtt |
+| **REG-090** | F1s shadow: clinical evaluation vs clinical investigation (MDR Art. 62) eldöntve **az első élő HIS-csatlakozás előtt**; protokoll + etikai út, ha vizsgálat | Compliance P0 | F1s előtt |
+| **REG-091** | DPA: intézmény = adatkezelő, gyártó = feldolgozó a shadowra (hacsak counsel mást nem mond); DPIA kiterjesztve a shadowra | Compliance P0 | F1s előtt |
 
 ---
 
@@ -530,8 +598,10 @@ A 12 vs 14 eltérés **nem** nyitott kérdés: lásd FR-310.
 | **OQ-02** | PREPARE 12 vs PGx-Passport 14 | Klinikai | **LEZÁRVA** (FR-310, VC-02) |
 | **OQ-03** | Melyik partnerlabor vállalja az L3 aláírói felelősséget, milyen áron? | Üzletfejlesztés | Nyitott |
 | **OQ-04** | Magyar Genom Program / BBMRI HU csomópont: partner vagy versenytárs? | Ügyvezetés | Nyitott; hungen.hu nem datált |
-| **OQ-05** | Védhető-e a „nem-MDSW riport-előállító” pozíció MDCG 2019-11 Rev.1 alatt, ha a kimenet gyógyszerajánlás-*szöveget* tartalmaz, és az aláíró a labor orvosa? **Legnagyobb egyetlen kockázat.** | **Külső jogi tanácsadó** | Nyitott. Ez a dokumentum **nem** állásfoglalás. Tényalap: A melléklet. |
+| **OQ-05** | Védhető-e az **A.1 F1+** (gén-szintű, verziózott guideline-kivonat, nincs aktuális-gyógyszer párosítás, nincs élő fenokonverzió, nincs CDS) nem-MDSW-ként? Szűkített a v1.1-hez képest. | **Külső counsel** | Nyitott |
 | **OQ-06** | ISO 13485 tanúsító és Notified Body; HU/EU NB átfutás | RA | Nyitott |
+| **OQ-15** | A shadow L4-live futtatása valós ellátási eseményen klinikai vizsgálat-e (Art. 62), vagy evaluation-adatgyűjtés? | RA + intézmény kutatási igazgatóság | Nyitott; REG-090 |
+| **OQ-16** | Anonim shadow: a diplotípus + ATC kombináció re-ID kockázata a DPIA szerint elfogadható-e, vagy kötelező az álnevesített út? | DPO | Nyitott; A13 |
 
 ### Nem-blokkoló
 
@@ -543,7 +613,7 @@ A 12 vs 14 eltérés **nem** nyitott kérdés: lásd FR-310.
 | **OQ-13** | FR-540 beteg-riport 6. § (4) tanácsadásnak minősül-e? | Jogi |
 | **OQ-14** | Magyar klinikai ajánlás-fordítás szakmai lektora | Klinikai szakértő |
 
-**Döntés, nem kérdés:** a v1 **nem** tartalmaz aktív, felírás-pillanatú riasztást. Ha mégis, az MDSW, és a §11 F1 oszlop érvénytelen.
+**Döntés, nem kérdés:** a v1 klinikai kimenet **nem** tartalmaz aktív, felírás-pillanatú riasztást, élő fenokonverzió-alkalmazást, és **nem** mutatja a shadowot a kezelőorvosnak. Ha mégis, az F2/MDSW, és az F1+ oszlop érvénytelen (NG-07/08).
 
 ---
 
@@ -564,13 +634,14 @@ A 12 vs 14 eltérés **nem** nyitott kérdés: lásd FR-310.
 
 | Fázis | Idő | Tartalom | Kimenet | MDR |
 | --- | --- | --- | --- | --- |
-| **F0** | 0–3 hó | C melléklet checklist; OQ-05 counsel; partnerlabor LOI; gold set v0 (60 szintetikus) | Jogi tisztánlátás + 1 LOI | — |
-| **F1** | 3–9 hó | L0–L2 + FR-240 + passzív L4 riport + FR-410. FR-300 matcher **ki**, hacsak OQ-05 engedi. | Fizető labor-partner | Nem MDSW **csak ha** OQ-05 igen |
-| **F2** | 6–18 hó | In-house aktív CDSS (FR-520/530); ISO 13485 + 62304 + 14971 | Case study + referenciák | In-house (REG-011) |
-| **F3** | 18–36 hó | IIa CE L4-re; AI Act a technikai fájlban | CE-jelölt CDSS | **IIa** |
-| **F4** | 36+ hó | L5 partner; EESZT-modul; EHDS-készültség | Enterprise platform | IIa |
+| **F0** | 0–3 hó | C checklist; OQ-05 counsel az **A.1 szűkített** szövegre; OQ-15; partnerlabor LOI; gold set v0 | Jogi tisztánlátás + 1 LOI | — |
+| **F1+** | 3–9 hó | L0–L2 + FR-240 + FR-400-STATIC + FR-410-EDU + FR-490. Matcher **ki**. FR-410-LIVE **ki a leletről**. | Fizető labor, white-label lelet | Nem MDSW **csak ha** OQ-05 igen |
+| **F1s** | F1+-szal párhuzamosan | Gateway (FR-460), shadow (FR-440), HITL (FR-450), izoláció (FR-470); REG-090/091 | G3 metrika, clinical evaluation input | Nem klinikai kimenet; OQ-15 |
+| **F2** | 6–18 hó | In-house élő CDSS (FR-520/530, FR-410-LIVE a klinikai UI-n); ISO 13485 + 62304 + 14971 | Case study | In-house (REG-011) |
+| **F3** | 18–36 hó | IIa CE; `LIVE_CDS` kapcsoló a már kiépített csövön | CE-jelölt CDSS | **IIa** |
+| **F4** | 36+ hó | L5 partner; EESZT-modul; EHDS | Enterprise | IIa |
 
-**Kritikus út:** OQ-05 → F1 hatókör. Ha a gyógyszerajánlás-szöveget tartalmazó riport is MDSW, F1 összeomlik F3-ba.
+**Kritikus út:** OQ-05 → F1+ hatókör. OQ-15 → F1s elindítható-e. A „kapcsoló átbillentése” F3-on **csak** CE/in-house után (FR-470).
 
 ### Kompetencia (SFIA)
 
@@ -591,10 +662,11 @@ A brief árazási modellje **követelmény-kötés**, nem megfigyelt ár:
 
 | Sáv | Modell | Spec-kötés |
 | --- | --- | --- |
-| Labor white-label (L0–L3 + passzív L4) | Fix havidíj + volumensáv | F1; nem per-patient (a preemptív tesztelést büntetné) |
-| Klinikai CDSS (L4 aktív) | Per-clinician/hó | F2/F3; FR-520 |
-| PRS (L5) | Per-report, partner-átárazás | FR-430; nem saját motor |
-| Enterprise / EHR-vendor | Éves platform + integrációs egyszeri | P6; REG-021 |
+| Labor white-label (F1+) | Fix havidíj + volumensáv | FR-400-STATIC; nem per-patient |
+| Shadow/HITL (F1s) | A labor/intézmény kutatási megállapodása; nem a felíró licenc | FR-440–450 |
+| Klinikai CDSS (L4-live) | Per-clinician/hó | **Csak F2/F3**; FR-520 |
+| PRS (L5) | Per-report, partner-átárazás | FR-430 |
+| Enterprise / EHR-vendor | Éves platform + integrációs egyszeri | P6; a F3 kapcsoló ugyanazon a csövön |
 
 ---
 
@@ -611,8 +683,9 @@ Váz:
 | FR-120 | 26. § (1) | TC-AUDIT-001..006 | GSPR 17.2 |
 | FR-210 | Klinikai kockázat + PharmCAT preprocessor | TC-CALL-001..012 | ISO 14971 RC-003 |
 | FR-310 | PREPARE; PGx-Passport; PharmCAT 2.11.0 | TC-CONF-001..005 | IEC 62304 §6 |
-| FR-400 | CPIC / DPWG / FDA | TC-RULE-001..040 | GSPR 17.1 |
-| FR-410 | Fenokonverzió-irodalom (I-02) | TC-PHENO-001..015 | Clinical evaluation |
+| FR-400-STATIC | CPIC / DPWG / FDA | TC-RULE-001..040 | GSPR 17.1; OQ-05 |
+| FR-410-LIVE | Fenokonverzió-irodalom | TC-PHENO-001..015 | Clinical eval; **nem** F1+ lelet |
+| FR-470 | A.0 / NG-07 | TC-ISO-001..008 | Rule 11a kikerülés tilalma |
 | FR-700 | MDCG 2025-6; AI Act 6(1) | TC-LLM-NEG-001..003 | AI Act Art. 9, 15 |
 | FR-710 | 6. § (6) | TC-EXPLAIN-001..004 | AI Act Art. 13; GSPR 23 |
 
@@ -664,12 +737,12 @@ A teljes registry: [SOURCE-REGISTRY](ProcessArtifacts/SOURCE-REGISTRY.md). Korre
 
 ## 15. Amit ez a spec nem tud
 
-- **Nem** OQ-05 jogi vélemény. A teljes F1 fázis ezen áll vagy dől.
-- **Nem** ellenőrizte a 2026-os ACC/AHA irányelv szövegét (Allelica PR, `[C]`, ki van hagyva).
-- **Nem** ismételte a Genetix ár-scrape-et (VC-10).
-- **Nem** talált (és nem is keresett OPTEN-ben) magyar/CEE PGx-CDSS versenytársat — ez üzleti dosszié, nem SRS.
-- **Nem** állít TAM-ot. A szekunder piackutatók 5,7× szórása szándékosan nincs a dokumentumban.
+- **Nem** OQ-05 jogi vélemény. Az F1+ (még a szűkített statikus társítás is) ezen áll vagy dől.
+- **Nem** OQ-15 döntés (shadow = klinikai vizsgálat-e).
+- **Nem** DPA, DPIA vagy etikai kérelem — E melléklet váz.
+- A felhasználói hibrid-brief [1]–[7] hivatkozásai (meddeviceguide, monterail, arxiv 2603.14876, stb.) **L4/L5**; a Rule 11a állítás a MDCG/MDR primerre támaszkodik `[V]`, nem ezekre a blogokra.
+- **Nem** FDA CDS guidance mélyelemzés; csak annyi: az MDR-ben nincs equivalent enforcement discretion.
 
 ---
 
-*PCE-SPEC-v1.1. A v1.0 váz korrekciói: VC-01–VC-06. OQ-02 lezárva. Következő: OQ-05 külső counsel; C melléklet F0 végrehajtás.*
+*PCE-SPEC-v1.2. v1.1-hez képest: NG-07/08, F1+/F1s/F2 lépcső, élő fenokonverzió le a leletről. OQ-02 lezárva. Következő: OQ-05 + OQ-15 counsel.*

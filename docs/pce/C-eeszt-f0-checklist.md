@@ -2,7 +2,7 @@
 
 | | |
 | --- | --- |
-| **Dokumentum** | PCE-SPEC-v1.1 Appendix C |
+| **Dokumentum** | PCE-SPEC-v1.2 Appendix C |
 | **Dátum** | 2026-08-12 |
 | **Jogalap** | 29/2022. (I. 31.) Korm. rendelet 5/F. §, 5/G. §, 9/C. §, **4. melléklet**; 294/2025. (IX. 25.) Korm. rendelet |
 | **Portál** | https://e-egeszsegugy.gov.hu/fejlesztoknek `[V]` |
@@ -91,7 +91,8 @@ F1-ben **nem** töltendő. Itt van, hogy F4-en ne kelljen keresni.
 | 2 | C-101–C-109 bizonyíték mappa | Pénzügy / jog | 4. mell. 1. pont |
 | 3 | ISO 9001 (vagy elfogadott szoftver-QMS) gap + tanúsító | RA | C-201, 2026-09-30 |
 | 4 | Döntés: saját EESZT-engedély vs vendor-modul (A8) | Ügyvezetés | REG-040b igen/nem |
-| 5 | OQ-05 counsel (párhuzamos, A melléklet csomag) | Külső jog | F1 MDSW igen/nem |
+| 5 | OQ-05 counsel (párhuzamos, A.1 szűkített szöveg) | Külső jog | F1+ MDSW igen/nem |
+| 6 | OQ-15: shadow = Art. 62 vizsgálat-e (ha F1s a F0-ban indul) | RA + intézmény | REG-090 döntés |
 
 A 2026-09-30 **kb. 7 hét** 2026-08-12-től. ISO 9001 nulláról ebben az ablakban szűk — ha nincs tanúsítvány, ez az F0 egyetlen kritikus útja, nem a kód.
 

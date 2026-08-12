@@ -1,4 +1,4 @@
-# VALIDATED-CLAIMS — PCE-SPEC-v1.1
+# VALIDATED-CLAIMS — PCE-SPEC-v1.2
 
 Minden CORRECTED / REFUTED tétel a deliverable-ben javítva. Soha nem hallgatjuk el.
 
@@ -17,4 +17,8 @@ Minden CORRECTED / REFUTED tétel a deliverable-ben javítva. Soha nem hallgatju
 
 ## REFUTED
 
-Nincs. A Class I túlállítás (VC-04) **CORRECTED**, nem teljes cáfolat: a PGx-CDSS IIa következtetés megmarad.
+| ID | Eredeti állítás | Típus | Státusz | Korrekció | Forrás | Deliverable |
+| --- | --- | --- | --- | --- | --- | --- |
+| **VC-11** | Az F2/F3 kimenet (betegre szabott, felírás-pillanatú javaslat) szállítható F1 köntösben, mert „a végső gombot az orvos nyomja meg” / disclaimer / későbbi HITL-minősítés („regulatory bypass”) | Legal/regulatory | **REFUTED** az EU MDR alatt mint kimenekülési stratégia | Rule 11a: információ diagnosztikai vagy **terápiás** döntéshez → IIa (felminősítés kivételével). Az orvos gombja nem minősít ki. Az MDR-ben nincs FDA-típusú CDS enforcement discretion. A disclaimer nem változtatja meg a rendeltetést. Élő F2-kimenet CE nélkül = forgalomba hozatal, ha MDSW. A HITL csak akkor nem CDSS-használat, ha a kezelőorvos **nem látja** (shadow). | S004, S005, S020 `[V]`; I-10 elemzés egyetért, a blog-URL-ek L4/L5 | A.0; NG-07/08; FR-470; R-015; PCE-SPEC §3, §4.1, §15 |
+
+A Class I túlállítás (VC-04) **CORRECTED**, nem teljes cáfolat: a PGx-CDSS IIa következtetés megmarad. VC-11 a **bypass-stratégiát** cáfolja, nem a F1+ statikus társítás OQ-05 kérdését — az továbbra is nyitott.
