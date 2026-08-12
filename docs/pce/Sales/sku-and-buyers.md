@@ -1,95 +1,91 @@
-# SKU és vevők — mit lehet eladni v1-ben
+# SKU — PCE rendszer (egy termék, piaci flag)
 
 | | |
 | --- | --- |
 | **Iktató** | PCE-SALES-SKU / v1.2 |
-| **Státusz** | Belső sales-térkép; a one-pagerek ebből készültek |
-| **Hipotézis** | OQ-05 IGEN feltétellel; OQ-03 legalább egy labor |
+| **Termék** | Precision Clinical Engine — **rendszerlicenc** |
+| **Nem termék** | Laboratóriumi PGx-vizsgálat, B2C lelet, „PDF-bolt” |
 
-A P2 klinikus **felírás-pillanatú riasztást** akar. Az a termék F2, Rule 11a, CE vagy in-house. **Ma nem eladható** anélkül, hogy a vevő (vagy a hatóság) MDSW-gyártónak nézne. A v1 eladható termék a **lelet-infrastruktúra**.
+A vevő (klinika, kórház, ellátóhálózat, HIS-vendor) a **PCE-t** veszi. F1+, F1s, F2, F3 **ugyanaz a szoftver**. A piac (HU / EU / US) és a minősítés azt dönti el, melyik modul **élő** a felírónak.
 
 ```
-[ Klinika rendel PGx-vizsgálatot ]
-        │  SKU-C: a klinika a LABORT fizeti
-        ▼
-[ Partnerlabor hívja a diplotípust + aláír ]
-        │  SKU-L: a labor a PCE-t fizeti
-        ▼
-[ PCE F1+ white-label PDF/FHIR ]
-        │
-        ├─► PDF a klinikusnak / betegnek
-        └─► HIS-modul (SKU-H), ha a vendor beépíti
+                    PCE rendszer (egy bináris / egy tenancy)
+        ┌──────────────┬──────────────┬──────────────┬──────────────┐
+        │  F1+         │  F1s         │  F2          │  F3          │
+        │  lelet       │  shadow      │  élő CDSS    │  CE/FDA CDSS │
+        │  L4-static   │  L4-live     │  in-house    │  forgalom    │
+        └──────┬───────┴──────┬───────┴──────┬───────┴──────┬───────┘
+               │              │              │              │
+         market pack     market pack    LOCK amíg     LOCK amíg
+         HU/EU/US        OQ-15/16       in-house/CE   CE / 510(k)
 ```
 
+Labor / LIS / VCF = **bemenet**. REG-020 = csatlakozási szerződés, nem a SKU neve.
+
 ---
 
-## SKU-L — Labor white-label (v1 bevételi mag)
+## SKU-P — Platform (ez az, amit eladsz)
 
 | | |
 | --- | --- |
-| **Vevő** | Engedélyezett genetikai / molekuláris labor (2008/XXI. 12. § (1)) |
-| **Mit kap** | Outside-call → aláírásra kész PDF + FHIR; saját arculat; verziózott CPIC/DPWG/FDA gén-tábla; callability; FR-100 kapu |
-| **Ár modell** | Havidíj + volumensáv (spec §11). Placeholder: `[Y1]` / `[Y2]` |
-| **Szerződés** | [OQ-03 term sheet](../Outbound/OQ-03-l3-term-sheet.md) → REG-020 |
-| **MDR** | Hipotézis: nem MDSW (OQ-05). Feltétel a licencben. |
-| **Nélküle** | Nincs aláíró, nincs klinikai lelet, SKU-C halott |
+| **Vevő** | Klinika, magánellátó, kórház, ellátóhálózat |
+| **Mit kap** | PCE rendszer: adatmodell, consent-kapu, ingest, knowledge, lelet, shadow-cső, CDSS-cső, audit. HIS/LIS csatlakozás. Piaci csomag (HU/EU/US). |
+| **Ár modell** | Éves platform + telephely / klinikus sáv. F2/F3 *aktiválás* külön sor, ha a flag feloldódik — nem új termék. Placeholder: `[Yp]` / `[Yc]` |
+| **Bemenet** | A vevő laborja (outside-call/VCF) vagy a vevő által kijelölt partnerlabor. A gyártó **nem** számláz vizsgálatot. |
+| **MDR / FDA** | A *bekapcsolt* modul intended purpose-e. Kikapcsolt F2 nem „titkos CDSS”. |
 
-Ez G1-et adja el: p95 &lt; 10 perc a kézi CPIC-másolás helyett.
+Ez G5: a v2 (élő CDSS) **nem** újraírt szoftver. Kapcsoló + dosszié.
 
 ---
 
-## SKU-C — Klinika / magánellátó (lelet, nem szoftver)
+## SKU-H — HIS-vendor (csatorna, ugyanaz a rendszer)
+
+A medikai szállító a PCE-t **beágyazza**. REG-021: ki a gyártó. A vendor nem lesz MDSW-gyártó attól, hogy F1+ dokumentumot megjelenít. F2 feloldás után a gyártó marad a CDSS gyártója, ha a szerződés így szól.
+
+Ár: éves platform + integráció `[Yh]` / `[Yi]`.
+
+---
+
+## Labor-csatlakozó (nem SKU)
 
 | | |
 | --- | --- |
-| **Vevő** | Magánklinika, szakrendelő, kórházi osztály — **PGx-vizsgálatot rendel** |
-| **Mit kap** | Aláírt farmakogenetikai lelet a partnerlaboron keresztül; a lelet a dokumentációban / HIS-ben; oktató guideline-szöveg a génhez; **nincs** felugró ablak a felíráskor |
-| **Kitől számláz** | Alapeset: a **labor** számláz a klinikának (vizsgálat + lelet). A gyártó a labort számlázza (SKU-L). Kivétel: a gyártó a klinika HIS-vendorán át SKU-H-t ad — akkor sem CDSS-licenc. |
-| **Ár modell** | A labor saját PGx-árazása (a piacon `[R]` 499 000 Ft lista egy versenytársnál — **nem** a PCE ára). A PCE nem B2C. |
-| **MDR** | A klinika **nem** MDSW-üzemeltető F1+-on. A lelet laboratóriumi jelentés. |
-| **Tilos a pitchben** | „Csökkenti a dózist”; „megakadályozza a mellékhatást a szoftver”; „ugyanaz, mint a YouScript / CDSS, csak olcsóbb” |
+| **Ki** | A vevő laborja vagy kijelölt partner |
+| **Mit csinál** | Diplotípust hív, callability, ahol kell: aláír a saját QMS-e szerint |
+| **Szerződés** | REG-020 / [lab-one-pager](lab-one-pager.md) — integráció |
+| **Pénz** | A labor a *vizsgálatot* a klinikának számlázhatja (az ő üzlete). A PCE-t a **klinika** fizeti a gyártónak. |
 
-A klinika **azért** veszi meg, mert:
-
-1. A lelet **gyorsabb** és **nyomon követhető** (guideline-verzió).
-2. Az aláíró labororvos a saját szakorvosa / partnere — felelősség tiszta.
-3. Ugyanaz a cső később F2-re kapcsolható (G5), **amikor** CE / in-house megvan — ez roadmap, nem v1 feature.
+NG-01: a PCE nem hív allélt FASTQ-ból. Ez nem teszi a labort a szoftver vevőjévé.
 
 ---
 
-## SKU-H — HIS / medikai vendor
+## Modulok — mi van a dobozban vs mi él
 
-| | |
-| --- | --- |
-| **Vevő** | Engedélyezett medikai rendszer szállítója (P6) |
-| **Mit kap** | F1+ modul: lelet megjelenítés + opcionális enciklopédia (FR-480). Írásos határ: ki a gyártó (REG-021). Nincs EESZT írás (NG-05). |
-| **Ár modell** | Éves platform + integrációs egyszeri |
-| **MDR** | A vendor **nem** akar MDSW-gyártó lenni — ezért F1+ statikus lelet, nem CDS Hooks. |
-| **F2** | Ugyanaz a cső; a kapcsoló a gyártóé, CE után. |
+| Modul | A rendszerben | Élő a felírónak | Feloldás |
+| --- | --- | --- | --- |
+| **F1+** | Igen | Market pack szerint (HU/EU: OQ-05) | Counsel / IIa |
+| **F1s** | Igen | Soha a felírónak (ez a lényeg) | OQ-15/16; HITL külön UI |
+| **F2** | Igen, `LIVE_CDS` compile/license **false** | Csak in-house (REG-011) után, azon az intézményen | Intézményi RA + QMS |
+| **F3** | Igen, ugyanaz a motor | Csak CE (EU) / FDA clearance (US) után | NB / FDA |
+| **L5 PRS** | Interfész-stub | Nem | F4 |
 
----
-
-## SKU-S — Shadow / HITL (nem v1 mag)
-
-Kórházi kutatási / QA megállapodás. OQ-15 + OQ-16. **Nem** a klinikus-licenc. Ne ezzel nyiss sales hívást. Akkor vedd elő, ha a vevő a *későbbi* CDSS-t kérdezi: „ezen a csövön mérjük, a felíró nem látja”.
+„Maximum ki van kapcsolva” = ez a tábla. **Nem** = „az EU-s klinikán megy a riasztás, mert a kódban benne van”.
 
 ---
 
-## SKU-F2 — Élő CDSS (nem v1)
+## Árazási kötés (spec §11, rendszerre olvasva)
 
-Per-clinician / hó. **Csak** CE vagy in-house (REG-011) után. A sales **nem** ígér dátumot, amíg REG-030 / OQ-06 nincs. Roadmap-mondat: *„A v1 leletcsőre épül; az élő riasztás külön minősítés.”*
-
----
-
-## Mi kell ahhoz, hogy a klinika *tényleg* vegyen
-
-| # | Feltétel | Miért |
+| Sor | Modell | Mikor |
 | --- | --- | --- |
-| 1 | Aláíró labor (SKU-L) | 12. §; NG-03 |
-| 2 | MSP működik (PDF + aláírás + disclaimer) | Nincs demó → nincs szerződés |
-| 3 | Őszinte „nem CDSS” mondat | A vevő RA-ja ezt kérdezi elsőnek |
-| 4 | OQ-05 mint **hatálybalépési feltétel** vagy fizetős pilot | Nem hazudsz MDSW-státuszt |
-| 5 | DPA-szerep: adatkezelő = labor/klinika; gyártó = feldolgozó | P5 DPO |
-| 6 | Ár a labor felé kitöltve (`[Y1]`/`[Y2]`) | G4 |
+| Platform (SKU-P) | Éves + telephely | Most |
+| Klinikus-sáv | Per-clinician/hó | F2/F3 *aktiváláskor* (spec: L4-live) |
+| HIS-vendor | Éves + integráció | SKU-H |
+| Labor volumensáv | Opcionális, ha a labor *is* tenancyt kér | Integráció, nem a mag-SKU |
 
-A 499 000 Ft-os kiskereskedelmi PGx-ár **nem** a tiéd. A tiéd a labor **ideje és a guideline-követés**. A klinika akkor fizet, ha a labor emiatt gyorsabb / megbízhatóbb leletet ad, vagy ha a HIS-ben megjelenik a lelet anélkül, hogy a vendor MDSW-t venne a nyakába.
+A 499 000 Ft-os kiskereskedelmi PGx-vizsgálat **nem** PCE-ár. Az a labor üzlete.
+
+---
+
+## G4
+
+Fizetőnek számít: aláírt **rendszerlicenc** (klinika / kórház / hálózat / HIS-vendor). Nem számít: ingyenes demó, „majd ha CE”, labor amely csak adatot ad licenc nélkül.

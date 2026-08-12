@@ -9,7 +9,7 @@
 
 A gyártó (A9: a `genetics` repo tulajdonos szervezete; **név nincs kitalálva**) az alábbi álláspontot kéri jóváhagyni. Az OQ **akkor zárul**, ha a címzett aláírja / elutasítja / feltételekkel visszaadja. Ez a fájl nem helyettesíti azt.
 
-**Küldhető iratok:** [Outbound/](Outbound/README.md) — OQ-k. [Sales/](Sales/README.md) — vevői ajánlat a *feltételezett* OQ-válaszokra (G4). A F.6 sor az Outbound aláírás után töltődik; a Sales ettől még mehet pilotként.
+**Küldhető iratok:** [Outbound/](Outbound/README.md) — OQ-k. [Sales/](Sales/README.md) — **rendszerlicenc** a klinikának (feltételezett OQ; F2 lakattal).
 
 ```
 v1 / F1s blokkolók
@@ -101,13 +101,13 @@ C melléklet C.4.
 
 ## F.5 OQ-03 — Üzlet (BELSŐ IGEN a tárgyalás indítására)
 
-**Belső döntés:** hivatalos tárgyalás az **első** partnerlaborral L3 outside-call + **minden** F1+ lelet aláírására. Kereskedelmi váz: havidíj + volumensáv (spec §11); a darabár opcionális sáv, nem „csak kivétel”. A szerződésben: aláírási SLA.
+**Belső döntés:** az **első fizető vevő a klinika/intézmény** (SKU-P rendszerlicenc). Párhuzamosan labor-**csatlakozó** (REG-020, outside-call), mert a rendszernek kell diplotípus-forrás — ez nem azt jelenti, hogy leletet adunk el.
 
 **Ami nyitva marad:** a labor **neve**, az ár, az aláírt REG-020. Itt labornevet **nem** találunk ki.
 
 **Küldendő irat:** [Outbound/OQ-03-l3-term-sheet.md](Outbound/OQ-03-l3-term-sheet.md) — minden F1+ lelet aláírása; NG-01 ≠ riasztáskód; havidíj + volumensáv.
 
-**Vevői pár:** [Sales/lab-one-pager.md](Sales/lab-one-pager.md) + [Sales/proposal-order.md](Sales/proposal-order.md). Klinikának: [Sales/clinic-one-pager.md](Sales/clinic-one-pager.md) — ők a leletet veszik, nem a CDSS-t. Enélkül G4 üres.
+**Vevői pár:** [Sales/](Sales/README.md) — a **klinika veszi a rendszert**. A labor REG-020 **csatlakozó**. F1–F3 egy bináris; HU/EU/US: [market-packs](Sales/market-packs.md).
 
 ---
 

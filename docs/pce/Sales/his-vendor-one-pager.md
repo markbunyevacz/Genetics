@@ -1,48 +1,44 @@
-# HIS / medikai vendor egyoldalas — F1+ modul (SKU-H)
+# HIS / medikai vendor — PCE rendszer beágyazás (SKU-H)
 
 | | |
 | --- | --- |
 | **Feladó** | `[Gyártó neve]` |
-| **Címzett** | `[Medikai rendszer / HIS vendor neve]` — termék + jog |
-| **Tárgy** | PGx-lelet modul az engedélyezett medikai rendszerben — ti nem lesztek MDSW-gyártók |
-| **Státusz** | Ajánlati egyoldalas. REG-021 határvonal. |
+| **Címzett** | `[HIS / medikai vendor]` — termék + jog |
+| **Tárgy** | A PCE **rendszer** a ti medikai platformotokban — F1–F3 egy cső, F2 lakattal |
+| **Státusz** | Ajánlat. REG-021: ti nem lesztek a PGx-CDSS gyártói. |
 
 Tisztelt Partner!
 
-A klinikai vevőitek PGx-leletet akarnak **a saját HIS-ükben**, nem egy külön portálon. Nem akarnak — és ti sem akartok — orvostechnikai szoftver-gyártóvá válni egy felírási riasztás miatt.
-
-Az F1+ modul: a partnerlabor aláírt leletének megjelenítése + opcionális **enciklopédia** (génre / hatóanyagra keresés, verziózott guideline). **Nincs** CDS Hooks `order-sign` kártya. **Nincs** EESZT írás (eRecept, eProfil).
+A klinikai vevőitek **rendszert** akarnak, nem egy külön PGx-portált. A PCE ugyanaz a szoftver F1-től F3-ig. A ti HIS-etekbe beágyazzuk; a `LIVE_CDS` a **mi** signed release-ünk, nem a ti admin-configotok. Így nem váltok MDSW-gyártóvá egy felírási riasztástól.
 
 ---
 
 ## Mit kaptok
 
-- FHIR / dokumentum-interfész a leletre (Genomics Reporting IG STU3, R4).
-- White-label a labor felé; a HIS a saját UX-ében jeleníti meg.
-- Írásos MDR-határ (REG-021): **gyártó = `[Gyártó neve]`** az F1+ motorra; **ti** a medikai rendszer gyártói / forgalmazói maradtok a saját engedélyetek szerint.
-- Ugyanaz a cső később F2-re (CE után) — a `LIVE_CDS` kapcsoló a mi release-ünk, nem a ti konfigotok.
+- Teljes PCE tenancy a ti UX-etekben: lelet, enciklopédia, később (lakat után) CDS Hooks.
+- FHIR / dokumentum + (F2 feloldáskor) CDS Hooks / SMART — ugyanaz a cső.
+- REG-021: **PGx-motor gyártója = `[Gyártó neve]`**. Ti a medikai rendszer gyártói maradtok.
+- Market pack a *telepítő* intézmény országa szerint (HU/EU/US), nem a vendor székhelye szerint egyedül.
 
-## Mit nem kaptok v1-ben
+## Mit nem kaptok
 
-- Interruptive CDSS, dózis-suggestion, SMART-on-FHIR felírási riasztás.
-- Nyílt EESZT FHIR API-t vagy BM szoftverengedélyt tőlünk (NG-05; F1 = modul).
-- Azt a jogi állítást, hogy „az orvos rákattint, tehát nem eszköz”.
+- Jogot `LIVE_CDS=true` billentésére CE/FDA/in-house nélkül.
+- EESZT írást tőlünk (NG-05).
+- Azt, hogy „az orvos rákattint, tehát nem eszköz”.
 
-## Ár (kitöltendő)
+## Ár
 
 | Tétel | Összeg |
 | --- | --- |
-| Éves platform | `[Yh]` Ft + ÁFA / év |
-| Integráció (egyszeri) | `[Yi]` Ft + ÁFA |
-| Tenant / labor | a SKU-L szerint, nem a vendor árrése helyett |
+| Éves platform (SKU-H) | `[Yh]` / év |
+| Integráció | `[Yi]` egyszeri |
+| Intézményi tenancy | a klinika SKU-P-je, nem a ti árrésetek helyett |
 
-## Hatály
-
-REG-021 + OQ-05 feltétel. Pilot: sandbox, szintetikus Bundle, nincs éles TAJ.
+F2 aktiválás: a **intézmény** §8 záradéka + a mi release-ünk.
 
 ---
 
 | | |
 | --- | --- |
 | Kapcsolat | `[név, e-mail, telefon]` |
-| Melléklet | A.1; B melléklet interfész-váz; REG-021 sablon-pontok a proposal-orderben |
+| Melléklet | market-packs; REG-021 pontok a proposal-orderben |

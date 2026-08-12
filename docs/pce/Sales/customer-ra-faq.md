@@ -1,84 +1,68 @@
-# A vevő RA / jogásza — FAQ (SKU-C / SKU-L / SKU-H)
+# Vevő RA / jog — FAQ (rendszerlicenc)
 
 | | |
 | --- | --- |
 | **Iktató** | PCE-SALES-RAFAQ / v1.2 |
-| **Címzett** | A vevő minőségirányítása, jogásza, DPO-ja |
-| **Státusz** | Tájékoztató. **Nem** helyettesíti a saját counselüket. **Nem** az OQ-05 pecsét. |
-
-A komoly klinika és labor **ezt** kérdezi, mielőtt aláír. A sales, aki ezt kikerüli, nem zár.
+| **Státusz** | Tájékoztató. Nem a ti counselötök. Nem OQ-05/17 pecsét. |
 
 ---
 
-## 1. Ez orvostechnikai eszköz (MDSW)?
+## 1. Mit veszünk? Leletet vagy eszközt?
 
-**Gyártói pozíció (kérés, nem pecsét):** az F1+ a labor által *már megállapított* diplotípus formázása és **gén-szintű**, verziózott, nyilvános irányelv-szöveg hozzárendelése. Nincs aktuális-gyógyszer párosítás, nincs felírási riasztás, nincs dózisszám. Aláíró: labororvos.
-
-**Nyitott:** külső counsel (OQ-05). A génhez rendelt CPIC *terápiás* szöveg önmagában lehet Rule 11a. A szerződés **hatálybalépési feltétele** ez az állásfoglalás.
-
-**Nem érv:** „az orvos dönt, tehát nem eszköz.” Az MDR-ben ez nem minősít ki.
+**Rendszert.** F1+, F1s, F2, F3 egy szoftver. A szerződés a `[HU|EU|US]` csomag **bekapcsolt** moduljaira szól. A zárt F2/F3 a telepítésben lakattal van; klinikai használatuk tiltott.
 
 ---
 
-## 2. Miért nincs CE-jel?
+## 2. Ha F2 bent van a kódban, az már MDSW-forgalmazás?
 
-Ha OQ-05 = IGEN: a gyártó szerint nem MDSW, CE nem e termékre kell. Ha OQ-05 = NEM: nincs éles szoftvereladás CE nélkül; IIa pálya.
+A gyártó álláspontja: **nem**, ha a klinikai UI-ra **nem** megy kimenet (`LIVE_CDS=false`, FR-470), és a rendeltetés a bekapcsolt modulé. A hatóság a *tényleges használatot* nézi. Ha a felíró riasztást kap, az F2, CE/in-house/FDA nélkül = tilos (NG-07). A lakat nem színház: admin nem billenti.
 
-A leleten lévő nyilatkozat **nem** CE-helyettesítő és **nem** felelősségkizárás.
-
----
-
-## 3. A klinika MDSW-üzemeltető lesz?
-
-F1+ SKU-C-n: a klinika **laboratóriumi jelentést** használ, mint más leletet. Nem futtat felírási CDSS-t. SKU-H: a HIS megjeleníti a dokumentumot; a vendor REG-021 szerint nem az F1+ motor gyártója.
-
-Ha a klinika **élő riasztást** kér a felírásnál: az F2, más szerződés, CE vagy in-house.
+OQ-05 a **F1+** rétegre. F2/F3 külön intended purpose (A.3).
 
 ---
 
-## 4. Ki hívja a genotípust? Ki ír alá?
+## 3. Miért nincs CE / 510(k) a teljes dobozon?
 
-A partnerlabor. A PCE nem hív allélt nyers adatból. Minden F1+ leletet labor-szakorvos ír alá. Aláírás nélküli „validált PDF” nincs.
-
----
-
-## 5. 2008. évi XXI. törvény?
-
-Mintavétel előtti tanácsadás: **6. § (2)**. Írásbeli beleegyezés: **8. §**. Vizsgálat: engedélyezett szolgáltató, **12. § (1)**. A szoftver **kapuz** (FR-100); a kötelezettség a szolgáltatóé. A gyártó nem B2C genetikai app.
+Mert a forgalomba hozott *funkció* a csomag ON modulja. A zárt CDSS-re nincs CE, amíg F3. US: OQ-17 nyitott; default F2/F3 LOCK.
 
 ---
 
-## 6. GDPR / genetikai adat?
+## 4. US vs EU — átkapcsolható?
 
-Adatkezelő: labor és/vagy klinika. Gyártó: adatfeldolgozó a DPA szerint. Éles TAJ a gyártó kutatási felhőjébe nem default. Shadow/HITL **külön** termék (OQ-16/15), nem ennek a v1 SKU-nak a része.
-
-Visszavonás: 26. § megsemmisítés; a gyártó 72 órás SLA-t **feltételez** (A10), a törvény határidőt nem ad.
+Nem egy checkbox. Új tenancy, új intended purpose. Az FDA 2022 CDS „az orvos le tudja vezetni” **nem** érvényes az MDR-ben. Az EU nem-MDSW **nem** érvényes automatikusan az FDA-nál.
 
 ---
 
-## 7. EESZT?
+## 5. Ki hívja a genotípust?
 
-A v1 **nem** ír az EESZT-be. Modul engedélyezett medikai rendszerben. ISO 9001 / szoftver-QMS: 2026-09-30 kapu a fejlesztői jogálláshoz — státuszt kérdezzetek, ne feltételezzetek 13485-öt.
-
----
-
-## 8. Felelősség, ha a lelet alapján rossz a terápia?
-
-Terápia: kezelőorvos. Diplotípus: aláíró labororvos. Szoftverhiba (rossz tábla, rossz verzió, hamis NM callability nélkül): gyártó, a hatályos termékfelelősség szerint. Disclaimer ezt **nem** zárja ki.
+A vevő laborja. A PCE nem hív nyers adatból (NG-01). A labor integrációs partner, nem a szoftver kiskereskedelmi vevője.
 
 ---
 
-## 9. Mit kaptok a dossziéból?
+## 6. 2008/XXI. (HU)?
 
-- A.1 / A.1.1 / A.1.2 (intended purpose + EDU szabályok)
-- Outbound OQ-05 brief (a *kérés*, nem a válasz)
-- FR-470: `LIVE_CDS=false` az F1+ buildben
-- Ez a FAQ
-
-Amit **nem** kaptok tőlünk pecsétként: a ti counselötök helyetti MDSW-minősítés.
+6. § (2) tanácsadás, 8. § beleegyezés, 12. § szolgáltató. A rendszer kapuz. EU/US csomagban ez a kapu N/A; helyi jog `[NEEDS VERIFICATION]`.
 
 ---
 
-## 10. Pilot vs éles
+## 7. GDPR / HIPAA?
 
-Pilot: szintetikus vagy labor-validációs eset, TAJ nélkül, fizetős is lehet. Éles beteglelet: §2 feltételek (OQ-05, REG-020, DPA).
+Adatkezelő: az intézmény. Gyártó: feldolgozó. F1s külön DPIA (OQ-16). US: HIPAA BAA, OQ-17 mellett.
+
+---
+
+## 8. EESZT?
+
+A rendszer **nem** ír eReceptet/eProfilt. HIS-modul.
+
+---
+
+## 9. Felelősség
+
+Terápia: kezelőorvos. Diplotípus: labor. Bekapcsolt szoftverhibája: gyártó, disclaimer nem zárja ki. LOCK modul használata: szerződéses tiltás.
+
+---
+
+## 10. Pilot
+
+Sandbox, SYN-adatok, F2 lakat látszik, nem él. Éles: megrendelőlap §3.

@@ -1,81 +1,51 @@
-# Demó-forgatókönyv — amit a vevő láthat (és amit nem)
+# Demó — a **rendszer** (F1–F3), piaci lakatokkal
 
 | | |
 | --- | --- |
 | **Iktató** | PCE-SALES-DEMO / v1.2 |
-| **Közönség** | Laborvezető, klinika-üzemeltető, HIS-vendor, *esetleg* a vevő RA-ja |
-| **Adat** | **Csak** szintetikus eset (`SYN-001`…). Éles TAJ, valódi recept, élő HIS **tilos** a demóban, amíg OQ-16/15 és DPA nincs. |
-
-A demó **eladja a leletet**. Ha felugró riasztást mutatsz, a v1 intended purpose hamis, a vevő RA-ja MDSW-nek néz, és a következő kérdés az: „hol a CE?”.
-
----
-
-## 0. Nyitó mondat (30 mp, kötelező)
-
-> „Ez nem döntéstámogató riasztás a felírásnál. A labor meghívja a diplotípust, a szoftver verziózott irányelv-táblát rendel hozzá, a labororvos aláír. A kezelőorvos a leletet kapja. Az élő CDSS külön, minősített termék.”
-
-Ha a hallgató P2 („én figyelmeztetést akarok a gombnál”):
-
-> „Az a F2, CE után, ugyanazon a csövön. Ma azt oldjuk meg, hogy a 499 ezres vizsgálat ne egy PDF legyen a beteg fiókjában.”
+| **Közönség** | Klinika / kórház IT+orvosigazgató; opcionálisan labor mint csatlakozó |
+| **Adat** | Csak `SYN-…`. Éles TAJ tilos. |
+| **Cél** | Eladni a **platformot**, nem egy PDF-et. Megmutatni, hogy F2/F3 *benne van*, és *zárva* van. |
 
 ---
 
-## 1. Forgatókönyv A — Labor (SKU-L), 12 perc
+## 0. Nyitó (45 mp)
 
-**Szereplők:** te + laborvezető. Képernyő: labor-UI.
+> „Ez egy farmakogenetikai rendszer: lelet, árnyék-validáció és élő döntéstámogatás **egy** szoftverben. A `[HU|EU|US]` csomagban ma az F1+[ / F1s] él. Az F2/F3 a felírónak zárva, amíg az adott piac minősítése megvan — nem azért, mert hiányzik, hanem mert a riasztás bekapcsolása forgalomba hozatal.”
 
-| Perc | Lépés | Mutatni | Nem mutatni |
+Ha azt mondják, „nekünk a YouScript kell, most”:
+
+> „A motor megvan. A felírási kártya ugyanazon a csövön kapcsol. Ma lakattal mutatom. CE / in-house / FDA nélkül nem kapcsolom, mert az a ti RA-toknak és nekünk is Rule 11a / eszköz.”
+
+---
+
+## 1. Forgatókönyv — 20 perc, klinika a vevő
+
+| Perc | Mit mutatsz | Mondat | Tilos |
 | --- | --- | --- | --- |
-| 0–2 | Outside-call be: CYP2D6 \*1/\*1, callability OK, aláíró mező üres | FR-240 mezők | Nyers FASTQ, „mi hívtuk az allélt” |
-| 2–5 | Generate: PDF white-label, **teljes** CYP2D6 CPIC tábla, verzió + URL | FR-400-STATIC | A beteg „jelenlegi” sertralinjára szűrt egy sor |
-| 5–7 | Callability fail eset: hiányzó pozíció → `INDETERMINATE`, nem NM | FR-210 | „Normál, mert nincs variáns a fájlban” |
-| 7–9 | EDU bekezdés: inhibitor-*osztályok* tankönyvileg | FR-410-EDU | „Mivel Ön paroxetint szed, PM” |
-| 9–11 | Aláírás helye, A.1.1 a láblécben, kolofon: technológiai szállító | FR-490 | „A fejlesztő minden felelősséget kizár” |
-| 11–12 | Guideline-verzió a metaadatban | FR-370 | Élő PharmCAT matcher mint default |
+| 0–2 | Nyitó + market pack slide (HU/EU/US tábla) | „Egy bináris, három csomag” | „US-ben ez nem eszköz, ezért EU-ban is mehet” |
+| 2–7 | F1+: SYN-001 outside-call → lelet, teljes gén-tábla, callability fail eset | „A labor *csatlakozik*, ti licencelitek a rendszert” | „Mi eladjuk a 499 ezres vizsgálatot” |
+| 7–11 | F1s: HITL kártya **kutatási UI**, reviewer-vak; felírói képernyőn üres | „A motor fut, a vizit nem látja” | Shadow tipp a vizit-UI-n |
+| 11–16 | F2 képernyő **lakattal**: CDS-kártya mock, `LIVE_CDS=false` badge | „Ez a feloldott állapot *után*. Ma nem kattintható élesre.” | Éles order-sign a demó-HIS-ben |
+| 16–18 | Feloldási út: CE / in-house / OQ-17 | „Szerződés §8, nem config” | Dátumígéret („Q4-ben biztos CE”) |
+| 18–20 | Ár: platform `[Yp]`, aktiválás `[Ya]` később | Rendszerlicenc | Labor listaár mint PCE-ár |
 
-**Záró:** term sheet `[Y1]`/`[X]` — „minden leletet ti írtok alá”.
-
----
-
-## 2. Forgatókönyv B — Klinika (SKU-C), 8 perc
-
-**Szereplők:** orvosigazgató. Képernyő: **kész PDF** + (ha van) HIS-dokumentum nézet. Nem labor-admin.
-
-| Perc | Lépés | Mutatni | Nem mutatni |
-| --- | --- | --- | --- |
-| 0–1 | Nyitó mondat (§0) | — | CDS Hooks kártya |
-| 1–4 | Ugyanaz a SYN-001 PDF, klinikus szemmel: diplotípus, tábla, forrás | „ezt kapja az orvos” | Dózis-slider, „cseréld X-re” |
-| 4–6 | Hol landol: HIS dokumentum / nyomtatás, nem beteg-email mint egyetlen csatorna | SKU-C ígéret | EESZT eProfil írás |
-| 6–8 | Felelősség-tábla: labor aláír, orvos terápia | clinic-one-pager | „A szoftver megakadályozza a mellékhatást” |
-
-**Ha kérik a riasztást:** 60 mp roadmap, **nincs** élő prototípus. „A motor megvan shadowban; a felíró nem látja, amíg nincs CE.” **Ne** mutasd a HITL kártyát úgy, mintha a vizit UI-ja lenne.
+Labor a teremben: 3 perc csatlakozó (outside-call mezők), nem „vegyétek meg ti a terméket”.
 
 ---
 
-## 3. Forgatókönyv C — HIS-vendor (SKU-H), 10 perc
+## 2. HIS-vendor (10 perc)
 
-- FHIR Bundle (DiagnosticReport + Observation), sandbox.
-- Enciklopédia: keresés „CYP2D6” → guideline lista, **nincs** nyitott MedicationRequest-hez kötött Card (FR-480).
-- REG-021 egy slide: ti nem MDSW-gyártók.
+Ugyanaz a rendszer, beágyazva. REG-021. Enciklopédia ON lehet F1+-szal. CDS Hooks endpoint a demóban **403/lakat**.
 
 ---
 
-## 4. Tiltott demó-elemek (CI a sales-re)
+## 3. Tiltott
 
-Ha bármelyik bekerül a hívásba, a demó **F2-t** adott el:
+- `LIVE_CDS=true` HU/EU/US demó-tenancyen, amíg a pack LOCK
+- „Bent van, kapcsoljuk, a CE majd utolér”
+- Gyártó mint genetikai labor
+- LLM-lelet
+- Valódi beteg
 
-- `LIVE_CDS`, CDS Hooks, SMART interruptive
-- „Ennél a betegnél a most felírt X-et Y-ra”
-- `dose_mg`, `functional_phenotype` a **aláírt** PDF-en
-- Shadow tipp a „kezelőorvos képernyőjén”
-- Valódi beteg, TAJ, élő recept
-- LLM-szöveg a leleten (FR-700)
-
----
-
-## 5. Kiosztandó a hívás után
-
-- A megfelelő one-pager (lab / clinic / HIS)
-- Szintetikus minta-PDF (ha már van; különben „MSP után”)
-- [proposal-order.md](proposal-order.md) pilot-sor
-- [customer-ra-faq.md](customer-ra-faq.md), ha jogász is volt a hívásban
+A lakat **eladási eszköz**: a vevő látja a teljes F1–F3-at. A lakat nélküli F2-demó EU-ban MDSW-forgalmazásnak *néz ki*.

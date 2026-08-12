@@ -12,7 +12,7 @@ Ez a csomag a PCE farmakogenetikai (PGx) platform **követelménylistája és sz
 
 v1.2 a **legális hibrid**: F1+ statikus, verziózott guideline-társítás aláírt laborleleten; F1s shadow HITL a kezelőorvos nélkül; élő F2/F3 CDSS csak minősítés után. Az „F2 képesség F1 minőségben, mert az orvos dönt” útvonal **elutasítva** (NG-07).
 
-A v1 / F1s **forgalmazási** induláshoz a gyártói kérés és a küldhető iratok kész ([F melléklet](F-decision-package.md), [Outbound](Outbound/README.md)); a **külső aláírás** hiányzik. A **spec-írás lezárva** (§10.2). A **F1+ mag kód** és a **Sales csomag** (feltételezett OQ-válaszok, G4) ettől függetlenül indul.
+A v1 / F1s **éles ON moduljához** a gyártói kérés kész ([F](F-decision-package.md), [Outbound](Outbound/README.md)); a pecsét hiányzik. A **spec-írás lezárva**. A **PCE rendszer** (kód + [Sales](Sales/README.md) SKU-P) ettől függetlenül indul: F2/F3 a dobozban, klinikai UI **zárva**.
 
 ## Olvasási sorrend
 
@@ -24,7 +24,7 @@ A v1 / F1s **forgalmazási** induláshoz a gyártói kérés és a küldhető ir
 6. **[E-shadow-hitl.md](E-shadow-hitl.md)** — shadow pipeline, intézményi gateway, HITL UI, GDPR két út, REG-090 / OQ-15.
 7. **[F-decision-package.md](F-decision-package.md)** — gyártói előterjesztés a v1 blokkolókra. **Nem** külső aláírás.
 8. **[Outbound/](Outbound/README.md)** — címzett-kész irattervezetek (counsel, DPO, intézményi RA, L3 term sheet, ISO/EESZT owner). Küldhető; **nem** aláírt állásfoglalás.
-9. **[Sales/](Sales/README.md)** — eladható ajánlat a **feltételezett** OQ-válaszokra. Klinika = lelet, nem élő CDSS. Nem pecsét.
+9. **[Sales/](Sales/README.md)** — **rendszerlicenc** (SKU-P). F1–F3 egy bináris; HU/EU/US flag. Klinika a vevő. Labor = csatlakozó. F2 bent van, lakattal. Nem leletbolt.
 
 ## Process artifacts
 
@@ -50,4 +50,4 @@ A gyártó neve ebben a csomagban **nincs kitalálva**. A9 feltevés: a gyártó
 
 ## Következő gate
 
-**Spec:** fagyasztva. **Kód:** F1+ mag (§10.2). **Értékesítés:** [Sales](Sales/README.md) — első SKU a labor; klinika a leletet veszi. **Éles nem-MDSW licenc / HIS-árnyék:** F.6.
+**Spec:** fagyasztva. **Termék:** PCE rendszer (F1–F3, flag). **Vevő:** klinika/intézmény. **Éles F2:** CE / in-house / OQ-17, nem sales-kapcsoló.

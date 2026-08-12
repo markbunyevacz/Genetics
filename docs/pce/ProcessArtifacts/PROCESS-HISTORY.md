@@ -21,7 +21,8 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P05f | Outbound hivatalos iratok | 2026-08-12 | 2026-08-12 | DONE | I-14 | `docs/pce/Outbound/` öt irat + index | E-10, E-11 |
 | P06f | Plan-vs-content (Outbound) | 2026-08-12 | 2026-08-12 | DONE | I-14 vs spec | Öt irat spec-hez igazítva; OQ-k nyitva | — |
 | P10 | Spec-fagyasztás | 2026-08-12 | 2026-08-12 | DONE | I-15 | §10.2; F1+ mag DEV-NOW; OQ-k nyitva | — |
-| P05g | Sales csomag (feltételezett OQ) | 2026-08-12 | 2026-08-12 | DONE | I-16 | `docs/pce/Sales/` | — |
+| P05g | Sales csomag (feltételezett OQ) | 2026-08-12 | 2026-08-12 | DONE | I-16 | `docs/pce/Sales/` (később I-17 felülírja a leletbolt-olvasatot) | E-12 |
+| P05h | Sales korrekció: rendszerlicenc | 2026-08-12 | 2026-08-12 | DONE | I-17 | SKU-P; market-packs HU/EU/US; OQ-17 | E-12 |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -47,7 +48,8 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-16 | P05e | Disclaimer mint MDSW-kimenekülés | Felelősségkizárás / A.1.1 | **A.1.1 marad**; nem felelősségkizárás | FR-490; A.0 | I-13 |
 | D-17 | P05f | I-14 vázlatok szó szerint? | Átmásolni / spec szerint javítani | **Javítva**: A.1 verbatim; FR-100≠FR-115; Art. 62 kérelem; L3≠NG-01; EESZT≠FHIR | IR-01, VC-01, NG-01, NG-05 | I-14 |
 | D-18 | P10 | Spec-szakasz a külső OQ alatt | Tovább írni / fagyasztani + kód | **Fagyasztva**; F1+ mag indul; OQ-k ELŐTERJESZTVE | I-15; F.6 ≠ git-stop | I-15 |
-| D-19 | P05g | Eladás a pecsét előtt | Várni F.6-ra / készíteni a SKU-t hipotézisen | **Sales csomag**; klinika=lelet; OQ-05 hatályfeltétel; első vevő=labor | G4; NG-07; NG-03 | I-16 |
+| D-19 | P05g | Eladás a pecsét előtt | Várni F.6-ra / készíteni a SKU-t hipotézisen | Sales csomag (I-16: klinika=lelet — **I-17 felülírja**) | G4 | I-16 |
+| D-20 | P05h | Mit adunk el? | Laborlelet / **rendszer** F1–F3 flaggel | **SKU-P**; labor csatlakozó; HU/EU/US; F2 LOCK≠hiány | I-17; NG-07; G5 | I-17 |
 
 ## 3. Error log
 
@@ -64,6 +66,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | E-09 | P05d | Terminology | I-12 „double-blind validation” | Szekvenciális reviewer-vak; a motor nem vak | FR-450-BLIND; E.4.1 |
 | E-10 | P05f | Scope / overclaim | I-14 OQ-05 pecsét előre „nem MDSW”; OQ-15 Art. 62 mint tény | Igen/Nem/Feltétellel; kérelem nem határozat | Outbound OQ-05/15 |
 | E-11 | P05f | Cross-reference / spec mismatch | I-14 L3 = NG-01 riasztás + csak kivétel díjazva; OQ-01 = EESZT FHIR/SSL | NG-01 = non-goal; minden lelet aláírás; Redmine + ISO 9001 2.1 | Outbound OQ-03/01 |
+| E-12 | P05g | Scope / product mismatch | I-16 sales a klinikának leletet adott el | Retry: SKU-P rendszer; market packs | I-17; D-20 |
 
 ## 4. File timeline
 
@@ -78,5 +81,5 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | docs/pce/E-shadow-hitl.md | P05b | P05c (E.3.1, E.4.1) | DRAFT v1.2 |
 | docs/pce/F-decision-package.md | P05e | P10 | DRAFT v1.2 |
 | docs/pce/Outbound/* | P05f | P10 (küldés most) | TERVEZET küldhető |
-| docs/pce/Sales/* | P05g | — | TERVEZET küldhető (hipotézis) |
+| docs/pce/Sales/* | P05g | P05h (SKU-P, market-packs) | TERVEZET rendszerlicenc |
 | docs/pce/ProcessArtifacts/* | P01–P06 | P05g | DRAFT |

@@ -1,115 +1,112 @@
-# Ajánlat és megrendelőlap (SKU-L / SKU-C / SKU-H)
+# Ajánlat és megrendelőlap — PCE **rendszerlicenc**
 
 | | |
 | --- | --- |
 | **Iktató** | PCE-SALES-ORD / v1.2 |
-| **Státusz** | Tervezet — **nem** ÁSZF, **nem** DPA |
+| **Státusz** | Tervezet — nem ÁSZF, nem DPA |
 | **Feladó** | `[Gyártó neve]` |
-| **Címzett** | `[Vevő neve]` |
+| **Címzett** | `[Vevő — klinika / kórház / hálózat / HIS-vendor]` |
+| **Market pack** | `[HU | EU | US]` |
 | **Ajánlat érvényes** | `[dátum]`-ig (alap: 30 nap) |
 
-Ez a lap a v1.2 spec kereskedelmi kötése. A szögletes zárójelek a küldőé. Jogi véglegesítés: counsel.
+A Vevő a **Precision Clinical Engine rendszert** rendeli (F1+ · F1s · F2 · F3 egy szoftver). Nem PGx-vizsgálatot, nem lelet-előfizetést.
 
 ---
 
 ## 1. Tárgy
 
-A Vevő a lenti SKU-t rendeli. A gyártó a PCE F1+ szoftvert / modult szállítja a [A.1 rendeltetés](../A-intended-purpose-and-modules.md) szerint.
+- [ ] **SKU-P** — Intézményi rendszerlicenc (alap)
+- [ ] **SKU-H** — HIS-vendor beágyazás (REG-021)
 
-**Nem tárgy:** élő klinikai döntéstámogatás (F2/F3), EESZT írás, B2C VCF-upload, saját genotípus-hívás.
+Labor: csatlakozó, nem ez a megrendelés tárgya. Csatolt REG-020: `[van / folyamatban / a Vevő laborja]`.
 
-Jelölj **egyet** (vagy L+H együtt, ha a vendor a labort is kiszolgálja):
-
-- [ ] **SKU-L** — Labor white-label szoftverlicenc
-- [ ] **SKU-C** — Klinika: PGx-lelet *szolgáltatás* partnerlaboron keresztül (a szoftvert a labor licenceli; ez a lap a klinika–labor–gyártó háromszöget rögzíti)
-- [ ] **SKU-H** — HIS / medikai vendor modullicenc
+**Nem tárgy, amíg a flag LOCK:** élő felírási CDSS a klinikai UI-n, EESZT írás, B2C VCF-upload, saját allélhívás.
 
 ---
 
-## 2. Hatálybalépési feltételek (kötelező)
+## 2. Modulmátrix (ez a telephely)
 
-A **éles betegadat** és a **fizetős szoftverlicenc** (SKU-L / SKU-H) akkor lép hatályba, ha:
+A nem ON sorok a szoftver **részei**, klinikai használatuk tiltott. Feloldás: §8.
 
-1. **OQ-05:** írásos counsel-állásfoglalás az F1+ A.1 rendeltetésről (IGEN vagy FELTÉTELLEL, a feltételek a szerződésbe emelve). Ha NEM (MDSW): a felek 30 napon belül IIa/CE ütemtervre térnek, vagy a Vevő eláll — a már megfizetett pilot nem jár vissza, ha a pilot teljesült.
-2. **SKU-L / SKU-C:** van REG-020 / aláíró labor (`[Partnerlabor]`). SKU-C labor nélkül **érvénytelen**.
-3. **Adat:** DPA aláírva. Adatkezelő = `[labor/klinika]`; adatfeldolgozó = `[Gyártó neve]`, hacsak a counsel mást nem ír.
-4. **ISO / EESZT:** a gyártó C-201 (ISO 9001 vagy egyéb szoftver-QMS) státusza a Vevővel közölve. 2026-09-30 kapuőr. Hiány **nem** automatikus érvénytelenség magánlabor-SKU-n, de a Vevő 14 napos elállást kap, ha a kapu elvész.
+| Modul | Ezen a megrendelésen |
+| --- | --- |
+| F1+ lelet / L4-static | `[ON / LOCK]` |
+| F1s shadow + HITL | `[ON / LOCK]` |
+| F2 élő CDSS (in-house) | **LOCK** |
+| F3 élő CDSS (CE/FDA) | **LOCK** |
+| `LIVE_CDS` | **false** |
 
-**Pilot (éles hatály előtt):** zárt környezet, szintetikus vagy a labor saját validációs esetei, `[Yp]` Ft + ÁFA, `[T]` hét, éles TAJ **nincs**.
+Market pack szabály: [market-packs.md](market-packs.md).
 
 ---
 
-## 3. Szolgáltatás és SLA
+## 3. Hatálybalépés
+
+**Éles betegadat** és a platformlicenc akkor él, ha:
+
+1. A `[HU|EU|US]` csomag szerinti külső feltétel: HU/EU F1+ ON-hoz OQ-05 *vagy* IIa/CE; US-hez OQ-17. Addig: fizetős sandbox.
+2. Diplotípus-forrás csatlakoztatva (Vevő laborja / REG-020).
+3. DPA: adatkezelő = Vevő (és/vagy labor); gyártó = feldolgozó.
+4. HU csomag: FR-100 kapu; OQ-01 státusz közölve.
+
+**Pilot:** szintetikus vagy labor-validációs eset, TAJ nélkül, `[Yp_pilot]`, `[T]` hét. A F2 UI lakattal **mutatható**, nem üzemeltethető.
+
+---
+
+## 4. Díjak
+
+| Tétel | Összeg |
+| --- | --- |
+| Platform `[HU\|EU\|US]` | `[Yp]` / év |
+| Telephely / klinikus sáv | `[Yc]` |
+| Indítás / HIS | `[Y0]` egyszeri |
+| SKU-H integráció (ha jelölve) | `[Yi]` |
+| F2/F3 aktiválás (később, §8) | `[Ya]` |
+| Pilot | `[Yp_pilot]` |
+
+---
+
+## 5. SLA (bekapcsolt modulokra)
 
 | Mutató | Cél |
 | --- | --- |
-| Szoftver: outside-call → aláírásra kész PDF/FHIR p95 | &lt; 10 perc (G1) |
-| Labororvosi aláírás (SKU-L, a labor vállalja) | `[X]` óra |
-| Rendelkezésre állás (szoftver) | `[99,x %]` munkaidőben; a felírás **nem** blokkolódik ettől a terméktől (nincs élő CDS) |
-| Guideline-váltás | FR-510 lista az érintett esetekről (P1; ha a csomagban van) |
+| Ingest → F1+ aláírásra kész p95 | &lt; 10 perc (szoftver) |
+| Rendelkezésre állás | `[99,x %]` |
+| Élő CDSS késleltetés (csak ha F2 ON) | fail-open: a felírás nem blokkolódik |
+| Shadow hiba | nem jelenik meg a felírónak |
 
 ---
 
-## 4. Díjak (kitöltendő)
+## 6. Felelősség
 
-| SKU | Tétel | Összeg | Időszak |
+| Tétel | Vevő / kezelőorvos | Labor | Gyártó |
 | --- | --- | --- | --- |
-| L | Indítás / arculat | `[Y0]` Ft + ÁFA | egyszeri |
-| L | Havidíj | `[Y1]` Ft + ÁFA | / hó, `[N]` lelet benne |
-| L | Volumensáv | `[Y2]` Ft + ÁFA | / aláírt lelet vagy sáv |
-| C | Klinika → labor vizsgálat | a labor díjszabása | nem PCE-ár |
-| H | Éves platform | `[Yh]` Ft + ÁFA | / év |
-| H | Integráció | `[Yi]` Ft + ÁFA | egyszeri |
-| — | Pilot | `[Yp]` Ft + ÁFA | `[T]` hét |
-
-Fizetés: `[munkanap]` nap, számla. Éves SKU-H: `[előre / negyedévente]`.
+| Terápia | Igen | Nem | Nem |
+| Diplotípus-hívás | — | Igen | Nem |
+| Bekapcsolt szoftverhibája | — | — | Hatályos termékfelelősség; nincs „minden kizárva” |
+| LOCK modul klinikai használata | Tiltott; a Vevő nem kapcsolhatja | — | Nem ad signed `LIVE_CDS=true`-t feltétel nélkül |
 
 ---
 
-## 5. Felelősségi határ (rövid)
+## 7. Adat
 
-| Tétel | Labor | Klinika | Gyártó | HIS-vendor |
-| --- | --- | --- | --- | --- |
-| Diplotípus-hívás | Igen | Nem | Nem | Nem |
-| Lelet aláírása | Igen | Nem | Nem | Nem |
-| Terápia | Nem | Kezelőorvos | Nem | Nem |
-| Renderer / guideline-config hiba | — | — | Szoftverhiba a hatályos jog szerint | — |
-| HIS-megjelenítés | — | — | Interfész-szerződés | Saját medikai rendszer |
-
-A.1.1 a leleten. **Nincs** „minden felelősség kizárva” klauzula.
-
-REG-021 (SKU-H): a vendor nem MDSW-gyártó az F1+ motorra.
+HU: 2008/XXI. kapu. Shadow csak ha F1s ON és OQ-16/15. Nincs B2C feltöltés.
 
 ---
 
-## 6. Adat
+## 8. Feloldás (átminősítés)
 
-- Nincs B2C feltöltés.
-- Éles genetikai adat csak FR-100 kapu után.
-- F1s / shadow **nem** része ennek a megrendelésnek, hacsak SKU-S külön nem keltezve (OQ-15/16).
-- Feldolgozói utasítás: a gyártó a lelet előállításához szükséges adatot kezeli; TAJ a gyártó shadow-felhőjébe F1+-on **nem** a default (klinikai tenancy a labor/HIS zónájában — B melléklet).
+F2/F3 ON csak: (a) írásos aktiválási megrendelés `[Ya]`, (b) HU/EU: CE vagy in-house (REG-011) / US: OQ-17 szerinti FDA-út, (c) gyártó signed release, A.3 intended purpose, (d) `LIVE_CDS=true` ettől a buildtől. Admin-config **nem** elég.
 
 ---
 
-## 7. Roadmap-mondat (nem teljesítési kötelezettség)
+## 9. Aláírás
 
-Az élő felírási riasztás (F2) **nem** e szerződés tárgya. A felek tudomásul veszik, hogy ugyanaz az integrációs cső később minősített CDSS-re kapcsolható; ehhez külön szerződés és CE / in-house kell.
-
----
-
-## 8. Aláírás
-
-- [ ] Pilot megrendelés (éles feltétel §2 nélkül, TAJ nélkül)
-- [ ] Éles SKU, §2 feltételekkel
+- [ ] Pilot (sandbox, F2 LOCK)
+- [ ] Éles SKU-P, §2–3 szerint
 
 | | Vevő | Gyártó |
 | --- | --- | --- |
 | Név / pozíció | | |
-| Dátum | | |
-| Aláírás | | |
-
-**SKU-C:** a partnerlabor képviselője is aláír, vagy csatolt REG-020.
-
-| Partnerlabor | Név | Dátum | Aláírás |
-| --- | --- | --- | --- |
-| `[Partnerlabor]` | | | |
+| Market pack | `[HU\|EU\|US]` | |
+| Dátum / aláírás | | |

@@ -68,7 +68,7 @@ A gyógyszerelési döntés pillanatában a rendelkezésre álló genetikai info
 
 A nem-megoldás költsége: a hazai laborok és klinikák statikus riportot adnak el prémium áron, klinikai hatás nélkül; a nemzetközi PGx-CDSS szállítók EU-jelenléte szűk; az AI Act Annex I tervezési óra (`[NEEDS VERIFICATION]` 2028-08-02, lásd §4.4) után az utólagos megfelelés drágább, mint a beépített.
 
-A v1 **fizető** differenciátor a skálázható, verziózott, white-label laborlelet (callability + CPIC/DPWG/FDA szövegtársítás). A **fenokonverzió** (aktuális gyógyszerlista → funkcionális fenotípus) a tudományos rés, de a v1.2-ben **nem** a aláírt lelet része: F1s shadow + HITL méri (G3), F2/F3 viszi élőbe. Az „F2 képesség F1 minőségben, mert az orvos dönt” útvonal **elutasítva** (A.0, NG-07).
+A v1 **fizető** termék a **PCE rendszer** (klinika/intézmény licenceli). A white-label lelet az F1+ *modul*, nem a SKU. A fenokonverzió F1s-ben mérhető, F2/F3-on él — a kód a dobozban van, a felírói kimenet flag mögött (G5, FR-470). Az „F2 képesség F1 minőségben, mert az orvos dönt” **elutasítva** (A.0, NG-07): bent van ≠ be van kapcsolva.
 
 ---
 
@@ -81,7 +81,7 @@ Outcome-ok, nem output-ok.
 | **G1** | A partnerlabor PGx-riport előállítási ideje csökkenjen | Kézi/félautomata baseline → **p95 < 10 perc** outside-call-tól vagy VCF-től aláírásra kész riportig | Pipeline-telemetria, `ingest→report_ready` |
 | **G2** | Az actionable találatok ne vesszenek el | A **PREPARE 12-génes** panel + aktuális CPIC/DPWG szerint actionable gén–gyógyszer párok **100%-a** megjelenik, 0 silent drop | Gold set (§9), minden release |
 | **G3** | Fenokonverzió-motor készen áll az F2-re | Shadow/HITL gold seten **≥ 90% recall**; a **aláírt F1+ leleten 0** élő fenokonverzió-alkalmazás | Gold set §9.2; FR-470 CI |
-| **G4** | Bevétel a szabályozott réteg előtt | **≥ 3 fizető labor/klinikai partner** és ≥ 1 dokumentált case study a v1 végéig | Aláírt szerződések |
+| **G4** | Bevétel a szabályozott réteg előtt | **≥ 3 fizető rendszerlicenc** (klinika / intézmény / HIS-vendor) | Aláírt SKU-P/H |
 | **G5** | A v2 (IIa) útvonal ne igényeljen újraírást | QMS + ugyanaz a L4-live motor shadowban, mint F3-on; klinikai UI-kapcsoló külön | REG-030; FR-470 flag |
 | **G6** | Nincs szabályozási bypass | 0 shadow/CDSS inferencia a klinikai pathen F1+ buildben | FR-470 CI |
 
@@ -103,7 +103,7 @@ Outcome-ok, nem output-ok.
 
 | Metrika | Success | Stretch | Módszer |
 | --- | --- | --- | --- |
-| Fizető partner | ≥ 3 | ≥ 5 | szerződés |
+| Fizető rendszerlicenc (SKU-P/H) | ≥ 3 | ≥ 5 | szerződés |
 | Override-ráta actionable riasztáson (F2+) | < 40% | < 25% | FR-600 |
 | Guideline-váltás utáni recall-kampány lefedettség | 100% érintett eset listázva | 100% + betegértesítés workflow | FR-510 |
 
@@ -658,6 +658,7 @@ A 12 vs 14 eltérés **nem** nyitott kérdés: lásd FR-310.
 | **OQ-12** | Genomics Reporting IG STU3 → STU4 időzítés | Engineering |
 | **OQ-13** | FR-540 beteg-riport 6. § (4) tanácsadásnak minősül-e? | Jogi |
 | **OQ-14** | Magyar klinikai ajánlás-fordítás szakmai lektora | Klinikai szakértő |
+| **OQ-17** | US: ugyanazon bináris F2/F3 kimenete eszköz-e (510(k) / De Novo / 2022 CDS guidance), NG-01 mellett? Nem az OQ-05 átvitele. US pack F2/F3 default LOCK. | US counsel |
 
 **Döntés, nem kérdés:** a v1 klinikai kimenet **nem** tartalmaz aktív, felírás-pillanatú riasztást, élő fenokonverzió-alkalmazást, és **nem** mutatja a shadowot a kezelőorvosnak. Ha mégis, az F2/MDSW, és az F1+ oszlop érvénytelen (NG-07/08).
 
@@ -673,13 +674,14 @@ A csomagok és a **gyártói kérés** a [F mellékletben](F-decision-package.md
 | RA + intézmény | OQ-15 | F.2 + E.4.1 + [OQ-15 kérelem](Outbound/OQ-15-intezmenyi-ra-egyoldalas.md) | F1s HIS-csatlakozás |
 | DPO | OQ-16 | F.3 + E.3.1 + [OQ-16 kérdőív](Outbound/OQ-16-dpo-dpia-kerdoiv.md) | Anonim vs FR-115 |
 | Ügyvezetés / RA | OQ-01 | F.4 + C + [OQ-01 owner](Outbound/OQ-01-iso-eeszt-owner-csomag.md) | 2026-09-30 kapu |
-| Üzlet | OQ-03 | F.5 + [OQ-03 term sheet](Outbound/OQ-03-l3-term-sheet.md) | L3 aláíró / COGS |
+| Üzlet | OQ-03 | F.5 + term sheet | Labor-**csatlakozó** (nem a mag-SKU) |
+| US counsel | OQ-17 | [market-packs](Sales/market-packs.md) | US F2/F3 feloldás |
 
 ### 10.2 Spec-fagyasztás és fejlesztési start (2026-08-12)
 
 **Döntés (D-18):** a v1.2 **követelmény- és iratíró szakasz lezárva**, amíg a külső állásfoglalások (F.6) meg nem érkeznek. A spec ettől a naptól **fagyasztott**: új FR/OQ/intended-purpose csak (a) beérkezett OQ-válasz, (b) P0 klinikai biztonsági hiba (pl. FR-210), vagy (c) explicit új felhasználói kérés esetén.
 
-Az OQ-05 / OQ-15 / OQ-16 / OQ-01 / OQ-03 **nem** zárulnak le. ELŐTERJESZTVE maradnak.
+Az OQ-05 / OQ-15 / OQ-16 / OQ-01 / OQ-03 / OQ-17 **nem** zárulnak le. ELŐTERJESZTVE / NYITOTT maradnak.
 
 A fejlesztés **elindulhat** a lenti határon. „F.6 nélkül nem indul a mérföldkő” = nincs **éles betegadat, HIS-csatlakozás, nem-MDSW forgalmazás**. Nem azt jelenti, hogy a git üresen marad.
 
@@ -690,12 +692,12 @@ A fejlesztés **elindulhat** a lenti határon. „F.6 nélkül nem indul a mérf
 | **F1s kód fixture-ön** | **Igen, zárt** | FR-440/450/450-BLIND/460/461/410-LIVE **szintetikus** adatokon, külön store, külön IAM. Nincs éles HIS, nincs valódi betegrekord. | Igen az **éles** HIS-csatlakozásra (OQ-15 + OQ-16). |
 | **ISO 9001 / Redmine** | **Igen** (F.4 BELSŐ IGEN) | C-000 tény, C-201 tanúsító; 2026-09-30 kapuőr | A tanúsítvány *ténye* nyitott; a folyamat nem vár counselre |
 | **Labor LOI** | **Igen** (F.5 BELSŐ IGEN) | [OQ-03 term sheet](Outbound/OQ-03-l3-term-sheet.md) kitöltve, név nélkül a specben | Igen az aláírt REG-020-ra |
-| **Értékesítés (G4)** | **Igen, hipotézisen** | [Sales/](Sales/README.md): SKU-L labor, SKU-C klinika=lelet nem CDSS, ajánlat OQ-05 feltétellel, MSP. Feltételezett OQ-válasz = eladási alap, nem pecsét. | Éles beteglelet / nem-MDSW licenc: OQ-05 + aláíró labor |
+| **Értékesítés (G4)** | **Igen, hipotézisen** | [Sales/](Sales/README.md): **SKU-P rendszerlicenc** klinikának/kórháznak; F1–F3 egy bináris; HU/EU/US flag; F2/F3 LOCK amíg minősítés. Labor = csatlakozó, nem a termék. | Éles ON modul: piaci OQ (05/15/16/17). `LIVE_CDS=true` nem sales-flag. |
 | **F2/F3 / `LIVE_CDS=true`** | **Nem** | Interruptive CDSS, élő fenokonverzió a klinikai UI-n | CE / in-house (REG-011) + NG-07 |
 
 **Tilos a fagyasztás alatt kódolni / szállítani:**
 
-- `LIVE_CDS=true` F1+ buildben; CDS Hooks a felírónak; shadow kimenet a klinikai UI-ra (NG-07/08, FR-470).
+- `LIVE_CDS=true` F1+ / HU-EU-US **LOCK** tenancyen; CDS Hooks a felírónak; shadow kimenet a klinikai UI-ra (NG-07/08, FR-470). A F2 **kód** a rendszer része (G5); az élő kimenet nem.
 - F1+ renderer, amely `MedicationEntry`-t olvas, vagy ha–akkor / receptre szűrt CPIC sort ad (R-021).
 - Valódi intézményi adat a shadow tárba OQ-16 + OQ-15 nélkül.
 - „Nem MDSW / nincs NB” állítás a counsel aláírása előtt.
@@ -722,7 +724,7 @@ Ha OQ-05 = **NEM**, a már megírt F1+ mag **nem dobandó**: IIa / CE pályára 
 
 | Fázis | Idő | Tartalom | Kimenet | MDR |
 | --- | --- | --- | --- | --- |
-| **F0** | 0–3 hó | Spec fagyasztva. Párhuzamos: Outbound küldés; ISO 9001; **Sales csomag** (SKU-L első); F1+ mag kód + gold set v0; F.6 *válasz*. | Ajánlat + MSP + küldött iratok | — |
+| **F0** | 0–3 hó | Spec fagyasztva. Outbound; ISO 9001; **SKU-P sales** (klinika veszi a rendszert); F1+ mag + F2 kód lakattal; F.6. | Rendszerlicenc-ajánlat + MSP | — |
 | **F1+** | 3–9 hó | L0–L2 + FR-240 + FR-400-STATIC + FR-410-EDU + FR-490. Matcher **ki**. FR-410-LIVE **ki a leletről**. | Fizető labor, white-label lelet | Nem MDSW **csak ha** OQ-05 igen |
 | **F1s** | F1+-szal párhuzamosan | Gateway (FR-460), shadow (FR-440), HITL (FR-450), izoláció (FR-470); REG-090/091 | G3 metrika, clinical evaluation input | Nem klinikai kimenet; OQ-15 |
 | **F2** | 6–18 hó | In-house élő CDSS (FR-520/530, FR-410-LIVE a klinikai UI-n); ISO 13485 + 62304 + 14971 | Case study | In-house (REG-011) |
@@ -750,9 +752,10 @@ A brief árazási modellje **követelmény-kötés**, nem megfigyelt ár:
 
 | Sáv | Modell | Spec-kötés |
 | --- | --- | --- |
-| Labor white-label (F1+) | Fix havidíj + volumensáv | FR-400-STATIC; nem per-patient |
-| Shadow/HITL (F1s) | A labor/intézmény kutatási megállapodása; nem a felíró licenc | FR-440–450 |
-| Klinikai CDSS (L4-live) | Per-clinician/hó | **Csak F2/F3**; FR-520 |
+| Labor white-label (F1+ modul) | Opcionális tenancy, ha a labor *is* licencel | FR-400-STATIC; **nem** a mag-SKU |
+| Platform (SKU-P) | Éves + telephely / klinikus | A klinika veszi a **rendszert**; F2/F3 aktiválás külön |
+| Shadow/HITL (F1s) | A licenc része, ha a pack ON | FR-440–450 |
+| Klinikai CDSS (L4-live) | Per-clinician/hó **aktiváláskor** | **Csak** F2/F3 ON; FR-520 |
 | PRS (L5) | Per-report, partner-átárazás | FR-430 |
 | Enterprise / EHR-vendor | Éves platform + integrációs egyszeri | P6; a F3 kapcsoló ugyanazon a csövön |
 
@@ -828,13 +831,13 @@ A teljes registry: [SOURCE-REGISTRY](ProcessArtifacts/SOURCE-REGISTRY.md). Korre
 
 ## 15. Amit ez a spec nem tud
 
-- **Nem** kitöltött F.6 aláíró-sor. Az F melléklet gyártói *kérés*; az [Outbound](Outbound/README.md) iratok küldhető tervezetek, nem counsel/DPO/RA határozat. A [Sales](Sales/README.md) a *feltételezett* válaszokra épülő ajánlat — G4, nem pecsét.
+- **Nem** kitöltött F.6. A [Sales](Sales/README.md) **rendszerlicenc** (SKU-P); F2 a dobozban lakattal. Nem pecsét. OQ-17 (US) nyitott.
 - **Nem** OQ-15 döntés. A „nincs hatása a kezelésre → nem Art. 62” *érv*, nem hatósági tény.
 - **Nem** OQ-16 DPIA-döntés. A FR-461 kontrollok a DPO inputjai.
 - **Nem** DPA, DPIA vagy etikai kérelem — E melléklet váz.
 - A10 **nem** F1s 72 órás puffer. Visszavonáskor 72 h kaszkád (törlés vagy irreverzibilis anonimizálás). Megőrzés: A15. §0.1.
 - A felhasználói hibrid-brief [1]–[7] hivatkozásai (meddeviceguide, monterail, arxiv 2603.14876, stb.) **L4/L5**; a Rule 11a állítás a MDCG/MDR primerre támaszkodik `[V]`, nem ezekre a blogokra.
-- **Nem** FDA CDS guidance mélyelemzés; csak annyi: az MDR-ben nincs equivalent enforcement discretion.
+- **Nem** FDA CDS guidance mélyelemzés. MDR-ben nincs equivalent discretion. US út = OQ-17, default LOCK.
 
 ---
 

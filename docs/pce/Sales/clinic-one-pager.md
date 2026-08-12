@@ -1,62 +1,66 @@
-# Klinikai egyoldalas — PGx-lelet a rutin ellátásban (SKU-C)
+# Klinikai egyoldalas — PCE rendszer (SKU-P)
 
 | | |
 | --- | --- |
 | **Feladó** | `[Gyártó neve]` |
-| **Címzett** | `[Klinika / rendelő neve]` — orvosigazgató / üzemeltetés |
-| **Tárgy** | Farmakogenetikai lelet a dokumentációban — nem felírási riasztás |
-| **Státusz** | Ajánlati egyoldalas. A szoftverlicenc OQ-05 counsel-állásfoglaláshoz kötött. |
+| **Címzett** | `[Klinika / kórház / hálózat]` — orvosigazgató / IT / üzemeltetés |
+| **Tárgy** | Farmakogenetikai **rendszer** a HIS-ben — F1+ / F1s / F2 / F3 egy platformon |
+| **Csomag** | `[HU | EU | US]` |
+| **Státusz** | Ajánlat. A bekapcsolt modulok a piaci csomag szerint. F2/F3 klinikai UI alapból **zárt**. |
 
 Tisztelt Partner!
 
-A PCE **nem** egy felugró ablak a receptírásnál. Az egy későbbi, minősített termék (F2). Amit ma meg tudunk oldani: a farmakogenetikai vizsgálat **aláírt, verziózott lelete** eljusson az orvoshoz, ne a beteg PDF-fiókjában vesszen el.
+A PCE **szoftverrendszer**, nem laborlelet-szolgáltatás. Ti licencelitek a motort. A genotípust a **ti laborotok** (vagy a kijelölt partnerlabor) adja; a vizsgálat díja az ő számlájuk. A rendszer F1-től F3-ig **egy** kódbázis: ami ma nem minősített, az **ki van kapcsolva**, nem hiányzik.
 
 ---
 
-## Mit kap a klinika
+## Ami a dobozban van
 
-1. **Partnerlaboratóriumi PGx-vizsgálat** a 2008. évi XXI. tv. szerinti tanácsadással és beleegyezéssel — a vizsgálatot **engedélyezett labor** végzi, nem a szoftvergyártó.
-2. **Aláírt lelet** (PDF és/vagy HIS-dokumentum): a labor által megállapított diplotípus + a génhez tartozó, **verziózott** CPIC / DPWG / FDA szövegtábla. Minden oldalon látszik, melyik irányelv-verzió.
-3. **Oktató bekezdés** a fenokonverzióról *általában* (tankönyvi, forrásolt) — **nem** azt mondja, hogy *ez a beteg* a most szedett gyógyszerétől fenokonvertált.
-4. **Callability:** ha a labor nem tudott egy gént biztonsággal hívni, a lelet **nem** ír hamis „normál”-t.
+| Réteg | Mit csinál | Most ezen a telephelyen |
+| --- | --- | --- |
+| **F1+** | Diplotípus → verziózott CPIC/DPWG/FDA lelet, callability, aláíróhely, HIS-dokumentum | `[ON / LOCK]` — HU/EU: OQ-05 |
+| **F1s** | Ugyanaz a döntéstámogató motor **árnyékban**; a felíró nem látja; HITL utólag | `[ON / LOCK]` — DPO/RA |
+| **F2** | Élő CDSS a felírás pillanatában, intézményen belül | **LOCK** — in-house dosszié után |
+| **F3** | Ugyanaz a CDSS forgalomba hozatalra | **LOCK** — CE (EU) / FDA (US) után |
 
-## Mit nem kap (szándékosan)
-
-- Figyelmeztetést a felírás gombjakor („ezt a szert most ne add”).
-- Konkrét dózist milligrammban a szoftvertől.
-- Azt, hogy a szoftver helyettesíti a kezelőorvos döntését.
-- Betegoldali VCF-feltöltést (otthoni „genetikai app”).
-
-Ezek vagy törvénybe / MDR-be ütköznének, vagy a későbbi, CE-zett CDSS részei.
+A lakat **szándékos**. Átminősítés után signed release, nem „bekapcsoljuk configból”. Részlet: [market-packs.md](market-packs.md).
 
 ---
 
-## Ki felelős
+## Amit ti adtok a rendszernek
 
-| Szerep | Ki |
+- HIS / LIS csatlakozás (FHIR vagy a vendorotok).
+- Labor-forrás: outside-call vagy VCF — **nem** a PCE hív allélt nyers adatból.
+- 2008/XXI. tanácsadás és beleegyezés, ha HU csomag (a szoftver kapuz).
+- Adatkezelői szerep; a gyártó feldolgozó.
+
+---
+
+## Amit nem ígérünk a zárás napján
+
+- Hogy hétfőn élő riasztás megy a receptre, mert „a kódban benne van”.
+- Hogy a gyártó elvégzi a genetikai vizsgálatot.
+- EESZT eRecept/eProfil írást (HU).
+- FDA-kiskaput az európai telephelyre.
+
+---
+
+## Ár (kitöltendő)
+
+| Tétel | Összeg |
 | --- | --- |
-| Genetikai vizsgálat, diplotípus, lelet aláírása | Partnerlabor szakorvosa |
-| Terápiás döntés | Kezelőorvos |
-| Szoftver (formázás, guideline-társítás, napló) | `[Gyártó neve]` mint technológiai szállító |
-| Adatkezelő | A vizsgálatot rendelő / végző egészségügyi szolgáltató |
+| Platform, `[HU\|EU\|US]` csomag | `[Yp]` / év |
+| Telephely / klinikus sáv | `[Yc]` |
+| Indítás / HIS-illesztés | `[Y0]` egyszeri |
+| F2/F3 aktiválás (ha a flag feloldódik) | `[Ya]` — külön záradék |
 
-A lelet alján szereplő nyilatkozat **nem** „a fejlesztő minden felelősséget kizár”. A termékfelelősség nem disclaimerezhető.
-
----
-
-## Ár és szerződés
-
-A klinika a **laboratóriumi szolgáltatást** fizeti a labor díjszabása szerint. A PCE-t a labor (vagy a HIS-szállító) licenceli.
-
-Ha a klinika **közvetlen** szoftverszerződést kér: az a [megrendelőlap](proposal-order.md) SKU-C / SKU-H sora, **hatálybalépési feltétellel** (OQ-05). Addig fizetős, zárt pilot szintetikus vagy labor-kontrollált eseteken.
-
-Roadmap (nem v1 ígéret-dátum): ugyanazon az integrációs csövön később élő döntéstámogatás, **csak** minősítés után.
+Pilot: sandbox, szintetikus vagy labor-kontrollált eset, `[Yp_pilot]`, `[T]` hét, éles TAJ nélkül.
 
 ---
 
 | | |
 | --- | --- |
 | Kapcsolat | `[név, e-mail, telefon]` |
-| Melléklet | A.1 rendeltetés; minta-lelet (szintetikus); customer-ra-faq |
+| Melléklet | market-packs; RA-FAQ; minta-UI (F2 = lakat) |
 
-*Nem orvostechnikai CDSS-ajánlat. Nem jogi állásfoglalás.*
+*Nem CE-jel. Nem FDA-clearance. A zárt modul a rendszer része, klinikai használata tiltott.*
