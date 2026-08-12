@@ -52,24 +52,62 @@ A gateway **nem** a PCE felhőjében fut. Kimenet csak akkor hagyja el az intéz
 | `Patient.id` | Új, nem visszavezethető UUID; **nincs** kulcs a PCE-nél | Intézményi pszeudonim; kulcs **csak** intézménynél |
 | `Patient.birthDate` | Legfeljebb **év** | Legfeljebb év, hacsak a protokoll indokolja |
 | `Patient.gender` | Megtartható | Megtartható |
-| `Observation` PGx | kód + value (diplotípus); callability | u.a. |
-| `MedicationRequest` | ATC / OGYÉI kód + adagolási struktúra, ha a protokoll kéri | u.a. |
+| `Observation` PGx | kód + **coarsened** value (FR-461); callability | nyers diplotípus a DPIA szerint |
+| `MedicationRequest` | ATC **≤ 4. szint**; **nincs** doseQuantity; `authoredOn` → negyedév | ATC5 a DPIA szerint; FR-115 |
 | `Practitioner`, org, ward, username | Törölve | Törölve vagy intézményi kód |
 | Meta `source`, `lastUpdated` belső ID-k | Tisztítva | Tisztítva |
 
 Irreverzibilis anonimizálás: nincs olyan kulcs, amellyel a gyártó a gént a személyhez köthetné. Ha van kulcs az intézménynél → **álnevesítés**, GDPR személyes adat, FR-115 kötelező.
 
-A 2008/XXI. 26. § szerinti 30 éves genetikai nyilvántartás az **intézmény / biobank** kötelezettsége. A gyártó shadow store-ja: kutatási cél, FR-115 szerinti törlés; nem helyettesíti a 30 éves intézményi naplót.
+A 2008/XXI. 26. § szerinti 30 éves genetikai nyilvántartás az **intézmény / biobank** kötelezettsége. A gyártó shadow store-ja: kutatási cél, FR-115 szerinti törlés; nem helyettesíti a 30 éves intézményi naplót. Megőrzés: **A15** (protokoll), nem A10.
+
+### E.3.1 FR-461 — aggregáció az anonim úton (OQ-16 csomag)
+
+A DPO/DPIA **előtt** ez a default. Ha a DPIA szerint így is személyes adat → A12 hamis, álnevesített út + FR-115.
+
+WHO ATC szintek `[V]` (S032): 1. anatómiai (1 betű) → 2. terápiás (3 karakter, pl. N06) → 3. farmakológiai (4 karakter, pl. N06A) → 4. kémiai alcsoport (5 karakter, pl. N06AB) → 5. hatóanyag (7 karakter, pl. N06AB10).
+
+| Kontroll | Default (A14) | Ha a DPO szigorít | Ár a G3 metrikának |
+| --- | --- | --- | --- |
+| ATC | max 4. szint | 3. vagy 2. szint | FR-410-LIVE nem különbözteti a paroxetint más SSRI-től, ha csak N06A megy ki (R-020) |
+| Diplotípus | nyers, ha a cella ≥ k és freq ≥ küszöb | csak fenotípus-osztály / drop | ritka allél recall csökken |
+| Idő | naptári negyedév | év | longitudinális összekötés nehezebb (álnevesített úton kell) |
+| k | ≥ 5 intézményi cella | nagyobb k | több drop (`E-SHADOW-003`) |
+
+**Ritka diplotípus:** küszöb 0,5% `[ASSUMPTION]` A14; a gyakoriság-tábla verziózott config (gnomAD / PharmGKB — a DPIA megnevezi). Intézményi cella: (fenotípus-osztály × ATC-szint × negyedév) count a gateway **helyi** statisztikáján; a nyers count **nem** megy a PCE-hez.
+
+**Drop vs coarsen:** a gateway configja. Drop: a HIS fail-open, a HITL nem kap sort. Coarsen: `diplotype_granularity = CLASS`.
 
 ---
 
 ## E.4 HITL felület (FR-450)
 
+```
+[ Belépés: hitl_reviewer, külön app ]
+        │
+        ▼
+[ Esetlista — opák ID, pl. A87F3 ]
+        │  látszik: gén + (coarsened) diplotípus/osztály + ATC3/4 + negyedév
+        │  nem látszik: név, kor, intézmény, orvos
+        ▼
+[ FR-450-BLIND 1: reviewer saját strukturált döntése, motor tipp rejtve ]
+        │
+        ▼
+[ FR-450-BLIND 2: motor kategória felvillan → AGREE / DISAGREE / INSUFFICIENT_DATA ]
+        │
+        ▼
+[ reason_code (+ opcionális szöveg, PII-scan) → HITL store / clinical evaluation input ]
+```
+
 - Szerep: `hitl_reviewer` ≠ `clinician` a felíró tenancyben. Ugyanaz a természetes személy lehet mindkettő, **más login / más app**.
-- Esetkártya: diplotípus, (ál)anonim gyógyszerlista, motor-kimenet (`functional_phenotype`, javasolt stratégia-kategória, **nem** kötelező `dose_mg` a v1 shadowban), guideline-verzió.
-- Válasz: `AGREE` \| `DISAGREE` \| `INSUFFICIENT_DATA` + kötelező kategória-indok.
-- Időzítés: nem a vizit alatt; batch (pl. havi) vagy bizottsági ülés.
-- G3 / clinical evaluation metrika: reviewer egyetértés a gold set + élő shadow mintán. Nem a felíró override-rátája (az F2 FR-600).
+- Nem a vizit alatt; batch (pl. havi) vagy bizottsági ülés → A15 megőrzés.
+- G3 metrika: vak döntés vs motor (ha BLIND be), különben AGREE-ráta. Nem a felíró override-rátája (az F2 FR-600).
+
+### E.4.1 Vak mód és OQ-15
+
+A vak HITL **támogató bizonyíték** arra, hogy a reviewer nem a napi ellátásban, nem a gép élő tanácsára gyógyít. **Nem** Art. 62-mentesség.
+
+Az érv, amit a RA/intézmény OQ-15-höz vihet (és a counsel elvethet): a L4-live kimenet nem befolyásolja az index-kezelést, mert a kezelőorvos nem látja, és a HITL utólagos. Az MDR Art. 62 hatóköre ettől még nyitott — REG-090 az első csatlakozás **előtt**.
 
 ---
 
@@ -82,7 +120,9 @@ A 2008/XXI. 26. § szerinti 30 éves genetikai nyilvántartás az **intézmény 
 
 Adatkezelő: labor/kórház. Gyártó: adatfeldolgozó a DPA szerint, hacsak a counsel mást nem mond a saját kutatási adatbázisra. DPIA: REG-050 kiterjesztése a shadowra **élesítés előtt**.
 
-„Tiszta anonimizálás után szabadon tanítjuk a modellt” — csak akkor, ha a anonimizálás **visszafordíthatatlan**. Genetikai + ritka gyógyszerkombináció re-identifikálhat; a DPIA-nak ezt kezelnie kell (k-anonymity / ritka kombináció elnyomása). `[ASSUMPTION]` A13: a gateway ritka-kombináció szűrőt alkalmaz, vagy az álnevesített utat választják.
+„Tiszta anonimizálás után szabadon tanítjuk a modellt” — csak akkor, ha a anonimizálás **visszafordíthatatlan**. Genetikai + ritka gyógyszerkombináció re-identifikálhat; FR-461 + DPIA. `[ASSUMPTION]` A13/A14.
+
+**A10 ≠ shadow TTL.** Ha a hozzájárulás-visszavonás SLA (A10) hamis, a FR-110 határidő változik — **nem** a HITL megőrzés. Ha A12 hamis → álnevesítés + FR-115, nincs „csendes” anonim shadow. Ha A13/A14 hamis → durvább ATC vagy kötelező álnevesítés; G3 recall csökken (R-020).
 
 ---
 
@@ -121,3 +161,5 @@ In-house F2 (A.7) más jogi doboz, mint a gyártó felhőjében futó shadow.
 - [ ] Given `clinician` szerep, When a klinikai API-t hívja, Then 404/403 a `/shadow/**` és `/hitl/**` útvonalakra.
 - [ ] CI: call-graph a report-renderer és a cds-hooks modul **nem** függ a shadow-writer kimeneti táblájától (csak fordítva tilos; a shadow olvashatja a diplotípust).
 - [ ] Feature flag `LIVE_CDS=true` csak signed release-ben, REG-010 F2/F3 intended purpose mellett; F1+ buildben a flag compile-time false.
+- [ ] Anonim ingest: ATC5 vagy nap-szintű `authoredOn` → elutasítva.
+- [ ] F1+ renderer: `MedicationEntry` nincs a call-graphben; tiltott token → `E-EDU-001`.

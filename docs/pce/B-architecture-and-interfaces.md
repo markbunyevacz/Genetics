@@ -82,10 +82,10 @@ Külön adatbázis, külön IAM. A klinikai `clinician` szerep **nem** olvassa.
 
 | Entitás | Kötelező mezők | Megjegyzés |
 | --- | --- | --- |
-| **GatewayEvent** | `id`, `received_at`, `org_id`, `mode` (ANON \| PSEUDO), `payload_hash` | FR-460; PII nélküli bundle |
+| **GatewayEvent** | `id`, `received_at`, `org_id`, `mode` (ANON \| PSEUDO), `payload_hash`, `atc_level`, `time_grain`, `diplotype_granularity`, `suppressed?` | FR-460/461; PII nélküli bundle |
 | **ResearchConsent** | `id`, `pseudo_id?`, `granted_at`, `withdrawn_at?` | FR-115; csak álnevesített út; anonim úton nincs |
-| **ShadowInference** | `id`, `gateway_event_id`, `config_id`, `diplotypes[]`, `medications[]`, `functional_phenotype[]`, `live_findings[]`, `clinical_context` | FR-400-LIVE + FR-410-LIVE; **soha** nem FK a Report-ra |
-| **HitlReview** | `id`, `inference_id`, `reviewer_id`, `verdict` (AGREE \| DISAGREE \| INSUFFICIENT_DATA), `reason_code`, `reviewed_at` | FR-450; G3 metrika |
+| **ShadowInference** | `id`, `gateway_event_id`, `config_id`, `diplotypes[]`, `medications[]` (ATC≤4), `functional_phenotype[]`, `live_findings[]`, `clinical_context` | FR-400-LIVE + FR-410-LIVE; **soha** nem FK a Report-ra |
+| **HitlReview** | `id`, `inference_id`, `reviewer_id`, `blind_decision?`, `verdict` (AGREE \| DISAGREE \| INSUFFICIENT_DATA), `reason_code`, `reviewed_at` | FR-450 / FR-450-BLIND |
 | **BuildFlag** | `LIVE_CDS` | Compile-time; F1+ = `false` |
 
 `live_findings[]` stratégia-kategória (pl. `CONSIDER_ALTERNATIVE`); v1 shadowban **nincs** `dose_mg`.
@@ -131,7 +131,7 @@ A HIS/LIS **nem** a PCE klinikai API-ját hívja szinkron. Esemény → intézm�
 - A PCE **nem** fogad nyers `Patient.name` / TAJ csomagot. Ha a bundle identifier-t tartalmaz, `E-SHADOW-001`, a rekord **nem** kerül a HITL store-ba.
 - Álnevesített út: hiányzó `ResearchConsent` → `E-CONSENT-006`, nincs továbbítás.
 - Aszinkron: 202 Accepted; a HIS fail-open (E.2).
-- Csonkolási szabály: E.3.
+- Csonkolási szabály: E.3 + E.3.1 (FR-461). ATC5 / pontos `authoredOn` / k-alatti cella → `E-SHADOW-001` vagy `E-SHADOW-003`.
 
 ---
 
@@ -190,7 +190,7 @@ Query: gén és/vagy hatóanyag. Válasz: verziózott guideline-szövegek. **Nin
 
 Csak `hitl_reviewer` (és DPO/admin a törléshez). `clinician` → 403/404 (`E-ISO-001`).
 
-`GET /v1/hitl/inferences` — batch kártyák. `POST /v1/hitl/inferences/{id}/reviews` — verdict.
+`GET /v1/hitl/inferences` — batch kártyák (opák ID, ATC≤4, nincs PII). `POST /v1/hitl/inferences/{id}/blind` — vak döntés. `POST /v1/hitl/inferences/{id}/reviews` — verdict a motor felfedése után.
 
 ---
 
@@ -214,10 +214,12 @@ Csak `hitl_reviewer` (és DPO/admin a törléshez). `clinician` → 403/404 (`E-
 | `E-CALLABILITY` | — | génszintű, nem feltétlen HTTP | `INDETERMINATE` a riportban, nem error a case-en, ha más gének CALLED |
 | `E-TIMEOUT-CDS` | — | CDS > 2 s | Hívó fail-open; PCE logolja. **F2 only.** |
 | `E-GONE-010` | 410 | Visszavont / törölt riport | FR-110 |
-| `E-SHADOW-001` | 400 | Gateway kimenet PII-t tartalmaz | A shadow ingest elutasít; a HIS nem blokkol. |
+| `E-SHADOW-001` | 400 | Gateway kimenet PII-t vagy ATC5-öt / nap-szintű időt tartalmaz | A shadow ingest elutasít; a HIS nem blokkol. |
 | `E-SHADOW-002` | 403 | Shadow hívás nem a gateway service-accounttól | |
+| `E-SHADOW-003` | 202 | Rekord FR-461 miatt elnyomva (k / ritka diplotípus) | Nincs HITL sor; csak aggregált számláló. |
 | `E-ISO-001` | 403/404 | `clinician` a `/shadow/**` vagy `/hitl/**` úton | FR-470 |
 | `E-ISO-002` | 404 | CDS endpoint F1+ buildben | `LIVE_CDS=false` |
+| `E-EDU-001` | 422 | F1+ renderer tiltott ha–akkor / „Ön” token | FR-410-EDU |
 
 Figyelmeztetés (`W-*`) nem csendes siker. A kliensnek meg kell jelenítenie.
 
@@ -230,6 +232,8 @@ Két üzemmód. Keverésük a aláírt leleten = NG-07.
 ### B.6.1 FR-410-EDU (F1+ lelet)
 
 Statikus, verziózott bekezdés a guideline/irodalom szerint: mely inhibitor/induktor *osztályok* módosíthatják a funkcionális fenotípust. **Nem** olvassa a `MedicationEntry` listát. **Nem** ír `FunctionalPhenotype` sort. Nem állítja, hogy *ez a beteg* jelenleg fenokonvertált.
+
+Invariánsok (A.1.2): nincs ha–akkor a beteg gyógyszerére; nincs kombinált diplotípus+med-lista hívás; a gén teljes guideline-táblája kimegy. Tiltott tokenek: „Ön”, „ennél a betegnél”, „a most felírt”. `E-EDU-001`.
 
 ### B.6.2 FR-410-LIVE (F1s shadow / F2 klinikai UI)
 

@@ -35,6 +35,7 @@ Hozzáférés dátuma: 2026-08-12, kivéve ahol jelezve. Authority: L1 hivatalos
 | S029 | I-10 hibrid-brief [7] PMC shadow/HITL | Folyóirat (ellenőrizendő) | L2 ha a PMC cikk a hivatkozott | https://pmc.ncbi.nlm.nih.gov/articles/PMC12482788/ | Shadow-mode analógia; E melléklet műszaki, nem ez a cikk a jogalap |
 | S030 | CPIC guidelines | Hivatalos guideline | L2 | https://cpicpgx.org/ | FR-400-STATIC; enciklopédia-analógia I-10 |
 | S031 | GDPR (EU) 2016/679 Art. 6, 9, 17, 32, 35 | Jogszabály | L1 | EUR-Lex | FR-115, REG-050/091, E.5 |
+| S032 | WHO CC ATC structure (szintek 1–5) | Hivatalos | L1 | https://www.whocc.no/atc/structure_and_principles/ | FR-461 ATC csonkolás |
 
 **Nem került a registrybe (szándékos):** Fortune/Mordor/Straits TAM-számok (egymásnak ellentmondó L4/L5); Allelica ACC/AHA idézés (céges PR, `[C]`); YouScript 39%/71% kórházi csökkenés (céges közlés).
 

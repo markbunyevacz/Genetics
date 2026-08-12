@@ -49,7 +49,8 @@ A szoftver **nem** végez egyedi betegre szabott klinikai értékelést a aktuá
 - Diplotípus + callability a laborhívásból (FR-240).
 - Statikus, verziózott guideline-szöveg a **meghívott génhez** (nem a felírt gyógyszerhez kötött pop-up): pl. „A beteg CYP2D6 diplotípusa a labor szerint \*1/\*1 (NM). A CPIC vX szerint a CYP2D6 NM státuszhoz tartozó gyógyszer–stratégia párok a következők: [táblázat, forrás, URL].”
 - Enciklopédia-nézet (FR-480): az orvos a génre kattint, a szoftver kilistázza a hivatalos útmutatókat; a beteg aktuális receptjéhez **nem** párosít proaktívan.
-- Fenokonverzió **oktató** bekezdés: általános, guideline-ból vett lista (mely inhibitorok *általában* módosíthatnak), **anélkül**, hogy a rendszer a beteg aktuális gyógyszerlistájára alkalmazná (FR-410-EDU).
+- Fenokonverzió **oktató** bekezdés: általános, guideline-ból vett lista (mely inhibitorok *általában* módosíthatnak), **anélkül**, hogy a rendszer a beteg aktuális gyógyszerlistájára alkalmazná (FR-410-EDU, A.1.2).
+- A génhez tartozó **teljes** publikált gyógyszer/osztály-tábla, nem a beteg aktuális receptjére szűrve (FR-400-STATIC).
 
 **Tilos (F1+ klinikai kimenet) — ez már F2/F3 vagy shadow:**
 
@@ -82,6 +83,23 @@ Counsel-review tárgy. **Nem** minősít ki MDSW-ből.
 > Aláíró orvos: \[laboratóriumi szakorvos neve és pecsétszáma\]
 
 A „fejlesztő minden felelősséget kizár” formula **nincs** a sablonban: a termékfelelősség / MDR GSPR nem disclaimerezhető el; a counsel tölti ki a felelősségi bekezdést.
+
+### A.1.2 FR-410-EDU / FR-400-STATIC — OQ-05 technikai csomag
+
+**Nem** jogi igazolás. A counsel ezt a csomagot kapja. OQ-05 nyitott marad: a gén-szintű CPIC terápiás szöveg önmagában lehet Rule 11a.
+
+| Szabály | Tilos | Szabad |
+| --- | --- | --- |
+| Ha–akkor | „Mivel Ön [gyógyszer]-t kap, a CYP2D6 miatt váltson [Y]-ra / csökkentse a dózist.” | Nincs beteg-gyógyszer kötés. |
+| Tankönyv | Szabadon generált, forrás nélküli tanács | Verziózott guideline-kivonat + URL, mint enciklopédia. |
+| Kombináció | Diplotípus **és** aktuális gyógyszerlista egy függvényben | A lelet a gén **összes** CPIC/DPWG/FDA sorát mutatja, a recepttől függetlenül. |
+| Fenokonverzió | `functional_phenotype` ebből a betegből | Osztály-szintű oktató bekezdés (FR-410-EDU). |
+
+Példa-szerkezet (nem végleges klinikai szöveg; lektor: OQ-14):
+
+> A CPIC nemzetközi irányelvei alapján a CYP2D6 ultragyors metabolizáló *kategóriában* a triciklikus antidepresszánsok alkalmazásakor fokozott metabolizáció és a hatás elmaradása *a guideline szerint* várható. Az irányelv ilyen *kategóriában* alternatív terápiát vagy dózismódosítást tárgyal. Részletes útmutató: CPIC Guideline [azonosító] v[n], [URL].
+
+A „Ön” / „ennél a betegnél” / „a most felírt” formulák a F1+ rendererben **tiltott tokenek** (CI).
 
 ---
 
@@ -159,4 +177,4 @@ REG-011. Nem mentesít 2008/XXI. és GDPR alól. Intézményen kívül = F3.
 
 > Védhető-e az A.1 F1+ pozíció, ha a kimenet a labor-diplotípushoz verziózott CPIC/DPWG/FDA **gén-szintű** szövegkivonatot rendel, **nincs** aktuális-gyógyszer párosítás, **nincs** fenokonverzió-alkalmazás, **nincs** CDS Hooks, és az aláíró a labor orvosa?
 
-A v1.1 kérdés tágabb volt (gyógyszerajánlás-szöveg általában). A v1.2 szűkít. A válasz továbbra is **külső counsel**. Csomag: A.1, A.1.1, A.4, FR-400-STATIC, FR-470, REG-010, MDCG Rev.1.
+A v1.1 kérdés tágabb volt (gyógyszerajánlás-szöveg általában). A v1.2 szűkít. A válasz továbbra is **külső counsel**. Csomag: A.1, A.1.1, **A.1.2**, A.4, FR-400-STATIC, FR-410-EDU, FR-470, REG-010, MDCG Rev.1.

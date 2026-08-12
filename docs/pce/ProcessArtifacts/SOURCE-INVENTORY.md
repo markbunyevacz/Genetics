@@ -20,13 +20,14 @@
 | I-08 | PharmCAT changelog (F5 removal, v2.11.0) | HTML | EN | Change-control bizonyíték | primer |
 | I-09 | e-egeszsegugy.gov.hu/fejlesztoknek | HTML | HU | EESZT fejlesztői portál | primer |
 | I-10 | Felhasználói hibrid-brief: F2/F3 képesség F1 minőségben; „regulatory bypass” elemzés; shadow/HITL/GDPR/FHIR váz | md (chat) | HU | v1.2 termék- és szabályozási input; blog-URL-ek L4/L5 | n/a |
+| I-11 | OQ technikai csomag: FR-461 gateway, FR-410-EDU szabályok, vak HITL; A10 félreolvasás (72 h mint shadow TTL) | md (chat) | HU | v1.2 finomhangolás; A10 **nem** átvéve TTL-ként | n/a |
 
 ## Átfedés
 
 - I-01 ⊂ I-02 strukturálva; I-01 joghelyei I-03/I-04/I-05 ellen ellenőrizve.
 - I-06 és I-07 génlistája **nem azonos** (12 vs 14) — ez a v1.1 OQ-02 lezárása.
 - I-02 üzleti/TAM/versenytárs anyaga **nem** került a SRS-be (deszkóp: üzleti dosszié ≠ követelmény).
-- I-10 a v1.1 F1-et **szűkíti** (élő fenokonverzió le a leletről; shadow külön path). A brief [1]–[7] URL-jei **nem** L1 a Rule 11a-hoz — az I-05 / MDR.
+- I-11 az OQ-05/15/16 **technikai** csomagja; az OQ-kat nem zárja. I-11 A10=shadow-TTL állítása **elvetve** (VC-12).
 
 ## Metaadat-ellentmondások
 

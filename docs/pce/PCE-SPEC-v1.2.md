@@ -8,7 +8,7 @@
 | **Hatókör** | PGx platform, magyar/EU piac; F1+ statikus lelet + F1s shadow HITL + F2/F3 CDSS |
 | **Előző** | PCE-SPEC-v1.1 — F1 passzív L4 + élő fenokonverzió a leleten; v1.2 ezt szűkíti |
 | **Mellékletek** | [A](A-intended-purpose-and-modules.md) · [B](B-architecture-and-interfaces.md) · [C](C-eeszt-f0-checklist.md) · [D](D-risk-and-traceability.md) · [E](E-shadow-hitl.md) |
-| **Következő gate** | OQ-05 (szűkített) + OQ-15 (shadow = vizsgálat-e) |
+| **Következő gate** | OQ-05 + OQ-15 + OQ-16 (csomag megvan, döntés nyitott) |
 
 Jelölések: `[V]` primerben verifikált · `[R]` egy forrás · `[C]` céges közlés · `[CORRECTED]` a v1.0-hoz képest javítva · `[ASSUMPTION]` · `[NEEDS VERIFICATION]`.
 
@@ -29,10 +29,12 @@ Kérdés helyett rögzítve. Ha bármelyik hamis, a jelzett szakasz újraírand�
 | A7 | Elsődleges UI-nyelv magyar; a klinikai ajánlás-szöveg HU, ha szakmai lektor van, különben az angol eredeti. | FR-610 |
 | A8 | EESZT-útvonal F1-ben: **modul** az engedélyezett medikai rendszerben, nem saját EESZT-csatlakozás (NG-05). A 2026-09-30 ISO 9001 akkor is F0, ha a vevő a vendor. | REG-040a, C melléklet |
 | A9 | A gyártó a `genetics` repo tulajdonos szervezete. **Név ebben a dokumentumban nincs kitalálva.** | Fejléc, REG-031 |
-| A10 | `[ASSUMPTION]` A hozzájárulás-visszavonás kaszkádjának **üzemi SLA-ja 72 óra**. A 2008/XXI. 26. § (1) határidőt nem ad. | FR-110 |
+| A10 | `[ASSUMPTION]` A **klinikai** hozzájárulás-visszavonás kaszkádjának üzemi SLA-ja **72 óra** (FR-110). A 2008/XXI. 26. § (1) határidőt nem ad. **Nem** a shadow store TTL-je. | FR-110 |
 | A11 | A v1.2 kanonikus szabályozási stratégia a **legális hibrid** (A.0–A.2): F1+ statikus lelet; F1s shadow HITL a kezelőorvos nélkül; F2/F3 csak minősítés után. | A, E, FR-440–470 |
 | A12 | Shadow default: **irreverzibilis anonimizálás** a intézményi gatewayen. Álnevesítés + FR-115 csak ha longitudinális követés kell. | E.5, FR-460 |
-| A13 | `[ASSUMPTION]` A gateway ritka gén–gyógyszer kombinációt elnyom vagy az álnevesített utat választják (re-ID kockázat). | E.5, DPIA |
+| A13 | `[ASSUMPTION]` A gateway ritka gén–gyógyszer kombinációt elnyom (FR-461) vagy az álnevesített utat választják (re-ID). | E.3.1, DPIA, OQ-16 |
+| A14 | `[ASSUMPTION]` Anonim path default: ATC max **4. szint** (5 karakter, pl. N06AB); ATC5 (7 karakter, hatóanyag) **tilos**; ritka diplotípus küszöb **0,5%** (forrás a DPIA-ban); k-anonymity **k ≥ 5** intézményi cellán. A DPO szigoríthat (ATC3 / nagyobb k). | FR-461; OQ-16 |
+| A15 | A shadow/HITL store megőrzése a **klinikai értékelési / vizsgálati protokoll** szerint (hónapok–évek, havi HITL-hez kell). **Nem** 72 óra. A 72 h = A10, csak visszavonási kaszkád. | E.5; FR-110 vs FR-440 |
 
 **Nem feltevés, hanem verifikált korlát:** a hazai jogi és EESZT-korlátok (§4) nem tárgyalhatók terméktervezéssel.
 
@@ -365,10 +367,12 @@ A v1 default gene set = PREPARE 12, `config_id = pgx-prepare-12@<version>`. HLA-
 
 - [ ] CPIC, ClinPGx-annotált DPWG és FDA-címke **szövegkivonat** a meghívott **génhez**, diplotípus/fenotípus-kategória szerint, ahogy a publikált táblázatban szerepel.
 - [ ] A társítás **nem** a HIS-ben éppen felírt gyógyszerhez kötött riasztás.
+- [ ] Given a génhez a guideline-ban N gyógyszer/osztály-sor van, When F1+ riport, Then **mind az N sor** megjelenik — **nincs** szűrés a beteg `MedicationEntry` listájára (A.1.2).
 - [ ] Given azonos génre eltérő CPIC és DPWG, When riport, Then **mindkettő** forrásmegjelöléssel; nincs szintetizált harmadik ajánlás.
 - [ ] Minden kivonat: forrás, verzió, evidencia-szint, URL.
 - [ ] `assert unsourced_claims == 0`.
 - [ ] Nincs `dose_mg`, nincs „csökkentsd 50%-kal ennél a betegnél”.
+- [ ] Negatív teszt: a report-renderer nem kap `MedicationEntry`-t argumentumként.
 
 #### FR-400-LIVE · Beteg–gyógyszer párosítás — **P0 shadow / P0 F2** ; **tilos F1+ leleten**
 
@@ -378,8 +382,14 @@ A v1 default gene set = PREPARE 12, `config_id = pgx-prepare-12@<version>`. HLA-
 
 #### FR-410-EDU · Fenokonverzió oktató szöveg — **Product P0 (F1+)**
 
-- [ ] A lelet tartalmazhat **általános**, verziózott bekezdést: mely inhibitor/induktor osztályok *a szakirodalom/guideline szerint* módosíthatják a funkcionális fenotípust.
+OQ-05 counsel-csomag része (A.1.2). **Nem** zárja le az OQ-05-öt.
+
+- [ ] A lelet tartalmazhat **általános**, verziózott bekezdést: mely inhibitor/induktor *osztályok* a szakirodalom/guideline szerint módosíthatják a funkcionális fenotípust.
 - [ ] A bekezdés **nem** állítja, hogy *ez a beteg* jelenleg fenokonvertált, és **nem** olvassa a `MedicationEntry` listát.
+- [ ] **Ha–akkor tiltás:** nincs olyan mondat, amely a beteg konkrét gyógyszerét a génjéhez köti (pl. „mivel Ön X-et kap, váltson Y-ra”).
+- [ ] **Tankönyvi forma:** statikus enciklopédia-kivonat; kötelező guideline-azonosító + verzió + URL. Példa-szerkezet: „A CPIC v[n] szerint a CYP2D6 ultragyors metabolizáló *kategóriában* a [gyógyszercsoport] alkalmazásakor [publikált stratégia]. Részletes útmutató: [URL].”
+- [ ] **Kombinációs tilalom:** az F1+ renderer nem futtat olyan függvényt, amelynek bemenete egyszerre diplotípus **és** a case gyógyszerlistája. CI call-graph.
+- [ ] Gold set: ≥ 5 tiltott „ha–akkor” minta → a renderer elutasítja / nem generálja.
 
 #### FR-410-LIVE · Fenokonverzió-alkalmazás — **Product P0 (F1s/F2)** ; **tilos F1+ leleten**
 
@@ -412,13 +422,32 @@ A tudományos differenciátor. G3 a shadow gold seten.
 #### FR-450 · HITL review UI — **Product P0 (F1s)**
 
 - [ ] Szerep `hitl_reviewer` elválasztva a felíró `clinician` tenancytől (E.4).
-- [ ] Kártya: diplotípus, gyógyszerlista, motor-kimenet, guideline-verzió; válasz `AGREE` / `DISAGREE` / `INSUFFICIENT_DATA` + indok.
+- [ ] Kártya (anonim út): opák `case_display_id` (pl. `A87F3`); gén; coarsened diplotípus/fenotípus-osztály; ATC3 vagy ATC4 (FR-461); guideline-verzió. **Nincs** név, TAJ, életkor, születési év, intézményi/osztály-azonosító, orvosnév. Motor-kategória: csak FR-450-BLIND 2. lépése után, vagy ha a vak mód ki van kapcsolva.
+- [ ] Válasz: `AGREE` / `DISAGREE` / `INSUFFICIENT_DATA` + kötelező `reason_code`; szabad szöveg opcionális, PII-scanner a mentéskor.
 - [ ] Nem a vizit alatt; batch vagy bizottság.
+- [ ] **P1 (OQ-15 csomag):** vak mód (FR-450-BLIND, E.4.1) default **be** az első intézményi protokollban, amíg OQ-15 el nem dől.
+
+#### FR-450-BLIND · Vak HITL — **P1 (F1s)**
+
+- [ ] 1. lépés: a reviewer **nem** látja a motor tippjét; strukturált saját döntést rögzít (`CONTINUE` / `ALTERNATIVE` / `DOSE_CHANGE` / `INSUFFICIENT`).
+- [ ] 2. lépés: a rendszer megmutatja a motor kategóriáját; a reviewer `AGREE`/`DISAGREE`.
+- [ ] A két lépés időbélyege és a vak döntés immutábilis. Ez **nem** zárja le az OQ-15-öt.
 
 #### FR-460 · Intézményi anonimizáló gateway — **Compliance P0 (F1s)**
 
 - [ ] A gateway a kórház/labor zónájában fut; a PCE felhő **nem** kap TAJ/nevet (E.3).
 - [ ] Anonim út: nincs re-ID kulcs a gyártónál. Álnevesített út: kulcs csak az adatkezelőnél + FR-115.
+- [ ] FR-461 aggregáció **a továbbítás előtt** fut; a PCE shadow ingest ATC5-öt / pontos timestampet / ritka nyers diplotípust `E-SHADOW-001` / `E-SHADOW-003` szerint elutasít.
+
+#### FR-461 · Re-ID kontroll (k-anonymity / aggregáció) — **Compliance P0 (F1s anonim út)**
+
+OQ-16 technikai csomag. **Nem** zárja le az OQ-16-ot. Küszöbök: A14, a DPO felülírhatja.
+
+- [ ] **ATC csonkolás:** anonim pathen tilos az ATC **5. szint** (7 karakter, hatóanyag, pl. N06AB10). Default max **4. szint** (5 karakter, pl. N06AB). Konfig: `ATC3` (4 karakter, pl. N06A), ha a DPIA kéri.
+- [ ] **Idő generalizáció:** `MedicationRequest.authoredOn` → naptári **negyedév** (pl. `2026-Q3`); nincs nap, óra, perc. `Patient.birthDate` a HITL kártyán nem jelenik meg.
+- [ ] **Ritka diplotípus:** ha a konfigurált populációs gyakoriság < A14 küszöb **vagy** az intézményi (gén-osztály × ATC-szint) cella elemszáma a gördülő ablakban < `k`, Then a gateway vagy (a) fenotípus-*osztályt* küld diplotípus helyett (`REDUCED` / `INCREASED` / `UNCERTAIN`), vagy (b) a rekordot **kihagyja** (`E-SHADOW-003`, csak számláló log).
+- [ ] Adagolási struktúra (doseQuantity) anonim pathen **nem** megy ki.
+- [ ] Álnevesített út: FR-461 enyhíthető a DPIA szerint; FR-115 kötelező.
 
 #### FR-470 · Csatorna-izoláció — **Compliance P0**
 
@@ -598,10 +627,10 @@ A 12 vs 14 eltérés **nem** nyitott kérdés: lásd FR-310.
 | **OQ-02** | PREPARE 12 vs PGx-Passport 14 | Klinikai | **LEZÁRVA** (FR-310, VC-02) |
 | **OQ-03** | Melyik partnerlabor vállalja az L3 aláírói felelősséget, milyen áron? | Üzletfejlesztés | Nyitott |
 | **OQ-04** | Magyar Genom Program / BBMRI HU csomópont: partner vagy versenytárs? | Ügyvezetés | Nyitott; hungen.hu nem datált |
-| **OQ-05** | Védhető-e az **A.1 F1+** (gén-szintű, verziózott guideline-kivonat, nincs aktuális-gyógyszer párosítás, nincs élő fenokonverzió, nincs CDS) nem-MDSW-ként? Szűkített a v1.1-hez képest. | **Külső counsel** | Nyitott |
+| **OQ-05** | Védhető-e az **A.1 F1+** (gén-szintű, verziózott guideline-kivonat, nincs aktuális-gyógyszer párosítás, nincs élő fenokonverzió, nincs CDS) nem-MDSW-ként? Szűkített a v1.1-hez képest. | **Külső counsel** | **Nyitott.** Technikai csomag: A.1.2, FR-400-STATIC (teljes gén-tábla), FR-410-EDU (ha–akkor / kombináció tilos). A csomag **nem** válasz. |
 | **OQ-06** | ISO 13485 tanúsító és Notified Body; HU/EU NB átfutás | RA | Nyitott |
-| **OQ-15** | A shadow L4-live futtatása valós ellátási eseményen klinikai vizsgálat-e (Art. 62), vagy evaluation-adatgyűjtés? | RA + intézmény kutatási igazgatóság | Nyitott; REG-090 |
-| **OQ-16** | Anonim shadow: a diplotípus + ATC kombináció re-ID kockázata a DPIA szerint elfogadható-e, vagy kötelező az álnevesített út? | DPO | Nyitott; A13 |
+| **OQ-15** | A shadow L4-live futtatása valós ellátási eseményen klinikai vizsgálat-e (Art. 62), vagy evaluation-adatgyűjtés? | RA + intézmény kutatási igazgatóság | **Nyitott.** Érv (nem tény): a kezelőorvos nem látja a kimenetet. Támogató design: FR-450-BLIND. **Nem** automatikus Art. 62-mentesség. REG-090. |
+| **OQ-16** | Anonim shadow: a diplotípus + ATC kombináció re-ID kockázata a DPIA szerint elfogadható-e, vagy kötelező az álnevesített út? | DPO | **Nyitott.** Technikai csomag: FR-461 (ATC4 max, negyedév, ritka-elnyomás, k≥5). A DPO dönt, hogy ez elég-e. |
 
 ### Nem-blokkoló
 
@@ -614,6 +643,8 @@ A 12 vs 14 eltérés **nem** nyitott kérdés: lásd FR-310.
 | **OQ-14** | Magyar klinikai ajánlás-fordítás szakmai lektora | Klinikai szakértő |
 
 **Döntés, nem kérdés:** a v1 klinikai kimenet **nem** tartalmaz aktív, felírás-pillanatú riasztást, élő fenokonverzió-alkalmazást, és **nem** mutatja a shadowot a kezelőorvosnak. Ha mégis, az F2/MDSW, és az F1+ oszlop érvénytelen (NG-07/08).
+
+**F1+ ≠ lezárt nem-MDSW.** Az A.1 pozíció *indoklás* OQ-05-ig. A FR-410-EDU szabályok a pozíciót *szűkítik*, nem igazolják.
 
 ---
 
@@ -686,6 +717,9 @@ Váz:
 | FR-400-STATIC | CPIC / DPWG / FDA | TC-RULE-001..040 | GSPR 17.1; OQ-05 |
 | FR-410-LIVE | Fenokonverzió-irodalom | TC-PHENO-001..015 | Clinical eval; **nem** F1+ lelet |
 | FR-470 | A.0 / NG-07 | TC-ISO-001..008 | Rule 11a kikerülés tilalma |
+| FR-410-EDU | A.1.2 | TC-EDU-001..010 | OQ-05 csomag, nem válasz |
+| FR-461 | E.3.1; A14 | TC-GW-010..020 | OQ-16 csomag, nem válasz |
+| FR-450-BLIND | E.4.1 | TC-HITL-010..014 | OQ-15 támogató design |
 | FR-700 | MDCG 2025-6; AI Act 6(1) | TC-LLM-NEG-001..003 | AI Act Art. 9, 15 |
 | FR-710 | 6. § (6) | TC-EXPLAIN-001..004 | AI Act Art. 13; GSPR 23 |
 
@@ -737,12 +771,14 @@ A teljes registry: [SOURCE-REGISTRY](ProcessArtifacts/SOURCE-REGISTRY.md). Korre
 
 ## 15. Amit ez a spec nem tud
 
-- **Nem** OQ-05 jogi vélemény. Az F1+ (még a szűkített statikus társítás is) ezen áll vagy dől.
-- **Nem** OQ-15 döntés (shadow = klinikai vizsgálat-e).
+- **Nem** OQ-05 jogi vélemény. Az F1+ (még a szűkített statikus társítás + FR-410-EDU is) ezen áll vagy dől.
+- **Nem** OQ-15 döntés. A „nincs hatása a kezelésre → nem Art. 62” *érv*, nem hatósági tény.
+- **Nem** OQ-16 DPIA-döntés. A FR-461 kontrollok a DPO inputjai.
 - **Nem** DPA, DPIA vagy etikai kérelem — E melléklet váz.
+- A10 **nem** F1s 72 órás puffer. A shadow megőrzés A15 / protokoll.
 - A felhasználói hibrid-brief [1]–[7] hivatkozásai (meddeviceguide, monterail, arxiv 2603.14876, stb.) **L4/L5**; a Rule 11a állítás a MDCG/MDR primerre támaszkodik `[V]`, nem ezekre a blogokra.
 - **Nem** FDA CDS guidance mélyelemzés; csak annyi: az MDR-ben nincs equivalent enforcement discretion.
 
 ---
 
-*PCE-SPEC-v1.2. v1.1-hez képest: NG-07/08, F1+/F1s/F2 lépcső, élő fenokonverzió le a leletről. OQ-02 lezárva. Következő: OQ-05 + OQ-15 counsel.*
+*PCE-SPEC-v1.2. FR-410-EDU / FR-461 / FR-450-BLIND a OQ-05/16/15 technikai csomagja; a három OQ nyitott. A10 ≠ shadow TTL (VC-12). Következő: OQ-05 + OQ-15 counsel.*

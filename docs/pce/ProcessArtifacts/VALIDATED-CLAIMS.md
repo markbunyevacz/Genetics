@@ -14,6 +14,7 @@ Minden CORRECTED / REFUTED tétel a deliverable-ben javítva. Soha nem hallgatju
 | VC-08 | PharmCAT F5 eltávolítás DPWG-visszavonás miatt | Technical spec | **VERIFIED** | Changelog 2.11.0: DPWG removed F5 + hormonal contraceptives; PharmGKB annotation retired; F5 removed from PharmCAT. | S010, S011 | FR-310 |
 | VC-09 | AI Act Annex I alkalmazás 2028-08-02 (Digital Omnibus) | Date/deadline | **UNVERIFIABLE** ebben a körben | I-01 állítja a Tanács 2026-06-29 / EP 2026-06-16 jóváhagyást. Hivatalos Lapban való közzététel ebben a körben nem lett letöltve. A spec a dátumot `[NEEDS VERIFICATION]` jelzéssel viszi, de tervezési órának megtartja. | S019 | §4.4, §11 |
 | VC-10 | Genetix DrugMap 499 000 Ft (2026-08-09) | Market data | **UNVERIFIABLE** ebben a körben | I-01 `[V]`-ként hozza 2026-08-09 lekérdezéssel; ez a kör nem ismételte a scrape-et. Problémaállításban `[R]` (egy forrás, I-01). | S017 | §1 |
+| VC-12 | A10 = az F1s shadow puffer 72 óra után törlődik / aggregálódik | Legal/technical | **CORRECTED** | A10 a **klinikai hozzájárulás-visszavonás** kaszkádjának üzemi SLA-ja (FR-110). A shadow/HITL megőrzés a protokoll (A15); a havi HITL 72 h TTL-lel ellentmondásos. | I-11 vs §0 A10 | PCE-SPEC A10/A15; E.5 |
 
 ## REFUTED
 
@@ -21,4 +22,4 @@ Minden CORRECTED / REFUTED tétel a deliverable-ben javítva. Soha nem hallgatju
 | --- | --- | --- | --- | --- | --- | --- |
 | **VC-11** | Az F2/F3 kimenet (betegre szabott, felírás-pillanatú javaslat) szállítható F1 köntösben, mert „a végső gombot az orvos nyomja meg” / disclaimer / későbbi HITL-minősítés („regulatory bypass”) | Legal/regulatory | **REFUTED** az EU MDR alatt mint kimenekülési stratégia | Rule 11a: információ diagnosztikai vagy **terápiás** döntéshez → IIa (felminősítés kivételével). Az orvos gombja nem minősít ki. Az MDR-ben nincs FDA-típusú CDS enforcement discretion. A disclaimer nem változtatja meg a rendeltetést. Élő F2-kimenet CE nélkül = forgalomba hozatal, ha MDSW. A HITL csak akkor nem CDSS-használat, ha a kezelőorvos **nem látja** (shadow). | S004, S005, S020 `[V]`; I-10 elemzés egyetért, a blog-URL-ek L4/L5 | A.0; NG-07/08; FR-470; R-015; PCE-SPEC §3, §4.1, §15 |
 
-A Class I túlállítás (VC-04) **CORRECTED**, nem teljes cáfolat: a PGx-CDSS IIa következtetés megmarad. VC-11 a **bypass-stratégiát** cáfolja, nem a F1+ statikus társítás OQ-05 kérdését — az továbbra is nyitott.
+A Class I túlállítás (VC-04) **CORRECTED**, nem teljes cáfolat: a PGx-CDSS IIa következtetés megmarad. VC-11 a **bypass-stratégiát** cáfolja, nem a F1+ statikus társítás OQ-05 kérdését — az továbbra is nyitott. VC-12 az A10 félreolvasását javítja.

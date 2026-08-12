@@ -34,9 +34,11 @@ Súlyosság / előfordulás / detektálhatóság: 1–5. RPN = S×O×D. Küszöb
 | **R-016** | Shadow inferencia szivárog a kezelőorvos klinikai UI-jára | Közös store, rossz RBAC, `LIVE_CDS` runtime true | Az A.1 rendeltetés hamis → F2/MDSW; NG-08 | 5 | 3 | 2 | 30 | **FR-470** CI call-graph; `E-ISO-001`; compile-time flag; E.8 | G6 = 0 szivárgás |
 | **R-017** | Anonimizáló gateway a gyártó felhőjében fut | PII (TAJ, név) elhagyja az intézményt | GDPR Art. 9; 2008/XXI.; DPA sérülés | 4 | 3 | 2 | 24 | **FR-460**; `E-SHADOW-001`; gateway intézményi zóna | REG-091 |
 | **R-018** | Shadow = rejtett klinikai vizsgálat Art. 62 nélkül | „Csak analitika” címke valós ellátási eseményen | Jogellenes vizsgálat; etikai/hatósági szankció | 4 | 3 | 3 | 36 | **REG-090**; **OQ-15** az első HIS-csatlakozás **előtt**; E.7 | Counsel dönt |
-| **R-019** | Re-identifikáció diplotípus + ritka ATC kombinációból | „Anonim” shadow, nincs k-anonymity | GDPR személyes adat; FR-115 megkerülve | 4 | 3 | 3 | 36 | **A13**; DPIA; ritka-kombináció elnyomás vagy álnevesített út; **OQ-16** | DPO |
+| **R-019** | Re-identifikáció diplotípus + ritka ATC kombinációból | „Anonim” shadow ATC5-tel / pontos idővel | GDPR személyes adat; FR-115 megkerülve | 4 | 3 | 2 | 24 | **FR-461**; ATC≤4; negyedév; ritka-elnyomás; k≥5 (A14); **OQ-16** | DPO |
+| **R-020** | ATC/diplotípus coarsening rontja a shadow validációt | DPO ATC3-at vagy CLASS-only diplotípust kér | G3 recall/precision a gold set alatt; F2 dosszié gyengül | 3 | 3 | 2 | 18 | Config-szint napló; G3 küszöb; ha ATC3, a phenoconversion gold set **ATC3-kompatibilis** subset | A14 vs G3 |
+| **R-021** | F1+ EDU ha–akkor / med-lista szűrés | Renderer a beteg receptjére szabja a CPIC sort | OQ-05 összeomlik; Rule 11a | 5 | 2 | 2 | 20 | **FR-410-EDU**, **FR-400-STATIC** teljes tábla; `E-EDU-001`; A.1.2 | OQ-05 nyitva |
 
-R-001 RPN 30, de **S = 5** → v1 előtt kötelező kontroll (FR-210 P0). R-002 RPN 45 → P0 jelzés + INDETERMINATE. R-015/R-016 S = 5 → FR-470 P0 a v1 klinikai release előtt.
+R-001 RPN 30, de **S = 5** → v1 előtt kötelező kontroll (FR-210 P0). R-002 RPN 45 → P0 jelzés + INDETERMINATE. R-015/R-016/R-021 S = 5 → FR-470 + EDU CI a v1 klinikai release előtt.
 
 R-008 v1.1-ben a aláírt lelet NM-jét védte. v1.2: élő fenokonverzió **nincs** a leleten; a kockázat a shadow/F2 kártyára és a F1+ EDU félreolvasására (R-007) marad.
 
@@ -67,13 +69,15 @@ Minden funkcionális, NFR és REG sor. TC-azonosítók a gold set / CI nevei; a 
 | FR-310 | Prod P0 | PREPARE 12; PGx-Passport 14; PharmCAT 2.11.0 | TC-CONF-001..005 | 62304 §6 change control | F1+ |
 | FR-400-STATIC | Prod P0 | CPIC/DPWG/FDA; A.1 | TC-RULE-001..040 | GSPR 17.1, 23; OQ-05 | F1+ |
 | FR-400-LIVE | P0 F1s/F2 | u.a.; **tilos F1+ leleten** | TC-RULE-050..055 | Rule 11a ha klinikai UI | F1s / F2 |
-| FR-410-EDU | Prod P0 | A.1 oktató bekezdés | TC-PHENO-EDU-001..003 | OQ-05 | F1+ |
+| FR-410-EDU | Prod P0 | A.1.2 oktató bekezdés | TC-EDU-001..010 | OQ-05 csomag | F1+ |
 | FR-410-LIVE | Prod P0 F1s/F2 | I-02 fenokonverzió; R-008 | TC-PHENO-001..015 | Clinical eval; **nem** F1+ lelet | F1s / F2 |
 | FR-420 | Prod P0 | Alert fatigue; A.1 vs A.3 | TC-ALRT-001..004 | GSPR 5, 14 | F1+ / F2 |
 | FR-430 | P2 | Kullo 2026; eMERGE 2024 | TC-PRS-IFACE-001 (contract test) | Rule 11a predikció | F4 |
 | FR-440 | Prod P0 F1s | A.2; E.2 | TC-SHDW-001..006 | REG-090 | F1s |
 | FR-450 | Prod P0 F1s | E.4 | TC-HITL-001..005 | G3 | F1s |
+| FR-450-BLIND | P1 F1s | E.4.1; OQ-15 | TC-HITL-010..014 | Art. 62 érv, nem döntés | F1s |
 | FR-460 | Comp P0 F1s | E.3; R-017 | TC-GW-001..008; E-SHADOW-001 | GDPR 32 | F1s |
+| FR-461 | Comp P0 F1s anonim | E.3.1; R-019/020; A14 | TC-GW-010..020; E-SHADOW-003 | OQ-16 csomag | F1s |
 | FR-470 | Comp P0 | A.0; NG-07/08; R-015/016 | TC-ISO-001..008 | Rule 11a kikerülés tilalma | F1+ |
 | FR-480 | P1 | A.1 enciklopédia | TC-ENC-001..003 | OQ-05 | F1+ |
 | FR-490 | Comp P0 | A.1.1; R-007 | TC-RPT-DISC-001..003 | GSPR 23; **nem** MDSW-kimenekülés | F1+ |
@@ -138,6 +142,10 @@ Minden funkcionális, NFR és REG sor. TC-azonosítók a gold set / CI nevei; a 
 | VC-05 72 h = A10 assumption | §0 A10; FR-110 |
 | VC-06 hash-chain P1 | FR-120 |
 | VC-11 „az orvos dönt” kimenekülés | A.0; NG-07; FR-470; VALIDATED-CLAIMS REFUTED |
+| VC-12 A10 ≠ F1s 72 h puffer | §0 A10/A15; E.5; VALIDATED-CLAIMS |
+| FR-410-EDU ha–akkor / teljes gén-tábla | A.1.2; FR-400-STATIC; FR-410-EDU |
+| Gateway ATC4 / k-anonymity / negyedév | E.3.1; FR-461 |
+| Vak HITL | E.4.1; FR-450-BLIND |
 | Product vs Compliance P0 szétválasztás | §0 szótár; minden FR címke |
 | F1+ / F1s / F2 intended purpose | A.1, A.2, A.3 |
 | L0–L7 mátrix (L4-static vs L4-live) | A.4 |
@@ -148,4 +156,4 @@ Minden funkcionális, NFR és REG sor. TC-azonosítók a gold set / CI nevei; a 
 | ISO 14971 kezdeti + teljes mátrix | ez a dokumentum |
 | Nincs TAM, nincs ticket, nincs counsel | PCE-SPEC §15; README |
 
-**P06 eredmény (v1.2):** a hibrid-brief tiltott/szabad viselkedése, a shadow architektúra, a GDPR két út és a szűkített OQ-05 a csomagban megvan. Maradék gap szándékos: OQ-05/OQ-15/OQ-16 válasza, gold-set SOP, engineering ticketek, DPA/DPIA végleges szöveg.
+**P06 eredmény (v1.2 + OQ-csomagok):** a hibrid-brief tiltott/szabad viselkedése, a shadow architektúra, a GDPR két út, az EDU/gateway/HITL technikai csomagok a dokumentumban megvannak. **OQ-05 / OQ-15 / OQ-16 továbbra is nyitott** — a csomagok nem helyettesítik a counsel/DPO/intézmény döntését. Maradék gap szándékos: gold-set SOP, engineering ticketek, DPA/DPIA végleges szöveg.
