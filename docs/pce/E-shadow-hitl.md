@@ -105,6 +105,8 @@ WHO ATC szintek `[V]` (S032): 1. anatómiai (1 betű) → 2. terápiás (3 karak
 
 ### E.4.1 Vak mód és OQ-15
 
+Szekvenciális, **reviewer-vak** eljárás. **Nem** kettős vak (double-blind): a motor kimenete a rendszerben megvan; a reviewer az 1. lépésben nem látja.
+
 A vak HITL **támogató bizonyíték** arra, hogy a reviewer nem a napi ellátásban, nem a gép élő tanácsára gyógyít. **Nem** Art. 62-mentesség.
 
 Az érv, amit a RA/intézmény OQ-15-höz vihet (és a counsel elvethet): a L4-live kimenet nem befolyásolja az index-kezelést, mert a kezelőorvos nem látja, és a HITL utólagos. Az MDR Art. 62 hatóköre ettől még nyitott — REG-090 az első csatlakozás **előtt**.
@@ -122,7 +124,18 @@ Adatkezelő: labor/kórház. Gyártó: adatfeldolgozó a DPA szerint, hacsak a c
 
 „Tiszta anonimizálás után szabadon tanítjuk a modellt” — csak akkor, ha a anonimizálás **visszafordíthatatlan**. Genetikai + ritka gyógyszerkombináció re-identifikálhat; FR-461 + DPIA. `[ASSUMPTION]` A13/A14.
 
-**A10 ≠ shadow TTL.** Ha a hozzájárulás-visszavonás SLA (A10) hamis, a FR-110 határidő változik — **nem** a HITL megőrzés. Ha A12 hamis → álnevesítés + FR-115, nincs „csendes” anonim shadow. Ha A13/A14 hamis → durvább ATC vagy kötelező álnevesítés; G3 recall csökken (R-020).
+**A10 ≠ shadow TTL.** Lásd spec §0.1.
+
+### E.5.1 Visszavonás vs megőrzés
+
+| Esemény | Klinikai tenancy | Álnevesített HITL | Már anonim HITL (nincs kulcs) |
+| --- | --- | --- | --- |
+| Protokoll fut, hozzájárulás él | 26. § nyilvántartás | A15, FR-115 | A15, ha a DPIA szerint nem személyes adat |
+| Klinikai vagy kutatási hozzájárulás **visszavonva** | 72 h megsemmisítés (A10, FR-110) | 72 h: törlés **vagy** irreverzibilis anonimizálás | Klinikai tenancy törlése; HITL-sor a DPIA szerint maradhat (nincs join) |
+
+A15 feltétel: OQ-16 anonim út *vagy* érvényes FR-115. Álnevesített, visszavont sort A15 **nem** tart meg.
+
+---
 
 ---
 

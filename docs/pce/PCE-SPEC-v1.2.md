@@ -29,14 +29,27 @@ Kérdés helyett rögzítve. Ha bármelyik hamis, a jelzett szakasz újraírand�
 | A7 | Elsődleges UI-nyelv magyar; a klinikai ajánlás-szöveg HU, ha szakmai lektor van, különben az angol eredeti. | FR-610 |
 | A8 | EESZT-útvonal F1-ben: **modul** az engedélyezett medikai rendszerben, nem saját EESZT-csatlakozás (NG-05). A 2026-09-30 ISO 9001 akkor is F0, ha a vevő a vendor. | REG-040a, C melléklet |
 | A9 | A gyártó a `genetics` repo tulajdonos szervezete. **Név ebben a dokumentumban nincs kitalálva.** | Fejléc, REG-031 |
-| A10 | `[ASSUMPTION]` A **klinikai** hozzájárulás-visszavonás kaszkádjának üzemi SLA-ja **72 óra** (FR-110). A 2008/XXI. 26. § (1) határidőt nem ad. **Nem** a shadow store TTL-je. | FR-110 |
+| A10 | `[ASSUMPTION]` A **klinikai** hozzájárulás-visszavonás kaszkádjának üzemi SLA-ja **72 óra** (FR-110). A 2008/XXI. 26. § (1) határidőt nem ad. **Nem** a shadow store alapértelmezett TTL-je. Visszavonáskor a álnevesített HITL-rekord: törlés **vagy** irreverzibilis anonimizálás 72 h-n belül. | FR-110; E.5.1 |
 | A11 | A v1.2 kanonikus szabályozási stratégia a **legális hibrid** (A.0–A.2): F1+ statikus lelet; F1s shadow HITL a kezelőorvos nélkül; F2/F3 csak minősítés után. | A, E, FR-440–470 |
 | A12 | Shadow default: **irreverzibilis anonimizálás** a intézményi gatewayen. Álnevesítés + FR-115 csak ha longitudinális követés kell. | E.5, FR-460 |
 | A13 | `[ASSUMPTION]` A gateway ritka gén–gyógyszer kombinációt elnyom (FR-461) vagy az álnevesített utat választják (re-ID). | E.3.1, DPIA, OQ-16 |
 | A14 | `[ASSUMPTION]` Anonim path default: ATC max **4. szint** (5 karakter, pl. N06AB); ATC5 (7 karakter, hatóanyag) **tilos**; ritka diplotípus küszöb **0,5%** (forrás a DPIA-ban); k-anonymity **k ≥ 5** intézményi cellán. A DPO szigoríthat (ATC3 / nagyobb k). | FR-461; OQ-16 |
-| A15 | A shadow/HITL store megőrzése a **klinikai értékelési / vizsgálati protokoll** szerint (hónapok–évek, havi HITL-hez kell). **Nem** 72 óra. A 72 h = A10, csak visszavonási kaszkád. | E.5; FR-110 vs FR-440 |
+| A15 | A shadow/HITL validációs esetek megőrzése a **klinikai értékelési / vizsgálati protokoll** szerint (hónapok–évek, havi HITL). Feltétel: a rekord **már anonim** (OQ-16/A12) **vagy** van érvényes FR-115. **Nem** 72 órás puffer. | E.5.1; FR-440 |
 
 **Nem feltevés, hanem verifikált korlát:** a hazai jogi és EESZT-korlátok (§4) nem tárgyalhatók terméktervezéssel.
+
+### 0.1 A10 vs A15 — változáskezelés (nem keverendő)
+
+| | A10 | A15 |
+| --- | --- | --- |
+| **Mi** | Hozzájárulás-**visszavonás** kaszkád SLA | HITL/shadow **megőrzés** a protokoll alatt |
+| **Mikor** | A beteg (klinikai 8. § és/vagy FR-115) visszavon | Amíg a protokoll és a jogalap él |
+| **Mit csinál a rendszer 72 h-n belül** | Klinikai genetikai tartalom megsemmisítése (26. §). Álnevesített HITL-sor: **törlés** *vagy* irreverzibilis anonimizálás (kulcs az intézménynél törlődik; PCE-nél nincs re-ID). | Semmit a 72 h miatt. A rekord marad, ha anonim (OQ-16) vagy FR-115 érvényes. |
+| **Mit nem** | Nem a HITL tár alapértelmezett élettartama. Nem „minden shadow 72 h után elvész”. | Nem mentesít a visszavonási kaszkád alól. |
+
+VC-12: az „A10 = 72 órás shadow-puffer” olvasat **hibás**. A havi review A15-öt igényel.
+
+---
 
 **Prioritás-szótár (write-spec + compliance):**
 
@@ -245,7 +258,8 @@ Hozzájárulás gén/génpanel és felhasználási cél szintjén; 6. § (7) nem
 
 - [ ] Given a beteg lemondott egy adott gén eredményének megismeréséről, When riport generálódik, Then az adott gén a **beteg-példányból** kimarad. A klinikus-példányban csak akkor jelenhet meg, ha a klinikus hozzáférése külön, konfigurált jogalapon engedélyezett — kódmódosítás nélkül.
 - [ ] Given hozzájárulás-visszavonás, When rögzítésre kerül, Then a rendszer kaszkádolva töröl minden érintett genetikai adatot és nyilvántartási bejegyzést, és visszavonhatatlan törlési tanúsítványt állít ki. Az üzemi cél: **72 órán belül** `[ASSUMPTION]` A10. A törvényi minimum: megsemmisítés a 26. § (1) szerint, határidő nélkül.
-- [ ] A kaszkád **derived** adatra is kiterjed: diplotípus, fenotípus, riportok, cache, PRS-eredmény (ha van), **és** a shadow/HITL store rekordja (E melléklet).
+- [ ] A kaszkád **derived** adatra is kiterjed: diplotípus, fenotípus, riportok, cache, PRS-eredmény (ha van).
+- [ ] **HITL/shadow (A10 vs A15):** álnevesített rekord 72 h-n belül vagy (a) törlődik, vagy (b) irreverzibilisen anonimizálódik (nincs kulcs a PCE-nél, intézményi kulcs megsemmisül). Már anonim HITL-sor (nincs join-key): a klinikai tenancy törlése a 26. § tárgya; a HITL-sor a DPIA szerint maradhat A15 alatt. Nem „minden shadow 72 h TTL”.
 - [ ] Negatív teszt: visszavonás után a korábbi riport URL **410 Gone**, nem 200 cache-ből.
 - [ ] A 30 éves **audit** napló a törlés *eseményét* megőrzi személyazonosító genetikai tartalom nélkül (ki, mikor, milyen jogalapon, milyen objektum-azonosítók semmisültek meg) — a genetikai tartalom nem marad.
 
@@ -270,7 +284,7 @@ Külön a 6. § (2)/8. § klinikai kaputól. Sablon: E.6.
 
 - [ ] Given álnevesített shadow-út, When nincs `research_consent` a case-hez, Then a gateway **nem** küld csomagot a PCE shadow store-ba (`E-CONSENT-006`).
 - [ ] Given anonim út (A12 default) és a DPIA szerint a kimenet nem személyes adat, When shadow fut, Then FR-115 nem blokkol — a klinikai FR-100 továbbra is igen.
-- [ ] A kutatási hozzájárulás visszavonása a HITL rekordot törli (FR-110 kaszkád).
+- [ ] A kutatási hozzájárulás visszavonása: álnevesített HITL-rekord 72 h-n belül törlődik **vagy** irreverzibilisen anonimizálódik (A10); A15 nem tartja meg álnevesített, visszavont sort.
 
 ---
 
@@ -427,7 +441,9 @@ A tudományos differenciátor. G3 a shadow gold seten.
 - [ ] Nem a vizit alatt; batch vagy bizottság.
 - [ ] **P1 (OQ-15 csomag):** vak mód (FR-450-BLIND, E.4.1) default **be** az első intézményi protokollban, amíg OQ-15 el nem dől.
 
-#### FR-450-BLIND · Vak HITL — **P1 (F1s)**
+#### FR-450-BLIND · Vak HITL (szekvenciális, reviewer-vak) — **P1 (F1s)**
+
+**Nem** kettős vak (double-blind): a motor kimenete ismert a rendszernek; csak a reviewer nem látja az 1. lépésben.
 
 - [ ] 1. lépés: a reviewer **nem** látja a motor tippjét; strukturált saját döntést rögzít (`CONTINUE` / `ALTERNATIVE` / `DOSE_CHANGE` / `INSUFFICIENT`).
 - [ ] 2. lépés: a rendszer megmutatja a motor kategóriáját; a reviewer `AGREE`/`DISAGREE`.
@@ -646,6 +662,18 @@ A 12 vs 14 eltérés **nem** nyitott kérdés: lásd FR-310.
 
 **F1+ ≠ lezárt nem-MDSW.** Az A.1 pozíció *indoklás* OQ-05-ig. A FR-410-EDU szabályok a pozíciót *szűkítik*, nem igazolják.
 
+### 10.1 v1 / F1s — külső állásfoglalás (a technikai csomag után)
+
+A csomagok a specben vannak. A mérföldkő **nem** indul counsel/DPO/intézmény nélkül.
+
+| Ki | Mit dönt | Csomag, amit kap | Blokkolja |
+| --- | --- | --- | --- |
+| Külső counsel | OQ-05: F1+ nem-MDSW védhető-e | A.1, A.1.1, A.1.2, FR-400-STATIC, FR-410-EDU, FR-470 | F1+ forgalmazás nem-MDSW-ként |
+| RA + partner intézmény kutatási igazgatóság | OQ-15: Art. 62 vizsgálat vs evaluation | E.4.1, FR-450-BLIND, REG-090 | F1s első HIS-csatlakozás |
+| DPO | OQ-16: anonim út elég-e | E.3.1, FR-461, A14 | Anonim shadow vs kötelező FR-115 |
+| Ügyvezetés / RA | OQ-01: EESZT + ISO 9001 2026-09-30 | C melléklet | Hazai éles / vendor-modul pálya |
+| Üzlet | OQ-03: partnerlabor L3 | REG-020 | F1+ COGS / aláíró |
+
 ---
 
 ## 11. Timeline és fázisolás
@@ -775,10 +803,10 @@ A teljes registry: [SOURCE-REGISTRY](ProcessArtifacts/SOURCE-REGISTRY.md). Korre
 - **Nem** OQ-15 döntés. A „nincs hatása a kezelésre → nem Art. 62” *érv*, nem hatósági tény.
 - **Nem** OQ-16 DPIA-döntés. A FR-461 kontrollok a DPO inputjai.
 - **Nem** DPA, DPIA vagy etikai kérelem — E melléklet váz.
-- A10 **nem** F1s 72 órás puffer. A shadow megőrzés A15 / protokoll.
+- A10 **nem** F1s 72 órás puffer. Visszavonáskor 72 h kaszkád (törlés vagy irreverzibilis anonimizálás). Megőrzés: A15. §0.1.
 - A felhasználói hibrid-brief [1]–[7] hivatkozásai (meddeviceguide, monterail, arxiv 2603.14876, stb.) **L4/L5**; a Rule 11a állítás a MDCG/MDR primerre támaszkodik `[V]`, nem ezekre a blogokra.
 - **Nem** FDA CDS guidance mélyelemzés; csak annyi: az MDR-ben nincs equivalent enforcement discretion.
 
 ---
 
-*PCE-SPEC-v1.2. FR-410-EDU / FR-461 / FR-450-BLIND a OQ-05/16/15 technikai csomagja; a három OQ nyitott. A10 ≠ shadow TTL (VC-12). Következő: OQ-05 + OQ-15 counsel.*
+*PCE-SPEC-v1.2. OQ-csomagok + §0.1 A10/A15 mátrix + §10.1 külső sign-off. Vak HITL ≠ double-blind. OQ-05/15/16 nyitott.*

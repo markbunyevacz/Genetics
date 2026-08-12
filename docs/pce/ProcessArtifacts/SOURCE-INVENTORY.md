@@ -21,6 +21,7 @@
 | I-09 | e-egeszsegugy.gov.hu/fejlesztoknek | HTML | HU | EESZT fejlesztői portál | primer |
 | I-10 | Felhasználói hibrid-brief: F2/F3 képesség F1 minőségben; „regulatory bypass” elemzés; shadow/HITL/GDPR/FHIR váz | md (chat) | HU | v1.2 termék- és szabályozási input; blog-URL-ek L4/L5 | n/a |
 | I-11 | OQ technikai csomag: FR-461 gateway, FR-410-EDU szabályok, vak HITL; A10 félreolvasás (72 h mint shadow TTL) | md (chat) | HU | v1.2 finomhangolás; A10 **nem** átvéve TTL-ként | n/a |
+| I-12 | Változáskezelés A10/A15; OQ-csomagok véglegesítése; „double-blind” megfogalmazás | md (chat) | HU | A10 = visszavonás 72 h (törlés vagy anonimizálás); A15 = protokoll-megőrzés; vak ≠ kettős vak | n/a |
 
 ## Átfedés
 
@@ -28,6 +29,7 @@
 - I-06 és I-07 génlistája **nem azonos** (12 vs 14) — ez a v1.1 OQ-02 lezárása.
 - I-02 üzleti/TAM/versenytárs anyaga **nem** került a SRS-be (deszkóp: üzleti dosszié ≠ követelmény).
 - I-11 az OQ-05/15/16 **technikai** csomagja; az OQ-kat nem zárja. I-11 A10=shadow-TTL állítása **elvetve** (VC-12).
+- I-12 A10-et visszavonási kaszkádra szűkíti (törlés vagy anonimizálás); A15 a megőrzés. I-12 „double-blind” → spec: reviewer-vak, nem kettős vak.
 
 ## Metaadat-ellentmondások
 

@@ -14,7 +14,7 @@ Minden CORRECTED / REFUTED tétel a deliverable-ben javítva. Soha nem hallgatju
 | VC-08 | PharmCAT F5 eltávolítás DPWG-visszavonás miatt | Technical spec | **VERIFIED** | Changelog 2.11.0: DPWG removed F5 + hormonal contraceptives; PharmGKB annotation retired; F5 removed from PharmCAT. | S010, S011 | FR-310 |
 | VC-09 | AI Act Annex I alkalmazás 2028-08-02 (Digital Omnibus) | Date/deadline | **UNVERIFIABLE** ebben a körben | I-01 állítja a Tanács 2026-06-29 / EP 2026-06-16 jóváhagyást. Hivatalos Lapban való közzététel ebben a körben nem lett letöltve. A spec a dátumot `[NEEDS VERIFICATION]` jelzéssel viszi, de tervezési órának megtartja. | S019 | §4.4, §11 |
 | VC-10 | Genetix DrugMap 499 000 Ft (2026-08-09) | Market data | **UNVERIFIABLE** ebben a körben | I-01 `[V]`-ként hozza 2026-08-09 lekérdezéssel; ez a kör nem ismételte a scrape-et. Problémaállításban `[R]` (egy forrás, I-01). | S017 | §1 |
-| VC-12 | A10 = az F1s shadow puffer 72 óra után törlődik / aggregálódik | Legal/technical | **CORRECTED** | A10 a **klinikai hozzájárulás-visszavonás** kaszkádjának üzemi SLA-ja (FR-110). A shadow/HITL megőrzés a protokoll (A15); a havi HITL 72 h TTL-lel ellentmondásos. | I-11 vs §0 A10 | PCE-SPEC A10/A15; E.5 |
+| VC-12 | A10 = az F1s shadow puffer 72 óra után törlődik / aggregálódik | Legal/technical | **CORRECTED** | A10 a **visszavonási** kaszkád 72 h SLA-ja (FR-110), beleértve álnevesített HITL törlését *vagy* irreverzibilis anonimizálását. A HITL megőrzés A15 (protokoll), ha anonim vagy FR-115 él. A havi review 72 h TTL-lel ellentmondásos. | I-11 vs §0.1 | PCE-SPEC A10/A15; E.5.1 |
 
 ## REFUTED
 

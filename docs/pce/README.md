@@ -12,7 +12,7 @@ Ez a csomag a PCE farmakogenetikai (PGx) platform **követelménylistája és sz
 
 v1.2 a **legális hibrid**: F1+ statikus, verziózott guideline-társítás aláírt laborleleten; F1s shadow HITL a kezelőorvos nélkül; élő F2/F3 CDSS csak minősítés után. Az „F2 képesség F1 minőségben, mert az orvos dönt” útvonal **elutasítva** (NG-07).
 
-Az OQ-05 / OQ-15 / OQ-16 **nyitott**. A spechez tartozik a technikai csomagjuk (FR-410-EDU, FR-461, FR-450-BLIND) — ez **nem** counsel/DPO döntés.
+A v1 / F1s induláshoz **külső állásfoglalás** kell (spec §10.1): counsel (OQ-05), intézmény+RA (OQ-15), DPO (OQ-16), plusz OQ-01 és OQ-03.
 
 ## Olvasási sorrend
 
@@ -47,4 +47,4 @@ A gyártó neve ebben a csomagban **nincs kitalálva**. A9 feltevés: a gyártó
 
 ## Következő gate
 
-P01 — source coverage audit + independent build-readiness review. Blokkoló kérdések: **OQ-05**, **OQ-15**, **OQ-16** (technikai csomag megvan, döntés nincs). Lásd spec §10, A.1.2, E.3.1, E.4.1.
+P01 — source coverage audit. v1 gate: **§10.1** külső állásfoglalás (OQ-05, OQ-15, OQ-16, OQ-01, OQ-03). A technikai csomag megvan, a döntés nincs.

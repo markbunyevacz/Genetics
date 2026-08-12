@@ -142,7 +142,7 @@ Minden funkcionális, NFR és REG sor. TC-azonosítók a gold set / CI nevei; a 
 | VC-05 72 h = A10 assumption | §0 A10; FR-110 |
 | VC-06 hash-chain P1 | FR-120 |
 | VC-11 „az orvos dönt” kimenekülés | A.0; NG-07; FR-470; VALIDATED-CLAIMS REFUTED |
-| VC-12 A10 ≠ F1s 72 h puffer | §0 A10/A15; E.5; VALIDATED-CLAIMS |
+| VC-12 A10 ≠ F1s 72 h puffer | §0.1; E.5.1; VALIDATED-CLAIMS |
 | FR-410-EDU ha–akkor / teljes gén-tábla | A.1.2; FR-400-STATIC; FR-410-EDU |
 | Gateway ATC4 / k-anonymity / negyedév | E.3.1; FR-461 |
 | Vak HITL | E.4.1; FR-450-BLIND |

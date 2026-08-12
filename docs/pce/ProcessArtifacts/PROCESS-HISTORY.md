@@ -16,6 +16,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P05b | Deliverable restart (v1.2) | 2026-08-12 | 2026-08-12 | DONE | I-10 + D-07 | PCE-SPEC-v1.2; A rewrite; B/D align; E új | — |
 | P05c | OQ technical packages | 2026-08-12 | 2026-08-12 | DONE | I-11 | FR-410-EDU/461/450-BLIND; A10≠TTL; A14/A15 | E-08 |
 | P06c | Plan-vs-content (OQ csomagok) | 2026-08-12 | 2026-08-12 | DONE | I-11 | D.3; VC-12; OQ-k nyitva | — |
+| P05d | A10/A15 mátrix + v1 sign-off | 2026-08-12 | 2026-08-12 | DONE | I-12 | §0.1; E.5.1; §10.1; nem double-blind | — |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -36,6 +37,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-11 | P05c | A10 mint F1s 72 h TTL | Átvenni / elvetni | **Elvetve** (VC-12); A15 = protokoll-megőrzés | Havi HITL ellentmond a 72 h puffernek; A10 = FR-110 | I-11 |
 | D-12 | P05c | OQ-05/15/16 lezárása a technikai csomaggal | Lezárni / nyitva + csomag | **Nyitva**; csomag = FR-410-EDU, FR-461, FR-450-BLIND | Nem jogi vélemény | I-11 |
 | D-13 | P05c | Anonim ATC max szint | ATC5 / ATC4 / ATC3 | Default **ATC4**; ATC5 tilos; ATC3 DPO | WHO szintek S032; G3 tradeoff R-020 | I-11 |
+| D-14 | P05d | Visszavonáskor HITL | Mindig töröl / töröl vagy anonimizál | **Törlés vagy irreverzibilis anonimizálás** 72 h (A10); A15 csak anonim vagy FR-115 | I-12 változáskezelés | I-12 |
 
 ## 3. Error log
 
@@ -49,6 +51,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | E-06 | P05b | Scope / regulatory bypass | v1.1 F1 tartalmazott élő fenokonverziót a leleten — I-10 szerint ez F2-hatás | Restart P05: szűkítés F1+-ra; shadow külön | D-07, D-08; VC-11 |
 | E-07 | P01b | Authority | I-10 [1]–[7] blog/preprint mint Rule 11a bizonyíték | Nem L1-ként használni | S023–S029 L4/L5; primer S004/S020 |
 | E-08 | P05c | Cross-reference breakage / assumption mix-up | I-11 A10-et F1s 72 h puffernek olvasta | Retry: A10 eredeti jelentés + A15 | VC-12 |
+| E-09 | P05d | Terminology | I-12 „double-blind validation” | Szekvenciális reviewer-vak; a motor nem vak | FR-450-BLIND; E.4.1 |
 
 ## 4. File timeline
 
