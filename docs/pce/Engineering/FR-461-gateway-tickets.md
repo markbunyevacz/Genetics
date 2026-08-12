@@ -158,7 +158,7 @@ A PCE **nem bízik** a gatewayben.
 | **AC** | §10.2 F1s kód fixture-ön; D.2 TC-GW-010..020 |
 | **TC** | a fenti TC-k mind |
 
-Minimum SYN esetek (kitalált PII **nincs**; opák ID-k):
+Minimum SYN esetek (kitalált PII **nincs**; opák ID-k). Kész Gold V0: [fixtures/gold-v0/](fixtures/gold-v0/README.md).
 
 1. ATC5 → ATC4 csonkolás (`N06AB10` → `N06AB`).
 2. ATC5 leak a PCE-re → `E-SHADOW-001`.

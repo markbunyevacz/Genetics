@@ -69,7 +69,8 @@ docs/pce/
 │   ├── competitor-analogs.md
 │   └── literature-boundary.md
 └── Engineering/
-    └── FR-461-gateway-tickets.md  ← SYN kódolás; nem OQ-pecsét
+    ├── FR-461-gateway-tickets.md
+    └── fixtures/gold-v0/          ← SYN TC-GW; CPIC European freq-szelet
 ```
 
 **OQ-16 nincs kihagyva.** F1s HIS OQ-16 nélkül nem indul.

@@ -33,6 +33,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P05l | FR-461 ticket-bontás | 2026-08-12 | 2026-08-12 | DONE | Explicit kérés: gateway csonkolás ticketek | `Engineering/FR-461-gateway-tickets.md`; OQ-16 nyitva | — |
 | P10c | Ops kapuk a fagyasztott specből | 2026-08-12 | 2026-08-12 | DONE | User: kötött lánc, majd core-most / telephely-később | README G5 modell; Outbound gyártói vs telephelyi; D-26/27 | — |
 | P05m | OQ-16 küldési csomag | 2026-08-12 | 2026-08-12 | DONE | User: első kimenő irat + név-helyettesítés | `OQ-16-kuldesi-csomag.md`; nevek nincsenek kitalálva | — |
+| P05n | Gold V0 SYN fixture | 2026-08-12 | 2026-08-12 | DONE | User: JSON fixture + CPIC 0,5% szelet | `Engineering/fixtures/gold-v0/`; S040–S042 | — |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -68,6 +69,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-26 | P10c | Küldési lánc | Párhuzamos OQ-15 / kötött 16→15→05→03→01 | **Kötött küldés**; HIS továbbra is 15+16 pecsét; FR-115 ≠ FR-100; ISO ≠ megújítás | §10.2 fallback; OQ-16 I.0 | user |
 | D-27 | P10c | Core most vs irat a megrendelőkor | Minden OQ most / minden OQ a vevőkor | **G5:** egy bináris SYN-en. Gyártói OQ-05/01 most. Telephelyi 16→15→03 nevesített megrendelőkor. Flag = telepítés. | SKU-P; user | user |
 | D-28 | P05m | OQ-16 küldési boríték | Nevek beírása a gitbe / boríték + A9 | **Boríték**; G1/C2 a küldőé; labor ≠ OQ-16; 16-A termék-DPO most, 16-B HIS-DPO névvel | A9; user OQ-16 első irat | user |
+| D-29 | P05n | SYN Gold V0 + CPIC freq | Synthea ATC mint primer / CPIC European szelet | **CPIC xlsx European**; 0,5% A14; GeT-RM ≠ freq; Synthea ≠ ATC default; opák ID | S040–S042 | user |
 
 ## 3. Error log
 
@@ -104,4 +106,4 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | docs/pce/Sales/* | P05g | P05j (mátrix + competitor-analogs) | TERVEZET rendszerlicenc |
 | docs/pce/Sources/S028-* | P01c | P05i | L5 jegyzet + PDF |
 | docs/pce/ProcessArtifacts/* | P01–P06 | P05l (I-20, D-25) | DRAFT |
-| docs/pce/Engineering/* | P05l | P05l | SYN ticketek; nem spec |
+| docs/pce/Engineering/* | P05l | P05n (gold-v0 fixtures) | SYN ticketek + Gold V0; nem spec |
