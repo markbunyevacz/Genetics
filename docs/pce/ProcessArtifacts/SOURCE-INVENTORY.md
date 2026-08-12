@@ -29,6 +29,7 @@
 | I-17 | Korrekció: a vevő **rendszert** vesz (F1–F3, flag); HU/EU/US; labor csatlakozó | md (chat) | HU | SKU-P; market-packs; OQ-17; NG-07 marad | n/a |
 | I-18 | CureMD Hybrid CDSS PDF (arXiv 2603.14876v1); kérés: SOTA/G3/SHAP/RWE beépítés | PDF | EN | Primer olvasás; VC-13: nem PGx SOTA, 83,10% ≠ G3 | ~13 oldal |
 | I-19 | Piaci analogia + PREPARE/YouScript beillesztés; Tandem/ClinLabomics/TSI | md (chat) + URL | HU/EN | VC-14: p=0,0075; PMC7195220 ≠ YouScript; OQ-05 nyitva; k≠ClinLabomics | n/a |
+| I-20 | FR-461 gateway ticket-lista + PR merge kérés | md (chat) | HU | Engineering bontás; spec fagyasztva marad; OQ-16 nyitva | n/a |
 
 ## Átfedés
 
@@ -44,6 +45,7 @@
 - I-17: SKU-P rendszerlicenc; F2 a dobozban lakattal; US ≠ EU kiskapu.
 - I-18 = S028 teljes PDF; a „tökéletes beépítés / állami SOTA / G3=83,1%” **elvetve** (VC-13).
 - I-19: PREPARE számok OQ-15-be; YouScript mátrix market-packs-be; Tandem/ClinLabomics/TSI túlállítás **elvetve** (VC-14).
+- I-20: ticketek a zárolt FR-461-ből; nem új küszöb; éles HIS pecsétig tilos.
 
 ## Metaadat-ellentmondások
 

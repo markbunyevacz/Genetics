@@ -25,6 +25,7 @@ A v1 / F1s **éles ON moduljához** a gyártói kérés kész ([F](F-decision-pa
 7. **[F-decision-package.md](F-decision-package.md)** — gyártói előterjesztés a v1 blokkolókra. **Nem** külső aláírás.
 8. **[Outbound/](Outbound/README.md)** — címzett-kész irattervezetek (counsel, DPO, intézményi RA, L3 term sheet, ISO/EESZT owner). Küldhető; **nem** aláírt állásfoglalás.
 9. **[Sales/](Sales/README.md)** — **rendszerlicenc** (SKU-P). F1–F3 egy bináris; HU/EU/US flag. Klinika a vevő. Labor = csatlakozó. F2 bent van, lakattal. Nem leletbolt.
+10. **[Engineering/](Engineering/README.md)** — FR-461 SYN ticketek. Nem spec-módosítás. Éles HIS pecsétig tilos.
 
 ## Process artifacts
 
@@ -45,7 +46,7 @@ A gyártó neve ebben a csomagban **nincs kitalálva**. A9 feltevés: a gyártó
 ## Ami szándékosan nincs itt
 
 - OQ-05 / OQ-15 jogi vélemény (külső counsel)
-- Engineering ticket-bontás, gold-set annotációs SOP
+- Gold-set annotációs SOP (§13 parking lot). FR-461 ticketek: [Engineering/](Engineering/README.md)
 - Saját PRS-motor, B2C VCF-upload, EESZT írás, onkológiai szomatikus panel
 - TAM / piackutató-számok (5,7× szórás; nem SRS-anyag)
 - Kitöltött F.6 aláírások, gyártónévvel/labor-névvel kitöltött Outbound/Sales iratok, aláírt DPIA, etikai engedély, REG-020 szerződés, kitöltött Ft-ár
@@ -63,10 +64,12 @@ docs/pce/
 ├── Outbound/
 │   ├── OQ-01, OQ-03, OQ-05, OQ-15, OQ-16
 │   └── README.md
-└── Sales/
-    ├── market-packs.md       ← `[Y*]` mátrix; ki fizet
-    ├── competitor-analogs.md
-    └── literature-boundary.md
+├── Sales/
+│   ├── market-packs.md       ← `[Y*]` mátrix; ki fizet
+│   ├── competitor-analogs.md
+│   └── literature-boundary.md
+└── Engineering/
+    └── FR-461-gateway-tickets.md  ← SYN kódolás; nem OQ-pecsét
 ```
 
 **OQ-16 nincs kihagyva.** F1s HIS OQ-16 nélkül nem indul.
@@ -79,10 +82,10 @@ docs/pce/
 | --- | --- |
 | Outbound **küldése** (kitöltött névvel, a specben név nélkül) | OQ válasz; nem-MDSW *piaci* állítás |
 | F1+ **mag kód**: L0–L2, outside-call, FR-210, PREPARE-12 config, FR-400-STATIC, FR-410-EDU, FR-490, PDF/FHIR, `LIVE_CDS=false`, FR-700 | Matcher ON; `MedicationEntry` a rendererben |
-| F1s kód **SYN** adatokon, külön store | Éles HIS / valódi beteg (OQ-15+16) |
+| F1s kód **SYN** adatokon, külön store; [FR-461 ticketek](Engineering/FR-461-gateway-tickets.md) | Éles HIS / valódi beteg (OQ-15+16) |
 | ISO 9001 folyamat + Redmine (OQ-01) | Tanúsítvány *ténye* |
 | SKU-P ajánlat placeholderekkel | Éles ON modul; `LIVE_CDS=true` |
 
-Új architektúra-terv **nem** kell a pecsétekig: a két path a [B mellékletben](B-architecture-and-interfaces.md) van. A következő *mérnöki* munka a F1+ mag, nem új spec-fejezet. Ticket-bontás / gold-set SOP a §13 parking lot — külön kérésre.
+Új architektúra-terv **nem** kell a pecsétekig: a két path a [B mellékletben](B-architecture-and-interfaces.md) van. A F1+ mag és a SYN FR-461 gateway a kódolható sáv. Gold-set annotációs SOP továbbra is §13.
 
 Tilos pecsét előtt: „nem MDSW” mint tény; élő CDS a felírónak; shadow a vizit-UI-n.
