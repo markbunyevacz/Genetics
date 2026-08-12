@@ -31,6 +31,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P05k | SKU-P ki-fizet + lakat driver | 2026-08-12 | 2026-08-12 | DONE | I-19 „hogyan épül be” | market-packs ki-fizet; OQ-03 default; OQ-15 HITL≠ADR | — |
 | P10b | Pecsétekig megerősítés | 2026-08-12 | 2026-08-12 | DONE | User: van-e architektúra-feladat pecsétekig? | README pecsétekig tábla; F.6 + OQ-17; D-24 | — |
 | P05l | FR-461 ticket-bontás | 2026-08-12 | 2026-08-12 | DONE | Explicit kérés: gateway csonkolás ticketek | `Engineering/FR-461-gateway-tickets.md`; OQ-16 nyitva | — |
+| P10c | Ops kapuk a fagyasztott specből | 2026-08-12 | 2026-08-12 | DONE | User: kötött küldési lánc + fallback | README pecsétekig + Outbound sorrend; spec nem nyílt | — |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -63,6 +64,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-23 | P05k | Ki fizet + lakat driver | Labor viszonteladó / SKU-P SaaS + `[Yl]` opcionális | Klinika fizeti SKU-P-t; labor nem viszonteladó; lakat előbb NG-07, aztán `[Ya]` | I-19 finomítás | I-19 |
 | D-24 | P10b | Iratírás pecsétekig | Tovább spec / fagyasztva + F1+ mag | **Megerősítve** §10.2; OQ-k nyitva; nincs `v1.2-Core-Specification.md`; nincs új architektúra-fejezet | README pecsétekig; B melléklet | user |
 | D-25 | P05l | FR-461 ticketek a fagyasztott specből | Spec-módosítás / engineering bontás | **Engineering/**; SYN only; A14 assumption; nem OQ-16 pecsét | FR-461; E.3.1; TC-GW-010..020 | user |
+| D-26 | P10c | Küldési lánc | Párhuzamos OQ-15 / kötött 16→15→05→03→01 | **Kötött küldés**; HIS továbbra is 15+16 pecsét; FR-115 ≠ FR-100; ISO ≠ megújítás | §10.2 fallback; OQ-16 I.0 | user |
 
 ## 3. Error log
 
@@ -87,7 +89,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 
 | Fájl | Létrehozva | Módosítva | Státusz |
 | --- | --- | --- | --- |
-| docs/pce/README.md | P00/P05 | P05l (Engineering link) | v1.2 FAGYASZTVA |
+| docs/pce/README.md | P00/P05 | P10c (kötött küldési lánc + fallback; PR #1 merged) | v1.2 FAGYASZTVA |
 | docs/pce/PCE-SPEC-v1.2.md | P05b (git mv) | P05j (§9.4 PREPARE p=0,0075) | v1.2 FAGYASZTVA; S028+PREPARE határ |
 | docs/pce/A-intended-purpose-and-modules.md | P05 | P05i (A.3 SHAP≠FR-710) | DRAFT v1.2 |
 | docs/pce/B-architecture-and-interfaces.md | P05 | P05c | DRAFT v1.2 |
@@ -95,7 +97,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | docs/pce/D-risk-and-traceability.md | P05 | P06j (VC-14) | DRAFT v1.2 |
 | docs/pce/E-shadow-hitl.md | P05b | P05i (E.7 SOTA-határ) | DRAFT v1.2 |
 | docs/pce/F-decision-package.md | P05e | P10b (F.6 + OQ-17) | DRAFT v1.2; OQ-k ELŐTERJESZTVE |
-| docs/pce/Outbound/* | P05f | P05j (OQ-15 PREPARE; OQ-05 L4; OQ-16 ClinLabomics) | TERVEZET küldhető |
+| docs/pce/Outbound/* | P05f | P10c (kötött 16→15→05→03→01) | TERVEZET küldhető |
 | docs/pce/Sales/* | P05g | P05j (mátrix + competitor-analogs) | TERVEZET rendszerlicenc |
 | docs/pce/Sources/S028-* | P01c | P05i | L5 jegyzet + PDF |
 | docs/pce/ProcessArtifacts/* | P01–P06 | P05l (I-20, D-25) | DRAFT |

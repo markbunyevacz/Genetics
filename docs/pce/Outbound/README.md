@@ -23,13 +23,17 @@ A v1.2 spec **fagyasztva** ([§10.2](../PCE-SPEC-v1.2.md)). Ezeket az iratokat *
 | [OQ-03-l3-term-sheet.md](OQ-03-l3-term-sheet.md) | OQ-03 | Partnerlaboratórium üzleti vezetése | Term sheet (nem szerződés) |
 | [OQ-01-iso-eeszt-owner-csomag.md](OQ-01-iso-eeszt-owner-csomag.md) | OQ-01 | Ügyvezetés / belső RA | F0 feladatlista + kapuőr |
 
-## Küldési sorrend (ajánlott)
+## Küldési sorrend (kötött)
 
-1. **OQ-16** (DPO) — az F1s anonim út ettől függ.
-2. **OQ-15** (intézmény) — OQ-16 után vagy vele párhuzamosan, de F1s HIS-csatlakozás OQ-16 nélkül nem indul.
-3. **OQ-05** (counsel) — F1+ forgalmazási pozíció; független az F1s-től, de a dosszié ugyanaz.
+`OQ-16 → OQ-15 → OQ-05 → OQ-03 → OQ-01`
+
+1. **OQ-16** (DPO) — elsőbbségi kapu. Az F1s *éles* HIS ettől függ. NEM → álnevesített út + FR-115 (kutatási/shadow). **Nem** kapcsolja ki a klinikai FR-100-at.
+2. **OQ-15** (intézmény) — **csak lezárt OQ-16 után** megy ki. Reviewer-vak HITL kérelem; HIS pecsét: OQ-15 **és** OQ-16.
+3. **OQ-05** (counsel) — F1+ nem-MDSW *kérés*. A gén-szintű CPIC szöveg lehet Rule 11a. A jogi hatókör független az F1s-től; a küldés a láncban a 15 után.
 4. **OQ-03** (labor) — F1+ COGS / REG-020; labornevet itt **nem** találunk ki.
-5. **OQ-01** (belső) — 2026-09-30 ISO 9001 / 4. melléklet 2.1; C-000 tény azonnal.
+5. **OQ-01** (belső) — 2026-09-30 ISO 9001 / 4. melléklet 2.1; C-000 tény. **Nem** „ISO megújítás”: lehet, hogy nincs tanúsítvány. Redmine ≠ EESZT FHIR (NG-05).
+
+A *küldés* most; a *pecsét* F.6. Párhuzamos kiküldés **nincs**: a 15-ös irat OQ-16 válasz nélkül nem megy.
 
 ## Mellékletek minden külső levélhez
 
