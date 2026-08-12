@@ -120,7 +120,8 @@ C melléklet C.4.
 | OQ-16 | DPO | | | |
 | OQ-01 | `eeszt_iso_owner` + tanúsító státusz | | | |
 | OQ-03 | Partnerlabor (REG-020) | | | |
+| OQ-17 | US counsel | | | |
 
-A sor kitöltése a címzett **Outbound** iratán történik, nem ebben a mellékletben.
+A sor kitöltése a címzett **Outbound** iratán történik, nem ebben a mellékletben. OQ-17 a US F2/F3 feloldást blokkolja, a HU/EU F1+ mag kódot nem.
 
 A spec-írás **fagyasztva** (§10.2). A F1+ mag és a [Sales](Sales/README.md) **nem** várja ezt a táblát; az éles HIS és a nem-MDSW *licenc* igen. Pilot (szintetikus) a Sales ajánlat §2 szerint mehet.

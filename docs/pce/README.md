@@ -52,4 +52,37 @@ A gyártó neve ebben a csomagban **nincs kitalálva**. A9 feltevés: a gyártó
 
 ## Következő gate
 
-**Spec:** fagyasztva. **Termék:** PCE rendszer (F1–F3, flag). **Vevő:** klinika/intézmény. **Éles F2:** CE / in-house / OQ-17, nem sales-kapcsoló.
+**Spec / Outbound / Sales iratírás:** fagyasztva (§10.2). **OQ-k:** ELŐTERJESZTVE, amíg F.6 ki nem töltődik. **Merge:** a PR a kanonikus csomag; a pecsét nem a git-merge.
+
+**Kanonikus fa** (nincs `v1.2-Core-Specification.md`):
+
+```
+docs/pce/
+├── PCE-SPEC-v1.2.md          ← zárolt PRD+SRS
+├── A–F mellékletek
+├── Outbound/
+│   ├── OQ-01, OQ-03, OQ-05, OQ-15, OQ-16
+│   └── README.md
+└── Sales/
+    ├── market-packs.md       ← `[Y*]` mátrix; ki fizet
+    ├── competitor-analogs.md
+    └── literature-boundary.md
+```
+
+**OQ-16 nincs kihagyva.** F1s HIS OQ-16 nélkül nem indul.
+
+**Labor:** REG-020 csatlakozó = 0 szoftverdíj. `[Yl]` csak saját white-label tenancy. Nem viszonteladó, nem „fix havidíjas adatkapcsolat” mint mag-SKU.
+
+### Pecsétekig — mi indul / mi nem (§10.2)
+
+| Indul most | Vár F.6-ra |
+| --- | --- |
+| Outbound **küldése** (kitöltött névvel, a specben név nélkül) | OQ válasz; nem-MDSW *piaci* állítás |
+| F1+ **mag kód**: L0–L2, outside-call, FR-210, PREPARE-12 config, FR-400-STATIC, FR-410-EDU, FR-490, PDF/FHIR, `LIVE_CDS=false`, FR-700 | Matcher ON; `MedicationEntry` a rendererben |
+| F1s kód **SYN** adatokon, külön store | Éles HIS / valódi beteg (OQ-15+16) |
+| ISO 9001 folyamat + Redmine (OQ-01) | Tanúsítvány *ténye* |
+| SKU-P ajánlat placeholderekkel | Éles ON modul; `LIVE_CDS=true` |
+
+Új architektúra-terv **nem** kell a pecsétekig: a két path a [B mellékletben](B-architecture-and-interfaces.md) van. A következő *mérnöki* munka a F1+ mag, nem új spec-fejezet. Ticket-bontás / gold-set SOP a §13 parking lot — külön kérésre.
+
+Tilos pecsét előtt: „nem MDSW” mint tény; élő CDS a felírónak; shadow a vizit-UI-n.
