@@ -28,6 +28,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P06i | Plan-vs-content (S028) | 2026-08-12 | 2026-08-12 | DONE | Három kért használat vs PDF | G3 marad ≥90%; nincs „állami referenciák” fejezet | — |
 | P05j | PREPARE + YouScript analogia iratokba | 2026-08-12 | 2026-08-12 | DONE | I-19 | OQ-15 §III; market-packs mátrix; OQ-05 IV.a; OQ-16 ClinLabomics-határ | E-14 |
 | P06j | Plan-vs-content (I-19) | 2026-08-12 | 2026-08-12 | DONE | PREPARE/YouScript/Tandem/ClinLabomics | VC-14; OQ-k nyitva; nincs kitalált Ft | — |
+| P05k | SKU-P ki-fizet + lakat driver | 2026-08-12 | 2026-08-12 | DONE | I-19 „hogyan épül be” | market-packs ki-fizet; OQ-03 default; OQ-15 HITL≠ADR | — |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -57,6 +58,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-20 | P05h | Mit adunk el? | Laborlelet / **rendszer** F1–F3 flaggel | **SKU-P**; labor csatlakozó; HU/EU/US; F2 LOCK≠hiány | I-17; NG-07; G5 | I-17 |
 | D-21 | P05i | S028 beépítés | Állami SOTA + G3=83,1% + SHAP-FR + RWE / L5 jegyzet + határ | **L5 jegyzet**; G3 ≥90% marad; SHAP nem v1 FR; RWE tiltott; **nincs** „állami referenciák” fejezet | VC-13; IR-01 | I-18 |
 | D-22 | P05j | PREPARE/YouScript iratba | Szó szerinti user-számok / primer Lancet + publikus YouScript lista | **Primer**: p=0,0075; 365 USD lista; Tandem nem pecsét; ClinLabomics nem k | VC-14 | I-19 |
+| D-23 | P05k | Ki fizet + lakat driver | Labor viszonteladó / SKU-P SaaS + `[Yl]` opcionális | Klinika fizeti SKU-P-t; labor nem viszonteladó; lakat előbb NG-07, aztán `[Ya]` | I-19 finomítás | I-19 |
 
 ## 3. Error log
 

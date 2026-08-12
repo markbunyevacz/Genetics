@@ -30,8 +30,9 @@ Labor / LIS / VCF = **bemenet**. REG-020 = csatlakozási szerződés, nem a SKU 
 | --- | --- |
 | **Vevő** | Klinika, magánellátó, kórház, ellátóhálózat |
 | **Mit kap** | PCE rendszer: adatmodell, consent-kapu, ingest, knowledge, lelet, shadow-cső, CDSS-cső, audit. HIS/LIS csatlakozás. Piaci csomag (HU/EU/US). |
-| **Ár modell** | Éves platform + telephely / klinikus sáv. F2/F3 *aktiválás* külön sor, ha a flag feloldódik — nem új termék. Placeholder: `[Yp]` / `[Yc]` |
-| **Bemenet** | A vevő laborja (outside-call/VCF) vagy a vevő által kijelölt partnerlabor. A gyártó **nem** számláz vizsgálatot. |
+| **Ár modell** | Éves platform + telephely / klinikus sáv (**B2B SaaS**). F2/F3 *aktiválás* `[Ya]`, ha a flag feloldódik — nem új termék. Placeholder: `[Yp]` / `[Yc]` |
+| **Bemenet** | A vevő laborja (outside-call/VCF) vagy kijelölt partnerlabor. A gyártó **nem** számláz vizsgálatot. A labor **nem** viszonteladó. |
+| **Labor díj** | Csak ha a labor *saját* white-label tenancyt kér: `[Yl]` a gyártónak (OQ-03). REG-020 csatlakozó = 0 szoftverdíj a labor felé. |
 | **MDR / FDA** | A *bekapcsolt* modul intended purpose-e. Kikapcsolt F2 nem „titkos CDSS”. |
 
 Ez G5: a v2 (élő CDSS) **nem** újraírt szoftver. Kapcsoló + dosszié.

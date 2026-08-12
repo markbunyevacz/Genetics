@@ -45,4 +45,7 @@ A vevő **SKU-P** rendszert licencel. A labor **csatlakozó**. Az alábbi három
 | --- | --- |
 | A kórház a szoftvert fizeti; a labor adatot ad (YouScript/ActX csatorna) | „Ők EU-ban nem-MDSW-ként mennek, tehát mi is” |
 | A lakat: előbb CE/in-house, aztán `[Ya]` | „YouScript-lakat; hétfőn kapcsoljuk” |
-| PREPARE a *PGx panel* evidenciája (§9.4) | „A PCE 30%-kal csökkenti az ADR-t” |
+| PREPARE a *PGx panel* evidenciája (§9.4) | „A PCE 30%-kal csökkenti az ADR-t”; „életet ment / ápolási nap” a Lancetből |
+| A kórház SKU-P-t fizet; a labor opcionális `[Yl]` | „A labor viszonteladja a PCE-t”; ágyszám-tarifa mint tény |
+
+YouScript + PREPARE **nem** zárja le az OQ-05 / 15 / 16 / 17-et és nem pecsételi a nem-MDSW-t.

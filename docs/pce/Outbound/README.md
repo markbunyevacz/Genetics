@@ -54,6 +54,7 @@ A vázlatok **nem** lettek szó szerint átmásolva, ahol a v1.2 spec mást mond
 | OQ-15 | Art. 62 mentesség mint kész jogi tény | Gyártói *érv*; a RA dönt vagy továbbítja |
 | OQ-03 | L3 = csak NG-01 riasztásra manuális felülbírálat; automatikus lelet ingyen | **NG-01** = non-goal (nincs saját hívás), nem riasztáskód. F1+ default = outside-call; **minden** leletet a labor orvosa ír alá |
 | OQ-03 | Darabár csak kivételekre | Spec: havidíj + volumensáv; a `[Y]` placeholder a tárgyalásé |
+| OQ-03 | Számlázási irány nyitott / labor viszonteladó | Default: klinika = SKU-P; labor `[Yl]` csak saját tenancy; **nem** viszonteladó |
 | OQ-01 | EESZT „aszinkron FHIR + SSL az éles adatközpontba” | **NG-05**: nincs EESZT írás, nincs nyílt FHIR API. Regisztráció = ESZFK **Redmine** (5/F. §) |
 | OQ-01 | ISO 9001 „megújítás” | Lehet, hogy **nincs** tanúsítvány; 2.1 = ISO 9001 **vagy** egyéb auditált szoftver-QMS; **nem** 13485 |
 | OQ-15 | PREPARE p=0,0034; „súlyos” ADR; ápolási nap; PCE-RWE; shadow = Lancet ADR újramérés | **p=0,0075**; 21,0% vs 27,7%; OR 0,70; grade 2–5 + possible; HU nincs; F1s = HITL/G3, nem PREPARE-klon |

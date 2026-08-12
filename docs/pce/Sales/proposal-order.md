@@ -18,7 +18,7 @@ A Vevő a **Precision Clinical Engine rendszert** rendeli (F1+ · F1s · F2 · F
 - [ ] **SKU-P** — Intézményi rendszerlicenc (alap)
 - [ ] **SKU-H** — HIS-vendor beágyazás (REG-021)
 
-Labor: csatlakozó, nem ez a megrendelés tárgya. Csatolt REG-020: `[van / folyamatban / a Vevő laborja]`.
+Labor: csatlakozó, nem ez a megrendelés tárgya. Csatolt REG-020: `[van / folyamatban / a Vevő laborja]`. A Vevő a PCE **platformot** fizeti (B2B SaaS: prediktív motor + munkafolyamat). A partnerlabor **nem** viszonteladó. Ha a labor saját white-label tenancyt kér: külön `[Yl]` (OQ-03), nem ez a SKU-P sor.
 
 **Nem tárgy, amíg a flag LOCK:** élő felírási CDSS a klinikai UI-n, EESZT írás, B2C VCF-upload, saját allélhívás.
 
@@ -62,6 +62,7 @@ Market pack szabály: [market-packs.md](market-packs.md).
 | Indítás / HIS | `[Y0]` egyszeri |
 | SKU-H integráció (ha jelölve) | `[Yi]` |
 | F2/F3 aktiválás (később, §8) | `[Ya]` |
+| Opcionális labor white-label tenancy (nem viszonteladás) | `[Yl]` — csak ha a labor *külön* tenancyt kér |
 | Pilot | `[Yp_pilot]` |
 
 Sávok magyarázata: [market-packs.md](market-packs.md) árazási mátrix. A YouScript 365 USD/év **nem** ennek a táblának az ára.

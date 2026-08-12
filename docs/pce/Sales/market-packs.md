@@ -72,6 +72,36 @@ Státusz: **NYITOTT**. A US market pack F2/F3 default **LOCK**.
 
 ---
 
+## Ki fizet (B2B SaaS, nem viszonteladás)
+
+YouScript/ActX *struktúra*-analogia: az intézmény a szoftvert fizeti; a labor genotípust ad. Publikus YouScript-tarifa: Per User / Site-Based + 365 USD/év lista. **Ágyszám-sávos enterprise árlista nincs nyilvánosan** — a PCE ezért nem másol kitalált ágyszám-táblát.
+
+| Pénzmozgás | Ki → kinek | Mit fedez | Nem |
+| --- | --- | --- | --- |
+| **SKU-P** | Klinika / hálózat → gyártó | Platform, HIS-cső, F1+ (ha ON), F1s (ha ON), zárt F2/F3 kód | PGx-vizsgálat darabára |
+| **Opcionális labor-tenancy** `[Yl]` | Partnerlabor → gyártó | Saját white-label render + aláíróhely (OQ-03) | A kórházi SKU-P viszonteladása |
+| **REG-020 csatlakozó** | Integráció, díj 0 vagy a klinika viszi | Outside-call / VCF a *klinika* tenancyjére | A labor nem lesz PCE-viszonteladó |
+| **Vizsgálat** | Labor → klinika (a labor árlistája) | A genotípus-hívás | Nem PCE-SKU |
+| **F2/F3 `[Ya]`** | Klinika → gyártó | Élő CDS feloldás | CE/in-house/OQ-17 **előtt** tilos |
+
+A licencmondat a megrendelőlapon: *„A Vevő a PCE platform prediktív és munkafolyamat-képességét licenceli (B2B SaaS). A partnerlabor nem viszonteladó. White-label tenancy külön `[Yl]`, OQ-03.”*
+
+---
+
+## Lakat mint sales-driver (FR-470) — előbb retesz, aztán `[Ya]`
+
+A HU/EU v1 buildben a `LIVE_CDS` **compile-time false**. A demóban a F2/F3 képernyő **látszik, nem kattintható**.
+
+| Szabad mondani | Tilos mondani |
+| --- | --- |
+| A vevő látja a teljes F1–F3 döntési fát; az élesítés gombja CE / in-house + licencmódosítás `[Ya]` | „YouScript-lakat”; „hétfőn kapcsoljuk”; ActX-szerű élő riasztás ma |
+| Az ActX *klinikai* gatingje (villan, ha releváns szer) az **F2 viselkedés** analogiája, feloldás után | Hogy az ActX compile-time MDR-reteszt használ; hogy PDF→CDSS történetük primer |
+| A lakat **először** Rule 11a védvonal (NG-07) | Hogy a lakat *csak* up-sell, ezért CE előtt is mehet a kártya |
+
+„Bent van, addig is megy a riasztás” = forgalomba hozatal, ha MDSW. A `[Ya]` **nem** nyitja a lakatoz CE nélkül.
+
+---
+
 ## Piaci analógia (SKU-P, nem pecsét)
 
 A kórház/hálózat **szoftverlicencet** vesz; a labor diplotípust szállít. Ez a PCE SKU-P + outside-call. A lenti termékek **US/vendor** analogiák, nem EU-MDR precedens és nem a mi árlistánk.

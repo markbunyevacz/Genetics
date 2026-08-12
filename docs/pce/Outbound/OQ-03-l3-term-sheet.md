@@ -76,16 +76,19 @@ A Partnerlaboratórium vállalja, hogy az aláírásra kész F1+ kimenet (PDF/FH
 
 A spec kötése: **fix havidíj + volumensáv**, nem per-patient CDSS-licenc. A tárgyalás ettől eltérhet; a placeholder-ek kötelezően kitöltendők aláírás előtt.
 
+**Gyártói default (nem pecsét):** a **kórház/klinika** fizeti a SKU-P-t a gyártónak. A labor **nem** viszonteladója a kórházi licencnek. Ha a labor *saját* white-label tenancyt kér (saját megrendelők, saját pecsét), a labor a gyártónak `[Y1]`/`[Y2]` (mátrix: `[Yl]`). Ha a labor csak a klinika tenancyjéhez csatlakozik (REG-020), szoftverdíj **nem** jár a labor felé — a vizsgálat díját a labor a klinikának számlázza.
+
 | Tétel | Összeg | Megjegyzés |
 | --- | --- | --- |
-| Havidíj (platform / white-label) | `[Y1]` Ft + ÁFA / hó | Minimum volumen: `[N]` lelet/hó |
+| Havidíj (platform / white-label tenancy) | `[Y1]` Ft + ÁFA / hó | Csak ha a labor *saját* tenancyt kér. Minimum volumen: `[N]` lelet/hó |
 | Volumensáv (sávonként) | `[Y2]` Ft + ÁFA / aláírt lelet **vagy** sávos csomag | Csak **aláírt** F1+ lelet |
 | Opcionális: INDETERMINATE / ütközés plusz munka | `[Y3]` Ft + ÁFA / eset | Nem „NG-01 díj” |
 | F1s / HITL (ha egyáltalán) | Külön kutatási megállapodás | Nem a felíró licenc |
+| Csatlakozó a klinika SKU-P-jéhez | 0 szoftverdíj a labor felé | REG-020; a klinika fizeti a `[Yp]`-t |
 
 Automatikus, **aláírás nélküli** leletkimenet **nincs** — ezért „az automatikus lelet után díj nem jár” modell **nem** alkalmazható.
 
-A gyártó a labor felé: a fenti díj a labor **bevétele** a white-label szolgáltatásból, vagy a gyártó fizet a labornak mint alvállalkozónak — **egyik sem dőlt el**; a felek a szerződésben rögzítik a számlázási irányt.
+Ettől a defaulttól a felek eltérhetnek (pl. a gyártó fizet a labornak mint alvállalkozónak). A számlázási irány a REG-020-ban rögzítendő. **Viszonteladás** (a labor SKU-P-t ad el kórháznak) **nem** default és nem cél.
 
 ---
 

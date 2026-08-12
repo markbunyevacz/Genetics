@@ -66,7 +66,13 @@ A „30%” az OR 0,70 (relatív esélycsökkenés), **nem** abszolút 30 száza
 
 **Kötelező forráskritika a címzett felé:** open-label; a hatás jelentős része grade 2; a Lancet levelei (Curtis; Rogers et al.; Van der Linden; Peñas-LLedó & LLerena) a haszon mértékét vitatják. A primer kimenet **nem** halálozás és **nem** ápolási nap. A PCE F1s **nem** méri újra a Lancet ADR-arányt, hacsak a helyi protokoll ADR-kimenetet is gyűjt — a v1.2 spec ezt **nem** írja elő.
 
-**Mit indokol ez a kérelemben:** (1) az F2/F3 *későbbi* élesítésnek van független, peer-reviewed PGx-evidenciája (panel + guideline-vezérelt felírás); (2) az F1s a helyi motor HITL-validációja ehhez a dossziéhoz, a felíró nélkül. **Nem** indokolja, hogy a shadow Art. 62 alól mentes, és **nem** a PCE saját RWE-je.
+**Mit indokol ez a kérelemben:** (1) az F2/F3 *későbbi* élesítésnek van független, peer-reviewed PGx-evidenciája (panel + guideline-vezérelt felírás); (2) az F1s a helyi motor HITL-validációja (FR-450-BLIND, G3) ehhez a dossziéhoz, a felíró nélkül.
+
+**Amit a shadow *nem* válaszol meg:** a helyi populációban „milyen arányban fordulnának elő a Lancet 21,0 / 27,7%-os ADR-ek, ha a rendszer élesben futna”. A HITL concordanciát mér (reviewer vs motor), nem ADR-incidenciát. ADR-kimenet csak akkor, ha a helyi protokoll azt *külön* gyűjti — a v1.2 ezt nem írja elő.
+
+**Klinikai haszon (MDR Annex XIV) — határ:** a PREPARE a preemptív 12-génes *stratégia* irodalmi evidenciája, nem a PCE eszköz klinikai értékelésének lezárása, nem halálozás, nem ápolási nap, nem „a rendszer életet ment”. A Notified Body a Lancet-leveleket megtalálja. OQ-15 ettől **nem** zárul.
+
+**Nem** indokolja, hogy a shadow Art. 62 alól mentes, és **nem** a PCE saját RWE-je.
 
 ---
 
