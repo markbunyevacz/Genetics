@@ -157,5 +157,6 @@ Minden funkcionális, NFR és REG sor. TC-azonosítók a gold set / CI nevei; a 
 | Gyártói előterjesztés, nem aláírás | F melléklet; OQ státusz ELŐTERJESZTVE |
 | Címzett-kész irattervezetek | Outbound/ (OQ-05/16/15/03/01); nem pecsét |
 | Spec-fagyasztás + F1+ mag DEV | §10.2; D-18; OQ-k nyitva |
+| Eladható ajánlat, feltételezett OQ | Sales/; SKU-L első; klinika ≠ CDSS |
 
-**P06 eredmény (v1.2 + Outbound + fagyasztás):** a hibrid-brief, a shadow architektúra, a GDPR két út, az EDU/gateway/HITL csomagok és az öt külső irat megvannak. **OQ-05 / OQ-15 / OQ-16 / OQ-01 / OQ-03 ELŐTERJESZTVE.** A spec-írás **lezárva** (D-18 / §10.2); a F1+ mag kód indulhat. Maradék gap szándékos: gold-set SOP, engineering ticketek, DPA/DPIA végleges szöveg, kitöltött F.6.
+**P06 eredmény (v1.2 + Outbound + fagyasztás + Sales):** a hibrid-brief, a shadow, a GDPR két út, az öt külső irat és a vevői SKU-csomag megvannak. **OQ-k ELŐTERJESZTVE.** Spec-írás **lezárva** (D-18); F1+ mag és Sales (D-19) indulhat. G4 első vevő = labor. Maradék: gold-set SOP, ticketek, DPA/ÁSZF, kitöltött F.6, kitöltött Ft-ár.

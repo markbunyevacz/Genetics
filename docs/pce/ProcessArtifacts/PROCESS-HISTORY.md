@@ -21,6 +21,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P05f | Outbound hivatalos iratok | 2026-08-12 | 2026-08-12 | DONE | I-14 | `docs/pce/Outbound/` öt irat + index | E-10, E-11 |
 | P06f | Plan-vs-content (Outbound) | 2026-08-12 | 2026-08-12 | DONE | I-14 vs spec | Öt irat spec-hez igazítva; OQ-k nyitva | — |
 | P10 | Spec-fagyasztás | 2026-08-12 | 2026-08-12 | DONE | I-15 | §10.2; F1+ mag DEV-NOW; OQ-k nyitva | — |
+| P05g | Sales csomag (feltételezett OQ) | 2026-08-12 | 2026-08-12 | DONE | I-16 | `docs/pce/Sales/` | — |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -46,6 +47,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-16 | P05e | Disclaimer mint MDSW-kimenekülés | Felelősségkizárás / A.1.1 | **A.1.1 marad**; nem felelősségkizárás | FR-490; A.0 | I-13 |
 | D-17 | P05f | I-14 vázlatok szó szerint? | Átmásolni / spec szerint javítani | **Javítva**: A.1 verbatim; FR-100≠FR-115; Art. 62 kérelem; L3≠NG-01; EESZT≠FHIR | IR-01, VC-01, NG-01, NG-05 | I-14 |
 | D-18 | P10 | Spec-szakasz a külső OQ alatt | Tovább írni / fagyasztani + kód | **Fagyasztva**; F1+ mag indul; OQ-k ELŐTERJESZTVE | I-15; F.6 ≠ git-stop | I-15 |
+| D-19 | P05g | Eladás a pecsét előtt | Várni F.6-ra / készíteni a SKU-t hipotézisen | **Sales csomag**; klinika=lelet; OQ-05 hatályfeltétel; első vevő=labor | G4; NG-07; NG-03 | I-16 |
 
 ## 3. Error log
 
@@ -76,4 +78,5 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | docs/pce/E-shadow-hitl.md | P05b | P05c (E.3.1, E.4.1) | DRAFT v1.2 |
 | docs/pce/F-decision-package.md | P05e | P10 | DRAFT v1.2 |
 | docs/pce/Outbound/* | P05f | P10 (küldés most) | TERVEZET küldhető |
-| docs/pce/ProcessArtifacts/* | P01–P06 | P10 | DRAFT |
+| docs/pce/Sales/* | P05g | — | TERVEZET küldhető (hipotézis) |
+| docs/pce/ProcessArtifacts/* | P01–P06 | P05g | DRAFT |

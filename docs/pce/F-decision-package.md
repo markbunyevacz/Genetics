@@ -9,7 +9,7 @@
 
 A gyártó (A9: a `genetics` repo tulajdonos szervezete; **név nincs kitalálva**) az alábbi álláspontot kéri jóváhagyni. Az OQ **akkor zárul**, ha a címzett aláírja / elutasítja / feltételekkel visszaadja. Ez a fájl nem helyettesíti azt.
 
-**Küldhető iratok:** [Outbound/](Outbound/README.md) — OQ-05 counsel brief, OQ-16 DPO kérdőív, OQ-15 intézményi kérelem, OQ-03 L3 term sheet, OQ-01 F0 owner-csomag. A F.6 sor az ottani aláírás után töltődik.
+**Küldhető iratok:** [Outbound/](Outbound/README.md) — OQ-k. [Sales/](Sales/README.md) — vevői ajánlat a *feltételezett* OQ-válaszokra (G4). A F.6 sor az Outbound aláírás után töltődik; a Sales ettől még mehet pilotként.
 
 ```
 v1 / F1s blokkolók
@@ -107,6 +107,8 @@ C melléklet C.4.
 
 **Küldendő irat:** [Outbound/OQ-03-l3-term-sheet.md](Outbound/OQ-03-l3-term-sheet.md) — minden F1+ lelet aláírása; NG-01 ≠ riasztáskód; havidíj + volumensáv.
 
+**Vevői pár:** [Sales/lab-one-pager.md](Sales/lab-one-pager.md) + [Sales/proposal-order.md](Sales/proposal-order.md). Klinikának: [Sales/clinic-one-pager.md](Sales/clinic-one-pager.md) — ők a leletet veszik, nem a CDSS-t. Enélkül G4 üres.
+
 ---
 
 ## F.6 Aláíró-sor (külső; üresen)
@@ -121,4 +123,4 @@ C melléklet C.4.
 
 A sor kitöltése a címzett **Outbound** iratán történik, nem ebben a mellékletben.
 
-A spec-írás **fagyasztva** (§10.2). A F1+ mag fejlesztés **nem** várja ezt a táblát; az éles HIS és a nem-MDSW forgalmazás igen.
+A spec-írás **fagyasztva** (§10.2). A F1+ mag és a [Sales](Sales/README.md) **nem** várja ezt a táblát; az éles HIS és a nem-MDSW *licenc* igen. Pilot (szintetikus) a Sales ajánlat §2 szerint mehet.

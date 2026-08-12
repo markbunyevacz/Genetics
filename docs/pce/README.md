@@ -2,7 +2,7 @@
 
 | | |
 | --- | --- |
-| **Státusz** | **v1.2 FAGYASZTVA** — spec-írás lezárva a külső OQ-kig; F1+ mag fejleszthető |
+| **Státusz** | **v1.2 FAGYASZTVA** — spec-írás lezárva; F1+ mag + Sales csomag indulhat |
 | **Verzió** | v1.2 |
 | **Dátum** | 2026-08-12 |
 | **Nyelv** | magyar (követelmény-ID-k angolul) |
@@ -12,7 +12,7 @@ Ez a csomag a PCE farmakogenetikai (PGx) platform **követelménylistája és sz
 
 v1.2 a **legális hibrid**: F1+ statikus, verziózott guideline-társítás aláírt laborleleten; F1s shadow HITL a kezelőorvos nélkül; élő F2/F3 CDSS csak minősítés után. Az „F2 képesség F1 minőségben, mert az orvos dönt” útvonal **elutasítva** (NG-07).
 
-A v1 / F1s **forgalmazási** induláshoz a gyártói kérés és a küldhető iratok kész ([F melléklet](F-decision-package.md), [Outbound](Outbound/README.md)); a **külső aláírás** hiányzik. A **spec-írás lezárva** (§10.2). A **F1+ mag kód** ettől függetlenül indulhat.
+A v1 / F1s **forgalmazási** induláshoz a gyártói kérés és a küldhető iratok kész ([F melléklet](F-decision-package.md), [Outbound](Outbound/README.md)); a **külső aláírás** hiányzik. A **spec-írás lezárva** (§10.2). A **F1+ mag kód** és a **Sales csomag** (feltételezett OQ-válaszok, G4) ettől függetlenül indul.
 
 ## Olvasási sorrend
 
@@ -24,6 +24,7 @@ A v1 / F1s **forgalmazási** induláshoz a gyártói kérés és a küldhető ir
 6. **[E-shadow-hitl.md](E-shadow-hitl.md)** — shadow pipeline, intézményi gateway, HITL UI, GDPR két út, REG-090 / OQ-15.
 7. **[F-decision-package.md](F-decision-package.md)** — gyártói előterjesztés a v1 blokkolókra. **Nem** külső aláírás.
 8. **[Outbound/](Outbound/README.md)** — címzett-kész irattervezetek (counsel, DPO, intézményi RA, L3 term sheet, ISO/EESZT owner). Küldhető; **nem** aláírt állásfoglalás.
+9. **[Sales/](Sales/README.md)** — eladható ajánlat a **feltételezett** OQ-válaszokra. Klinika = lelet, nem élő CDSS. Nem pecsét.
 
 ## Process artifacts
 
@@ -45,8 +46,8 @@ A gyártó neve ebben a csomagban **nincs kitalálva**. A9 feltevés: a gyártó
 - Engineering ticket-bontás, gold-set annotációs SOP
 - Saját PRS-motor, B2C VCF-upload, EESZT írás, onkológiai szomatikus panel
 - TAM / piackutató-számok (5,7× szórás; nem SRS-anyag)
-- Kitöltött F.6 aláírások, gyártónévvel/labor-névvel kitöltött Outbound iratok, aláírt DPIA, etikai engedély, REG-020 szerződés
+- Kitöltött F.6 aláírások, gyártónévvel/labor-névvel kitöltött Outbound/Sales iratok, aláírt DPIA, etikai engedély, REG-020 szerződés, kitöltött Ft-ár
 
 ## Következő gate
 
-**Spec:** fagyasztva. **Kód:** F1+ mag (§10.2). **Forgalmazás / F1s HIS:** F.6 aláíró-sor (OQ-05/15/16/01/03).
+**Spec:** fagyasztva. **Kód:** F1+ mag (§10.2). **Értékesítés:** [Sales](Sales/README.md) — első SKU a labor; klinika a leletet veszi. **Éles nem-MDSW licenc / HIS-árnyék:** F.6.

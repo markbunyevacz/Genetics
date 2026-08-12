@@ -25,6 +25,7 @@
 | I-13 | Gyártói döntési csomag a v1 blokkolókra (counsel/DPO/RA/ügyvezetés/üzlet kérései) | md (chat) | HU | F melléklet; OQ nem zárva; disclaimer ≠ felelősségkizárás | n/a |
 | I-14 | Öt küldhető hivatalos irat vázlata (counsel, DPO, intézményi RA, L3 term sheet, ISO/EESZT owner) | md (chat) | HU | Outbound/; vázlat hibák javítva (NG-01, EESZT FHIR, Art. 62 mint tény, FR-100 keverés) | n/a |
 | I-15 | Spec-szakasz lezárása vs fejlesztés indítása a külső OQ-k alatt | md (chat) | HU | §10.2 fagyasztás; F1+ mag kód igen; OQ-k nyitva | n/a |
+| I-16 | Eladás klinikáknak a külső OQ-k feltételezésével | md (chat) | HU | Sales/; SKU-L/C/H; klinika=lelet nem CDSS; OQ mint hatályfeltétel | n/a |
 
 ## Átfedés
 
@@ -36,6 +37,7 @@
 - I-13 gyártói kérés a címzetteknek; F.6 üresen marad külső aláírásig.
 - I-14 az I-13 kéréseit címzett-kész irattá alakítja; a vázlat **nem** szó szerinti, ahol a spec mást mond (Outbound/README javítótábla).
 - I-15 a spec-írást fagyasztja; a F1+ mag kódot elválasztja a F.6 forgalmazási kaputól.
+- I-16: a vevőnek SKU kell a pecsét előtt; a klinika nem F2-t vesz. OQ-k ettől még nyitva.
 
 ## Metaadat-ellentmondások
 

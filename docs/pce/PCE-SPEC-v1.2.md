@@ -7,7 +7,7 @@
 | **Dátum** | 2026-08-12 |
 | **Hatókör** | PGx platform, magyar/EU piac; F1+ statikus lelet + F1s shadow HITL + F2/F3 CDSS |
 | **Előző** | PCE-SPEC-v1.1 — F1 passzív L4 + élő fenokonverzió a leleten; v1.2 ezt szűkíti |
-| **Mellékletek** | [A](A-intended-purpose-and-modules.md) · [B](B-architecture-and-interfaces.md) · [C](C-eeszt-f0-checklist.md) · [D](D-risk-and-traceability.md) · [E](E-shadow-hitl.md) · [F](F-decision-package.md) · [Outbound](Outbound/README.md) |
+| **Mellékletek** | [A](A-intended-purpose-and-modules.md) · [B](B-architecture-and-interfaces.md) · [C](C-eeszt-f0-checklist.md) · [D](D-risk-and-traceability.md) · [E](E-shadow-hitl.md) · [F](F-decision-package.md) · [Outbound](Outbound/README.md) · [Sales](Sales/README.md) |
 | **Következő gate** | Párhuzamos: (1) F.6 külső aláírás · (2) F1+ mag fejlesztés §10.2 szerint |
 
 Jelölések: `[V]` primerben verifikált · `[R]` egy forrás · `[C]` céges közlés · `[CORRECTED]` a v1.0-hoz képest javítva · `[ASSUMPTION]` · `[NEEDS VERIFICATION]`.
@@ -690,6 +690,7 @@ A fejlesztés **elindulhat** a lenti határon. „F.6 nélkül nem indul a mérf
 | **F1s kód fixture-ön** | **Igen, zárt** | FR-440/450/450-BLIND/460/461/410-LIVE **szintetikus** adatokon, külön store, külön IAM. Nincs éles HIS, nincs valódi betegrekord. | Igen az **éles** HIS-csatlakozásra (OQ-15 + OQ-16). |
 | **ISO 9001 / Redmine** | **Igen** (F.4 BELSŐ IGEN) | C-000 tény, C-201 tanúsító; 2026-09-30 kapuőr | A tanúsítvány *ténye* nyitott; a folyamat nem vár counselre |
 | **Labor LOI** | **Igen** (F.5 BELSŐ IGEN) | [OQ-03 term sheet](Outbound/OQ-03-l3-term-sheet.md) kitöltve, név nélkül a specben | Igen az aláírt REG-020-ra |
+| **Értékesítés (G4)** | **Igen, hipotézisen** | [Sales/](Sales/README.md): SKU-L labor, SKU-C klinika=lelet nem CDSS, ajánlat OQ-05 feltétellel, MSP. Feltételezett OQ-válasz = eladási alap, nem pecsét. | Éles beteglelet / nem-MDSW licenc: OQ-05 + aláíró labor |
 | **F2/F3 / `LIVE_CDS=true`** | **Nem** | Interruptive CDSS, élő fenokonverzió a klinikai UI-n | CE / in-house (REG-011) + NG-07 |
 
 **Tilos a fagyasztás alatt kódolni / szállítani:**
@@ -721,7 +722,7 @@ Ha OQ-05 = **NEM**, a már megírt F1+ mag **nem dobandó**: IIa / CE pályára 
 
 | Fázis | Idő | Tartalom | Kimenet | MDR |
 | --- | --- | --- | --- | --- |
-| **F0** | 0–3 hó | **Spec fagyasztva (§10.2).** Párhuzamos: Outbound küldés; ISO 9001; labor LOI; **F1+ mag kód** + gold set v0. Counsel/DPO/RA *válasz* F.6-ra. | Kód + küldött iratok; F.6 még üres lehet | — |
+| **F0** | 0–3 hó | Spec fagyasztva. Párhuzamos: Outbound küldés; ISO 9001; **Sales csomag** (SKU-L első); F1+ mag kód + gold set v0; F.6 *válasz*. | Ajánlat + MSP + küldött iratok | — |
 | **F1+** | 3–9 hó | L0–L2 + FR-240 + FR-400-STATIC + FR-410-EDU + FR-490. Matcher **ki**. FR-410-LIVE **ki a leletről**. | Fizető labor, white-label lelet | Nem MDSW **csak ha** OQ-05 igen |
 | **F1s** | F1+-szal párhuzamosan | Gateway (FR-460), shadow (FR-440), HITL (FR-450), izoláció (FR-470); REG-090/091 | G3 metrika, clinical evaluation input | Nem klinikai kimenet; OQ-15 |
 | **F2** | 6–18 hó | In-house élő CDSS (FR-520/530, FR-410-LIVE a klinikai UI-n); ISO 13485 + 62304 + 14971 | Case study | In-house (REG-011) |
@@ -827,7 +828,7 @@ A teljes registry: [SOURCE-REGISTRY](ProcessArtifacts/SOURCE-REGISTRY.md). Korre
 
 ## 15. Amit ez a spec nem tud
 
-- **Nem** kitöltött F.6 aláíró-sor. Az F melléklet gyártói *kérés*; az [Outbound](Outbound/README.md) iratok küldhető tervezetek, nem counsel/DPO/RA határozat.
+- **Nem** kitöltött F.6 aláíró-sor. Az F melléklet gyártói *kérés*; az [Outbound](Outbound/README.md) iratok küldhető tervezetek, nem counsel/DPO/RA határozat. A [Sales](Sales/README.md) a *feltételezett* válaszokra épülő ajánlat — G4, nem pecsét.
 - **Nem** OQ-15 döntés. A „nincs hatása a kezelésre → nem Art. 62” *érv*, nem hatósági tény.
 - **Nem** OQ-16 DPIA-döntés. A FR-461 kontrollok a DPO inputjai.
 - **Nem** DPA, DPIA vagy etikai kérelem — E melléklet váz.
