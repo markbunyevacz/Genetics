@@ -69,3 +69,39 @@ Státusz: **NYITOTT**. A US market pack F2/F3 default **LOCK**.
 ## Szerződési egy mondat
 
 > A Vevő a PCE rendszert a `[HU|EU|US]` csomagban licenceli. A nem ON modulok a szoftver részét képezik, klinikai használatuk tiltott. Feloldás írásos aktiválással, a gyártó signed release-ével és az adott piac szabályozási feltételének teljesülésével.
+
+---
+
+## Piaci analógia (SKU-P, nem pecsét)
+
+A kórház/hálózat **szoftverlicencet** vesz; a labor diplotípust szállít. Ez a PCE SKU-P + outside-call. A lenti termékek **US/vendor** analogiák, nem EU-MDR precedens és nem a mi árlistánk.
+
+| Analóg | Amit *igazol* `[V]` / `[R]` | Amit *nem* igazol |
+| --- | --- | --- |
+| **YouScript** | EHR-be ágyazott élő PGx-CDS (Epic/Cerner, SMART on FHIR). Katalógus: **Per User, Site-Based**. Nyilvános kiskereskedelmi megújítás: **365 USD / év / provider** (youscript.com, 2026-08-12). GenomeWeb (2014): más labor genotípusa is betölthető — outside-call analógia `[R]`. | Enterprise ágyszám-tarifa (nincs publikus tábla). Compile-time `LIVE_CDS` lakat. 39%/71% kórházi csökkenés (céges közlés, registryből kihagyva). A PMC 7195220 **nem** YouScript-cikk (polifarmácia-review). |
+| **ActX** | Ma: labor-PDF riport **és** order-entry riasztás, ha van genomprofil és releváns gyógyszer (actx.com). A „villan, ha releváns szer” = **klinikai** gating (F2 viselkedés). | Hogy PDF-leletként *indultak*, majd CDSS-sé alakultak `[NEEDS VERIFICATION]`. Hogy a PCE FR-470 lakat = az ő modelljük. Az ActX élő riasztás **F2**, HU/EU-ban CE/in-house nélkül tilos (NG-07). |
+| **Translational Software** | Lab-facing knowledge/API + white-label riport létezett. A 510(k) **elutasítás** után a US szolgáltatást leállították (GenomeWeb `[R]`): a FDA a betegre szabott, CPIC-alapú riportot nem fogadta el „könyvtárnak”. | Hogy az F1+ „önmagában hatalmas, biztonságos B2B piac”. Ellenkezőleg: **NG-01** (ne hívjunk diplotípust) és az OQ-05 maradék kockázat (gén-szintű terápiás szöveg lehet Rule 11a). |
+
+A demó **lakatja** (FR-470) először **szabályozási** retesz, másodszor látható F2/F3 upgrade-út. Nem YouScript-feature-másolat. „Bent van, addig is megy a riasztás” = forgalomba hozatal, ha MDSW.
+
+Részlet: [competitor-analogs.md](competitor-analogs.md). Irodalmi határ: [literature-boundary.md](literature-boundary.md).
+
+---
+
+## Árazási mátrix minta (struktúra, nem kitalált Ft)
+
+A YouScript **publikus** sémája: egyéni provider-előfizetés (365 USD/év) + intézményi „site-based” (ár nélkül). A PCE ezt **sávos placeholderrel** viszi. **Nincs** kitalált ágyszám-tarifa és **nincs** Ft-összeg. A `[Y*]` a tárgyalásé (proposal-order §4).
+
+| Sáv | Ki fizet | PCE sor | YouScript/ActX analog (nyilvános) | Placeholder | Mikor számlázható élesen |
+| --- | --- | --- | --- | --- | --- |
+| **A. Platform** | Klinika / hálózat (SKU-P) | Éves intézményi licenc, market pack HU/EU/US | SMART: Site-Based; enterprise quote nem publikus | `[Yp]` / év / tenancy | MSP + DPA + diplotípus-forrás. F1+ ON: OQ-05 *vagy* IIa/CE |
+| **B. Klinikus-sáv** | Ugyanaz a vevő | Per-clinician / év (vagy /hó × 12) | YouScript provider **365 USD/év** lista (US, 1 fiók, nem EHR-enterprise) | `[Yc]` | Ugyanaz. Nem a 365 USD átvétele |
+| **C. Telephely** | Ugyanaz | Extra site | Site-Based (ár nélkül) | `[Ys]` | Ugyanaz |
+| **D. Indítás / HIS** | Vevő vagy SKU-H | Egyszeri integráció | Nincs publikus YouScript-tétel | `[Y0]` / `[Yi]` | Szerződés |
+| **E. F1s shadow** | Vevő, ha a pack ON | A platform része vagy külön sor | Nincs YouScript-ár | `[Ysh]` vagy 0 (benne van) | OQ-15 + OQ-16 |
+| **F. F2/F3 aktiválás** | Vevő | Előfizetés / aktiválási díj a **feloldott** élő CDS-re | ActX: élő order-alert a fizetett klinikai réteg (vendor). YouScript: az élő CDS *a* termék | `[Ya]` / klinikus vagy site | **Csak** CE / in-house / OQ-17 után. Nem demó-kapcsoló |
+| **G. Labor tenancy** | Csak ha a labor *is* white-label tenancyt kér | Opcionális havidíj + volumensáv | ActX lab PDF reporting (vendor). TSI volt lab-API | `[Yl]` | REG-020. **Nem** viszonteladás. A mag-SKU a klinika |
+
+**Tilos a mátrixban:** ágyszám-sáv kitalált árral; „a labor fizeti a platformot, a kórház ingyen kapja”; YouScript 365 USD mint HU listaár; F2 díj CE előtt.
+
+G4: aláírt **rendszerlicenc** (A+B/C), nem három PDF.

@@ -56,6 +56,9 @@ A vázlatok **nem** lettek szó szerint átmásolva, ahol a v1.2 spec mást mond
 | OQ-03 | Darabár csak kivételekre | Spec: havidíj + volumensáv; a `[Y]` placeholder a tárgyalásé |
 | OQ-01 | EESZT „aszinkron FHIR + SSL az éles adatközpontba” | **NG-05**: nincs EESZT írás, nincs nyílt FHIR API. Regisztráció = ESZFK **Redmine** (5/F. §) |
 | OQ-01 | ISO 9001 „megújítás” | Lehet, hogy **nincs** tanúsítvány; 2.1 = ISO 9001 **vagy** egyéb auditált szoftver-QMS; **nem** 13485 |
+| OQ-15 | PREPARE p=0,0034; „súlyos” ADR; ápolási nap; PCE-RWE; shadow = Lancet ADR újramérés | **p=0,0075**; 21,0% vs 27,7%; OR 0,70; grade 2–5 + possible; HU nincs; F1s = HITL/G3, nem PREPARE-klon |
+| OQ-05 | Tandem/punktum/mdxcro = nem-MDSW pecsét | L4; primer MDCG; gén-szintű CPIC szöveg továbbra is lehet 11a |
+| OQ-16 | ClinLabomics = k≥5 bizonyíték | Nem; A14 assumption; Wen 2022 labor-bányászat |
 
 ## Ami szándékosan üres
 

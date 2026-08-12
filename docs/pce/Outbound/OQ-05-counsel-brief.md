@@ -108,6 +108,22 @@ A gyártó **nem** kéri, hogy a counsel ezt a kockázatot hallgassa el:
 
 A hibrid (F1+ statikus társítás) a v1.1-hez képest **szűkít** (kivette az élő fenokonverziót és a gyógyszerlista-alapú kiemelést). **Nem** szünteti meg az OQ-05-öt.
 
+### IV.a Szomszédos L4 blogok — nem pecsét
+
+A gyártó kapott vendor-blog hivatkozásokat (Tandem Health, 2026-06-24; punktum.net; mdxcro.com; IntuitionLabs a Tandem cikkben). **L4.** Nem Notified Body határozat.
+
+Amit ezek **összhangban** mondanak a spec A.0 / NG-07-tel (a primer továbbra is **MDCG 2019-11 Rev.1 + MDR Rule 11**, S004/S005/S020):
+
+- Az „AI asszisztens” / „csak tájékoztató” címke **nem** minősít ki, ha a kimenet klinikai döntést támogat.
+- A puszta tárolás/megjelenítés vs. a döntést *befolyásoló* kimenet a MDCG kérdése.
+
+Amit **nem** szabad belőlük kiolvasni (VC-14):
+
+- Hogy a FR-400-STATIC gyógyszerlista-vakság **bizonyítottan** nem-MDSW. A dosszié IV.1 pontja nyitva: gén-szintű CPIC/DPWG/FDA *terápiás* szöveg lehet Rule 11a gyógyszerlista nélkül is.
+- Hogy a Translational Software lab-API „bizonyítja” az F1+ EU-s biztonságát. A TSI 510(k) **elutasítás** (US, `[R]`) ellenkező irányú tanulság a betegre szabott riportokra.
+
+Kérjük a counsel-t, a minősítést a **MDCG/MDR primerre** és az A.1 szövegre adja, ne ezekre a blogokra.
+
 ---
 
 ## V. Kért kimenet
@@ -148,6 +164,6 @@ Az alábbi szöveg **csak akkor** használható, ha a fenti döntés IGEN vagy a
 | Aláírás / pecsét | .................................... |
 | Mellékelt dosszié verziója | PCE-SPEC-v1.2 + A melléklet (A.0, A.1, A.1.1, A.1.2, A.4, A.8) |
 
-**Mellékletek:** PCE-SPEC-v1.2; A melléklet; F.1; MDCG 2019-11 Rev.1 (a counsel saját példánya).
+**Mellékletek:** PCE-SPEC-v1.2; A melléklet; F.1; MDCG 2019-11 Rev.1 (a counsel saját példánya). Tandem/punktum/mdxcro **nem** a minősítés primer forrása.
 
 *Ez az irat gyártói kérés. Nem helyettesíti a counsel független vizsgálatát. OQ-05 a F.6 sor kitöltéséig nyitott.*

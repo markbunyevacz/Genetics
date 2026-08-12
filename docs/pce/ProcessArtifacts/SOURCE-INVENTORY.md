@@ -28,6 +28,7 @@
 | I-16 | Eladás klinikáknak a külső OQ-k feltételezésével | md (chat) | HU | Sales v1: tévesen leletbolt-SKU | n/a |
 | I-17 | Korrekció: a vevő **rendszert** vesz (F1–F3, flag); HU/EU/US; labor csatlakozó | md (chat) | HU | SKU-P; market-packs; OQ-17; NG-07 marad | n/a |
 | I-18 | CureMD Hybrid CDSS PDF (arXiv 2603.14876v1); kérés: SOTA/G3/SHAP/RWE beépítés | PDF | EN | Primer olvasás; VC-13: nem PGx SOTA, 83,10% ≠ G3 | ~13 oldal |
+| I-19 | Piaci analogia + PREPARE/YouScript beillesztés; Tandem/ClinLabomics/TSI | md (chat) + URL | HU/EN | VC-14: p=0,0075; PMC7195220 ≠ YouScript; OQ-05 nyitva; k≠ClinLabomics | n/a |
 
 ## Átfedés
 
@@ -42,6 +43,7 @@
 - I-16: első sales-váz leletboltként olvasta a klinikát — **I-17 javítja**.
 - I-17: SKU-P rendszerlicenc; F2 a dobozban lakattal; US ≠ EU kiskapu.
 - I-18 = S028 teljes PDF; a „tökéletes beépítés / állami SOTA / G3=83,1%” **elvetve** (VC-13).
+- I-19: PREPARE számok OQ-15-be; YouScript mátrix market-packs-be; Tandem/ClinLabomics/TSI túlállítás **elvetve** (VC-14).
 
 ## Metaadat-ellentmondások
 

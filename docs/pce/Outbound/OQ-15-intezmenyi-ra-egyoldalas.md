@@ -45,7 +45,32 @@ A két lépés időbélyege immutábilis. A HITL **nem** a felíró napi UI.
 
 ---
 
-## III. Gyártói érv — és ami *nem* dőlt el
+## III. Klinikai háttér — PREPARE (S008), nem PCE-RWE
+
+Az F1s **nem** a PREPARE újrafuttatása. A Lancet-vizsgálat a *preemptív 12-génes panel + DPWG szerinti felírás* klinikai hasznát mérte hét EU-országban. A shadow a **helyi** L4-live motor concordanciáját és a későbbi F2/F3 clinical evaluation *inputját* gyűjti (G3, HITL). Magyarország **nincs** a hét országban.
+
+**Számok a közleményből** `[V]` Swen et al., Lancet 2023;401:347–356; doi:10.1016/S0140-6736(22)01841-4; NCT03093818:
+
+| Tétel | Érték |
+| --- | --- |
+| Design | Nyílt, multicentrikus, klaszter-randomizált crossover |
+| Helyszín | 18 kórház, 9 közösségi egészségügyi központ, 28 patika; AT, GR, IT, NL, SI, ES, UK |
+| Enrollált | **6944** / 41 696 alkalmas (3342 beavatkozás, 3602 kontroll) |
+| Panel | 50 germline variáns, **12 gén** (köztük CYP2D6, CYP2C19, DPYD) |
+| Actionable DGI az index-gyógyszerre | **1558** beteg (második gatekeeping) |
+| Primer kimenet | Klinikailag releváns ADR 12 héten: Liverpool definite/probable/**possible** + CTCAE **grade 2–5** |
+| Actionable kar | **152/725 (21,0%)** vs **231/833 (27,7%)**; OR **0,70** (0,54–0,91); **p = 0,0075** |
+| Teljes kezelt | 628/2923 (21,5%) vs 934/3270 (28,6%); OR 0,70; p < 0,0001 |
+
+A „30%” az OR 0,70 (relatív esélycsökkenés), **nem** abszolút 30 százalékpont, **nem** p = 0,0034, **nem** „súlyos ADR” mint egyetlen címke.
+
+**Kötelező forráskritika a címzett felé:** open-label; a hatás jelentős része grade 2; a Lancet levelei (Curtis; Rogers et al.; Van der Linden; Peñas-LLedó & LLerena) a haszon mértékét vitatják. A primer kimenet **nem** halálozás és **nem** ápolási nap. A PCE F1s **nem** méri újra a Lancet ADR-arányt, hacsak a helyi protokoll ADR-kimenetet is gyűjt — a v1.2 spec ezt **nem** írja elő.
+
+**Mit indokol ez a kérelemben:** (1) az F2/F3 *későbbi* élesítésnek van független, peer-reviewed PGx-evidenciája (panel + guideline-vezérelt felírás); (2) az F1s a helyi motor HITL-validációja ehhez a dossziéhoz, a felíró nélkül. **Nem** indokolja, hogy a shadow Art. 62 alól mentes, és **nem** a PCE saját RWE-je.
+
+---
+
+## IV. Gyártói érv — és ami *nem* dőlt el
 
 **Érv (nem tény):** mivel a szoftver kimeneteit az ellátó orvos nem látja, a szoftver **zéró hatást** gyakorol az *index* páciens kezelésére a felírás pillanatában. Az eljárás ezért a gyártó szerint közelebb áll az MDR Annex XIV szerinti **klinikai értékelési adatgyűjtéshez** és belső minőségbiztosításhoz, mint az MDR 62. cikke szerinti, emberen végzett klinikai vizsgálathoz.
 
@@ -59,7 +84,7 @@ Kérjük a címzettet, hogy a lenti három közül válasszon — ne hagyja üre
 
 ---
 
-## IV. Döntés
+## V. Döntés
 
 - [ ] **JÓVÁHAGYVA mint klinikai értékelési / QA adatgyűjtés** — a shadow futtatás megkezdhető a csatolt protokoll és az OQ-16 DPO-döntés szerint; a címzett megítélése szerint **nem** MDR Art. 62 klinikai vizsgálat. (A címzett saját RA-eljárása szerint dokumentálandó.)
 - [ ] **TOVÁBBÍTVA** etikai bizottsághoz / hatósági bejelentéshez mint **klinikai vizsgálat** (Art. 62+) — a shadow **nem** indul a vizsgálat engedélye nélkül.
@@ -71,7 +96,7 @@ Kérjük a címzettet, hogy a lenti három közül válasszon — ne hagyja üre
 
 ---
 
-## V. Aláírás
+## VI. Aláírás
 
 | | |
 | --- | --- |
@@ -81,6 +106,6 @@ Kérjük a címzettet, hogy a lenti három közül válasszon — ne hagyja üre
 | Dátum | .................................... |
 | Aláírás / pecsét | .................................... |
 
-**Mellékletek:** PCE-SPEC-v1.2 (FR-440, FR-450, FR-450-BLIND, FR-470, REG-090); A.2; E.4, E.4.1, E.7; F.2; OQ-16 kérdőív (másolat vagy DPO-válasz).
+**Mellékletek:** PCE-SPEC-v1.2 (FR-440, FR-450, FR-450-BLIND, FR-470, REG-090, §9.4); A.2; E.4, E.4.1, E.7; F.2; OQ-16 kérdőív (másolat vagy DPO-válasz); Swen et al., Lancet 2023;401:347–356 (S008) — a címzett saját példánya / PubMed 36739136.
 
 *REG-090: az első HIS-csatlakozás előtt. Ez az egyoldalas kérelem, nem a vizsgálat teljes protokollja.*

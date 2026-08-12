@@ -629,9 +629,11 @@ Nélküle G2/G3 nem mérhető, a v2 dosszié nem védhető.
 
 ### 9.4 Klinikai evidencia a v2 dossziéhoz
 
-**PREPARE** (Swen et al., Lancet 2023;401:347–356) `[V]`: nyílt, multicentrikus, kontrollált, klaszter-randomizált crossover; 12-génes panel; 18 kórház, 9 közösségi egészségügyi központ, 28 közösségi gyógyszertár; 7 ország (AT, GR, IT, NL, SI, ES, UK) — **Magyarország nincs benne**. 50 germline variáns 12 génben a startnál. 6944 beteg 41 696 alkalmasból; 6495 (93,5%) enrolláltnál actionable variáns; genotípus-vezérelt kar vs standard: klinikailag releváns ADR csökkenés (a közlemény ~30% OR-csökkenést közöl az actionable alcsoportban).
+**PREPARE** (Swen et al., Lancet 2023;401:347–356; NCT03093818) `[V]`: nyílt, multicentrikus, kontrollált, klaszter-randomizált crossover; 12-génes panel; 18 kórház, 9 közösségi egészségügyi központ, 28 közösségi gyógyszertár; 7 ország (AT, GR, IT, NL, SI, ES, UK) — **Magyarország nincs benne**. 50 germline variáns 12 génben a startnál. 41 696 alkalmasból **6944** enrollált (3342 genotípus-vezérelt, 3602 standard). 6495 (93,5%) enrolláltnál legalább egy actionable variáns; az index-gyógyszerre actionable DGI: **1558** (25,2% a második gatekeeping-elemzésben).
 
-**Forráskritika (kötelező a dossziéban):** a csökkenés elsősorban grade 2 ADR, „possible to probable” adjudikáció; a Lancet legalább négy kritikai levelet közölt (Curtis; Rogers et al.; Van der Linden; Peñas-LLedó & LLerena). A Notified Body ezt megtalálja.
+Elsődleges kimenet (12 hét): *klinikailag releváns* ADR = Liverpool causality definite/probable/**possible** **és** NCI-CTCAE **grade 2–5** (nem „súlyos” mint egyetlen címke). Actionable alcsoport: **152/725 (21,0%)** vs **231/833 (27,7%)**; OR **0,70** (95% CI 0,54–0,91); **p = 0,0075** (nem 0,0034). Teljes kezelt populáció: 628/2923 (21,5%) vs 934/3270 (28,6%); OR 0,70; p < 0,0001. A ~30% a **esélyhányados** csökkenése (1−0,70), nem abszolút kockázatcsökkenés (6,7 százalékpont az actionable karon).
+
+**Forráskritika (kötelező a dossziéban):** a hatás elsősorban grade 2; open-label; a Lancet kritikai leveleket közölt (Curtis; Rogers et al.; Van der Linden; Peñas-LLedó & LLerena). A primer kimenet **nem** halálozás és **nem** ápolási nap. A vizsgálat DPWG-vezérelt felírást mért, **nem** a PCE szoftvert. A Notified Body ezt megtalálja. VC-14.
 
 A 12 vs 14 eltérés **nem** nyitott kérdés: lásd FR-310.
 
@@ -835,7 +837,7 @@ A teljes registry: [SOURCE-REGISTRY](ProcessArtifacts/SOURCE-REGISTRY.md). Korre
 
 **Klinikai (PGx-SOTA)**
 
-7. `[V]` Swen et al. Lancet 2023;401:347–356 (PREPARE) + kritikai levelek
+7. `[V]` Swen et al. Lancet 2023;401:347–356 (PREPARE) + kritikai levelek — 21,0% vs 27,7%, OR 0,70, p=0,0075 (actionable DGI)
 8. `[V]` van der Wouden et al. CPT 2019;106:866–873 (PGx-Passport)
 9. `[V]` Kullo et al. Nat Rev Genet 2026;27:246–263
 10. `[V]` eMERGE, Nat Med 2024, doi:10.1038/s41591-024-02796-z

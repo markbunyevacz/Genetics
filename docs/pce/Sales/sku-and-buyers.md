@@ -84,6 +84,8 @@ NG-01: a PCE nem hív allélt FASTQ-ból. Ez nem teszi a labort a szoftver vevő
 
 A 499 000 Ft-os kiskereskedelmi PGx-vizsgálat **nem** PCE-ár. Az a labor üzlete.
 
+Sávos placeholder-mátrix (YouScript 365 USD/év lista **nem** HU ár): [market-packs.md](market-packs.md). Analogia-határ: [competitor-analogs.md](competitor-analogs.md).
+
 ---
 
 ## G4

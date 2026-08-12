@@ -26,6 +26,8 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P01c | Source ingestion (CureMD PDF) | 2026-08-12 | 2026-08-12 | DONE | I-18 PDF arXiv:2603.14876v1 | Inventory I-18; S028 L5 „elolvasva”; S028-note | E-13 |
 | P05i | S028 formális beillesztés + határ | 2026-08-12 | 2026-08-12 | DONE | I-18 + VC-13 | §9.5; FR-710 SHAP-tiltás v1-en; literature-boundary | E-13 |
 | P06i | Plan-vs-content (S028) | 2026-08-12 | 2026-08-12 | DONE | Három kért használat vs PDF | G3 marad ≥90%; nincs „állami referenciák” fejezet | — |
+| P05j | PREPARE + YouScript analogia iratokba | 2026-08-12 | 2026-08-12 | DONE | I-19 | OQ-15 §III; market-packs mátrix; OQ-05 IV.a; OQ-16 ClinLabomics-határ | E-14 |
+| P06j | Plan-vs-content (I-19) | 2026-08-12 | 2026-08-12 | DONE | PREPARE/YouScript/Tandem/ClinLabomics | VC-14; OQ-k nyitva; nincs kitalált Ft | — |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -54,6 +56,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-19 | P05g | Eladás a pecsét előtt | Várni F.6-ra / készíteni a SKU-t hipotézisen | Sales csomag (I-16: klinika=lelet — **I-17 felülírja**) | G4 | I-16 |
 | D-20 | P05h | Mit adunk el? | Laborlelet / **rendszer** F1–F3 flaggel | **SKU-P**; labor csatlakozó; HU/EU/US; F2 LOCK≠hiány | I-17; NG-07; G5 | I-17 |
 | D-21 | P05i | S028 beépítés | Állami SOTA + G3=83,1% + SHAP-FR + RWE / L5 jegyzet + határ | **L5 jegyzet**; G3 ≥90% marad; SHAP nem v1 FR; RWE tiltott; **nincs** „állami referenciák” fejezet | VC-13; IR-01 | I-18 |
+| D-22 | P05j | PREPARE/YouScript iratba | Szó szerinti user-számok / primer Lancet + publikus YouScript lista | **Primer**: p=0,0075; 365 USD lista; Tandem nem pecsét; ClinLabomics nem k | VC-14 | I-19 |
 
 ## 3. Error log
 
@@ -72,20 +75,21 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | E-11 | P05f | Cross-reference / spec mismatch | I-14 L3 = NG-01 riasztás + csak kivétel díjazva; OQ-01 = EESZT FHIR/SSL | NG-01 = non-goal; minden lelet aláírás; Redmine + ISO 9001 2.1 | Outbound OQ-03/01 |
 | E-12 | P05g | Scope / product mismatch | I-16 sales a klinikának leletet adott el | Retry: SKU-P rendszer; market packs | I-17; D-20 |
 | E-13 | P01c/P05i | Scope / overclaim | I-18: S028 = F1s állami SOTA; Top-5 83,1% = G3/R-020; SHAP = F2 mag; PCE-RWE | Primer PDF; CORRECTED nem silent drop | VC-13; D-21; §9.5 |
+| E-14 | P05j | Hallucinated / wrong cite | I-19: PREPARE p=0,0034; PMC7195220 mint YouScript; ClinLabomics mint k-anon; Tandem mint OQ-05 pecsét; TSI mint F1+ siker; ágyszám-ár | Primer Lancet + vendor oldalak; CORRECTED | VC-14; D-22 |
 
 ## 4. File timeline
 
 | Fájl | Létrehozva | Módosítva | Státusz |
 | --- | --- | --- | --- |
 | docs/pce/README.md | P00/P05 | P10 (fagyasztás) | v1.2 FAGYASZTVA |
-| docs/pce/PCE-SPEC-v1.2.md | P05b (git mv) | P05i (§9.5, FR-710, G3≠S028) | v1.2 FAGYASZTVA; S028 határ |
+| docs/pce/PCE-SPEC-v1.2.md | P05b (git mv) | P05j (§9.4 PREPARE p=0,0075) | v1.2 FAGYASZTVA; S028+PREPARE határ |
 | docs/pce/A-intended-purpose-and-modules.md | P05 | P05i (A.3 SHAP≠FR-710) | DRAFT v1.2 |
 | docs/pce/B-architecture-and-interfaces.md | P05 | P05c | DRAFT v1.2 |
 | docs/pce/C-eeszt-f0-checklist.md | P05 | P05f (C.4 Outbound linkek) | DRAFT v1.2 |
-| docs/pce/D-risk-and-traceability.md | P05 | P06i (VC-13 P06 sor) | DRAFT v1.2 |
+| docs/pce/D-risk-and-traceability.md | P05 | P06j (VC-14) | DRAFT v1.2 |
 | docs/pce/E-shadow-hitl.md | P05b | P05i (E.7 SOTA-határ) | DRAFT v1.2 |
 | docs/pce/F-decision-package.md | P05e | P10 | DRAFT v1.2 |
-| docs/pce/Outbound/* | P05f | P10 (küldés most) | TERVEZET küldhető |
-| docs/pce/Sales/* | P05g | P05i (literature-boundary) | TERVEZET rendszerlicenc |
+| docs/pce/Outbound/* | P05f | P05j (OQ-15 PREPARE; OQ-05 L4; OQ-16 ClinLabomics) | TERVEZET küldhető |
+| docs/pce/Sales/* | P05g | P05j (mátrix + competitor-analogs) | TERVEZET rendszerlicenc |
 | docs/pce/Sources/S028-* | P01c | P05i | L5 jegyzet + PDF |
-| docs/pce/ProcessArtifacts/* | P01–P06 | P05i (VC-13) | DRAFT |
+| docs/pce/ProcessArtifacts/* | P01–P06 | P05j (VC-14) | DRAFT |

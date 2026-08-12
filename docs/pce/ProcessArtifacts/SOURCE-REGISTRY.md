@@ -36,7 +36,14 @@ Hozzáférés dátuma: 2026-08-12, kivéve ahol jelezve. Authority: L1 hivatalos
 | S030 | CPIC guidelines | Hivatalos guideline | L2 | https://cpicpgx.org/ | FR-400-STATIC; enciklopédia-analógia I-10 |
 | S031 | GDPR (EU) 2016/679 Art. 6, 9, 17, 32, 35 | Jogszabály | L1 | EUR-Lex | FR-115, REG-050/091, E.5 |
 | S032 | WHO CC ATC structure (szintek 1–5) | Hivatalos | L1 | https://www.whocc.no/atc/structure_and_principles/ | FR-461 ATC csonkolás |
+| S033 | YouScript provider subscription 1 year | Vendor árlista | L3 | https://youscript.com/product/youscript-provider-subscription-1-year/ (2026-08-12: **365 USD**) | Sales mátrix analog; **nem** HU listaár |
+| S034 | SMART Health IT app catalog: YouScript | Katalógus | L3 | https://apps.smarthealthit.org/app/youscript — Licensing: Per User, Site-Based; EHR: Epic, Cerner | SKU-P struktúra |
+| S035 | ActX lab reporting + Epic order-entry | Vendor | L3 | https://www.actx.com/info/laboratory_reporting ; https://www.actx.com/partner/epic | PDF + élő riasztás ma párhuzamos; történet `[NEEDS VERIFICATION]` |
+| S036 | Valdes et al., Crit Rev Clin Lab Sci 2020;57:161–180 | Peer-reviewed review | L2 | PMC7195220 — **polifarmácia**, YouScript **nincs** benne | I-19 [1] **hibás** YouScript-hivatkozás; ne használd analogiaként |
+| S037 | GenomeWeb: Translational Software 510(k) elutasítás / leállás | Szakmai hír | L4 | genomeweb.com business-news (TSI shutting down PGx DSS) | NG-01; OQ-05 maradék; **nem** F1+ siker-story |
+| S038 | Wen et al., BMC Bioinformatics 2022;23:387 (Clinlabomics) | Peer-reviewed review | L2 | doi:10.1186/s12859-022-04926-1 | Laboradat-bányászat. **Nem** k-anonimitás, **nem** OQ-16 |
+| S039 | Tandem Health: Why AI CDS needs MDR Class IIa (2026-06-24) | Vendor blog | L4 | https://tandemhealth.ai/resources/knowledge/why-ai-clinical-decision-support-needs-mdr-class-iia | NG-07 *összhang*; **nem** OQ-05 pecsét. Primer = S004/S020 |
 
-**Nem került a registrybe (szándékos):** Fortune/Mordor/Straits TAM-számok (egymásnak ellentmondó L4/L5); Allelica ACC/AHA idézés (céges PR, `[C]`); YouScript 39%/71% kórházi csökkenés (céges közlés).
+**Nem került a registrybe (szándékos):** Fortune/Mordor/Straits TAM-számok (egymásnak ellentmondó L4/L5); Allelica ACC/AHA idézés (céges PR, `[C]`); YouScript 39%/71% kórházi csökkenés (céges közlés); punktum.net / mdxcro.com / IntuitionLabs mint Rule 11a primer (L4, S039-en keresztül említve).
 
 **v1.2 megjegyzés:** az I-10 [1]–[7] URL-ek **L4/L5** (kivéve ha a PMC cikk peer-reviewednek bizonyul). A Rule 11a / „nincs FDA enforcement discretion” állítás **S004, S005, S020** `[V]`, nem a blogokra.

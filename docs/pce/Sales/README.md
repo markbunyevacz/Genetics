@@ -42,7 +42,7 @@ Licencmondat: *„A PCE rendszerlicenc a `[HU|EU|US]` csomagot adja. A F2/F3 kli
 | Fájl | Ki olvassa |
 | --- | --- |
 | [sku-and-buyers.md](sku-and-buyers.md) | Sales — **SKU-P rendszer**, nem leletbolt |
-| [market-packs.md](market-packs.md) | Sales + RA — HU / EU / US flag |
+| [market-packs.md](market-packs.md) | Sales + RA — HU / EU / US flag + árazási mátrix minta (`[Y*]`) |
 | [clinic-one-pager.md](clinic-one-pager.md) | Klinika / kórház — **ők a vevők** |
 | [lab-one-pager.md](lab-one-pager.md) | Labor mint **integrációs partner** |
 | [his-vendor-one-pager.md](his-vendor-one-pager.md) | HIS-csatorna |
@@ -50,7 +50,8 @@ Licencmondat: *„A PCE rendszerlicenc a `[HU|EU|US]` csomagot adja. A F2/F3 kli
 | [demo-script.md](demo-script.md) | Teljes rendszer demó; F2 lakat |
 | [msp-checklist.md](msp-checklist.md) | Enélkül ne számlázz éles tenancyt |
 | [customer-ra-faq.md](customer-ra-faq.md) | Vevő jog / RA |
-| [literature-boundary.md](literature-boundary.md) | S028 **nem** PCE-RWE; ne csatold a licenchez SOTA-ként |
+| [literature-boundary.md](literature-boundary.md) | PREPARE/S028/YouScript **határ**; ne csatold RWE/pecsétként |
+| [competitor-analogs.md](competitor-analogs.md) | YouScript / ActX / TSI — struktúra, nem árlista |
 
 ## Sorrend
 

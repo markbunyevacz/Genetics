@@ -67,6 +67,8 @@ Intézményi cella: (fenotípus-osztály × ATC-szint × negyedév) a gateway **
 - A legritkább diplotípus-osztály default **drop**, akkor is, ha a G3 recall csökken. Nincs manuális k-küszöb override az F1s anonim úton.
 - A gateway `E-SHADOW-003` drop-arányt és a k-cella eloszlást aggregáltan (nem PII) jelenti a DPO-nak legalább **negyedévente**.
 
+**Nem ClinLabomics.** Wen et al., BMC Bioinformatics 2022;23:387 (S038) laboradat-bányászat / „clinlabomics” review. **Nem** k-anonimitási tétel, **nem** A13/A14 matematikai igazolás, **nem** OQ-16 pecsét. A k ≥ 5 és a 0,5% `[ASSUMPTION]` A14; a DPO szigoríthat. Primer a GDPR + a DPIA, nem ez a cikk.
+
 ---
 
 ## II. Re-identifikációs forgatókönyvek és védelem
@@ -191,6 +193,6 @@ A DPIA külön dokumentum; ez a kérdőív a DPIA **inputja**. OQ-16 a F.6 sor k
 | Dátum | .................................... |
 | Aláírás | .................................... |
 
-**Mellékletek:** PCE-SPEC-v1.2 (FR-115, FR-460, FR-461, A10/A15 §0.1); E melléklet; F.3; WHO ATC struktúra (S032).
+**Mellékletek:** PCE-SPEC-v1.2 (FR-115, FR-460, FR-461, A10/A15 §0.1); E melléklet; F.3; WHO ATC struktúra (S032). ClinLabomics **nincs** a k-küszöb mellékleteként.
 
 *Ha A1 = NEM, a gyártó az álnevesített utat és az E.6 FR-115 sablont viszi — nem „titkos anonimizálás”.*

@@ -64,6 +64,8 @@ Market pack szabály: [market-packs.md](market-packs.md).
 | F2/F3 aktiválás (később, §8) | `[Ya]` |
 | Pilot | `[Yp_pilot]` |
 
+Sávok magyarázata: [market-packs.md](market-packs.md) árazási mátrix. A YouScript 365 USD/év **nem** ennek a táblának az ára.
+
 ---
 
 ## 5. SLA (bekapcsolt modulokra)

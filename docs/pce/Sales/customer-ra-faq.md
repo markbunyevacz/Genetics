@@ -71,4 +71,8 @@ Sandbox, SYN-adatok, F2 lakat látszik, nem él. Éles: megrendelőlap §3.
 
 ## 11. Van RWE / SOTA a PCE-re? (CureMD-cikk)
 
-A CureMD/arXiv 2603.14876 **nem** a PCE bizonyítéka: US diagnózis CBC/CMP-ből, L5 preprint, Top-5 accuracy 83,10% **nem** a G3. PGx-evidencia: PREPARE (Lancet 2023; HU nincs a 7 országban). Részlet: [literature-boundary.md](literature-boundary.md).
+A CureMD/arXiv 2603.14876 **nem** a PCE bizonyítéka: US diagnózis CBC/CMP-ből, L5 preprint, Top-5 accuracy 83,10% **nem** a G3.
+
+PGx-evidencia: **PREPARE** (Lancet 2023;401:347–356). Actionable DGI: 21,0% vs 27,7% klinikailag releváns ADR (grade 2–5, possible+), OR 0,70, **p = 0,0075**. Magyarország nincs a 7 országban. Ez a *panel + DPWG felírás* evidencája, **nem** a PCE saját RWE-je, **nem** ápolási nap.
+
+Részlet: [literature-boundary.md](literature-boundary.md). YouScript/ActX: [competitor-analogs.md](competitor-analogs.md).
