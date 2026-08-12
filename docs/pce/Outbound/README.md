@@ -11,6 +11,8 @@ Ez a mappa az F melléklet kéréseit **címzett-kész** iratokká alakítja. Ki
 
 **Nem** zárja le az OQ-05 / OQ-15 / OQ-16 / OQ-01 / OQ-03 kérdéseket. A F.6 tábla akkor töltődik, ha a címzett az itteni iraton dönt.
 
+A v1.2 spec **fagyasztva** ([§10.2](../PCE-SPEC-v1.2.md)). Ezeket az iratokat **most** ki kell küldeni; a spec-írás nem folytatódik a válaszokig.
+
 ## Irattár
 
 | Fájl | OQ | Címzett | Típus |

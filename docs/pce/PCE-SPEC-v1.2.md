@@ -3,12 +3,12 @@
 | | |
 | --- | --- |
 | **Dokumentum-ID** | PCE-SPEC-v1.2 |
-| **Státusz** | Draft — review-ra kész |
+| **Státusz** | **v1.2 FAGYASZTVA** — spec-írás lezárva a külső OQ-kig; F1+ mag fejleszthető (§10.2) |
 | **Dátum** | 2026-08-12 |
 | **Hatókör** | PGx platform, magyar/EU piac; F1+ statikus lelet + F1s shadow HITL + F2/F3 CDSS |
 | **Előző** | PCE-SPEC-v1.1 — F1 passzív L4 + élő fenokonverzió a leleten; v1.2 ezt szűkíti |
-| **Mellékletek** | [A](A-intended-purpose-and-modules.md) · [B](B-architecture-and-interfaces.md) · [C](C-eeszt-f0-checklist.md) · [D](D-risk-and-traceability.md) · [E](E-shadow-hitl.md) · [F](F-decision-package.md) |
-| **Következő gate** | OQ-05 + OQ-15 + OQ-16 (csomag megvan, döntés nyitott) |
+| **Mellékletek** | [A](A-intended-purpose-and-modules.md) · [B](B-architecture-and-interfaces.md) · [C](C-eeszt-f0-checklist.md) · [D](D-risk-and-traceability.md) · [E](E-shadow-hitl.md) · [F](F-decision-package.md) · [Outbound](Outbound/README.md) |
+| **Következő gate** | Párhuzamos: (1) F.6 külső aláírás · (2) F1+ mag fejlesztés §10.2 szerint |
 
 Jelölések: `[V]` primerben verifikált · `[R]` egy forrás · `[C]` céges közlés · `[CORRECTED]` a v1.0-hoz képest javítva · `[ASSUMPTION]` · `[NEEDS VERIFICATION]`.
 
@@ -665,7 +665,7 @@ A 12 vs 14 eltérés **nem** nyitott kérdés: lásd FR-310.
 
 ### 10.1 v1 / F1s — külső állásfoglalás (a technikai csomag után)
 
-A csomagok és a **gyártói kérés** a [F mellékletben](F-decision-package.md) vannak. A **küldhető iratok** az [Outbound](Outbound/README.md) mappában. A mérföldkő **nem** indul a F.6 aláíró-sor nélkül.
+A csomagok és a **gyártói kérés** a [F mellékletben](F-decision-package.md) vannak. A **küldhető iratok** az [Outbound](Outbound/README.md) mappában. A **klinikai / forgalmazási** mérföldkő **nem** indul a F.6 aláíró-sor nélkül. A **spec-írás** és a **F1+ mag kód** ettől elválik — §10.2.
 
 | Ki | Mit dönt | Csomag, amit kap | Blokkolja |
 | --- | --- | --- | --- |
@@ -674,6 +674,33 @@ A csomagok és a **gyártói kérés** a [F mellékletben](F-decision-package.md
 | DPO | OQ-16 | F.3 + E.3.1 + [OQ-16 kérdőív](Outbound/OQ-16-dpo-dpia-kerdoiv.md) | Anonim vs FR-115 |
 | Ügyvezetés / RA | OQ-01 | F.4 + C + [OQ-01 owner](Outbound/OQ-01-iso-eeszt-owner-csomag.md) | 2026-09-30 kapu |
 | Üzlet | OQ-03 | F.5 + [OQ-03 term sheet](Outbound/OQ-03-l3-term-sheet.md) | L3 aláíró / COGS |
+
+### 10.2 Spec-fagyasztás és fejlesztési start (2026-08-12)
+
+**Döntés (D-18):** a v1.2 **követelmény- és iratíró szakasz lezárva**, amíg a külső állásfoglalások (F.6) meg nem érkeznek. A spec ettől a naptól **fagyasztott**: új FR/OQ/intended-purpose csak (a) beérkezett OQ-válasz, (b) P0 klinikai biztonsági hiba (pl. FR-210), vagy (c) explicit új felhasználói kérés esetén.
+
+Az OQ-05 / OQ-15 / OQ-16 / OQ-01 / OQ-03 **nem** zárulnak le. ELŐTERJESZTVE maradnak.
+
+A fejlesztés **elindulhat** a lenti határon. „F.6 nélkül nem indul a mérföldkő” = nincs **éles betegadat, HIS-csatlakozás, nem-MDSW forgalmazás**. Nem azt jelenti, hogy a git üresen marad.
+
+| Sáv | Indul most? | Tartalom | Vár F.6-ra? |
+| --- | --- | --- | --- |
+| **Spec / Outbound** | **Lezárva** (fagyasztva) | v1.2 + A–F + öt küldendő irat | Igen a *válaszra*; a *küldés* azonnal |
+| **F1+ mag (kód)** | **Igen** | L0–L2, FR-240 outside-call, FR-210 callability, FR-310 PREPARE-12 config, FR-400-STATIC, FR-410-EDU, FR-490, FR-500 PDF/FHIR, FR-470 `LIVE_CDS=false`, FR-700 (nincs LLM a klinikai úton). Matcher **ki**. Gold set v0: missing-to-ref + tiltott EDU tokenek. | Nem a kódra. Igen a **nem-MDSW piaci** állításra (OQ-05). |
+| **F1s kód fixture-ön** | **Igen, zárt** | FR-440/450/450-BLIND/460/461/410-LIVE **szintetikus** adatokon, külön store, külön IAM. Nincs éles HIS, nincs valódi betegrekord. | Igen az **éles** HIS-csatlakozásra (OQ-15 + OQ-16). |
+| **ISO 9001 / Redmine** | **Igen** (F.4 BELSŐ IGEN) | C-000 tény, C-201 tanúsító; 2026-09-30 kapuőr | A tanúsítvány *ténye* nyitott; a folyamat nem vár counselre |
+| **Labor LOI** | **Igen** (F.5 BELSŐ IGEN) | [OQ-03 term sheet](Outbound/OQ-03-l3-term-sheet.md) kitöltve, név nélkül a specben | Igen az aláírt REG-020-ra |
+| **F2/F3 / `LIVE_CDS=true`** | **Nem** | Interruptive CDSS, élő fenokonverzió a klinikai UI-n | CE / in-house (REG-011) + NG-07 |
+
+**Tilos a fagyasztás alatt kódolni / szállítani:**
+
+- `LIVE_CDS=true` F1+ buildben; CDS Hooks a felírónak; shadow kimenet a klinikai UI-ra (NG-07/08, FR-470).
+- F1+ renderer, amely `MedicationEntry`-t olvas, vagy ha–akkor / receptre szűrt CPIC sort ad (R-021).
+- Valódi intézményi adat a shadow tárba OQ-16 + OQ-15 nélkül.
+- „Nem MDSW / nincs NB” állítás a counsel aláírása előtt.
+- PharmCAT matcher bekapcsolása F1+ klinikai úton (OQ-05 + REG-010 újra).
+
+Ha OQ-05 = **NEM**, a már megírt F1+ mag **nem dobandó**: IIa / CE pályára megy (REG-010), a statikus renderer megmarad. Ha OQ-16 = **NEM**, a gateway kód megmarad, az út álnevesített + FR-115.
 
 ---
 
@@ -694,14 +721,14 @@ A csomagok és a **gyártói kérés** a [F mellékletben](F-decision-package.md
 
 | Fázis | Idő | Tartalom | Kimenet | MDR |
 | --- | --- | --- | --- | --- |
-| **F0** | 0–3 hó | C checklist; OQ-05 counsel az **A.1 szűkített** szövegre; OQ-15; partnerlabor LOI; gold set v0 | Jogi tisztánlátás + 1 LOI | — |
+| **F0** | 0–3 hó | **Spec fagyasztva (§10.2).** Párhuzamos: Outbound küldés; ISO 9001; labor LOI; **F1+ mag kód** + gold set v0. Counsel/DPO/RA *válasz* F.6-ra. | Kód + küldött iratok; F.6 még üres lehet | — |
 | **F1+** | 3–9 hó | L0–L2 + FR-240 + FR-400-STATIC + FR-410-EDU + FR-490. Matcher **ki**. FR-410-LIVE **ki a leletről**. | Fizető labor, white-label lelet | Nem MDSW **csak ha** OQ-05 igen |
 | **F1s** | F1+-szal párhuzamosan | Gateway (FR-460), shadow (FR-440), HITL (FR-450), izoláció (FR-470); REG-090/091 | G3 metrika, clinical evaluation input | Nem klinikai kimenet; OQ-15 |
 | **F2** | 6–18 hó | In-house élő CDSS (FR-520/530, FR-410-LIVE a klinikai UI-n); ISO 13485 + 62304 + 14971 | Case study | In-house (REG-011) |
 | **F3** | 18–36 hó | IIa CE; `LIVE_CDS` kapcsoló a már kiépített csövön | CE-jelölt CDSS | **IIa** |
 | **F4** | 36+ hó | L5 partner; EESZT-modul; EHDS | Enterprise | IIa |
 
-**Kritikus út:** OQ-05 → F1+ hatókör. OQ-15 → F1s elindítható-e. A „kapcsoló átbillentése” F3-on **csak** CE/in-house után (FR-470).
+**Kritikus út:** OQ-05 → F1+ *forgalmazási* hatókör (nem a renderer-kód). OQ-15 → F1s *éles* HIS. A „kapcsoló átbillentése” F3-on **csak** CE/in-house után (FR-470). A F1+ mag kód F0-ban indul (§10.2).
 
 ### Kompetencia (SFIA)
 
@@ -762,7 +789,7 @@ Váz:
 - Gyógyszertári medication review (PREPARE 28 patika — validált use case, nem v1)
 - Pharma kohorsz-toborzás (EHDS 2031+)
 - Biztosítói prevenciós modul
-- Engineering ticket-bontás, gold-set annotációs SOP, OQ-05 counsel brief (write-spec §5 follow-up)
+- Engineering ticket-bontás és gold-set annotációs SOP — **következő munka**, nem spec-feladat (§10.2)
 
 ---
 
@@ -810,4 +837,4 @@ A teljes registry: [SOURCE-REGISTRY](ProcessArtifacts/SOURCE-REGISTRY.md). Korre
 
 ---
 
-*PCE-SPEC-v1.2. F melléklet: gyártói előterjesztés. OQ-k ELŐTERJESZTVE, nem lezárva. Disclaimer ≠ felelősségkizárás.*
+*PCE-SPEC-v1.2 FAGYASZTVA (§10.2). OQ-k ELŐTERJESZTVE. F1+ mag fejleszthető. Disclaimer ≠ felelősségkizárás.*

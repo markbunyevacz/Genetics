@@ -20,6 +20,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P05e | Gyártói döntési előterjesztés | 2026-08-12 | 2026-08-12 | DONE | I-13 | F melléklet; OQ ELŐTERJESZTVE; FR-461 monitor | — |
 | P05f | Outbound hivatalos iratok | 2026-08-12 | 2026-08-12 | DONE | I-14 | `docs/pce/Outbound/` öt irat + index | E-10, E-11 |
 | P06f | Plan-vs-content (Outbound) | 2026-08-12 | 2026-08-12 | DONE | I-14 vs spec | Öt irat spec-hez igazítva; OQ-k nyitva | — |
+| P10 | Spec-fagyasztás | 2026-08-12 | 2026-08-12 | DONE | I-15 | §10.2; F1+ mag DEV-NOW; OQ-k nyitva | — |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -44,6 +45,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-15 | P05e | OQ-k lezárása gyártói kéréssel | Lezárni / előterjeszteni | **ELŐTERJESZTVE** (F); külső aláírás kell | Nem hamisítunk counsel/DPO pecsétet | I-13 |
 | D-16 | P05e | Disclaimer mint MDSW-kimenekülés | Felelősségkizárás / A.1.1 | **A.1.1 marad**; nem felelősségkizárás | FR-490; A.0 | I-13 |
 | D-17 | P05f | I-14 vázlatok szó szerint? | Átmásolni / spec szerint javítani | **Javítva**: A.1 verbatim; FR-100≠FR-115; Art. 62 kérelem; L3≠NG-01; EESZT≠FHIR | IR-01, VC-01, NG-01, NG-05 | I-14 |
+| D-18 | P10 | Spec-szakasz a külső OQ alatt | Tovább írni / fagyasztani + kód | **Fagyasztva**; F1+ mag indul; OQ-k ELŐTERJESZTVE | I-15; F.6 ≠ git-stop | I-15 |
 
 ## 3. Error log
 
@@ -65,13 +67,13 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 
 | Fájl | Létrehozva | Módosítva | Státusz |
 | --- | --- | --- | --- |
-| docs/pce/README.md | P00/P05 | P05f | DRAFT v1.2 |
-| docs/pce/PCE-SPEC-v1.2.md | P05b (git mv) | P05f (§10.1 Outbound) | DRAFT kanonikus |
+| docs/pce/README.md | P00/P05 | P10 (fagyasztás) | v1.2 FAGYASZTVA |
+| docs/pce/PCE-SPEC-v1.2.md | P05b (git mv) | P10 (§10.2) | v1.2 FAGYASZTVA |
 | docs/pce/A-intended-purpose-and-modules.md | P05 | P05c (A.1.2) | DRAFT v1.2 |
 | docs/pce/B-architecture-and-interfaces.md | P05 | P05c | DRAFT v1.2 |
 | docs/pce/C-eeszt-f0-checklist.md | P05 | P05f (C.4 Outbound linkek) | DRAFT v1.2 |
-| docs/pce/D-risk-and-traceability.md | P05 | P05c (R-020/021) | DRAFT v1.2 |
+| docs/pce/D-risk-and-traceability.md | P05 | P10 (P06 fagyasztás) | DRAFT v1.2 |
 | docs/pce/E-shadow-hitl.md | P05b | P05c (E.3.1, E.4.1) | DRAFT v1.2 |
-| docs/pce/F-decision-package.md | P05e | P05f (Outbound linkek) | DRAFT v1.2 |
-| docs/pce/Outbound/* | P05f | — | TERVEZET küldhető |
-| docs/pce/ProcessArtifacts/* | P01–P06 | P05f | DRAFT |
+| docs/pce/F-decision-package.md | P05e | P10 | DRAFT v1.2 |
+| docs/pce/Outbound/* | P05f | P10 (küldés most) | TERVEZET küldhető |
+| docs/pce/ProcessArtifacts/* | P01–P06 | P10 | DRAFT |

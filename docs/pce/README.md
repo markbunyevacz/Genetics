@@ -2,7 +2,7 @@
 
 | | |
 | --- | --- |
-| **Státusz** | Draft — review-ra kész |
+| **Státusz** | **v1.2 FAGYASZTVA** — spec-írás lezárva a külső OQ-kig; F1+ mag fejleszthető |
 | **Verzió** | v1.2 |
 | **Dátum** | 2026-08-12 |
 | **Nyelv** | magyar (követelmény-ID-k angolul) |
@@ -12,7 +12,7 @@ Ez a csomag a PCE farmakogenetikai (PGx) platform **követelménylistája és sz
 
 v1.2 a **legális hibrid**: F1+ statikus, verziózott guideline-társítás aláírt laborleleten; F1s shadow HITL a kezelőorvos nélkül; élő F2/F3 CDSS csak minősítés után. Az „F2 képesség F1 minőségben, mert az orvos dönt” útvonal **elutasítva** (NG-07).
 
-A v1 / F1s induláshoz a gyártói kérés kész ([F melléklet](F-decision-package.md)); a **külső aláírás** (counsel, DPO, intézmény, labor, ISO tény) hiányzik.
+A v1 / F1s **forgalmazási** induláshoz a gyártói kérés és a küldhető iratok kész ([F melléklet](F-decision-package.md), [Outbound](Outbound/README.md)); a **külső aláírás** hiányzik. A **spec-írás lezárva** (§10.2). A **F1+ mag kód** ettől függetlenül indulhat.
 
 ## Olvasási sorrend
 
@@ -49,4 +49,4 @@ A gyártó neve ebben a csomagban **nincs kitalálva**. A9 feltevés: a gyártó
 
 ## Következő gate
 
-P01 — F melléklet + Outbound irattervezetek kész. v1 gate: F.6 aláíró-sor a címzettek Outbound iratain (OQ-05/15/16/01/03).
+**Spec:** fagyasztva. **Kód:** F1+ mag (§10.2). **Forgalmazás / F1s HIS:** F.6 aláíró-sor (OQ-05/15/16/01/03).

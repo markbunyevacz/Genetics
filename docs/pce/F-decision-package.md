@@ -28,6 +28,7 @@ v1 / F1s blokkolók
 | **ELŐTERJESZTVE** | A gyártó kérése rögzítve; külső aláírás hiányzik |
 | **BELSŐ IGEN** | Amit a gyártó magának eldönthet (erőforrás, tárgyalás indítása) |
 | **LEZÁRVA** | Csak külső vagy ténybeli zárás után (itt: egyik OQ sem, kivéve OQ-02) |
+| **SPEC FAGYASZTVA** | v1.2 iratírás lezárva (§10.2); OQ-k ettől még ELŐTERJESZTVE |
 
 A disclaimer (A.1.1 / FR-490) **nem** felelősségkizárás és **nem** MDSW-kimenekülés.
 
@@ -119,3 +120,5 @@ C melléklet C.4.
 | OQ-03 | Partnerlabor (REG-020) | | | |
 
 A sor kitöltése a címzett **Outbound** iratán történik, nem ebben a mellékletben.
+
+A spec-írás **fagyasztva** (§10.2). A F1+ mag fejlesztés **nem** várja ezt a táblát; az éles HIS és a nem-MDSW forgalmazás igen.
