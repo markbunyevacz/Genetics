@@ -7,7 +7,7 @@
 | **Dátum** | 2026-08-12 |
 | **Hatókör** | PGx platform, magyar/EU piac; F1+ statikus lelet + F1s shadow HITL + F2/F3 CDSS |
 | **Előző** | PCE-SPEC-v1.1 — F1 passzív L4 + élő fenokonverzió a leleten; v1.2 ezt szűkíti |
-| **Mellékletek** | [A](A-intended-purpose-and-modules.md) · [B](B-architecture-and-interfaces.md) · [C](C-eeszt-f0-checklist.md) · [D](D-risk-and-traceability.md) · [E](E-shadow-hitl.md) |
+| **Mellékletek** | [A](A-intended-purpose-and-modules.md) · [B](B-architecture-and-interfaces.md) · [C](C-eeszt-f0-checklist.md) · [D](D-risk-and-traceability.md) · [E](E-shadow-hitl.md) · [F](F-decision-package.md) |
 | **Következő gate** | OQ-05 + OQ-15 + OQ-16 (csomag megvan, döntés nyitott) |
 
 Jelölések: `[V]` primerben verifikált · `[R]` egy forrás · `[C]` céges közlés · `[CORRECTED]` a v1.0-hoz képest javítva · `[ASSUMPTION]` · `[NEEDS VERIFICATION]`.
@@ -464,6 +464,7 @@ OQ-16 technikai csomag. **Nem** zárja le az OQ-16-ot. Küszöbök: A14, a DPO f
 - [ ] **Ritka diplotípus:** ha a konfigurált populációs gyakoriság < A14 küszöb **vagy** az intézményi (gén-osztály × ATC-szint) cella elemszáma a gördülő ablakban < `k`, Then a gateway vagy (a) fenotípus-*osztályt* küld diplotípus helyett (`REDUCED` / `INCREASED` / `UNCERTAIN`), vagy (b) a rekordot **kihagyja** (`E-SHADOW-003`, csak számláló log).
 - [ ] Adagolási struktúra (doseQuantity) anonim pathen **nem** megy ki.
 - [ ] Álnevesített út: FR-461 enyhíthető a DPIA szerint; FR-115 kötelező.
+- [ ] **A14 monitor (DPO-feltétel, F.3):** a gateway `E-SHADOW-003` drop-arányt és a k-cella eloszlást aggregáltan (nem PII) jelenti a DPO-nak legalább negyedévente. A legritkább diplotípus-osztály default **drop**, akkor is, ha a G3 recall csökken (R-020). Nincs manuális override a k-küszöbre F1s anonim úton.
 
 #### FR-470 · Csatorna-izoláció — **Compliance P0**
 
@@ -639,14 +640,14 @@ A 12 vs 14 eltérés **nem** nyitott kérdés: lásd FR-310.
 
 | ID | Kérdés | Kinek | Státusz |
 | --- | --- | --- | --- |
-| **OQ-01** | Van érvényes EESZT fejlesztői regisztráció? A 4. melléklet 1.1–1.9 + 2.1 teljesíthető-e 2026-09-30-ig? | Ügyvezetés / RA | **Teendő**, nem spekuláció → [C melléklet](C-eeszt-f0-checklist.md) |
+| **OQ-01** | Van érvényes EESZT fejlesztői regisztráció? A 4. melléklet 1.1–1.9 + 2.1 teljesíthető-e 2026-09-30-ig? | Ügyvezetés / RA | **ELŐTERJESZTVE** (F.4): owner szerep + audit azonnal. A regisztráció *ténye* nyitott → C melléklet |
 | **OQ-02** | PREPARE 12 vs PGx-Passport 14 | Klinikai | **LEZÁRVA** (FR-310, VC-02) |
-| **OQ-03** | Melyik partnerlabor vállalja az L3 aláírói felelősséget, milyen áron? | Üzletfejlesztés | Nyitott |
+| **OQ-03** | Melyik partnerlabor vállalja az L3 aláírói felelősséget, milyen áron? | Üzletfejlesztés | **ELŐTERJESZTVE** (F.5): tárgyalás indul, darabár a COGS-ban. Labor neve / aláírt szerződés nyitott |
 | **OQ-04** | Magyar Genom Program / BBMRI HU csomópont: partner vagy versenytárs? | Ügyvezetés | Nyitott; hungen.hu nem datált |
-| **OQ-05** | Védhető-e az **A.1 F1+** (gén-szintű, verziózott guideline-kivonat, nincs aktuális-gyógyszer párosítás, nincs élő fenokonverzió, nincs CDS) nem-MDSW-ként? Szűkített a v1.1-hez képest. | **Külső counsel** | **Nyitott.** Technikai csomag: A.1.2, FR-400-STATIC (teljes gén-tábla), FR-410-EDU (ha–akkor / kombináció tilos). A csomag **nem** válasz. |
+| **OQ-05** | Védhető-e az **A.1 F1+** nem-MDSW-ként? | **Külső counsel** | **ELŐTERJESZTVE** (F.1). Gyártói kérés: feltételes nem-MDSW a A.1.2 + FR-490 mellett. **Nem** counsel-aláírás. |
 | **OQ-06** | ISO 13485 tanúsító és Notified Body; HU/EU NB átfutás | RA | Nyitott |
-| **OQ-15** | A shadow L4-live futtatása valós ellátási eseményen klinikai vizsgálat-e (Art. 62), vagy evaluation-adatgyűjtés? | RA + intézmény kutatási igazgatóság | **Nyitott.** Érv (nem tény): a kezelőorvos nem látja a kimenetet. Támogató design: FR-450-BLIND. **Nem** automatikus Art. 62-mentesség. REG-090. |
-| **OQ-16** | Anonim shadow: a diplotípus + ATC kombináció re-ID kockázata a DPIA szerint elfogadható-e, vagy kötelező az álnevesített út? | DPO | **Nyitott.** Technikai csomag: FR-461 (ATC4 max, negyedév, ritka-elnyomás, k≥5). A DPO dönt, hogy ez elég-e. |
+| **OQ-15** | Shadow = Art. 62 vizsgálat vagy evaluation? | RA + intézmény | **ELŐTERJESZTVE** (F.2). Gyártói kérés: nem Art. 62, reviewer-vak evaluation. Függ OQ-16-tól. **Nem** RA-határozat. |
+| **OQ-16** | Anonim shadow elég-e, vagy FR-115? | DPO | **ELŐTERJESZTVE** (F.3). Gyártói kérés: anonim default + A14 monitor/drop G3 rovására is. **Nem** DPIA. |
 
 ### Nem-blokkoló
 
@@ -664,15 +665,15 @@ A 12 vs 14 eltérés **nem** nyitott kérdés: lásd FR-310.
 
 ### 10.1 v1 / F1s — külső állásfoglalás (a technikai csomag után)
 
-A csomagok a specben vannak. A mérföldkő **nem** indul counsel/DPO/intézmény nélkül.
+A csomagok és a **gyártói kérés** a [F mellékletben](F-decision-package.md) vannak. A mérföldkő **nem** indul a F.6 aláíró-sor nélkül.
 
 | Ki | Mit dönt | Csomag, amit kap | Blokkolja |
 | --- | --- | --- | --- |
-| Külső counsel | OQ-05: F1+ nem-MDSW védhető-e | A.1, A.1.1, A.1.2, FR-400-STATIC, FR-410-EDU, FR-470 | F1+ forgalmazás nem-MDSW-ként |
-| RA + partner intézmény kutatási igazgatóság | OQ-15: Art. 62 vizsgálat vs evaluation | E.4.1, FR-450-BLIND, REG-090 | F1s első HIS-csatlakozás |
-| DPO | OQ-16: anonim út elég-e | E.3.1, FR-461, A14 | Anonim shadow vs kötelező FR-115 |
-| Ügyvezetés / RA | OQ-01: EESZT + ISO 9001 2026-09-30 | C melléklet | Hazai éles / vendor-modul pálya |
-| Üzlet | OQ-03: partnerlabor L3 | REG-020 | F1+ COGS / aláíró |
+| Külső counsel | OQ-05 | F.1 + A melléklet | F1+ nem-MDSW forgalmazás |
+| RA + intézmény | OQ-15 | F.2 + E.4.1 | F1s HIS-csatlakozás |
+| DPO | OQ-16 | F.3 + E.3.1 | Anonim vs FR-115 |
+| Ügyvezetés / RA | OQ-01 | F.4 + C | 2026-09-30 kapu |
+| Üzlet | OQ-03 | F.5 | L3 aláíró / COGS |
 
 ---
 
@@ -799,7 +800,7 @@ A teljes registry: [SOURCE-REGISTRY](ProcessArtifacts/SOURCE-REGISTRY.md). Korre
 
 ## 15. Amit ez a spec nem tud
 
-- **Nem** OQ-05 jogi vélemény. Az F1+ (még a szűkített statikus társítás + FR-410-EDU is) ezen áll vagy dől.
+- **Nem** kitöltött F.6 aláíró-sor. Az F melléklet gyártói *kérés*, nem counsel/DPO/RA határozat.
 - **Nem** OQ-15 döntés. A „nincs hatása a kezelésre → nem Art. 62” *érv*, nem hatósági tény.
 - **Nem** OQ-16 DPIA-döntés. A FR-461 kontrollok a DPO inputjai.
 - **Nem** DPA, DPIA vagy etikai kérelem — E melléklet váz.
@@ -809,4 +810,4 @@ A teljes registry: [SOURCE-REGISTRY](ProcessArtifacts/SOURCE-REGISTRY.md). Korre
 
 ---
 
-*PCE-SPEC-v1.2. OQ-csomagok + §0.1 A10/A15 mátrix + §10.1 külső sign-off. Vak HITL ≠ double-blind. OQ-05/15/16 nyitott.*
+*PCE-SPEC-v1.2. F melléklet: gyártói előterjesztés. OQ-k ELŐTERJESZTVE, nem lezárva. Disclaimer ≠ felelősségkizárás.*

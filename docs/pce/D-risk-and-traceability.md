@@ -154,6 +154,6 @@ Minden funkcionális, NFR és REG sor. TC-azonosítók a gold set / CI nevei; a 
 | Shadow, gateway, HITL, consent váz | E melléklet |
 | EESZT 1.1–1.9 + 2.1 | C melléklet |
 | ISO 14971 kezdeti + teljes mátrix | ez a dokumentum |
-| Nincs TAM, nincs ticket, nincs counsel | PCE-SPEC §15; README |
+| Gyártói előterjesztés, nem aláírás | F melléklet; OQ státusz ELŐTERJESZTVE |
 
 **P06 eredmény (v1.2 + OQ-csomagok):** a hibrid-brief tiltott/szabad viselkedése, a shadow architektúra, a GDPR két út, az EDU/gateway/HITL technikai csomagok a dokumentumban megvannak. **OQ-05 / OQ-15 / OQ-16 továbbra is nyitott** — a csomagok nem helyettesítik a counsel/DPO/intézmény döntését. Maradék gap szándékos: gold-set SOP, engineering ticketek, DPA/DPIA végleges szöveg.

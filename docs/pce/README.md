@@ -12,7 +12,7 @@ Ez a csomag a PCE farmakogenetikai (PGx) platform **követelménylistája és sz
 
 v1.2 a **legális hibrid**: F1+ statikus, verziózott guideline-társítás aláírt laborleleten; F1s shadow HITL a kezelőorvos nélkül; élő F2/F3 CDSS csak minősítés után. Az „F2 képesség F1 minőségben, mert az orvos dönt” útvonal **elutasítva** (NG-07).
 
-A v1 / F1s induláshoz **külső állásfoglalás** kell (spec §10.1): counsel (OQ-05), intézmény+RA (OQ-15), DPO (OQ-16), plusz OQ-01 és OQ-03.
+A v1 / F1s induláshoz a gyártói kérés kész ([F melléklet](F-decision-package.md)); a **külső aláírás** (counsel, DPO, intézmény, labor, ISO tény) hiányzik.
 
 ## Olvasási sorrend
 
@@ -21,7 +21,8 @@ A v1 / F1s induláshoz **külső állásfoglalás** kell (spec §10.1): counsel 
 3. **[B-architecture-and-interfaces.md](B-architecture-and-interfaces.md)** — két path (klinikai vs shadow), adatmodell, API/FHIR/VCF, hibakatalógus, SOUP, fenokonverzió EDU/LIVE.
 4. **[C-eeszt-f0-checklist.md](C-eeszt-f0-checklist.md)** — 29/2022. 4. melléklet 1.1–1.9 + ISO 9001, 2026-09-30.
 5. **[D-risk-and-traceability.md](D-risk-and-traceability.md)** — ISO 14971 kezdeti kockázat (R-015–R-019) + FR→forrás→teszt→GSPR mátrix.
-6. **[E-shadow-hitl.md](E-shadow-hitl.md)** — shadow pipeline, intézményi gateway, HITL UI, GDPR két út, kutatási hozzájárulás váz, REG-090 / OQ-15.
+6. **[E-shadow-hitl.md](E-shadow-hitl.md)** — shadow pipeline, intézményi gateway, HITL UI, GDPR két út, REG-090 / OQ-15.
+7. **[F-decision-package.md](F-decision-package.md)** — gyártói előterjesztés a v1 blokkolókra. **Nem** külső aláírás.
 
 ## Process artifacts
 
@@ -43,8 +44,8 @@ A gyártó neve ebben a csomagban **nincs kitalálva**. A9 feltevés: a gyártó
 - Engineering ticket-bontás, gold-set annotációs SOP
 - Saját PRS-motor, B2C VCF-upload, EESZT írás, onkológiai szomatikus panel
 - TAM / piackutató-számok (5,7× szórás; nem SRS-anyag)
-- DPA, DPIA, etikai kérelem végleges szövege (E melléklet váz)
+- Kitöltött F.6 aláírások, OQ-05 counsel brief végleges szövege a gyártónévvel, DPIA, etikai kérelem, labor-szerződés
 
 ## Következő gate
 
-P01 — source coverage audit. v1 gate: **§10.1** külső állásfoglalás (OQ-05, OQ-15, OQ-16, OQ-01, OQ-03). A technikai csomag megvan, a döntés nincs.
+P01 — F melléklet előterjesztés kész. v1 gate: F.6 aláíró-sor (OQ-05/15/16/01/03).

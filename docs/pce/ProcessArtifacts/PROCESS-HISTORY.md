@@ -17,6 +17,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P05c | OQ technical packages | 2026-08-12 | 2026-08-12 | DONE | I-11 | FR-410-EDU/461/450-BLIND; A10≠TTL; A14/A15 | E-08 |
 | P06c | Plan-vs-content (OQ csomagok) | 2026-08-12 | 2026-08-12 | DONE | I-11 | D.3; VC-12; OQ-k nyitva | — |
 | P05d | A10/A15 mátrix + v1 sign-off | 2026-08-12 | 2026-08-12 | DONE | I-12 | §0.1; E.5.1; §10.1; nem double-blind | — |
+| P05e | Gyártói döntési előterjesztés | 2026-08-12 | 2026-08-12 | DONE | I-13 | F melléklet; OQ ELŐTERJESZTVE; FR-461 monitor | — |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -38,6 +39,8 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-12 | P05c | OQ-05/15/16 lezárása a technikai csomaggal | Lezárni / nyitva + csomag | **Nyitva**; csomag = FR-410-EDU, FR-461, FR-450-BLIND | Nem jogi vélemény | I-11 |
 | D-13 | P05c | Anonim ATC max szint | ATC5 / ATC4 / ATC3 | Default **ATC4**; ATC5 tilos; ATC3 DPO | WHO szintek S032; G3 tradeoff R-020 | I-11 |
 | D-14 | P05d | Visszavonáskor HITL | Mindig töröl / töröl vagy anonimizál | **Törlés vagy irreverzibilis anonimizálás** 72 h (A10); A15 csak anonim vagy FR-115 | I-12 változáskezelés | I-12 |
+| D-15 | P05e | OQ-k lezárása gyártói kéréssel | Lezárni / előterjeszteni | **ELŐTERJESZTVE** (F); külső aláírás kell | Nem hamisítunk counsel/DPO pecsétet | I-13 |
+| D-16 | P05e | Disclaimer mint MDSW-kimenekülés | Felelősségkizárás / A.1.1 | **A.1.1 marad**; nem felelősségkizárás | FR-490; A.0 | I-13 |
 
 ## 3. Error log
 

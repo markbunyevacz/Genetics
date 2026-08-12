@@ -87,12 +87,15 @@ F1-ben **nem** töltendő. Itt van, hogy F4-en ne kelljen keresni.
 
 | # | Teendő | Owner | Kimenet |
 | --- | --- | --- | --- |
-| 1 | C-000–C-002 kitöltése | Ügyvezetés | OQ-01 tény |
+| 0 | `eeszt_iso_owner` kijelölése (név a QMS-ben; F.4) | Ügyvezetés | OQ-01 owner |
+| 1 | C-000–C-002 kitöltése | `eeszt_iso_owner` | OQ-01 tény |
 | 2 | C-101–C-109 bizonyíték mappa | Pénzügy / jog | 4. mell. 1. pont |
-| 3 | ISO 9001 (vagy elfogadott szoftver-QMS) gap + tanúsító | RA | C-201, 2026-09-30 |
+| 3 | ISO 9001 gap + tanúsító **azonnal** (F.4) | RA + külső QMS | C-201, 2026-09-30 |
 | 4 | Döntés: saját EESZT-engedély vs vendor-modul (A8) | Ügyvezetés | REG-040b igen/nem |
-| 5 | OQ-05 counsel (párhuzamos, A.1 szűkített szöveg) | Külső jog | F1+ MDSW igen/nem |
-| 6 | OQ-15: shadow = Art. 62 vizsgálat-e (ha F1s a F0-ban indul) | RA + intézmény | REG-090 döntés |
+| 5 | OQ-05: F.1 csomag a counselnek | Külső jog | F.6 aláírás |
+| 6 | OQ-15: F.2 csomag az intézménynek (OQ-16 után) | RA + intézmény | F.6 aláírás |
+| 7 | OQ-16: F.3 csomag a DPO-nak | DPO | DPIA + F.6 |
+| 8 | OQ-03: L3 tárgyalás, labor név nélkül itt (F.5) | Üzlet | REG-020 tervezet |
 
 A 2026-09-30 **kb. 7 hét** 2026-08-12-től. ISO 9001 nulláról ebben az ablakban szűk — ha nincs tanúsítvány, ez az F0 egyetlen kritikus útja, nem a kód.
 
