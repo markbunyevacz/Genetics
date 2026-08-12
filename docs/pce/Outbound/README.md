@@ -28,6 +28,7 @@ A telephelyi lánc **kötött**: `OQ-16 → OQ-15 → OQ-03`. Az OQ-05 **nem** v
 | --- | --- | --- | --- |
 | [OQ-05-counsel-brief.md](OQ-05-counsel-brief.md) | OQ-05 | Külső jogi és szabályozási tanácsadó | Állásfoglalás-kérés |
 | [OQ-16-dpo-dpia-kerdoiv.md](OQ-16-dpo-dpia-kerdoiv.md) | OQ-16 | DPO / DPIA munkacsoport | Igen/nem kontrollcsomag |
+| [OQ-16-kuldesi-csomag.md](OQ-16-kuldesi-csomag.md) | OQ-16 | Küldő (belső) | Boríték + változó-tábla; **első kimenő irat** |
 | [OQ-15-intezmenyi-ra-egyoldalas.md](OQ-15-intezmenyi-ra-egyoldalas.md) | OQ-15 | Intézményi RA / orvosigazgató / etikai bizottság | Jóváhagyási kérelem |
 | [OQ-03-l3-term-sheet.md](OQ-03-l3-term-sheet.md) | OQ-03 | Partnerlaboratórium üzleti vezetése | Term sheet (nem szerződés) |
 | [OQ-01-iso-eeszt-owner-csomag.md](OQ-01-iso-eeszt-owner-csomag.md) | OQ-01 | Ügyvezetés / belső RA | F0 feladatlista + kapuőr |
@@ -40,7 +41,7 @@ A telephelyi lánc **kötött**: `OQ-16 → OQ-15 → OQ-03`. Az OQ-05 **nem** v
 
 `OQ-16 → OQ-15 → OQ-03`
 
-1. **OQ-16** (intézményi DPO) — elsőbbségi kapu az F1s *éles* HIS-re. NEM → álnevesített út + FR-115 (kutatási/shadow). **Nem** kapcsolja ki a klinikai FR-100-at.
+1. **OQ-16** (DPO) — **első kimenő irat.** Boríték: [OQ-16-kuldesi-csomag.md](OQ-16-kuldesi-csomag.md). NEM → álnevesített út + FR-115 (kutatási/shadow). **Nem** kapcsolja ki a klinikai FR-100-at. Partnerlabor **nincs** ezen az iraton (az OQ-03). Gyártónév: A9, küldéskor, nem kitalálva.
 2. **OQ-15** (intézményi RA) — **csak lezárt OQ-16 után**. Reviewer-vak HITL kérelem; HIS pecsét: OQ-15 **és** OQ-16.
 3. **OQ-03** (labor) — REG-020 / opcionális `[Yl]`; labornevet itt **nem** találunk ki.
 
@@ -82,6 +83,6 @@ A vázlatok **nem** lettek szó szerint átmásolva, ahol a v1.2 spec mást mond
 
 ## Ami szándékosan üres
 
-- Gyártó cégneve, labor neve, Ft-összeg, SLA-óra
+- Gyártó cégneve, labor neve, Ft-összeg, SLA-óra — a küldő tölti a *kimenő másolaton*; a git placeholder marad (A9)
 - F.6 aláírások
 - Counsel/DPO/RA *válasza*

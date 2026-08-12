@@ -32,6 +32,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P10b | Pecsétekig megerősítés | 2026-08-12 | 2026-08-12 | DONE | User: van-e architektúra-feladat pecsétekig? | README pecsétekig tábla; F.6 + OQ-17; D-24 | — |
 | P05l | FR-461 ticket-bontás | 2026-08-12 | 2026-08-12 | DONE | Explicit kérés: gateway csonkolás ticketek | `Engineering/FR-461-gateway-tickets.md`; OQ-16 nyitva | — |
 | P10c | Ops kapuk a fagyasztott specből | 2026-08-12 | 2026-08-12 | DONE | User: kötött lánc, majd core-most / telephely-később | README G5 modell; Outbound gyártói vs telephelyi; D-26/27 | — |
+| P05m | OQ-16 küldési csomag | 2026-08-12 | 2026-08-12 | DONE | User: első kimenő irat + név-helyettesítés | `OQ-16-kuldesi-csomag.md`; nevek nincsenek kitalálva | — |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -66,6 +67,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-25 | P05l | FR-461 ticketek a fagyasztott specből | Spec-módosítás / engineering bontás | **Engineering/**; SYN only; A14 assumption; nem OQ-16 pecsét | FR-461; E.3.1; TC-GW-010..020 | user |
 | D-26 | P10c | Küldési lánc | Párhuzamos OQ-15 / kötött 16→15→05→03→01 | **Kötött küldés**; HIS továbbra is 15+16 pecsét; FR-115 ≠ FR-100; ISO ≠ megújítás | §10.2 fallback; OQ-16 I.0 | user |
 | D-27 | P10c | Core most vs irat a megrendelőkor | Minden OQ most / minden OQ a vevőkor | **G5:** egy bináris SYN-en. Gyártói OQ-05/01 most. Telephelyi 16→15→03 nevesített megrendelőkor. Flag = telepítés. | SKU-P; user | user |
+| D-28 | P05m | OQ-16 küldési boríték | Nevek beírása a gitbe / boríték + A9 | **Boríték**; G1/C2 a küldőé; labor ≠ OQ-16; 16-A termék-DPO most, 16-B HIS-DPO névvel | A9; user OQ-16 első irat | user |
 
 ## 3. Error log
 
@@ -90,7 +92,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 
 | Fájl | Létrehozva | Módosítva | Státusz |
 | --- | --- | --- | --- |
-| docs/pce/README.md | P00/P05 | P10c (kötött küldési lánc + fallback; PR #1 merged) | v1.2 FAGYASZTVA |
+| docs/pce/README.md | P00/P05 | P10c (G5 core-most; gyártói vs telephelyi OQ) | v1.2 FAGYASZTVA |
 | docs/pce/PCE-SPEC-v1.2.md | P05b (git mv) | P05j (§9.4 PREPARE p=0,0075) | v1.2 FAGYASZTVA; S028+PREPARE határ |
 | docs/pce/A-intended-purpose-and-modules.md | P05 | P05i (A.3 SHAP≠FR-710) | DRAFT v1.2 |
 | docs/pce/B-architecture-and-interfaces.md | P05 | P05c | DRAFT v1.2 |
@@ -98,7 +100,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | docs/pce/D-risk-and-traceability.md | P05 | P06j (VC-14) | DRAFT v1.2 |
 | docs/pce/E-shadow-hitl.md | P05b | P05i (E.7 SOTA-határ) | DRAFT v1.2 |
 | docs/pce/F-decision-package.md | P05e | P10b (F.6 + OQ-17) | DRAFT v1.2; OQ-k ELŐTERJESZTVE |
-| docs/pce/Outbound/* | P05f | P10c (kötött 16→15→05→03→01) | TERVEZET küldhető |
+| docs/pce/Outbound/* | P05f | P05m (OQ-16 küldési boríték) | TERVEZET; 16 első kimenő; A9 |
 | docs/pce/Sales/* | P05g | P05j (mátrix + competitor-analogs) | TERVEZET rendszerlicenc |
 | docs/pce/Sources/S028-* | P01c | P05i | L5 jegyzet + PDF |
 | docs/pce/ProcessArtifacts/* | P01–P06 | P05l (I-20, D-25) | DRAFT |

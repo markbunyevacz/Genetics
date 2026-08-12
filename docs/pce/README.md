@@ -89,7 +89,7 @@ Egy bináris: F1+ · F1s · F2 · F3 **benne van**. Tesztadat / SYN. A megrendel
 
 Részlet: [Outbound/README](Outbound/README.md).
 
-- **OQ-16** intézményi DPO: F1s éles HIS kapu. NEM → `PSEUDO` + **FR-115** (kutatási/shadow). **Nem** a mintavételi FR-100 — az **mindig** kell.
+- **OQ-16** intézményi vagy termék-DPO: első kimenő irat, [küldési csomag](Outbound/OQ-16-kuldesi-csomag.md). NEM → `PSEUDO` + **FR-115**. **Nem** a mintavételi FR-100. Partnerlabor **nem** az OQ-16 mezője.
 - **OQ-15** intézményi RA: reviewer-vak HITL. HIS: 15 **és** 16 pecsét.
 - **OQ-05** gyártói counsel: F1+ nem-MDSW *kérés*; gén-szintű CPIC lehet Rule 11a. A válasz a telephely F1+ flagje.
 - **OQ-03** labor REG-020 / `[Yl]`. **OQ-01** ISO folyamat + Redmine, nem „megújítás”.
