@@ -9,6 +9,8 @@
 
 A gyártó (A9: a `genetics` repo tulajdonos szervezete; **név nincs kitalálva**) az alábbi álláspontot kéri jóváhagyni. Az OQ **akkor zárul**, ha a címzett aláírja / elutasítja / feltételekkel visszaadja. Ez a fájl nem helyettesíti azt.
 
+**Küldhető iratok:** [Outbound/](Outbound/README.md) — OQ-05 counsel brief, OQ-16 DPO kérdőív, OQ-15 intézményi kérelem, OQ-03 L3 term sheet, OQ-01 F0 owner-csomag. A F.6 sor az ottani aláírás után töltődik.
+
 ```
 v1 / F1s blokkolók
         │
@@ -47,6 +49,8 @@ A disclaimer (A.1.1 / FR-490) **nem** felelősségkizárás és **nem** MDSW-kim
 
 Csomag: A.1, A.1.1, A.1.2, FR-400-STATIC, FR-410-EDU, FR-470, REG-010, MDCG 2019-11 Rev.1.
 
+**Küldendő irat:** [Outbound/OQ-05-counsel-brief.md](Outbound/OQ-05-counsel-brief.md) — Igen/Nem/Feltétellel; A.1 szó szerint; a pecsét nem előre „nem MDSW”.
+
 ---
 
 ## F.2 OQ-15 — RA + intézmény (ELŐTERJESZTVE)
@@ -60,6 +64,8 @@ Csomag: A.1, A.1.1, A.1.2, FR-400-STATIC, FR-410-EDU, FR-470, REG-010, MDCG 2019
 **Ami ezt nem zárja:** etikai bizottság / hatósági bejelentés, ha a RA másképp dönt. REG-090 az első HIS-csatlakozás előtt.
 
 Csomag: E.4.1, E.7, FR-450-BLIND, FR-470.
+
+**Küldendő irat:** [Outbound/OQ-15-intezmenyi-ra-egyoldalas.md](Outbound/OQ-15-intezmenyi-ra-egyoldalas.md) — kérelem, nem Art. 62-mentesség mint tény.
 
 ---
 
@@ -76,6 +82,8 @@ Csomag: E.4.1, E.7, FR-450-BLIND, FR-470.
 
 **Ami ezt nem zárja:** aláírt DPIA. Ha a DPO szerint a profil így is személyes adat → A12 hamis, FR-115 kötelező.
 
+**Küldendő irat:** [Outbound/OQ-16-dpo-dpia-kerdoiv.md](Outbound/OQ-16-dpo-dpia-kerdoiv.md) — anonim út **nem** kapcsolja ki FR-100-at.
+
 ---
 
 ## F.4 OQ-01 — Ügyvezetés / RA (BELSŐ IGEN a folyamatról)
@@ -86,13 +94,17 @@ Csomag: E.4.1, E.7, FR-450-BLIND, FR-470.
 
 C melléklet C.4.
 
+**Belső irat:** [Outbound/OQ-01-iso-eeszt-owner-csomag.md](Outbound/OQ-01-iso-eeszt-owner-csomag.md) — Redmine + 2.1 ISO 9001; **nem** EESZT FHIR.
+
 ---
 
 ## F.5 OQ-03 — Üzlet (BELSŐ IGEN a tárgyalás indítására)
 
-**Belső döntés:** hivatalos tárgyalás az **első** partnerlaborral L3 outside-call aláírásra, darabáras elszámolás, az F1+ COGS része. A szerződésben: aláírási SLA.
+**Belső döntés:** hivatalos tárgyalás az **első** partnerlaborral L3 outside-call + **minden** F1+ lelet aláírására. Kereskedelmi váz: havidíj + volumensáv (spec §11); a darabár opcionális sáv, nem „csak kivétel”. A szerződésben: aláírási SLA.
 
 **Ami nyitva marad:** a labor **neve**, az ár, az aláírt REG-020. Itt labornevet **nem** találunk ki.
+
+**Küldendő irat:** [Outbound/OQ-03-l3-term-sheet.md](Outbound/OQ-03-l3-term-sheet.md) — minden F1+ lelet aláírása; NG-01 ≠ riasztáskód; havidíj + volumensáv.
 
 ---
 
@@ -106,4 +118,4 @@ C melléklet C.4.
 | OQ-01 | `eeszt_iso_owner` + tanúsító státusz | | | |
 | OQ-03 | Partnerlabor (REG-020) | | | |
 
-A sor kitöltése a címzett dokumentuma, nem ez a melléklet.
+A sor kitöltése a címzett **Outbound** iratán történik, nem ebben a mellékletben.

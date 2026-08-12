@@ -642,7 +642,7 @@ A 12 vs 14 eltérés **nem** nyitott kérdés: lásd FR-310.
 | --- | --- | --- | --- |
 | **OQ-01** | Van érvényes EESZT fejlesztői regisztráció? A 4. melléklet 1.1–1.9 + 2.1 teljesíthető-e 2026-09-30-ig? | Ügyvezetés / RA | **ELŐTERJESZTVE** (F.4): owner szerep + audit azonnal. A regisztráció *ténye* nyitott → C melléklet |
 | **OQ-02** | PREPARE 12 vs PGx-Passport 14 | Klinikai | **LEZÁRVA** (FR-310, VC-02) |
-| **OQ-03** | Melyik partnerlabor vállalja az L3 aláírói felelősséget, milyen áron? | Üzletfejlesztés | **ELŐTERJESZTVE** (F.5): tárgyalás indul, darabár a COGS-ban. Labor neve / aláírt szerződés nyitott |
+| **OQ-03** | Melyik partnerlabor vállalja az L3 aláírói felelősséget, milyen áron? | Üzletfejlesztés | **ELŐTERJESZTVE** (F.5). Tárgyalás indul; havidíj + volumensáv. Labor neve / aláírt szerződés nyitott. |
 | **OQ-04** | Magyar Genom Program / BBMRI HU csomópont: partner vagy versenytárs? | Ügyvezetés | Nyitott; hungen.hu nem datált |
 | **OQ-05** | Védhető-e az **A.1 F1+** nem-MDSW-ként? | **Külső counsel** | **ELŐTERJESZTVE** (F.1). Gyártói kérés: feltételes nem-MDSW a A.1.2 + FR-490 mellett. **Nem** counsel-aláírás. |
 | **OQ-06** | ISO 13485 tanúsító és Notified Body; HU/EU NB átfutás | RA | Nyitott |
@@ -665,15 +665,15 @@ A 12 vs 14 eltérés **nem** nyitott kérdés: lásd FR-310.
 
 ### 10.1 v1 / F1s — külső állásfoglalás (a technikai csomag után)
 
-A csomagok és a **gyártói kérés** a [F mellékletben](F-decision-package.md) vannak. A mérföldkő **nem** indul a F.6 aláíró-sor nélkül.
+A csomagok és a **gyártói kérés** a [F mellékletben](F-decision-package.md) vannak. A **küldhető iratok** az [Outbound](Outbound/README.md) mappában. A mérföldkő **nem** indul a F.6 aláíró-sor nélkül.
 
 | Ki | Mit dönt | Csomag, amit kap | Blokkolja |
 | --- | --- | --- | --- |
-| Külső counsel | OQ-05 | F.1 + A melléklet | F1+ nem-MDSW forgalmazás |
-| RA + intézmény | OQ-15 | F.2 + E.4.1 | F1s HIS-csatlakozás |
-| DPO | OQ-16 | F.3 + E.3.1 | Anonim vs FR-115 |
-| Ügyvezetés / RA | OQ-01 | F.4 + C | 2026-09-30 kapu |
-| Üzlet | OQ-03 | F.5 | L3 aláíró / COGS |
+| Külső counsel | OQ-05 | F.1 + A + [OQ-05 brief](Outbound/OQ-05-counsel-brief.md) | F1+ nem-MDSW forgalmazás |
+| RA + intézmény | OQ-15 | F.2 + E.4.1 + [OQ-15 kérelem](Outbound/OQ-15-intezmenyi-ra-egyoldalas.md) | F1s HIS-csatlakozás |
+| DPO | OQ-16 | F.3 + E.3.1 + [OQ-16 kérdőív](Outbound/OQ-16-dpo-dpia-kerdoiv.md) | Anonim vs FR-115 |
+| Ügyvezetés / RA | OQ-01 | F.4 + C + [OQ-01 owner](Outbound/OQ-01-iso-eeszt-owner-csomag.md) | 2026-09-30 kapu |
+| Üzlet | OQ-03 | F.5 + [OQ-03 term sheet](Outbound/OQ-03-l3-term-sheet.md) | L3 aláíró / COGS |
 
 ---
 
@@ -800,7 +800,7 @@ A teljes registry: [SOURCE-REGISTRY](ProcessArtifacts/SOURCE-REGISTRY.md). Korre
 
 ## 15. Amit ez a spec nem tud
 
-- **Nem** kitöltött F.6 aláíró-sor. Az F melléklet gyártói *kérés*, nem counsel/DPO/RA határozat.
+- **Nem** kitöltött F.6 aláíró-sor. Az F melléklet gyártói *kérés*; az [Outbound](Outbound/README.md) iratok küldhető tervezetek, nem counsel/DPO/RA határozat.
 - **Nem** OQ-15 döntés. A „nincs hatása a kezelésre → nem Art. 62” *érv*, nem hatósági tény.
 - **Nem** OQ-16 DPIA-döntés. A FR-461 kontrollok a DPO inputjai.
 - **Nem** DPA, DPIA vagy etikai kérelem — E melléklet váz.

@@ -92,10 +92,11 @@ F1-ben **nem** töltendő. Itt van, hogy F4-en ne kelljen keresni.
 | 2 | C-101–C-109 bizonyíték mappa | Pénzügy / jog | 4. mell. 1. pont |
 | 3 | ISO 9001 gap + tanúsító **azonnal** (F.4) | RA + külső QMS | C-201, 2026-09-30 |
 | 4 | Döntés: saját EESZT-engedély vs vendor-modul (A8) | Ügyvezetés | REG-040b igen/nem |
-| 5 | OQ-05: F.1 csomag a counselnek | Külső jog | F.6 aláírás |
-| 6 | OQ-15: F.2 csomag az intézménynek (OQ-16 után) | RA + intézmény | F.6 aláírás |
-| 7 | OQ-16: F.3 csomag a DPO-nak | DPO | DPIA + F.6 |
-| 8 | OQ-03: L3 tárgyalás, labor név nélkül itt (F.5) | Üzlet | REG-020 tervezet |
+| 5 | OQ-05: [counsel brief](Outbound/OQ-05-counsel-brief.md) | Külső jog | F.6 aláírás |
+| 6 | OQ-15: [intézményi kérelem](Outbound/OQ-15-intezmenyi-ra-egyoldalas.md) (OQ-16 után) | RA + intézmény | F.6 aláírás |
+| 7 | OQ-16: [DPO kérdőív](Outbound/OQ-16-dpo-dpia-kerdoiv.md) | DPO | DPIA + F.6 |
+| 8 | OQ-03: [L3 term sheet](Outbound/OQ-03-l3-term-sheet.md), labor név nélkül itt (F.5) | Üzlet | REG-020 tervezet |
+| 9 | OQ-01 végrehajtás: [F0 owner-csomag](Outbound/OQ-01-iso-eeszt-owner-csomag.md) | `eeszt_iso_owner` | C-000 + C-201 |
 
 A 2026-09-30 **kb. 7 hét** 2026-08-12-től. ISO 9001 nulláról ebben az ablakban szűk — ha nincs tanúsítvány, ez az F0 egyetlen kritikus útja, nem a kód.
 
@@ -103,6 +104,6 @@ A 2026-09-30 **kb. 7 hét** 2026-08-12-től. ISO 9001 nulláról ebben az ablakb
 
 ## C.5 Ami szándékosan nincs ebben a mellékletben
 
-- FHIR API az EESZT-hez (nincs nyílt FHIR; NG-05).
+- FHIR API az EESZT-hez (nincs nyílt FHIR; NG-05). Az OQ-01 owner-csomag **nem** SSL/FHIR élesítési checklist.
 - BM szoftverengedély-kérelem sablonja (Redmine-dokumentáció, nem publikus ebben a körben).
 - Az engedélyezett medikai rendszerek BM-táblázata (folyamatosan frissül; P6 célfiók, nem spec-kód).

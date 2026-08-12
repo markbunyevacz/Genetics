@@ -155,5 +155,6 @@ Minden funkcionális, NFR és REG sor. TC-azonosítók a gold set / CI nevei; a 
 | EESZT 1.1–1.9 + 2.1 | C melléklet |
 | ISO 14971 kezdeti + teljes mátrix | ez a dokumentum |
 | Gyártói előterjesztés, nem aláírás | F melléklet; OQ státusz ELŐTERJESZTVE |
+| Címzett-kész irattervezetek | Outbound/ (OQ-05/16/15/03/01); nem pecsét |
 
-**P06 eredmény (v1.2 + OQ-csomagok):** a hibrid-brief tiltott/szabad viselkedése, a shadow architektúra, a GDPR két út, az EDU/gateway/HITL technikai csomagok a dokumentumban megvannak. **OQ-05 / OQ-15 / OQ-16 továbbra is nyitott** — a csomagok nem helyettesítik a counsel/DPO/intézmény döntését. Maradék gap szándékos: gold-set SOP, engineering ticketek, DPA/DPIA végleges szöveg.
+**P06 eredmény (v1.2 + OQ-csomagok + Outbound):** a hibrid-brief tiltott/szabad viselkedése, a shadow architektúra, a GDPR két út, az EDU/gateway/HITL technikai csomagok a dokumentumban megvannak. Az öt külső irat a spechez igazítva kész (I-14 javítótábla). **OQ-05 / OQ-15 / OQ-16 / OQ-01 / OQ-03 továbbra is nyitott** — a csomagok és az Outbound tervezetek nem helyettesítik a counsel/DPO/intézmény/labor/tanúsító döntését. Maradék gap szándékos: gold-set SOP, engineering ticketek, DPA/DPIA végleges szöveg, kitöltött F.6.

@@ -23,6 +23,7 @@ A v1 / F1s induláshoz a gyártói kérés kész ([F melléklet](F-decision-pack
 5. **[D-risk-and-traceability.md](D-risk-and-traceability.md)** — ISO 14971 kezdeti kockázat (R-015–R-019) + FR→forrás→teszt→GSPR mátrix.
 6. **[E-shadow-hitl.md](E-shadow-hitl.md)** — shadow pipeline, intézményi gateway, HITL UI, GDPR két út, REG-090 / OQ-15.
 7. **[F-decision-package.md](F-decision-package.md)** — gyártói előterjesztés a v1 blokkolókra. **Nem** külső aláírás.
+8. **[Outbound/](Outbound/README.md)** — címzett-kész irattervezetek (counsel, DPO, intézményi RA, L3 term sheet, ISO/EESZT owner). Küldhető; **nem** aláírt állásfoglalás.
 
 ## Process artifacts
 
@@ -44,8 +45,8 @@ A gyártó neve ebben a csomagban **nincs kitalálva**. A9 feltevés: a gyártó
 - Engineering ticket-bontás, gold-set annotációs SOP
 - Saját PRS-motor, B2C VCF-upload, EESZT írás, onkológiai szomatikus panel
 - TAM / piackutató-számok (5,7× szórás; nem SRS-anyag)
-- Kitöltött F.6 aláírások, OQ-05 counsel brief végleges szövege a gyártónévvel, DPIA, etikai kérelem, labor-szerződés
+- Kitöltött F.6 aláírások, gyártónévvel/labor-névvel kitöltött Outbound iratok, aláírt DPIA, etikai engedély, REG-020 szerződés
 
 ## Következő gate
 
-P01 — F melléklet előterjesztés kész. v1 gate: F.6 aláíró-sor (OQ-05/15/16/01/03).
+P01 — F melléklet + Outbound irattervezetek kész. v1 gate: F.6 aláíró-sor a címzettek Outbound iratain (OQ-05/15/16/01/03).

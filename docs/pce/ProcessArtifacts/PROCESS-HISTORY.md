@@ -18,6 +18,8 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P06c | Plan-vs-content (OQ csomagok) | 2026-08-12 | 2026-08-12 | DONE | I-11 | D.3; VC-12; OQ-k nyitva | — |
 | P05d | A10/A15 mátrix + v1 sign-off | 2026-08-12 | 2026-08-12 | DONE | I-12 | §0.1; E.5.1; §10.1; nem double-blind | — |
 | P05e | Gyártói döntési előterjesztés | 2026-08-12 | 2026-08-12 | DONE | I-13 | F melléklet; OQ ELŐTERJESZTVE; FR-461 monitor | — |
+| P05f | Outbound hivatalos iratok | 2026-08-12 | 2026-08-12 | DONE | I-14 | `docs/pce/Outbound/` öt irat + index | E-10, E-11 |
+| P06f | Plan-vs-content (Outbound) | 2026-08-12 | 2026-08-12 | DONE | I-14 vs spec | Öt irat spec-hez igazítva; OQ-k nyitva | — |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -41,6 +43,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-14 | P05d | Visszavonáskor HITL | Mindig töröl / töröl vagy anonimizál | **Törlés vagy irreverzibilis anonimizálás** 72 h (A10); A15 csak anonim vagy FR-115 | I-12 változáskezelés | I-12 |
 | D-15 | P05e | OQ-k lezárása gyártói kéréssel | Lezárni / előterjeszteni | **ELŐTERJESZTVE** (F); külső aláírás kell | Nem hamisítunk counsel/DPO pecsétet | I-13 |
 | D-16 | P05e | Disclaimer mint MDSW-kimenekülés | Felelősségkizárás / A.1.1 | **A.1.1 marad**; nem felelősségkizárás | FR-490; A.0 | I-13 |
+| D-17 | P05f | I-14 vázlatok szó szerint? | Átmásolni / spec szerint javítani | **Javítva**: A.1 verbatim; FR-100≠FR-115; Art. 62 kérelem; L3≠NG-01; EESZT≠FHIR | IR-01, VC-01, NG-01, NG-05 | I-14 |
 
 ## 3. Error log
 
@@ -55,16 +58,20 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | E-07 | P01b | Authority | I-10 [1]–[7] blog/preprint mint Rule 11a bizonyíték | Nem L1-ként használni | S023–S029 L4/L5; primer S004/S020 |
 | E-08 | P05c | Cross-reference breakage / assumption mix-up | I-11 A10-et F1s 72 h puffernek olvasta | Retry: A10 eredeti jelentés + A15 | VC-12 |
 | E-09 | P05d | Terminology | I-12 „double-blind validation” | Szekvenciális reviewer-vak; a motor nem vak | FR-450-BLIND; E.4.1 |
+| E-10 | P05f | Scope / overclaim | I-14 OQ-05 pecsét előre „nem MDSW”; OQ-15 Art. 62 mint tény | Igen/Nem/Feltétellel; kérelem nem határozat | Outbound OQ-05/15 |
+| E-11 | P05f | Cross-reference / spec mismatch | I-14 L3 = NG-01 riasztás + csak kivétel díjazva; OQ-01 = EESZT FHIR/SSL | NG-01 = non-goal; minden lelet aláírás; Redmine + ISO 9001 2.1 | Outbound OQ-03/01 |
 
 ## 4. File timeline
 
 | Fájl | Létrehozva | Módosítva | Státusz |
 | --- | --- | --- | --- |
-| docs/pce/README.md | P00/P05 | P06c | DRAFT v1.2 |
-| docs/pce/PCE-SPEC-v1.2.md | P05b (git mv) | P05c | DRAFT kanonikus |
+| docs/pce/README.md | P00/P05 | P05f | DRAFT v1.2 |
+| docs/pce/PCE-SPEC-v1.2.md | P05b (git mv) | P05f (§10.1 Outbound) | DRAFT kanonikus |
 | docs/pce/A-intended-purpose-and-modules.md | P05 | P05c (A.1.2) | DRAFT v1.2 |
 | docs/pce/B-architecture-and-interfaces.md | P05 | P05c | DRAFT v1.2 |
-| docs/pce/C-eeszt-f0-checklist.md | P05 | P05b (verzió + OQ-15 sor) | DRAFT v1.2 |
+| docs/pce/C-eeszt-f0-checklist.md | P05 | P05f (C.4 Outbound linkek) | DRAFT v1.2 |
 | docs/pce/D-risk-and-traceability.md | P05 | P05c (R-020/021) | DRAFT v1.2 |
 | docs/pce/E-shadow-hitl.md | P05b | P05c (E.3.1, E.4.1) | DRAFT v1.2 |
-| docs/pce/ProcessArtifacts/* | P01–P06 | P05c/P06c | DRAFT |
+| docs/pce/F-decision-package.md | P05e | P05f (Outbound linkek) | DRAFT v1.2 |
+| docs/pce/Outbound/* | P05f | — | TERVEZET küldhető |
+| docs/pce/ProcessArtifacts/* | P01–P06 | P05f | DRAFT |
