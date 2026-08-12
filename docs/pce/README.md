@@ -76,25 +76,32 @@ docs/pce/
 
 **Labor:** REG-020 csatlakozó = 0 szoftverdíj. `[Yl]` csak saját white-label tenancy. Nem viszonteladó, nem „fix havidíjas adatkapcsolat” mint mag-SKU.
 
-### Kiküldési lánc (Outbound)
+### Core most, telephely később (G5)
 
-Sorrend **kötött** ([Outbound/README](Outbound/README.md)):
+Egy bináris: F1+ · F1s · F2 · F3 **benne van**. Tesztadat / SYN. A megrendelőkor a [market-packs](Sales/market-packs.md) ON/LOCK + `[Y*]` mondja meg, mit telepítünk / kapcsolunk / customizálunk. **Bent van ≠ be van kapcsolva** (NG-07). `LIVE_CDS` compile-time **false**, amíg CE/in-house/`[Ya]`. A F1+ matcher a klinikai rendererben **ki**; a motor SYN-en fejleszthető.
 
-`OQ-16 (DPO) → OQ-15 (RA / intézmény) → OQ-05 (counsel) → OQ-03 (labor) → OQ-01 (ügyvezetés / RA)`
+### Kiküldés: gyártói most, telephely a megrendelőkor
 
-- **OQ-16** elsőbbségi kapu az F1s *éles* adatútra. NEM → nincs HIS; álnevesített út + **FR-115** (kutatási/shadow hozzájárulás). Ez **nem** a mintavételi FR-100 (6. § (2) / 8. §) — az **mindig** kell.
-- **OQ-15** kérelem csak **lezárt OQ-16** után megy ki. HIS: OQ-15 **és** OQ-16 pecsét.
-- **OQ-05** az F1+ nem-MDSW *kérés*; a gén-szintű CPIC szöveg lehet Rule 11a. A jogi hatókör független az F1s-től; a *küldés* a láncban a 15 után van.
-- **OQ-03 / OQ-01** üzleti + ISO 9001 / ESZFK Redmine. ISO **nem** „megújítás”: lehet, hogy nincs tanúsítvány.
+| Sáv | OQ | Mikor |
+| --- | --- | --- |
+| Gyártói | OQ-05, OQ-01 | **Most** (counsel, ISO 2026-09-30). Nincs kórházi név kell. |
+| Telephelyi | OQ-16 → OQ-15 → OQ-03 | Nevesített intézmény / labor. A 15 csak lezárt 16 után. |
+
+Részlet: [Outbound/README](Outbound/README.md).
+
+- **OQ-16** intézményi DPO: F1s éles HIS kapu. NEM → `PSEUDO` + **FR-115** (kutatási/shadow). **Nem** a mintavételi FR-100 — az **mindig** kell.
+- **OQ-15** intézményi RA: reviewer-vak HITL. HIS: 15 **és** 16 pecsét.
+- **OQ-05** gyártói counsel: F1+ nem-MDSW *kérés*; gén-szintű CPIC lehet Rule 11a. A válasz a telephely F1+ flagje.
+- **OQ-03** labor REG-020 / `[Yl]`. **OQ-01** ISO folyamat + Redmine, nem „megújítás”.
 
 ### Pecsétekig — mi indul / mi nem (§10.2)
 
-| Terület | Indul most | Vár F.6-ra |
+| Terület | Indul most (SYN / sandbox) | Vár telephelyi F.6-ra / minősítésre |
 | --- | --- | --- |
-| F1+ mag | L0–L2, outside-call, FR-210, PREPARE-12, FR-400-STATIC, FR-410-EDU, FR-490, PDF/FHIR, `LIVE_CDS=false`, FR-700. Matcher **ki**. | Matcher ON; renderer, amely `MedicationEntry`-t olvas |
-| F1s | SYN adatok, külön store/IAM; [FR-461 ticketek](Engineering/FR-461-gateway-tickets.md) | Éles HIS / valódi beteg (OQ-15+16) |
-| QA | ISO 9001 **folyamat** + Redmine (OQ-01) | Tanúsítvány *ténye* (nem „megújítás”) |
-| Sales | SKU-P `[Y*]`; REG-020 = 0 Ft; `[Yl]` csak saját tenancy | Éles ON modul; `LIVE_CDS=true` |
+| F1+ mag | L0–L2, outside-call, FR-210, PREPARE-12, FR-400-STATIC, FR-410-EDU, FR-490, PDF/FHIR, `LIVE_CDS=false`, FR-700. Matcher a **klinikai** rendererben ki. | Matcher ON a leleten; renderer, amely `MedicationEntry`-t olvas |
+| F1s / F2 kód | SYN, külön store/IAM; [FR-461](Engineering/FR-461-gateway-tickets.md); F2 UI **lakattal** | Éles HIS / valódi beteg (OQ-15+16); `LIVE_CDS=true` |
+| QA | ISO 9001 **folyamat** + Redmine (OQ-01) | Tanúsítvány *ténye* |
+| Sales | SKU-P `[Y*]` ajánlat; sandbox | Éles ON modul a megrendelőlap §2 szerint |
 
 ### Fallback (címzett NEM)
 
@@ -103,6 +110,6 @@ Sorrend **kötött** ([Outbound/README](Outbound/README.md)):
 | **OQ-05 = NEM** | F1+ renderer és kódalap **megmarad** | IIa / CE (REG-010). „Nem MDSW” kommunikáció **leáll**. |
 | **OQ-16 = NEM** | Gateway megmarad; `mode = PSEUDO` | FR-115 kötelező a shadow/HITL-re. FR-100 a mintavételnél ettől függetlenül kell. |
 
-Új architektúra-terv **nem** kell a pecsétekig: a két path a [B mellékletben](B-architecture-and-interfaces.md) van. Gold-set annotációs SOP továbbra is §13.
+Új architektúra-terv **nem** kell: a két path a [B mellékletben](B-architecture-and-interfaces.md) van. Gold-set annotációs SOP továbbra is §13.
 
-Tilos pecsét előtt: „nem MDSW” mint tény; élő CDS a felírónak; shadow a vizit-UI-n.
+Tilos pecsét / CE előtt: „nem MDSW” mint tény; élő CDS a felírónak; shadow a vizit-UI-n; valódi beteg a shadow tárban.

@@ -31,7 +31,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P05k | SKU-P ki-fizet + lakat driver | 2026-08-12 | 2026-08-12 | DONE | I-19 „hogyan épül be” | market-packs ki-fizet; OQ-03 default; OQ-15 HITL≠ADR | — |
 | P10b | Pecsétekig megerősítés | 2026-08-12 | 2026-08-12 | DONE | User: van-e architektúra-feladat pecsétekig? | README pecsétekig tábla; F.6 + OQ-17; D-24 | — |
 | P05l | FR-461 ticket-bontás | 2026-08-12 | 2026-08-12 | DONE | Explicit kérés: gateway csonkolás ticketek | `Engineering/FR-461-gateway-tickets.md`; OQ-16 nyitva | — |
-| P10c | Ops kapuk a fagyasztott specből | 2026-08-12 | 2026-08-12 | DONE | User: kötött küldési lánc + fallback | README pecsétekig + Outbound sorrend; spec nem nyílt | — |
+| P10c | Ops kapuk a fagyasztott specből | 2026-08-12 | 2026-08-12 | DONE | User: kötött lánc, majd core-most / telephely-később | README G5 modell; Outbound gyártói vs telephelyi; D-26/27 | — |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -65,6 +65,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-24 | P10b | Iratírás pecsétekig | Tovább spec / fagyasztva + F1+ mag | **Megerősítve** §10.2; OQ-k nyitva; nincs `v1.2-Core-Specification.md`; nincs új architektúra-fejezet | README pecsétekig; B melléklet | user |
 | D-25 | P05l | FR-461 ticketek a fagyasztott specből | Spec-módosítás / engineering bontás | **Engineering/**; SYN only; A14 assumption; nem OQ-16 pecsét | FR-461; E.3.1; TC-GW-010..020 | user |
 | D-26 | P10c | Küldési lánc | Párhuzamos OQ-15 / kötött 16→15→05→03→01 | **Kötött küldés**; HIS továbbra is 15+16 pecsét; FR-115 ≠ FR-100; ISO ≠ megújítás | §10.2 fallback; OQ-16 I.0 | user |
+| D-27 | P10c | Core most vs irat a megrendelőkor | Minden OQ most / minden OQ a vevőkor | **G5:** egy bináris SYN-en. Gyártói OQ-05/01 most. Telephelyi 16→15→03 nevesített megrendelőkor. Flag = telepítés. | SKU-P; user | user |
 
 ## 3. Error log
 
