@@ -1,0 +1,20 @@
+# VALIDATED-CLAIMS — PCE-SPEC-v1.1
+
+Minden CORRECTED / REFUTED tétel a deliverable-ben javítva. Soha nem hallgatjuk el.
+
+| ID | Eredeti állítás (I-01/I-02) | Típus | Státusz | Korrekció | Forrás | Deliverable |
+| --- | --- | --- | --- | --- | --- | --- |
+| VC-01 | Az EESZT 2026-09-30 határidő „ISO-tanúsítás”, a spec ISO 13485/27001-gyel keveri | Technical spec | **CORRECTED** | 29/2022. 4. melléklet 2.1 = **ISO 9001 vagy egyéb szoftverfejlesztési QMS**. A 9/C. § (1) a 4. melléklet **2. pontjára** vonatkozik. ISO 13485 külön, F2/MDR pálya (REG-030). | S002, S003, S007 | PCE-SPEC §4.3, §8 REG-040a; C melléklet |
+| VC-02 | Design basis = PGx-Passport 14 gén; PREPARE „12-gene” eltérés nyitott (OQ-02) | Technical spec | **CORRECTED** + OQ-02 **lezárva** | PREPARE induláskor **50 germline variáns, 12 gén**: CYP2B6, CYP2C9, CYP2C19, CYP2D6, CYP3A5, DPYD, F5, HLA-B, SLCO1B1, TPMT, UGT1A1, VKORC1. PGx-Passport 2019: **58 variáns, 14 gén** (+ HLA-A, NUDT15). Klinikai evidencia = 12; konfiguráció = verziózott lista. | S008, S009 | PCE-SPEC §6.4 FR-310, §9, §10 |
+| VC-03 | FR-100 a 2008/XXI. 8. §-ra hivatkozik a tanácsadás-kapunál | Legal requirement | **CORRECTED** | Mintavétel előtti tanácsadás: **6. § (2)**. Írásbeli beleegyezés: **8. §**. Engedélyezett szolgáltató: **12. § (1)**. Célhoz kötöttség: **15. §**. | S001 | PCE-SPEC FR-100, §4.2 |
+| VC-04 | „Az MDCG táblázatában a Class I meg sem jelenik” → Class I MDSW ritka / gyakorlatilag nincs | Legal/regulatory | **CORRECTED** | Az IMDRF-leképező tábla tényleg nem tartalmazza a Class I-et (S005: „This table does not take into account MDSW which is Class I”). Rule **11c** megmarad; Rev.1 Annex IV **új Class I példát** adott. PGx-ajánlást adó kimenet továbbra is Rule **11a → IIa default**. | S004, S005 | PCE-SPEC §4.1; A melléklet |
+| VC-05 | FR-110: visszavonás után **72 órán belül** kaszkádolt törlés | Legal requirement | **CORRECTED** (SLA = assumption) | 26. § (1) visszavonáskor megsemmisítést ír elő, **határidő nélkül**. A 72 órás SLA `[ASSUMPTION]` A10. | S001 | PCE-SPEC FR-110, §0 A10 |
+| VC-06 | FR-120: hash-chain, kriptográfiailag láncolt napló mint P0 jogi kötelezettség | Technical spec | **CORRECTED** | A törvény nyilvántartást és 30 éves megőrzést ír elő, nem hash-chaint. Append-only + strukturált export = **Compliance P0**. Kriptográfiai lánc = **P1**. | S001 26. § | PCE-SPEC FR-120 |
+| VC-07 | Algoritmus-magyarázat „2008/XXI. automatizált feldolgozás” | Legal requirement | **VERIFIED** | 6. § (6): automatizált adatfeldolgozás, kódolás esetén az érintettet kérelmére tájékoztatni kell az alkalmazott informatikai módszerről. | S001 | FR-710 |
+| VC-08 | PharmCAT F5 eltávolítás DPWG-visszavonás miatt | Technical spec | **VERIFIED** | Changelog 2.11.0: DPWG removed F5 + hormonal contraceptives; PharmGKB annotation retired; F5 removed from PharmCAT. | S010, S011 | FR-310 |
+| VC-09 | AI Act Annex I alkalmazás 2028-08-02 (Digital Omnibus) | Date/deadline | **UNVERIFIABLE** ebben a körben | I-01 állítja a Tanács 2026-06-29 / EP 2026-06-16 jóváhagyást. Hivatalos Lapban való közzététel ebben a körben nem lett letöltve. A spec a dátumot `[NEEDS VERIFICATION]` jelzéssel viszi, de tervezési órának megtartja. | S019 | §4.4, §11 |
+| VC-10 | Genetix DrugMap 499 000 Ft (2026-08-09) | Market data | **UNVERIFIABLE** ebben a körben | I-01 `[V]`-ként hozza 2026-08-09 lekérdezéssel; ez a kör nem ismételte a scrape-et. Problémaállításban `[R]` (egy forrás, I-01). | S017 | §1 |
+
+## REFUTED
+
+Nincs. A Class I túlállítás (VC-04) **CORRECTED**, nem teljes cáfolat: a PGx-CDSS IIa következtetés megmarad.
