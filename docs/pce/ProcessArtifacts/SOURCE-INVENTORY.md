@@ -2,7 +2,7 @@
 
 | | |
 | --- | --- |
-| **Fázis** | P01 (ingestion) + P01b (v1.2 hibrid-brief) |
+| **Fázis** | P01 (ingestion) + P01b (v1.2 hibrid-brief) + P01c (S028 PDF) |
 | **Dátum** | 2026-08-12 |
 | **Hatókör** | A v1.2 speccsomaghoz felhasznált források |
 
@@ -27,6 +27,7 @@
 | I-15 | Spec-szakasz lezárása vs fejlesztés indítása a külső OQ-k alatt | md (chat) | HU | §10.2 fagyasztás; F1+ mag kód igen; OQ-k nyitva | n/a |
 | I-16 | Eladás klinikáknak a külső OQ-k feltételezésével | md (chat) | HU | Sales v1: tévesen leletbolt-SKU | n/a |
 | I-17 | Korrekció: a vevő **rendszert** vesz (F1–F3, flag); HU/EU/US; labor csatlakozó | md (chat) | HU | SKU-P; market-packs; OQ-17; NG-07 marad | n/a |
+| I-18 | CureMD Hybrid CDSS PDF (arXiv 2603.14876v1); kérés: SOTA/G3/SHAP/RWE beépítés | PDF | EN | Primer olvasás; VC-13: nem PGx SOTA, 83,10% ≠ G3 | ~13 oldal |
 
 ## Átfedés
 
@@ -40,6 +41,7 @@
 - I-15 a spec-írást fagyasztja; a F1+ mag kódot elválasztja a F.6 forgalmazási kaputól.
 - I-16: első sales-váz leletboltként olvasta a klinikát — **I-17 javítja**.
 - I-17: SKU-P rendszerlicenc; F2 a dobozban lakattal; US ≠ EU kiskapu.
+- I-18 = S028 teljes PDF; a „tökéletes beépítés / állami SOTA / G3=83,1%” **elvetve** (VC-13).
 
 ## Metaadat-ellentmondások
 

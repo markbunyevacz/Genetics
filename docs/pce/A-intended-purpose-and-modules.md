@@ -121,6 +121,8 @@ Ha a shadow kimenet bármely klinikai képernyőre kerül, az üzemmód **F2**, 
 
 **F2 vs F3:** F2 in-house (REG-011). F3 CE, Notified Body, piaci forgalomba hozatal. Az F1s HITL-adatok a clinical evaluation inputjai, nem helyettesítik a CE-t.
 
+**Lakat alatti magyarázat (HU/EU: F2/F3 UI zárva, amíg CE/in-house):** a bekapcsolt magyarázat **FR-710** — gén, diplotípus, guideline-verzió, szabály, callability; determinisztikus, nem LLM. **Nem** SHAP a v1 PGx-magra. SHAP (S028 analógia) csak P2 jelölt, ha később külön ML komponens kerül a rendszerbe. §9.5; VC-13.
+
 ---
 
 ## A.4 L0–L7 modul-minősítési mátrix

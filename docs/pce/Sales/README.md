@@ -50,6 +50,7 @@ Licencmondat: *„A PCE rendszerlicenc a `[HU|EU|US]` csomagot adja. A F2/F3 kli
 | [demo-script.md](demo-script.md) | Teljes rendszer demó; F2 lakat |
 | [msp-checklist.md](msp-checklist.md) | Enélkül ne számlázz éles tenancyt |
 | [customer-ra-faq.md](customer-ra-faq.md) | Vevő jog / RA |
+| [literature-boundary.md](literature-boundary.md) | S028 **nem** PCE-RWE; ne csatold a licenchez SOTA-ként |
 
 ## Sorrend
 

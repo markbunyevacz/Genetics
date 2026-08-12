@@ -23,6 +23,9 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P10 | Spec-fagyasztás | 2026-08-12 | 2026-08-12 | DONE | I-15 | §10.2; F1+ mag DEV-NOW; OQ-k nyitva | — |
 | P05g | Sales csomag (feltételezett OQ) | 2026-08-12 | 2026-08-12 | DONE | I-16 | `docs/pce/Sales/` (később I-17 felülírja a leletbolt-olvasatot) | E-12 |
 | P05h | Sales korrekció: rendszerlicenc | 2026-08-12 | 2026-08-12 | DONE | I-17 | SKU-P; market-packs HU/EU/US; OQ-17 | E-12 |
+| P01c | Source ingestion (CureMD PDF) | 2026-08-12 | 2026-08-12 | DONE | I-18 PDF arXiv:2603.14876v1 | Inventory I-18; S028 L5 „elolvasva”; S028-note | E-13 |
+| P05i | S028 formális beillesztés + határ | 2026-08-12 | 2026-08-12 | DONE | I-18 + VC-13 | §9.5; FR-710 SHAP-tiltás v1-en; literature-boundary | E-13 |
+| P06i | Plan-vs-content (S028) | 2026-08-12 | 2026-08-12 | DONE | Három kért használat vs PDF | G3 marad ≥90%; nincs „állami referenciák” fejezet | — |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -50,6 +53,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-18 | P10 | Spec-szakasz a külső OQ alatt | Tovább írni / fagyasztani + kód | **Fagyasztva**; F1+ mag indul; OQ-k ELŐTERJESZTVE | I-15; F.6 ≠ git-stop | I-15 |
 | D-19 | P05g | Eladás a pecsét előtt | Várni F.6-ra / készíteni a SKU-t hipotézisen | Sales csomag (I-16: klinika=lelet — **I-17 felülírja**) | G4 | I-16 |
 | D-20 | P05h | Mit adunk el? | Laborlelet / **rendszer** F1–F3 flaggel | **SKU-P**; labor csatlakozó; HU/EU/US; F2 LOCK≠hiány | I-17; NG-07; G5 | I-17 |
+| D-21 | P05i | S028 beépítés | Állami SOTA + G3=83,1% + SHAP-FR + RWE / L5 jegyzet + határ | **L5 jegyzet**; G3 ≥90% marad; SHAP nem v1 FR; RWE tiltott; **nincs** „állami referenciák” fejezet | VC-13; IR-01 | I-18 |
 
 ## 3. Error log
 
@@ -67,19 +71,21 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | E-10 | P05f | Scope / overclaim | I-14 OQ-05 pecsét előre „nem MDSW”; OQ-15 Art. 62 mint tény | Igen/Nem/Feltétellel; kérelem nem határozat | Outbound OQ-05/15 |
 | E-11 | P05f | Cross-reference / spec mismatch | I-14 L3 = NG-01 riasztás + csak kivétel díjazva; OQ-01 = EESZT FHIR/SSL | NG-01 = non-goal; minden lelet aláírás; Redmine + ISO 9001 2.1 | Outbound OQ-03/01 |
 | E-12 | P05g | Scope / product mismatch | I-16 sales a klinikának leletet adott el | Retry: SKU-P rendszer; market packs | I-17; D-20 |
+| E-13 | P01c/P05i | Scope / overclaim | I-18: S028 = F1s állami SOTA; Top-5 83,1% = G3/R-020; SHAP = F2 mag; PCE-RWE | Primer PDF; CORRECTED nem silent drop | VC-13; D-21; §9.5 |
 
 ## 4. File timeline
 
 | Fájl | Létrehozva | Módosítva | Státusz |
 | --- | --- | --- | --- |
 | docs/pce/README.md | P00/P05 | P10 (fagyasztás) | v1.2 FAGYASZTVA |
-| docs/pce/PCE-SPEC-v1.2.md | P05b (git mv) | P10 (§10.2) | v1.2 FAGYASZTVA |
-| docs/pce/A-intended-purpose-and-modules.md | P05 | P05c (A.1.2) | DRAFT v1.2 |
+| docs/pce/PCE-SPEC-v1.2.md | P05b (git mv) | P05i (§9.5, FR-710, G3≠S028) | v1.2 FAGYASZTVA; S028 határ |
+| docs/pce/A-intended-purpose-and-modules.md | P05 | P05i (A.3 SHAP≠FR-710) | DRAFT v1.2 |
 | docs/pce/B-architecture-and-interfaces.md | P05 | P05c | DRAFT v1.2 |
 | docs/pce/C-eeszt-f0-checklist.md | P05 | P05f (C.4 Outbound linkek) | DRAFT v1.2 |
-| docs/pce/D-risk-and-traceability.md | P05 | P10 (P06 fagyasztás) | DRAFT v1.2 |
-| docs/pce/E-shadow-hitl.md | P05b | P05c (E.3.1, E.4.1) | DRAFT v1.2 |
+| docs/pce/D-risk-and-traceability.md | P05 | P06i (VC-13 P06 sor) | DRAFT v1.2 |
+| docs/pce/E-shadow-hitl.md | P05b | P05i (E.7 SOTA-határ) | DRAFT v1.2 |
 | docs/pce/F-decision-package.md | P05e | P10 | DRAFT v1.2 |
 | docs/pce/Outbound/* | P05f | P10 (küldés most) | TERVEZET küldhető |
-| docs/pce/Sales/* | P05g | P05h (SKU-P, market-packs) | TERVEZET rendszerlicenc |
-| docs/pce/ProcessArtifacts/* | P01–P06 | P05g | DRAFT |
+| docs/pce/Sales/* | P05g | P05i (literature-boundary) | TERVEZET rendszerlicenc |
+| docs/pce/Sources/S028-* | P01c | P05i | L5 jegyzet + PDF |
+| docs/pce/ProcessArtifacts/* | P01–P06 | P05i (VC-13) | DRAFT |

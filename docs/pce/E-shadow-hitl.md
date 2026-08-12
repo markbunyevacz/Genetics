@@ -166,6 +166,8 @@ attól függően, hogy a szoftver „használatba vétele” / beavatkozás-e. *
 
 In-house F2 (A.7) más jogi doboz, mint a gyártó felhőjében futó shadow.
 
+**SOTA a F1s / clinical evaluation dossziéhoz:** PREPARE (S008), PGx-Passport (S009), CPIC (S030), MDCG/MDR. A CureMD labor→ICD preprint (S028, L5, n=593 055, Top-5 acc. 83,10%) **nem** állami/hatósági SOTA és **nem** G3-küszöb. Szabad *irodalmi* mellékletként: [S028-note](Sources/S028-curemd-hybrid-cdss-note.md). VC-13.
+
 ---
 
 ## E.8 Tesztelendő invariánsok (FR-470)

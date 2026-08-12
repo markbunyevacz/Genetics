@@ -32,9 +32,11 @@ A v1 / F1s **éles ON moduljához** a gyártói kérés kész ([F](F-decision-pa
 | --- | --- |
 | [ProcessArtifacts/SOURCE-INVENTORY.md](ProcessArtifacts/SOURCE-INVENTORY.md) | Felhasznált forrásdokumentumok |
 | [ProcessArtifacts/SOURCE-REGISTRY.md](ProcessArtifacts/SOURCE-REGISTRY.md) | Külső források L1–L5 besorolással |
-| [ProcessArtifacts/VALIDATED-CLAIMS.md](ProcessArtifacts/VALIDATED-CLAIMS.md) | Korrekciók a v1.0 vázlathoz + VC-11 REFUTED |
+| [ProcessArtifacts/VALIDATED-CLAIMS.md](ProcessArtifacts/VALIDATED-CLAIMS.md) | Korrekciók a v1.0 vázlathoz + VC-11 REFUTED + VC-13 S028 |
 | [ProcessArtifacts/PROCESS-HISTORY.md](ProcessArtifacts/PROCESS-HISTORY.md) | Fázis- és döntésnapló |
 | [Sources/PCE-SPEC-v1.0.md](Sources/PCE-SPEC-v1.0.md) | Előző vázlat (nem kanonikus) |
+| [Sources/S028-curemd-hybrid-cdss-note.md](Sources/S028-curemd-hybrid-cdss-note.md) | CureMD/arXiv 2603.14876 — L5; **nem** PGx-SOTA, **nem** G3 |
+| [Sales/literature-boundary.md](Sales/literature-boundary.md) | S028 **nem** csatolható PCE-RWE-ként a licenchez |
 
 ## Gyártó
 

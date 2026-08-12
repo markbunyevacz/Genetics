@@ -80,7 +80,7 @@ Outcome-ok, nem output-ok.
 | --- | --- | --- | --- |
 | **G1** | A partnerlabor PGx-riport előállítási ideje csökkenjen | Kézi/félautomata baseline → **p95 < 10 perc** outside-call-tól vagy VCF-től aláírásra kész riportig | Pipeline-telemetria, `ingest→report_ready` |
 | **G2** | Az actionable találatok ne vesszenek el | A **PREPARE 12-génes** panel + aktuális CPIC/DPWG szerint actionable gén–gyógyszer párok **100%-a** megjelenik, 0 silent drop | Gold set (§9), minden release |
-| **G3** | Fenokonverzió-motor készen áll az F2-re | Shadow/HITL gold seten **≥ 90% recall**; a **aláírt F1+ leleten 0** élő fenokonverzió-alkalmazás | Gold set §9.2; FR-470 CI |
+| **G3** | Fenokonverzió-motor készen áll az F2-re | Shadow/HITL gold seten **≥ 90% recall**; a **aláírt F1+ leleten 0** élő fenokonverzió-alkalmazás. **Nem** a CureMD Top-5 83,10% (S028, VC-13). | Gold set §9.2; FR-470 CI |
 | **G4** | Bevétel a szabályozott réteg előtt | **≥ 3 fizető rendszerlicenc** (klinika / intézmény / HIS-vendor) | Aláírt SKU-P/H |
 | **G5** | A v2 (IIa) útvonal ne igényeljen újraírást | QMS + ugyanaz a L4-live motor shadowban, mint F3-on; klinikai UI-kapcsoló külön | REG-030; FR-470 flag |
 | **G6** | Nincs szabályozási bypass | 0 shadow/CDSS inferencia a klinikai pathen F1+ buildben | FR-470 CI |
@@ -552,6 +552,7 @@ Jogalap: **6. § (6)** `[V]`.
 - [ ] Given beteg vagy képviselője magyarázatot kér, When a kérés rögzített, Then esetspecifikus, laikus nyelvű magyarázat: mely gének, milyen diplotípus, melyik guideline-verzió, melyik szabály, callability.
 - [ ] A magyarázat **determinisztikus**: ugyanaz az eset + ugyanaz a config → bitre azonos magyarázat (NFR-060).
 - [ ] A magyarázat **nem** LLM-generált.
+- [ ] A v1 PGx-szabályút magyarázata **nem** SHAP / feature-attribution. SHAP csak P2 jelölt, *ha* később külön ML komponens kerül a rendszerbe (nem LLM — FR-700; nem v1 core). S028 módszertani analógia, nem FR. §9.5.
 
 ---
 
@@ -615,9 +616,11 @@ Nélküle G2/G3 nem mérhető, a v2 dosszié nem védhető.
 | Diplotípus-egyezés referencia-anyagokon (outside-call echo / matcher) | **100%** | Determinisztikus |
 | Actionable ajánlás recall (PREPARE 12 + aktuális CPIC/DPWG) | **100%** (0 FN) | G2 |
 | Callability-jelölés | **100%** | FR-210 |
-| Fenokonverzió recall | **≥ 90%** | G3 |
+| Fenokonverzió recall | **≥ 90%** | G3. **Nem** S028 Top-5 accuracy 83,10%. |
 | Fenokonverzió precision | **≥ 75%** | FP = „nézd meg” |
 | Forrás nélküli állítás | **0** | FR-400 CI |
+
+**G3 ≠ R-020 ≠ S028.** R-020 = ATC/diplotípus-csonkolás vs G3 a shadow gold seten. A CureMD Table 2 Top-5 **83,10%** más feladat (ICD-csoport, US primer ellátás), más metrika (Top-N accuracy). Nem küszöb, nem matematikai referencia. VC-13.
 
 ### 9.3 Regressziós kapu
 
@@ -631,6 +634,25 @@ Nélküle G2/G3 nem mérhető, a v2 dosszié nem védhető.
 **Forráskritika (kötelező a dossziéban):** a csökkenés elsősorban grade 2 ADR, „possible to probable” adjudikáció; a Lancet legalább négy kritikai levelet közölt (Curtis; Rogers et al.; Van der Linden; Peñas-LLedó & LLerena). A Notified Body ezt megtalálja.
 
 A 12 vs 14 eltérés **nem** nyitott kérdés: lásd FR-310.
+
+### 9.5 Szomszédos CDSS-irodalom (nem PGx-SOTA, nem állami referencia)
+
+**Nincs** „Klinikai háttér és állami referenciák” fejezet. Az a cím L1/L2 hatósági vagy PGx-SOTA forrásnak járna. Az alábbi preprint **L5**.
+
+**S028** `[V]` a PDF-ből: Maqsood et al., CureMD Research, *A Hybrid AI and Rule-Based Decision Support System for Disease Diagnosis and Management Using Labs*, arXiv:2603.14876v1, 2026-03-16. Példány: [Sources/](Sources/CureMD-Hybrid-CDSS-arXiv-2603.14876v1.pdf). Formális jegyzet: [S028-note](Sources/S028-curemd-hybrid-cdss-note.md).
+
+| A PDF állítása | Érték | PCE-használat |
+| --- | --- | --- |
+| Mintanagyság | **593 055** beteg, **547** US primary care | Nem PCE-kohorsz |
+| Szabály + ML | 59 állapot; XGBoost 37 ICD-10 → 11 csoport | Analógia: hibrid CDSS létezik. Nem PGx-motor. |
+| Top-N accuracy (teszt 20%) | Top-1 **31,18%**; Top-5 **83,10%**; Top-11 99,6% | **Tiltott** G3/R-020 küszöbnek |
+| Szerzői olvasat | Top-5 ≈ 80% **trade-off**, nem „a modell 83%-ban helyes” | Ugyanígy tilos sales-RWE-ként |
+| SHAP | Az *ő* XGBoostjukra (T2DM appendix) | Nem FR-710; P2 ha később ML komponens |
+| Limitáció (szerzők) | Csak labor; nincs vital/anamnézis/tünet | Más intended purpose, mint a PCE |
+
+**F1s klinikai értékelés SOTA-sora:** PREPARE (S008), PGx-Passport (S009), CPIC (S030), MDCG/MDR. S028 **irodalmi melléklet** lehet („hibrid szabály+ML CDSS labor-diagnosztikában”), **nem** Annex XIV SOTA, **nem** állami/hatósági hivatkozás.
+
+**Sales:** a cikket **ne** csatold a licenchez PCE-RWE-ként. [literature-boundary](Sales/literature-boundary.md).
 
 ---
 
@@ -791,6 +813,7 @@ Váz:
 - HLA hiperszenzitivitás kiterjesztés (HLA-B\*57:01, \*15:02 túl)
 - Magyar referencia-genom allélfrekvencia-korrekció (Semmelweis projekttől függ)
 - Gyógyszertári medication review (PREPARE 28 patika — validált use case, nem v1)
+- Feature-attribution (SHAP-osztály) **csak** ha később külön ML komponens kerül a rendszerbe (nem LLM; nem v1 PGx-core). S028 analógia. Nem G3.
 - Pharma kohorsz-toborzás (EHDS 2031+)
 - Biztosítói prevenciós modul
 - Engineering ticket-bontás és gold-set annotációs SOP — **következő munka**, nem spec-feladat (§10.2)
@@ -810,12 +833,16 @@ A teljes registry: [SOURCE-REGISTRY](ProcessArtifacts/SOURCE-REGISTRY.md). Korre
 5. `[NEEDS VERIFICATION]` Digital Omnibus AI dátumok (I-01)
 6. `[V]` 29/2022. (I. 31.) Korm. r.; 294/2025. (IX. 25.) Korm. r. 4. melléklet; e-egeszsegugy.gov.hu/fejlesztoknek
 
-**Klinikai**
+**Klinikai (PGx-SOTA)**
 
 7. `[V]` Swen et al. Lancet 2023;401:347–356 (PREPARE) + kritikai levelek
 8. `[V]` van der Wouden et al. CPT 2019;106:866–873 (PGx-Passport)
 9. `[V]` Kullo et al. Nat Rev Genet 2026;27:246–263
 10. `[V]` eMERGE, Nat Med 2024, doi:10.1038/s41591-024-02796-z
+
+**Szomszédos CDSS (nem PGx-SOTA, L5)**
+
+10a. `[V]` Maqsood et al., arXiv:2603.14876v1 — n=593 055; Top-5 acc. 83,10%; **nem** G3, **nem** PCE-RWE. [S028-note](Sources/S028-curemd-hybrid-cdss-note.md).
 
 **Technológia**
 
@@ -837,6 +864,7 @@ A teljes registry: [SOURCE-REGISTRY](ProcessArtifacts/SOURCE-REGISTRY.md). Korre
 - **Nem** DPA, DPIA vagy etikai kérelem — E melléklet váz.
 - A10 **nem** F1s 72 órás puffer. Visszavonáskor 72 h kaszkád (törlés vagy irreverzibilis anonimizálás). Megőrzés: A15. §0.1.
 - A felhasználói hibrid-brief [1]–[7] hivatkozásai (meddeviceguide, monterail, arxiv 2603.14876, stb.) **L4/L5**; a Rule 11a állítás a MDCG/MDR primerre támaszkodik `[V]`, nem ezekre a blogokra.
+- **S028** (CureMD hybrid CDSS) **elolvasva.** Nem F1s SOTA, nem G3/R-020 küszöb, nem PCE-RWE, nem „állami referencia” (VC-13). Nincs ilyen című fejezet. §9.5.
 - **Nem** FDA CDS guidance mélyelemzés. MDR-ben nincs equivalent discretion. US út = OQ-17, default LOCK.
 
 ---

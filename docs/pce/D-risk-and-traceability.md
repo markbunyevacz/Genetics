@@ -158,5 +158,6 @@ Minden funkcionális, NFR és REG sor. TC-azonosítók a gold set / CI nevei; a 
 | Címzett-kész irattervezetek | Outbound/ (OQ-05/16/15/03/01); nem pecsét |
 | Spec-fagyasztás + F1+ mag DEV | §10.2; D-18; OQ-k nyitva |
 | Eladható ajánlat, feltételezett OQ | Sales/; **SKU-P rendszer**; HU/EU/US flag; F2 LOCK |
+| VC-13 S028 ≠ PGx-SOTA / G3 / PCE-RWE | §9.5; G3 ≥90% marad; FR-710 nem SHAP; [S028-note](Sources/S028-curemd-hybrid-cdss-note.md); [literature-boundary](Sales/literature-boundary.md) |
 
-**P06 eredmény (v1.2 + Sales SKU-P):** a vevő **rendszert** licencel (F1–F3 egy bináris, piaci flag). Labor = csatlakozó. NG-07: bent van ≠ be van kapcsolva. OQ-k + OQ-17 nyitva.
+**P06 eredmény (v1.2 + Sales SKU-P + S028):** a vevő **rendszert** licencel (F1–F3 egy bináris, piaci flag). Labor = csatlakozó. NG-07: bent van ≠ be van kapcsolva. S028 L5 szomszédos irodalom, nem G3. OQ-k + OQ-17 nyitva.
