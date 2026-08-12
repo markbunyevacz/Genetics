@@ -158,19 +158,19 @@ A PCE **nem bízik** a gatewayben.
 | **AC** | §10.2 F1s kód fixture-ön; D.2 TC-GW-010..020 |
 | **TC** | a fenti TC-k mind |
 
-Minimum SYN esetek (kitalált PII **nincs**; opák ID-k). Kész Gold V0: [fixtures/gold-v0/](fixtures/gold-v0/README.md).
+Minimum SYN esetek (kitalált PII **nincs**; opák ID-k). Kész Gold V0: [fixtures/gold-v0/](fixtures/gold-v0/README.md) · [index.json](fixtures/gold-v0/index.json).
 
-1. ATC5 → ATC4 csonkolás (`N06AB10` → `N06AB`).
-2. ATC5 leak a PCE-re → `E-SHADOW-001`.
-3. `authoredOn` nap → `YYYY-Qn`.
-4. `doseQuantity` jelen van a HIS mockban → kimenetben nincs.
-5. Cella count 4, k = 5, COARSEN → `CLASS`.
-6. Cella count 4, k = 5, DROP → nincs HITL sor, számláló +1.
-7. Freq &lt; 0,5% → coarsen vagy drop a fixture-config szerint.
-8. Legritkább osztály → mindig drop.
-9. ANON k-csökkentés kísérlet → elutasítva.
-10. TAJ a bundle-ben → `E-SHADOW-001`.
-11. Negyedéves monitor JSON: csak aggregátum.
+1. ATC5 → ATC4 csonkolás (`N06AB10` → `N06AB`) — `gw-v0-01`.
+2. ATC5 leak a PCE-re → `E-SHADOW-001` — `gw-v0-03`.
+3. `authoredOn` nap → `YYYY-Qn` — `gw-v0-01`; ingest védelem `gw-v0-09`.
+4. `doseQuantity` jelen van a HIS mockban → kimenetben nincs — `gw-v0-01`.
+5. Cella count 4, k = 5, COARSEN → `CLASS` — `gw-v0-04` (`*4/*4`, freq ≥ 0,5%).
+6. Cella count 4, k = 5, DROP → nincs HITL sor, számláló +1 — `gw-v0-05`.
+7. Freq &lt; 0,5% → coarsen vagy drop a fixture-config szerint — `gw-v0-02` (`*6/*6`).
+8. Legritkább osztály → mindig drop — `gw-v0-06` (`*3x2/*3x2`).
+9. ANON k-csökkentés kísérlet → elutasítva — `gw-v0-07`.
+10. TAJ a bundle-ben → `E-SHADOW-001` — gateway strip `gw-v0-01`; ingest `gw-v0-08`.
+11. Negyedéves monitor JSON: csak aggregátum — `gw-v0-10`.
 
 Ez **nem** a §13 gold-set annotációs SOP (klinikai G3). Az a parking lot.
 

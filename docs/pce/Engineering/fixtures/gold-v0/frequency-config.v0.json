@@ -6,14 +6,34 @@
   "threshold_status": "A14_ASSUMPTION",
   "biogeographic_group_default": "European",
   "biogeographic_group_note": "Hungary is not a CPIC biogeographic group. SYN default uses the European column. DPIA names the production group.",
+  "implementation": {
+    "bake": "allowlist of diplotypes with European HW frequency >= rare_diplotype_threshold",
+    "unknown_diplotype": "treat as below threshold (COARSEN_OR_DROP)",
+    "do_not_vendor_full_sheet": true,
+    "pharmgkb_gene_drug_tsv": "not this config — matcher/FR-400; DPIA names the production frequency source (E.3.1)"
+  },
   "source": {
-    "name": "CPIC/ClinPGx CYP2D6 frequency table",
-    "url": "https://files.cpicpgx.org/data/report/current/frequency/CYP2D6_frequency_table.xlsx",
-    "index": "https://www.clinpgx.org/page/cyp2d6RefMaterials",
-    "sheet": "Diplotype frequency",
-    "column": "European",
-    "methods": "Hardy-Weinberg from allele frequencies (Methods and Caveats tab)",
-    "changelog_in_file": "2024-10-17"
+    "cyp2d6": {
+      "name": "CPIC/ClinPGx CYP2D6 frequency table",
+      "url": "https://files.cpicpgx.org/data/report/current/frequency/CYP2D6_frequency_table.xlsx",
+      "index": "https://www.clinpgx.org/page/cyp2d6RefMaterials",
+      "sheet": "Diplotype frequency",
+      "column": "European",
+      "methods": "Hardy-Weinberg from allele frequencies (Methods and Caveats tab)",
+      "changelog_in_file": "2024-10-17",
+      "rows_with_numeric_european": 4005,
+      "keep_gte_threshold": 34,
+      "positive_below_threshold": 1001,
+      "zero": 2970
+    },
+    "cyp2c19": {
+      "name": "CPIC/ClinPGx CYP2C19 frequency table",
+      "url": "https://files.cpicpgx.org/data/report/current/frequency/CYP2C19_frequency_table.xlsx",
+      "sheet": "Diplotype frequency",
+      "column": "European",
+      "changelog_in_file": "2022-03-11",
+      "keep_gte_threshold": 6
+    }
   },
   "rule": {
     "if_frequency_gte_threshold": "RAW_DIPLOTYPE_ALLOWED",
@@ -227,11 +247,57 @@
       "frequency": 0.00508835
     }
   ],
+  "keep_european_cyp2c19_freq_gte_0_005": [
+    {
+      "gene": "CYP2C19",
+      "diplotype": "*1/*1",
+      "biogeographic_group": "European",
+      "frequency": 0.39080182
+    },
+    {
+      "gene": "CYP2C19",
+      "diplotype": "*1/*17",
+      "biogeographic_group": "European",
+      "frequency": 0.2693592
+    },
+    {
+      "gene": "CYP2C19",
+      "diplotype": "*1/*2",
+      "biogeographic_group": "European",
+      "frequency": 0.18361284
+    },
+    {
+      "gene": "CYP2C19",
+      "diplotype": "*2/*17",
+      "biogeographic_group": "European",
+      "frequency": 0.06327735
+    },
+    {
+      "gene": "CYP2C19",
+      "diplotype": "*17/*17",
+      "biogeographic_group": "European",
+      "frequency": 0.04641379
+    },
+    {
+      "gene": "CYP2C19",
+      "diplotype": "*2/*2",
+      "biogeographic_group": "European",
+      "frequency": 0.021566989
+    }
+  ],
   "fixture_rare": {
     "gene": "CYP2D6",
     "diplotype": "*6/*6",
     "biogeographic_group": "European",
-    "frequency": 0.00012537414
+    "frequency": 0.00012537414,
+    "role": "TC-GW-017 freq < 0.5%; not claimed as global minimum"
+  },
+  "rarest_positive_in_full_cpic_european_diplotype_sheet": {
+    "gene": "CYP2D6",
+    "diplotype": "*3x2/*3x2",
+    "biogeographic_group": "European",
+    "frequency": 9.999999e-09,
+    "role": "PCE-GW-461-07 always-drop even if on_rare=COARSEN and cell_count >= k"
   },
   "phenotype_for_fixtures": [
     {
@@ -242,10 +308,27 @@
       "source": "https://files.cpicpgx.org/data/report/current/diplotype_phenotype/CYP2D6_Diplotype_Phenotype_Table.xlsx"
     },
     {
+      "diplotype": "*4/*4",
+      "activity_score": "0.0",
+      "cpic_summary": "CYP2D6 Poor Metabolizer",
+      "coarsen_class_if_needed": "REDUCED",
+      "european_frequency": 0.034168635,
+      "note": ">= 0.5% so TC-GW-015/016 isolate k-cell from the A14 frequency rule",
+      "source": "https://files.cpicpgx.org/data/report/current/diplotype_phenotype/CYP2D6_Diplotype_Phenotype_Table.xlsx"
+    },
+    {
       "diplotype": "*6/*6",
       "activity_score": "0.0",
       "cpic_summary": "CYP2D6 Poor Metabolizer",
       "coarsen_class_if_needed": "REDUCED",
+      "source": "https://files.cpicpgx.org/data/report/current/diplotype_phenotype/CYP2D6_Diplotype_Phenotype_Table.xlsx"
+    },
+    {
+      "diplotype": "*3x2/*3x2",
+      "activity_score": "0.0",
+      "cpic_summary": "CYP2D6 Poor Metabolizer",
+      "coarsen_class_if_needed": "REDUCED",
+      "note": "Always DROP under PCE-GW-461-07; coarsen class unused",
       "source": "https://files.cpicpgx.org/data/report/current/diplotype_phenotype/CYP2D6_Diplotype_Phenotype_Table.xlsx"
     }
   ]

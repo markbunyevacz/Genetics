@@ -1,0 +1,37 @@
+{
+  "fixture": "gw-v0-06-rarest-always-drop",
+  "tc": ["TC-GW-018"],
+  "cpic_european_frequency": {
+    "gene": "CYP2D6",
+    "diplotype": "*3x2/*3x2",
+    "frequency": 9.999999e-09,
+    "gte_threshold": false,
+    "is_rarest_positive_in_full_european_sheet": true,
+    "source": "CPIC CYP2D6_frequency_table.xlsx Diplotype frequency / European, accessed 2026-08-12"
+  },
+  "cpic_phenotype": {
+    "activity_score": "0.0",
+    "summary": "CYP2D6 Poor Metabolizer"
+  },
+  "even_if": {
+    "on_rare": "COARSEN",
+    "on_small_cell": "COARSEN",
+    "cell_count_including_this_event": 100,
+    "k": 5
+  },
+  "must": {
+    "on_rarest_positive": "ALWAYS_DROP",
+    "error": "E-SHADOW-003",
+    "http": 202,
+    "hitl": false,
+    "g3_recall_may_fall": true,
+    "manual_override": false,
+    "GatewayEvent": {
+      "mode": "ANON",
+      "suppressed": true,
+      "diplotype_granularity": null,
+      "payload_genetics": null
+    }
+  },
+  "note": "*6/*6 (gw-v0-02) is rare under A14 0.5% but is not the sheet minimum. PCE-GW-461-07 binds the rarest positive frequency class in the loaded table."
+}

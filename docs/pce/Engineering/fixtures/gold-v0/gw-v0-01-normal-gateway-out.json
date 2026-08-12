@@ -4,7 +4,7 @@
   "cpic_european_frequency": {
     "gene": "CYP2D6",
     "diplotype": "*1/*2",
-    "frequency": 0.10565814,
+    "frequency": 0.105658144,
     "gte_threshold": true,
     "source": "CPIC CYP2D6_frequency_table.xlsx Diplotype frequency / European, accessed 2026-08-12"
   },

@@ -1,0 +1,51 @@
+{
+  "fixture": "gw-v0-04-small-cell-coarsen",
+  "tc": ["TC-GW-015"],
+  "his_in": "gw-v0-04-small-cell-his-in.json",
+  "cpic_european_frequency": {
+    "gene": "CYP2D6",
+    "diplotype": "*4/*4",
+    "frequency": 0.034168635,
+    "gte_threshold": true,
+    "source": "CPIC CYP2D6_frequency_table.xlsx Diplotype frequency / European, accessed 2026-08-12"
+  },
+  "cpic_phenotype": {
+    "activity_score": "0.0",
+    "summary": "CYP2D6 Poor Metabolizer",
+    "coarsen_class": "REDUCED"
+  },
+  "gateway_local": {
+    "cell": {
+      "phenotype_class": "REDUCED",
+      "atc_level": 4,
+      "quarter": "2026-Q3"
+    },
+    "cell_count_including_this_event": 4,
+    "k": 5,
+    "on_small_cell": "COARSEN",
+    "note": "Count stays on the institutional gateway. It must not appear in the PCE payload."
+  },
+  "GatewayEvent": {
+    "mode": "ANON",
+    "atc_level": 4,
+    "time_grain": "QUARTER",
+    "diplotype_granularity": "CLASS",
+    "phenotype_class": "REDUCED",
+    "raw_diplotype": null,
+    "suppressed": false,
+    "cell_count": null,
+    "patient": {
+      "name": null,
+      "identifier": null,
+      "birthDate": "1968",
+      "id_join_key_at_manufacturer": false
+    },
+    "medications": [
+      { "system": "http://www.whocc.no/atc", "code": "N06AB", "display": "Selective serotonin reuptake inhibitors" }
+    ],
+    "authoredOn": "2026-Q3",
+    "doseQuantity": null
+  },
+  "hitl": true,
+  "http_to_pce": 202
+}

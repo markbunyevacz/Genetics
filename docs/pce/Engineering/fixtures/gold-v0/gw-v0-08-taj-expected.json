@@ -1,0 +1,11 @@
+{
+  "fixture": "gw-v0-08-taj-pce-ingest",
+  "tc": ["TC-GW-010"],
+  "scene": "Defense-in-depth: identifier (TAJ stand-in) reaches POST /v1/shadow/events after the gateway was skipped or failed to strip.",
+  "expected": {
+    "error": "E-SHADOW-001",
+    "http": 400,
+    "hitl": false,
+    "reason": "Patient.identifier forbidden on ANON ingest"
+  }
+}

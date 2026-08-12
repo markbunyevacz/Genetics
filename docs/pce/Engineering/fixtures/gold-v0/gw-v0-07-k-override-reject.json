@@ -1,0 +1,23 @@
+{
+  "fixture": "gw-v0-07-k-override",
+  "tc": ["TC-GW-019"],
+  "scene": "Runtime attempt to lower k on the ANON path. No new error code is minted here; FR-461 only requires rejection.",
+  "reject": {
+    "mode": "ANON",
+    "action": "set_k",
+    "requested_k": 3,
+    "current_k": 5,
+    "accepted": false,
+    "runtime_switch": false
+  },
+  "allow_via_config_release": {
+    "mode": "ANON",
+    "action": "set_k",
+    "requested_k": 10,
+    "note": "DPO tightening (larger k) is a versioned config release, not a live toggle."
+  },
+  "pseudo_path": {
+    "mode": "PSEUDO",
+    "k_relief": "only after DPIA + FR-115 (OQ-16 = NEM branch). SYN-testable; live locked until seals."
+  }
+}

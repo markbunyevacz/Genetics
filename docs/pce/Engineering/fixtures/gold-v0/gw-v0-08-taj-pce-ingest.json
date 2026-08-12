@@ -1,0 +1,45 @@
+{
+  "resourceType": "Bundle",
+  "id": "gw-v0-08-taj-pce-ingest",
+  "type": "collection",
+  "meta": {
+    "tag": [
+      { "system": "https://example.invalid/pce-fixture", "code": "gold-v0" },
+      { "system": "https://example.invalid/pce-tc", "code": "TC-GW-010" }
+    ]
+  },
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeee0008",
+        "identifier": [
+          {
+            "system": "https://example.invalid/syn-taj",
+            "value": "SYN-TAJ-008"
+          }
+        ],
+        "gender": "unknown"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "syn-medreq-008",
+        "status": "active",
+        "intent": "order",
+        "subject": { "reference": "Patient/aaaaaaaa-bbbb-cccc-dddd-eeeeeeee0008" },
+        "authoredOn": "2026-Q3",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.whocc.no/atc",
+              "code": "N06AB",
+              "display": "Selective serotonin reuptake inhibitors"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

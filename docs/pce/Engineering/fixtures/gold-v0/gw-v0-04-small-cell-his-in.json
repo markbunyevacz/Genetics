@@ -1,0 +1,90 @@
+{
+  "resourceType": "Bundle",
+  "id": "gw-v0-04-small-cell-his-in",
+  "type": "collection",
+  "meta": {
+    "tag": [
+      { "system": "https://example.invalid/pce-fixture", "code": "gold-v0" },
+      { "system": "https://example.invalid/pce-tc", "code": "TC-GW-015" }
+    ]
+  },
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "syn-patient-004",
+        "name": [{ "text": "SYN-NAME-004" }],
+        "identifier": [
+          {
+            "system": "https://example.invalid/syn-taj",
+            "value": "SYN-TAJ-004"
+          }
+        ],
+        "gender": "unknown",
+        "birthDate": "1968-11-02"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "syn-obs-cyp2d6-004",
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "81247-9",
+              "display": "Master HL7 genetic variant reporting panel"
+            }
+          ]
+        },
+        "subject": { "reference": "Patient/syn-patient-004" },
+        "component": [
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "48018-6",
+                  "display": "Gene studied [ID]"
+                }
+              ]
+            },
+            "valueCodeableConcept": { "text": "CYP2D6" }
+          },
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "84413-4",
+                  "display": "Genotype display name"
+                }
+              ]
+            },
+            "valueString": "*4/*4"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "syn-medreq-004",
+        "status": "active",
+        "intent": "order",
+        "subject": { "reference": "Patient/syn-patient-004" },
+        "authoredOn": "2026-08-13T01:15:00Z",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.whocc.no/atc",
+              "code": "N06AB10",
+              "display": "escitalopram"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
