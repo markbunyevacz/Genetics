@@ -3,7 +3,7 @@
 | | |
 | --- | --- |
 | **Csomag** | PCE-SPEC-v1.2 Sales |
-| **Dátum** | 2026-08-12 |
+| **Dátum** | 2026-08-13 (árazási sáv: [pricing.md](pricing.md)) |
 | **Státusz** | Kereskedelmi hipotézis — küldhető; nem counsel-pecsét |
 | **Gyártó** | `[Gyártó neve]` (A9; név nincs kitalálva) |
 | **Termék** | **PCE rendszer** (egy szoftver: F1+ · F1s · F2 · F3). Nem laborlelet-kereskedelem. |
@@ -52,6 +52,7 @@ Licencmondat: *„A PCE rendszerlicenc a `[HU|EU|US]` csomagot adja. A F2/F3 kli
 | [customer-ra-faq.md](customer-ra-faq.md) | Vevő jog / RA |
 | [literature-boundary.md](literature-boundary.md) | PREPARE/S028/YouScript **határ**; ne csatold RWE/pecsétként |
 | [competitor-analogs.md](competitor-analogs.md) | YouScript / ActX / TSI — struktúra, nem árlista |
+| [pricing.md](pricing.md) | Megfigyelt YouScript 365 USD + HIS-plafon; javasolt Ft-sáv = **következtetés** |
 
 ## Sorrend
 

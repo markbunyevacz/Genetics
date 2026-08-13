@@ -118,20 +118,20 @@ Részlet: [competitor-analogs.md](competitor-analogs.md). Irodalmi határ: [lite
 
 ---
 
-## Árazási mátrix minta (struktúra, nem kitalált Ft)
+## Árazási mátrix minta
 
-A YouScript **publikus** sémája: egyéni provider-előfizetés (365 USD/év) + intézményi „site-based” (ár nélkül). A PCE ezt **sávos placeholderrel** viszi. **Nincs** kitalált ágyszám-tarifa és **nincs** Ft-összeg. A `[Y*]` a tárgyalásé (proposal-order §4).
+A YouScript **publikus** sémája: egyéni provider-előfizetés (365 USD/év) + intézményi „site-based” (ár nélkül). A javasolt **Ft-sáv** [pricing.md](pricing.md) — **következtetés**, nem megfigyelt PCE-listaár. A megrendelőlapon a `[Y*]` marad (proposal-order §4). **Nincs** kitalált ágyszám-tarifa.
 
 | Sáv | Ki fizet | PCE sor | YouScript/ActX analog (nyilvános) | Placeholder | Mikor számlázható élesen |
 | --- | --- | --- | --- | --- | --- |
-| **A. Platform** | Klinika / hálózat (SKU-P) | Éves intézményi licenc, market pack HU/EU/US | SMART: Site-Based; enterprise quote nem publikus | `[Yp]` / év / tenancy | MSP + DPA + diplotípus-forrás. F1+ ON: OQ-05 *vagy* IIa/CE |
-| **B. Klinikus-sáv** | Ugyanaz a vevő | Per-clinician / év (vagy /hó × 12) | YouScript provider **365 USD/év** lista (US, 1 fiók, nem EHR-enterprise) | `[Yc]` | Ugyanaz. Nem a 365 USD átvétele |
-| **C. Telephely** | Ugyanaz | Extra site | Site-Based (ár nélkül) | `[Ys]` | Ugyanaz |
-| **D. Indítás / HIS** | Vevő vagy SKU-H | Egyszeri integráció | Nincs publikus YouScript-tétel | `[Y0]` / `[Yi]` | Szerződés |
+| **A. Platform** | Klinika / hálózat (SKU-P) | Éves intézményi licenc, market pack HU/EU/US | SMART: Site-Based; enterprise quote nem publikus | `[Yp]` — sáv **6–35 M Ft**/év (következtetés) | MSP + DPA + diplotípus-forrás. F1+ ON: OQ-05 *vagy* IIa/CE |
+| **B. Klinikus-sáv** | Ugyanaz a vevő | Per-clinician / év (vagy /hó × 12) | YouScript provider **365 USD/év** lista (US, 1 fiók, nem EHR-enterprise) | `[Yc]` — sáv **120–480 e Ft**/év (következtetés) | Ugyanaz. Nem a 365 USD átvétele |
+| **C. Telephely** | Ugyanaz | Extra site | Site-Based (ár nélkül) | `[Ys]` — sáv **2–8 M Ft**/év (következtetés) | Ugyanaz |
+| **D. Indítás / HIS** | Vevő vagy SKU-H | Egyszeri integráció | Nincs publikus YouScript-tétel | `[Y0]` / `[Yi]` — a licenc **20–50%-a** (norma, `[ASSUMPTION]`) | Szerződés |
 | **E. F1s shadow** | Vevő, ha a pack ON | A platform része vagy külön sor | Nincs YouScript-ár | `[Ysh]` vagy 0 (benne van) | OQ-15 + OQ-16 |
-| **F. F2/F3 aktiválás** | Vevő | Előfizetés / aktiválási díj a **feloldott** élő CDS-re | ActX: élő order-alert a fizetett klinikai réteg (vendor). YouScript: az élő CDS *a* termék | `[Ya]` / klinikus vagy site | **Csak** CE / in-house / OQ-17 után. Nem demó-kapcsoló |
-| **G. Labor tenancy** | Csak ha a labor *is* white-label tenancyt kér | Opcionális havidíj + volumensáv | ActX lab PDF reporting (vendor). TSI volt lab-API | `[Yl]` | REG-020. **Nem** viszonteladás. A mag-SKU a klinika |
+| **F. F2/F3 aktiválás** | Vevő | Előfizetés / aktiválási díj a **feloldott** élő CDS-re | ActX: élő order-alert a fizetett klinikai réteg (vendor). YouScript: az élő CDS *a* termék | `[Ya]` — **+15–40%** (következtetés), csak pecsét után | **Csak** CE / in-house / OQ-17 után. Nem demó-kapcsoló |
+| **G. Labor tenancy** | Csak ha a labor *is* white-label tenancyt kér | Opcionális havidíj + volumensáv | ActX lab PDF reporting (vendor). TSI volt lab-API | `[Yl]` — sáv **4–25 M Ft**/év (következtetés) | REG-020. **Nem** viszonteladás. A mag-SKU a klinika |
 
-**Tilos a mátrixban:** ágyszám-sáv kitalált árral; „a labor fizeti a platformot, a kórház ingyen kapja”; YouScript 365 USD mint HU listaár; F2 díj CE előtt.
+**Tilos a mátrixban:** ágyszám-sáv kitalált árral; „a labor fizeti a platformot, a kórház ingyen kapja”; YouScript 365 USD mint HU listaár; a 6–35 M Ft mint *listaár*; F2 díj CE előtt. Részlet: [pricing.md](pricing.md).
 
 G4: aláírt **rendszerlicenc** (A+B/C), nem három PDF.

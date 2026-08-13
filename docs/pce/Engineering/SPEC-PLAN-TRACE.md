@@ -294,3 +294,16 @@ A user öt pontja: forrás-letöltés; szegény címke tiltás; „a lelet olvas
 | J-5 F-01 | §0 Owner / Validation / Due / Ha hamis. A14 k≥5 / 0,5% horgonya WP29 05/2014 + EDPB 01/2025, nem a DPIA. |
 | Unittest | **108 OK** |
 
+---
+
+## 13. P06z — árazás (2026-08-13)
+
+| Tétel | Eredmény |
+| --- | --- |
+| YouScript 365 USD | `[V]` WebFetch; urllib pin 403 |
+| SMART Per User, Site-Based | `[V]` pin |
+| Semmelweis 816.636.406 Ft | `[V]` GFI + KÉ 2020/58 pin — **HIS**, nem PGx |
+| EKR ~88,3 M Ft | `[R]` — EKR body hátravan |
+| Javasolt Ft-sáv | **Következtetés** `Sales/pricing.md`. Nincs a spec FR-ben listaárként. |
+| Repo mögé | 5 modul (shadow+HITL egy cső); 12 official SHA-256 `ok`; **111** teszt. Nem 94, nem 7 pin. |
+

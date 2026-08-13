@@ -49,7 +49,7 @@ A gyártó neve ebben a csomagban **nincs kitalálva**. A9 feltevés: a gyártó
 - Gold-set annotációs SOP (§13 parking lot). FR-461 ticketek: [Engineering/](Engineering/README.md)
 - Saját PRS-motor, B2C VCF-upload, EESZT írás, onkológiai szomatikus panel
 - TAM / piackutató-számok (5,7× szórás; nem SRS-anyag)
-- Kitöltött F.6 aláírások, gyártónévvel/labor-névvel kitöltött Outbound/Sales iratok, aláírt DPIA, etikai engedély, REG-020 szerződés, kitöltött Ft-ár
+- Kitöltött F.6 aláírások, gyártónévvel/labor-névvel kitöltött Outbound/Sales iratok, aláírt DPIA, etikai engedély, REG-020 szerződés, kitöltött szerződéses Ft-ár (a [Sales/pricing.md](Sales/pricing.md) sáv **következtetés**, nem aláírt lista)
 
 ## Következő gate
 

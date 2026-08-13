@@ -163,5 +163,6 @@ Minden funkcionális, NFR és REG sor. TC-azonosítók a gold set / CI nevei; a 
 | Eladható ajánlat, feltételezett OQ | Sales/; **SKU-P rendszer**; HU/EU/US flag; F2 LOCK |
 | VC-13 S028 ≠ PGx-SOTA / G3 / PCE-RWE | §9.5; G3 ≥90% marad; FR-710 nem SHAP; [S028-note](Sources/S028-curemd-hybrid-cdss-note.md); [literature-boundary](Sales/literature-boundary.md) |
 | VC-14 PREPARE/YouScript/Tandem/ClinLabomics | OQ-15 §III (p=0,0075); market-packs mátrix; OQ-05 IV.a; OQ-16 I.4; [competitor-analogs](Sales/competitor-analogs.md) |
+| VC-16 Ft-sáv = következtetés | [Sales/pricing.md](Sales/pricing.md); YouScript 365 USD ≠ HU lista; HIS-plafon pin |
 
-**P06 eredmény (v1.2 + Sales SKU-P + S028 + I-19):** a vevő **rendszert** licencel. PREPARE számok a Lancetből, nem user-p=0,0034. YouScript 365 USD lista ≠ HU ár. Tandem/ClinLabomics nem pecsét. OQ-k + OQ-17 nyitva.
+**P06 eredmény (v1.2 + Sales SKU-P + S028 + I-19 + árazás):** a vevő **rendszert** licencel. PREPARE számok a Lancetből, nem user-p=0,0034. YouScript 365 USD lista ≠ HU ár. A 6–35 M Ft **következtetés**. Tandem/ClinLabomics nem pecsét. OQ-k + OQ-17 nyitva.

@@ -50,6 +50,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P05x | Spec-validáció: 7 karakteres kód + hivatalos pin + lelet-szöveg | 2026-08-13 | 2026-08-13 | DONE | User 5 pont: forrás-letöltés; szegény címke; „lelet olvas”; 5 vs 7; allélhívó | `Sources/official/`; A14/FR-461 D-38; `gyogyszerlista_a_leleten`; `diplotipus_forras_hu` | E-18 |
 | P06x | Plan-vs-content az 5 user-pontra | 2026-08-13 | 2026-08-13 | DONE | TRACE §11; official pin teszt | SPEC-PLAN-TRACE §11 | — |
 | P05y | J-1…J-6 kapuk | 2026-08-13 | 2026-08-13 | DONE | User: kódszintű F-07 injekció + tételes lista | allow-list B.4.1; pheno-gold-v0 N=32; A.4.1; FR-110 Art. 12(3); §0 Owner/Due | E-19 |
+| P05z | Árazás: megfigyelt vs következtetés | 2026-08-13 | 2026-08-13 | DONE | User: YouScript 365 USD; HIS-plafon; javasolt Ft-sáv | `Sales/pricing.md`; S056–S058; VC-16 | E-20 |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -96,6 +97,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-37 | P05w | Hol a NM→szegény tábla; ATC pontosság | Kitalált SSRI NM→szegény / opioid tábla keverése / hiány jelzése | **Amit van, azt írjuk; ami nincs, azt jelezzük.** SSRI 2023: nincs sor. FDA: erős gátló. Opioid 2020: van szabály, de nem a paroxetin-SSRI példa. ANON marad ATC4 (spec). Párosítás: 7 karakteres hatóanyag-kód (PSEUDO+hozzájárulás). Nem „egy szer = egy beteg”. | S045–S050; user 6 pont | user |
 | D-38 | P05x | Spec-validáció: 5 vs 7 karakteres kód | Fagyasztott A14 ATC4 / 7 karakteres hatóanyag-kód | **7 karakteres WHO hatóanyag-kód a default** (§10.2 (c)). A14/FR-450/460/461 javítva. DPO durvíthat; akkor párosítás szünetel. k≥5 és 0,5% marad. Nem betegazonosító. | S032; user 2026-08-13 | user |
 | D-39 | P05y | J-1 vs J-3 sorrend; J-2 osztály | Csak J-1 / csak J-3 / mind a hat | **Mind a hat.** J-1 allow-list ma. J-3 pheno-gold **üres** funkcionális fenotípus (nincs kitalált NM→szegény). J-2 A.4.1 + NFR-070a/b, OQ-06 nyitott. Ár **nincs** a specben. | User 2026-08-13 kódszintű lista | user |
+| D-40 | P05z | Ft-sáv a specben vs Sales | Listaár a specbe / csak Sales következtetés | **Sales/pricing.md.** A spec §11 kötés marad; a 6–35 M Ft **nem** megfigyelt listaár. DrugMap VC-10. EKR 88,3 M Ft nincs pinelve. | User 2026-08-13 árazás | user |
 
 ## 3. Error log
 
@@ -120,6 +122,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | E-17 | P05w | Jargon / information loss | PM betűszó magyarázat nélkül; „durvább kód” / „szer azonosítja a beteget”; extra doksi | Magyar van/hiányzik a kártyán; hatóanyag-kód a párosításhoz; TRACE/DELIVERY/DATAFLOW only | D-37 |
 | E-18 | P05x | Jargon / spec mismatch | „A lelet olvassa a gyógyszerlistát”; „allélhívó ki”; fagyasztott 5 karakteres kód vs WHO 7 | Lelet-szöveg: guideline-lista, nem felírás-szűrés; PharmCAT NamedAlleleMatcher magyarázat; A14 D-38 | D-38 |
 | E-19 | P05y | API / authority fetch | EUR-Lex GDPR HTML/PDF 202 empty body | Irish DPC CS2025 pin Art. 12(3)-ra; S055 hátravan | J-4 |
+| E-20 | P05z | Authority fetch | YouScript HTML urllib 403; EKR001266472024 karbantartási oldal | WebFetch 365 USD; SMART+Semmelweis pin; EKR összeg `[R]` | D-40 |
 
 ## 4. File timeline
 
@@ -147,3 +150,5 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | src/pce_report/schema.py | P05r | P05y | B.4.1 allow-list |
 | tests/fixtures/f1plus-v0/prepare12/ | P05w | P05w | 12 gén CPIC pin |
 | tests/fixtures/vcf-gold-v0/ | P05w | P05w | 3 SYN missing-to-ref |
+| docs/pce/Sales/pricing.md | P05z | P05z | Következtetési sáv; nem listaár |
+| docs/pce/Sources/market/ | P05z | P05z | SMART + Semmelweis/KÉ pin |

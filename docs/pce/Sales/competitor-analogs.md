@@ -48,4 +48,10 @@ A vevő **SKU-P** rendszert licencel. A labor **csatlakozó**. Az alábbi három
 | PREPARE a *PGx panel* evidenciája (§9.4) | „A PCE 30%-kal csökkenti az ADR-t”; „életet ment / ápolási nap” a Lancetből |
 | A kórház SKU-P-t fizet; a labor opcionális `[Yl]` | „A labor viszonteladja a PCE-t”; ágyszám-tarifa mint tény |
 
-YouScript + PREPARE **nem** zárja le az OQ-05 / 15 / 16 / 17-et és nem pecsételi a nem-MDSW-t.
+---
+
+## GenXys / OneOme / Coriell
+
+Nyilvános **USD/Ft listaár** ebben a körben **nincs**. A vendor oldalak demót / contact-sales-t kérnek (kutatás + OneOme/GenXys nyilvános „contact us” szövegek). **Nem** PCE-ár.
+
+YouScript + PREPARE **nem** zárja le az OQ-05 / 15 / 16 / 17-et és nem pecsételi a nem-MDSW-t. Ft-sáv: [pricing.md](pricing.md).

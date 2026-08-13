@@ -65,7 +65,7 @@ Market pack szabály: [market-packs.md](market-packs.md).
 | Opcionális labor white-label tenancy (nem viszonteladás) | `[Yl]` — csak ha a labor *külön* tenancyt kér |
 | Pilot | `[Yp_pilot]` |
 
-Sávok magyarázata: [market-packs.md](market-packs.md) árazási mátrix. A YouScript 365 USD/év **nem** ennek a táblának az ára.
+Sávok magyarázata: [pricing.md](pricing.md) (következtetés) és [market-packs.md](market-packs.md). A YouScript 365 USD/év **nem** ennek a táblának az ára. A `[Y*]` kitöltése a sávból tárgyalás, nem listaár.
 
 ---
 

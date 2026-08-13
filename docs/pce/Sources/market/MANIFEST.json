@@ -1,0 +1,55 @@
+{
+  "accessed": "2026-08-13",
+  "note": "Market/procurement pins for Sales pricing. Not clinical guideline tables.",
+  "files": [
+    {
+      "id": "YOUSCRIPT-PROVIDER-1Y",
+      "url": "https://youscript.com/product/youscript-provider-subscription-1-year/",
+      "path": null,
+      "accessed": "2026-08-13",
+      "ok": false,
+      "error": "HTTP Error 403: Forbidden"
+    },
+    {
+      "id": "SMART-YOUSCRIPT",
+      "url": "https://apps.smarthealthit.org/app/youscript",
+      "path": "docs/pce/Sources/market/smart-youscript-2026-08-13.html",
+      "accessed": "2026-08-13",
+      "ok": true,
+      "content_type": "text/html",
+      "bytes": 15492,
+      "sha256": "81e9ff97c7f791260cacb7c3fcf85018d06a8c5ecfcd84176ed312f341cd3262"
+    },
+    {
+      "id": "SEMMELWEIS-GFI-9641-2020",
+      "url": "https://semmelweis.hu/gfi/2020/04/07/kozbeszerzesi-szerzodeskotes-a-t-systems-zrt-vel-gfibszi-9641-2020/",
+      "path": "docs/pce/Sources/market/semmelweis-t-systems-gfibszi-9641-2020.html",
+      "accessed": "2026-08-13",
+      "ok": true,
+      "content_type": "text/html",
+      "bytes": 71835,
+      "sha256": "358337c1e9a063cddd5dfbfa3afcab99dec5662a5fdd078a687daa9ef3816749"
+    },
+    {
+      "id": "EGOV-KE-2020-58",
+      "url": "https://hirlevel.egov.hu/2020/03/28/a-heten-olvastuk-valogatas-a-kozbeszerzesi-ertesitoben-megjelent-informatikai-es-szakpolitikai-temaju-eljarasok-eredmenyeibol-2020-marcius-23-marcius-27/",
+      "path": "docs/pce/Sources/market/egov-hirlevel-ke-2020-58-medsolution.html",
+      "accessed": "2026-08-13",
+      "ok": true,
+      "content_type": "text/html",
+      "bytes": 125040,
+      "sha256": "a0f6dc2d2d884e6fea487ae15f10ef38edcc68c64bb2c1927e51a0609dea8ee6"
+    },
+    {
+      "id": "EKR001266472024",
+      "url": "https://ekr.gov.hu/portal/kozbeszerzes/eljarasok/EKR001266472024",
+      "path": null,
+      "accessed": "2026-08-13",
+      "ok": false,
+      "content_type": "text/html",
+      "bytes": 209801,
+      "sha256": "6f8ced46acbf4c9f32be29efd39ad4409a54d710c65897b7ac858bb842f11c0b",
+      "error": "EKR maintenance page, not the notice body"
+    }
+  ]
+}

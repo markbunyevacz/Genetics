@@ -54,6 +54,8 @@ A lakat **szándékos**. Átminősítés után signed release, nem „bekapcsolj
 | Indítás / HIS-illesztés | `[Y0]` egyszeri |
 | F2/F3 aktiválás (ha a flag feloldódik) | `[Ya]` — külön záradék |
 
+A belső sáv (következtetés, nem listaár): [pricing.md](pricing.md). Egy klinikus-licenc a sáv alján egy DrugMap-teszt (~499 e Ft, VC-10) **negyede** — ha az a szám áll; az nem PCE-árlista.
+
 Pilot: sandbox, szintetikus vagy labor-kontrollált eset, `[Yp_pilot]`, `[T]` hét, éles TAJ nélkül.
 
 ---

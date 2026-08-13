@@ -784,7 +784,7 @@ Egyik sem opcionális. A6 a minimum.
 
 ### Árazási kötés a követelményekre (nem TAM)
 
-A brief árazási modellje **követelmény-kötés**, nem megfigyelt ár:
+A brief árazási modellje **követelmény-kötés**, nem megfigyelt ár. Javasolt Ft-sáv (következtetés, nem listaár): [Sales/pricing.md](Sales/pricing.md).
 
 | Sáv | Modell | Spec-kötés |
 | --- | --- | --- |
