@@ -1,6 +1,6 @@
 # VCF gold — hiányzó definiáló pozíció (FR-210)
 
-Nem betegadat. Az allélhívó ki van kapcsolva. A PharmCAT `--absent-to-ref` nincs hívva.
+Nem betegadat. A PCE nem hív csillag-allélt a VCF-ből (PharmCAT NamedAlleleMatcher ki; FR-300). A PharmCAT `--absent-to-ref` nincs hívva.
 
 ## Honnan van a három minta?
 

@@ -396,7 +396,7 @@ class ClinicalService:
                     "diplotype": None,
                     "calling_lab": origin,
                     "signing_physician": signer,
-                    "method": "VCF-lefedettség (allélhívó ki)",
+                    "method": "VCF-lefedettség (a PCE nem hív csillag-allélt a VCF-ből)",
                     "call_date": _now()[:10],
                     "phenotype": None,
                     "callability": callability,

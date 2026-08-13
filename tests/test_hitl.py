@@ -129,7 +129,7 @@ class PersistTests(unittest.TestCase):
         self.assertFalse(body["hitl"])
         self.assertEqual(hitl.query("SELECT id FROM shadow_inference"), [])
 
-    def test_atc5_does_not_write_hitl(self) -> None:
+    def test_atc5_writes_hitl(self) -> None:
         hitl = _hitl_store(self)
         bundle = load_json(str(GOLD / "gw-v0-03-atc5-pce-ingest.json"))
         status, body = handle_pce_ingest(
@@ -140,9 +140,9 @@ class PersistTests(unittest.TestCase):
             allowed_accounts={"gw-ok"},
             hitl_store=hitl,
         )
-        self.assertEqual(status, 400)
-        self.assertEqual(body["error"], "E-SHADOW-001")
-        self.assertEqual(hitl.query("SELECT id FROM shadow_inference"), [])
+        self.assertEqual(status, 202)
+        self.assertTrue(body["hitl"])
+        self.assertEqual(len(hitl.query("SELECT id FROM shadow_inference")), 1)
 
     def test_store_failure_is_fail_open_202(self) -> None:
         class Boom:
@@ -234,7 +234,7 @@ class CardAndBlindTests(unittest.TestCase):
 
 
 class PseudoAtc5PairingTests(unittest.TestCase):
-    def test_anon_still_rejects_atc5(self) -> None:
+    def test_anon_accepts_seven_char_paroxetine(self) -> None:
         hitl = _hitl_store(self)
         bundle = load_json(str(ROOT / "tests" / "fixtures" / "shadow-v0" / "pseudo-atc5-paroxetine-pce-ingest.json"))
         status, body = handle_pce_ingest(
@@ -245,9 +245,14 @@ class PseudoAtc5PairingTests(unittest.TestCase):
             allowed_accounts={"gw-ok"},
             hitl_store=hitl,
         )
-        self.assertEqual(status, 400)
-        self.assertEqual(body["error"], "E-SHADOW-001")
-        self.assertEqual(hitl.query("SELECT id FROM shadow_inference"), [])
+        self.assertEqual(status, 202)
+        rows = hitl.query("SELECT body_json FROM shadow_inference")
+        self.assertEqual(len(rows), 1)
+        inf = json.loads(rows[0]["body_json"])
+        self.assertEqual(inf["live_findings"][0]["drug_atc"], "N06AB05")
+        self.assertEqual(inf["live_findings"][0]["strategy_category"], "CONTINUE")
+        self.assertEqual(inf["functional_phenotype"], [])
+        self.assertFalse(inf["forras_allapot"]["functional_phenotype_iras"]["irtunk_szegeny_metabolizalot"])
 
     def test_pseudo_research_consent_keeps_paroxetine_code(self) -> None:
         hitl = _hitl_store(self)
@@ -343,7 +348,7 @@ class F1sDataflowTests(unittest.TestCase):
     def test_his_gateway_ingest_hitl_report_untouched(self) -> None:
         his = load_json(str(GOLD / "gw-v0-01-normal-his-in.json"))
         kcell = _kcell(self)
-        kcell.seed("UNCERTAIN", "N06AB", "2026-Q3", 4)
+        kcell.seed("UNCERTAIN", "N06AB10", "2026-Q3", 4)
         gw = process_his_event(his, GatewayConfig(), FREQ, kcell)
         self.assertEqual(gw.http, 202)
         self.assertTrue(gw.hitl)
@@ -371,9 +376,9 @@ class F1sDataflowTests(unittest.TestCase):
             "hitl_reviewer",
         )
         self.assertEqual(clinical.query("SELECT id FROM report"), [])
-        atc5 = load_json(str(GOLD / "gw-v0-03-atc5-pce-ingest.json"))
+        taj = load_json(str(GOLD / "gw-v0-08-taj-pce-ingest.json"))
         status, body = handle_pce_ingest(
-            atc5,
+            taj,
             GatewayConfig(),
             FREQ,
             authorization="gw-ok",

@@ -5,7 +5,7 @@
   "gateway_local": {
     "cell": {
       "phenotype_class": "REDUCED",
-      "atc_level": 4,
+      "atc_level": 5,
       "quarter": "2026-Q3"
     },
     "cell_count_including_this_event": 4,

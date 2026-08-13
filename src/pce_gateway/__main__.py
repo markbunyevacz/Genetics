@@ -14,7 +14,12 @@ from pce_gateway.ingest import handle_pce_ingest
 from pce_gateway.kcell import KCellStore
 from pce_gateway.pipeline import process_his_event
 from pce_gateway.server import bind_ingest_server
-from pce_gateway.transform import ShadowReject, load_json, transform_bundle
+from pce_gateway.transform import (
+    DEFAULT_MAX_ATC_LEVEL,
+    ShadowReject,
+    load_json,
+    transform_bundle,
+)
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_FREQ = ROOT / "tests" / "fixtures" / "gold-v0" / "frequency-config.v0.json"
@@ -34,7 +39,13 @@ def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--input", "-i", help="FHIR Bundle JSON")
     p.add_argument("--mode", choices=("gateway", "ingest", "serve"), default="gateway")
-    p.add_argument("--atc-level", type=int, default=4, choices=(1, 2, 3, 4, 5))
+    p.add_argument(
+        "--atc-level",
+        type=int,
+        default=DEFAULT_MAX_ATC_LEVEL,
+        choices=(1, 2, 3, 4, 5),
+        help="WHO ATC level to keep. Default 5 = 7-character substance code.",
+    )
     p.add_argument("--time-grain", default="QUARTER", choices=("QUARTER", "YEAR", "quarter", "year"))
     p.add_argument("--on-small-cell", default="COARSEN", choices=("COARSEN", "DROP"))
     p.add_argument("--on-rare", default="DROP", choices=("COARSEN", "DROP"))

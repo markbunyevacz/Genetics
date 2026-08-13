@@ -17,7 +17,7 @@
   "gateway_local": {
     "cell": {
       "phenotype_class": "REDUCED",
-      "atc_level": 4,
+      "atc_level": 5,
       "quarter": "2026-Q3"
     },
     "cell_count_including_this_event": 4,
@@ -27,7 +27,7 @@
   },
   "GatewayEvent": {
     "mode": "ANON",
-    "atc_level": 4,
+    "atc_level": 5,
     "time_grain": "QUARTER",
     "diplotype_granularity": "CLASS",
     "phenotype_class": "REDUCED",
@@ -41,7 +41,7 @@
       "id_join_key_at_manufacturer": false
     },
     "medications": [
-      { "system": "http://www.whocc.no/atc", "code": "N06AB", "display": "Selective serotonin reuptake inhibitors" }
+      { "system": "http://www.whocc.no/atc", "code": "N06AB10", "display": null }
     ],
     "authoredOn": "2026-Q3",
     "doseQuantity": null

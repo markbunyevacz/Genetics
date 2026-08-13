@@ -47,6 +47,8 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P06v | Felesleges plusz doksi törlése | 2026-08-13 | 2026-08-13 | DONE | User: ne generálj új doksit mindenre | `VALASZ-SPEC-TERV.md` törölve; a TRACE/DELIVERY-PLAN/DATAFLOW marad | — |
 | P05w | PREPARE-12 CPIC + VCF gold + forráshiány a termékben | 2026-08-13 | 2026-08-13 | DONE | User: van/nincs tábla; PM=szegény metabolizáló; hatóanyag-kód; teljes rendszer | `prepare12/` extract; `vcf-gold-v0/`; `forras_allapot`; PSEUDO ATC5 | VC-15 |
 | P06w | Plan-vs-content a 6 user-pontra | 2026-08-13 | 2026-08-13 | DONE | TRACE/DELIVERY/DATAFLOW/registry; 89 unittest | SPEC-PLAN-TRACE §10 | — |
+| P05x | Spec-validáció: 7 karakteres kód + hivatalos pin + lelet-szöveg | 2026-08-13 | 2026-08-13 | DONE | User 5 pont: forrás-letöltés; szegény címke; „lelet olvas”; 5 vs 7; allélhívó | `Sources/official/`; A14/FR-461 D-38; `gyogyszerlista_a_leleten`; `diplotipus_forras_hu` | E-18 |
+| P06x | Plan-vs-content az 5 user-pontra | 2026-08-13 | 2026-08-13 | DONE | TRACE §11; official pin teszt | SPEC-PLAN-TRACE §11 | — |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -91,6 +93,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-35 | P05s | Klinikai lánc a fagyasztott B szerint | Terv-only / SQLite+stdlib HTTP a B.3/B.4-re | **Kód**: `pce_clinical` + labor HTML; FR-100 CLI sem kerülhető; NFR-031 TLS SYN-en localhost (dokumentált eltérés) | P06r rés FR-100 | user |
 | D-36 | P05u | NM + erős gátló → PM a shadowban | Kitalált PM / forrásolt null, amíg CPIC konszenzus nincs | **Null `functional_phenotype`**; FDA strong class ATC5-ön; ATC4 nem paroxetin; Table 2a csak stratégia-kategória | S046; B.6.2 „a tábla szerint”; user: pótold | user |
 | D-37 | P05w | Hol a NM→szegény tábla; ATC pontosság | Kitalált SSRI NM→szegény / opioid tábla keverése / hiány jelzése | **Amit van, azt írjuk; ami nincs, azt jelezzük.** SSRI 2023: nincs sor. FDA: erős gátló. Opioid 2020: van szabály, de nem a paroxetin-SSRI példa. ANON marad ATC4 (spec). Párosítás: 7 karakteres hatóanyag-kód (PSEUDO+hozzájárulás). Nem „egy szer = egy beteg”. | S045–S050; user 6 pont | user |
+| D-38 | P05x | Spec-validáció: 5 vs 7 karakteres kód | Fagyasztott A14 ATC4 / 7 karakteres hatóanyag-kód | **7 karakteres WHO hatóanyag-kód a default** (§10.2 (c)). A14/FR-450/460/461 javítva. DPO durvíthat; akkor párosítás szünetel. k≥5 és 0,5% marad. Nem betegazonosító. | S032; user 2026-08-13 | user |
 
 ## 3. Error log
 
@@ -113,13 +116,14 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | E-15 | P05q | Hallucinated PII / API mismatch | User-minta: „Kovács János” / TAJ 123456789; `entry.resourceType`; DSTU2 `doseQuantity` | Gold V0 opák ID; FHIR R4 `entry.resource` + `doseAndRate` | D-32 |
 | E-16 | P05u | Hallucinated phenotype mapping | Spec AC „NM + erős gátló → PM/IM a tábla szerint” — CPIC 2023: konszenzus **nincs** | Switch: FDA class + sourced null; dummy PM = fail | VC-15; D-36 |
 | E-17 | P05w | Jargon / information loss | PM betűszó magyarázat nélkül; „durvább kód” / „szer azonosítja a beteget”; extra doksi | Magyar van/hiányzik a kártyán; hatóanyag-kód a párosításhoz; TRACE/DELIVERY/DATAFLOW only | D-37 |
+| E-18 | P05x | Jargon / spec mismatch | „A lelet olvassa a gyógyszerlistát”; „allélhívó ki”; fagyasztott 5 karakteres kód vs WHO 7 | Lelet-szöveg: guideline-lista, nem felírás-szűrés; PharmCAT NamedAlleleMatcher magyarázat; A14 D-38 | D-38 |
 
 ## 4. File timeline
 
 | Fájl | Létrehozva | Módosítva | Státusz |
 | --- | --- | --- | --- |
 | docs/pce/README.md | P00/P05 | P10c (G5 core-most; gyártói vs telephelyi OQ) | v1.2 FAGYASZTVA |
-| docs/pce/PCE-SPEC-v1.2.md | P05b (git mv) | P05j (§9.4 PREPARE p=0,0075) | v1.2 FAGYASZTVA; S028+PREPARE határ |
+| docs/pce/PCE-SPEC-v1.2.md | P05b (git mv) | P05x (A14/FR-461 D-38) | v1.2 FAGYASZTVA; ATC-klauzula §10.2 (c) |
 | docs/pce/A-intended-purpose-and-modules.md | P05 | P05i (A.3 SHAP≠FR-710) | DRAFT v1.2 |
 | docs/pce/B-architecture-and-interfaces.md | P05 | P05c | DRAFT v1.2 |
 | docs/pce/C-eeszt-f0-checklist.md | P05 | P05f (C.4 Outbound linkek) | DRAFT v1.2 |
@@ -134,6 +138,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | src/pce_shadow/ | P05u | P05w | F1s élő párosítás; forráshiány magyarul |
 | src/pce_hitl/ | P05u | P05w | vak ellenőrző API + `hitl.sqlite` |
 | src/pce_ui/hitl.html | P05u | P05w | van/hiányzik lista a vak lépés után |
-| src/pce_clinical/coverage.py | P05w | P05w | FR-210; allélhívó ki |
+| src/pce_clinical/coverage.py | P05w | P05x | FR-210; diplotípus-forrás magyarul |
+| docs/pce/Sources/official/ | P05x | P05x | CPIC PDF + FDA HTML + WHO pin |
 | tests/fixtures/f1plus-v0/prepare12/ | P05w | P05w | 12 gén CPIC pin |
 | tests/fixtures/vcf-gold-v0/ | P05w | P05w | 3 SYN missing-to-ref |

@@ -118,7 +118,7 @@ P0: JSON `{ medications: [{code_system, code, name}], observations: [{loinc, val
 
 P1: FHIR R4 Bundle (`MedicationRequest` | `MedicationStatement`, `Observation`). Profile: nem saját IG v1-ben; validáció R4 + kötelező kódolás.
 
-F1+ report-renderer: a lista tárolható a case-en (labor workflow), de a JSON/PDF **nem** tartalmaz `functional_phenotype`-ot és ATC-szűrt riasztást.
+F1+ report-renderer: a lista tárolható a case-en (labor workflow). Az aláírt JSON/PDF a meghívott gén publikált guideline-sorait listázza; **nem** a beteg aktuális felírásaiból szűrt figyelmeztetés. `functional_phenotype` nincs a leleten.
 
 ### B.3.4 HL7 v2 LRI — **P1**
 
@@ -131,7 +131,7 @@ A HIS/LIS **nem** a PCE klinikai API-ját hívja szinkron. Esemény → intézm�
 - A PCE **nem** fogad nyers `Patient.name` / TAJ csomagot. Ha a bundle identifier-t tartalmaz, `E-SHADOW-001`, a rekord **nem** kerül a HITL store-ba.
 - Álnevesített út: hiányzó `ResearchConsent` → `E-CONSENT-006`, nincs továbbítás.
 - Aszinkron: 202 Accepted; a HIS fail-open (E.2).
-- Csonkolási szabály: E.3 + E.3.1 (FR-461). ATC5 / pontos `authoredOn` / k-alatti cella → `E-SHADOW-001` vagy `E-SHADOW-003`.
+- Csonkolási szabály: E.3 + E.3.1 (FR-461). Default: 7 karakteres hatóanyag-kód. Pontos `authoredOn` / TAJ / k-alatti cella → `E-SHADOW-001` vagy `E-SHADOW-003`.
 
 ---
 

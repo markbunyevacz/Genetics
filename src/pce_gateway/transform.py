@@ -1,6 +1,7 @@
 """FR-460 PII strip and PCE-GW-461-01..03 (ATC, time, dose).
 
 Stdlib only. WHO ATC lengths (S032): ATC3=4 (N06A), ATC4=5 (N06AB), ATC5=7 (N06AB10).
+Default is the 7-character substance code (D-38). DPO may coarsen; pairing then pauses.
 
 The GatewayEvent export has no Patient resource. Gender and birth year stay
 on a local_counter dict and are not POSTed to PCE. CLI: python -m pce_gateway.
@@ -14,6 +15,7 @@ from typing import Any, Iterator
 
 WHO_ATC_LEN = {1: 1, 2: 3, 3: 4, 4: 5, 5: 7}
 WHO_LEN_TO_LEVEL = {v: k for k, v in WHO_ATC_LEN.items()}
+DEFAULT_MAX_ATC_LEVEL = 5  # WHO 5th level = 7-character substance code (D-38)
 ATC_CODE_RE = re.compile(r"^[A-Z]\d{2}[A-Z]{0,2}\d{0,2}$")
 QUARTER_RE = re.compile(r"^(\d{4})-Q([1-4])$")
 YEAR_RE = re.compile(r"^(\d{4})$")
@@ -89,8 +91,8 @@ def atc_level_of(code: str) -> int:
     return WHO_LEN_TO_LEVEL[len(normalize_atc_code(code))]
 
 
-def truncate_atc(code: str, max_level: int = 4) -> str:
-    """FR-461-01: cut to at most max_level. Already-coarser codes stay as-is."""
+def truncate_atc(code: str, max_level: int = DEFAULT_MAX_ATC_LEVEL) -> str:
+    """Keep at most max_level. Default keeps the 7-character substance code."""
     if max_level not in WHO_ATC_LEN:
         raise ValueError(f"max_level must be 1..5, got {max_level}")
     c = normalize_atc_code(code)
@@ -262,11 +264,11 @@ def local_counter_demographics(stripped_bundle: dict[str, Any]) -> dict[str, Any
 def transform_bundle(
     bundle: dict[str, Any],
     *,
-    max_atc_level: int = 4,
+    max_atc_level: int = DEFAULT_MAX_ATC_LEVEL,
     time_grain: str = "QUARTER",
     include_local: bool = False,
 ) -> dict[str, Any]:
-    """ANON GatewayEvent: ATC + time. No Patient, no dose, no genetics."""
+    """ANON GatewayEvent: ATC substance code + time. No Patient, no dose, no INN."""
     stripped = strip_pii_fr460(bundle)
     work = suppress_dose_fr461_03(stripped)
     medications: list[dict[str, Any]] = []
@@ -288,7 +290,8 @@ def transform_bundle(
                 "system": "http://www.whocc.no/atc",
                 "code": cut,
             }
-            if cut != normalize_atc_code(code):
+            # 7-character code is the substance. Do not forward INN/brand (escitalopram).
+            if len(cut) == 7 or cut != normalize_atc_code(code):
                 rec["display"] = None
             elif coding.get("display"):
                 rec["display"] = coding["display"]
@@ -320,9 +323,13 @@ def transform_bundle(
 def ingest_guard(
     bundle: dict[str, Any],
     *,
-    max_atc_level: int = 4,
+    max_atc_level: int = DEFAULT_MAX_ATC_LEVEL,
 ) -> None:
-    """PCE ANON ingest: PII, dose, ATC5, or day-level authoredOn → E-SHADOW-001."""
+    """PCE ANON ingest: PII, dose, or day-level authoredOn → E-SHADOW-001.
+
+    7-character substance codes are accepted at the default max_atc_level=5.
+    If the DPO caps max_atc_level below 5, a finer code is still rejected.
+    """
     max_len = WHO_ATC_LEN[max_atc_level]
     for patient in iter_resources(bundle, "Patient"):
         for key in DIRECT_PII_KEYS:

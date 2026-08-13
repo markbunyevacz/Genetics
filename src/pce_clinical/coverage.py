@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from pce_report.flags import MATCHER_ON
+from pce_report.flags import DIPLOTIPUS_FORRAS_HU, MATCHER_ON
 from pce_report.panel import PREPARE_12
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -102,9 +102,8 @@ def assess_coverage(
                     "missing": [],
                     "naive_missing_to_ref_would_claim": None,
                     "note_hu": (
-                        f"{gene}: nincs pin-elt definiáló-pozíció katalógus. "
-                        "Allélhívó ki. Nem NORMAL. A gyártó tölti a PharmVar/CPIC allél-definíciót; "
-                        "addig a hiány jelzett."
+                        f"{gene}: nincs pin-elt definiáló-pozíció katalógus. Nem NORMAL. "
+                        + DIPLOTIPUS_FORRAS_HU
                     ),
                     "pharmcat_absent_to_ref": False,
                 }
@@ -141,8 +140,10 @@ def assess_coverage(
                     "naive_missing_to_ref_would_claim": naive,
                     "note_hu": (
                         f"{gene}: definiáló pozíció hiányzik a VCF-ből, nincs lefedő gVCF-blokk. "
-                        "Ez nem referencia-allél és nem NORMAL. "
+                        "Ez nem referencia-allél és nem NORMAL. INDETERMINATE. "
                         + " ".join(why)
+                        + " "
+                        + DIPLOTIPUS_FORRAS_HU
                     ).strip(),
                     "pharmcat_absent_to_ref": False,
                 }
@@ -155,8 +156,9 @@ def assess_coverage(
                     "missing": [],
                     "naive_missing_to_ref_would_claim": None,
                     "note_hu": (
-                        f"{gene}: a pin-elt definiáló pozíció szerepel a VCF-ben, de az allélhívó ki van "
-                        "kapcsolva, ezért nincs diplotípus és nincs NORMAL állítás."
+                        f"{gene}: a pin-elt definiáló pozíció szerepel a VCF-ben. "
+                        "Ettől még nincs diplotípus és nincs NORMAL állítás. "
+                        + DIPLOTIPUS_FORRAS_HU
                     ),
                     "pharmcat_absent_to_ref": False,
                 }

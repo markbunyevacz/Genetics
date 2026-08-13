@@ -1,11 +1,16 @@
 {
   "fixture": "gw-v0-03-atc5-pce-ingest",
   "tc": ["TC-GW-011"],
-  "scene": "Defense-in-depth: the institutional gateway did not truncate; ATC5 reaches POST /v1/shadow/events.",
+  "scene": "D-38: 7-character WHO substance code is the default. ANON ingest accepts N06AB10.",
   "expected": {
+    "ingest": "accepted",
+    "http": 202,
+    "hitl": true
+  },
+  "if_dpo_coarsens_to_atc4": {
     "error": "E-SHADOW-001",
     "http": 400,
     "hitl": false,
-    "reason": "ATC5 (7-character N06AB10) forbidden on ANON ingest"
+    "reason": "ATC5 (7-character N06AB10) forbidden when max_atc_level=4"
   }
 }

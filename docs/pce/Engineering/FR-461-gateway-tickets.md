@@ -13,7 +13,7 @@ A gateway az **intézményi zónában** fut (FR-460). A PCE felhő defense-in-de
 
 **Osztály-enum coarsenkor (FR-461):** `REDUCED` | `INCREASED` | `UNCERTAIN`. `diplotype_granularity = CLASS` (E.3.1).
 
-WHO ATC `[V]` S032: ATC3 = 4 karakter (`N06A`); ATC4 = 5 (`N06AB`); ATC5 = 7 (`N06AB10`). Anonim default: max ATC4; ATC5 **tilos**.
+WHO ATC `[V]` S032: ATC3 = 4 karakter (`N06A`); ATC4 = 5 (`N06AB`); ATC5 = 7 (`N06AB10`). **Default (D-38): ATC5, 7 karakteres hatóanyag-kód.** A DPO durvíthat; akkor a párosítás szünetel.
 
 ---
 
@@ -42,17 +42,18 @@ SYN kód: [`src/pce_gateway/`](../../../src/pce_gateway/) (`strip_pii_fr460`). A
 
 Minden ticket ANON `mode`. Config default: A14. Nincs manuális k-override ANON úton (FR-461 utolsó AC).
 
-### PCE-GW-461-01 — ATC csonkolás (default ATC4)
+### PCE-GW-461-01 — Hatóanyag-kód (default ATC5, 7 karakter)
 
 | | |
 | --- | --- |
-| **AC** | FR-461 ATC; E.3.1; OQ-16 I.3 |
+| **AC** | FR-461 ATC; E.3.1; OQ-16 I.3; D-38 |
 | **TC** | TC-GW-010, TC-GW-011 |
 
-- Given `MedicationRequest` ATC5 (`N06AB10`), When ANON gateway, Then kimenet max `N06AB` (5 karakter). `atc_level = 4`.
+- Given `MedicationRequest` ATC5 (`N06AB10`), When ANON gateway, Then kimenet `N06AB10` (7 karakter). `atc_level = 5`. INN (`escitalopram`) **nincs** a payloadban.
+- Given config `ATC4`, When ugyanaz, Then `N06AB` (5 karakter). `atc_level = 4`. Párosítás szünetel.
 - Given config `ATC3`, When ugyanaz, Then `N06A` (4 karakter). `atc_level = 3`.
-- Given ATC5 a PCE ingesten, When ANON, Then `E-SHADOW-001`, nincs HITL sor.
-- Tilos: hatóanyag-szint (7 karakter) az ANON payloadban.
+- Given 7 karakteres kód a PCE ingesten, When default ANON, Then **202**, HITL sor lehet.
+- Given 7 karakteres kód a PCE ingesten, When `max_atc_level=4`, Then `E-SHADOW-001`.
 
 Kód: [`src/pce_gateway/`](../../../src/pce_gateway/) (`truncate_atc`).
 
@@ -143,7 +144,7 @@ A PCE **nem bízik** a gatewayben.
 | Bemenet | Kód | HITL |
 | --- | --- | --- |
 | `Patient.name` / TAJ / identifier | `E-SHADOW-001` (400) | nem |
-| ATC5 (7 karakter) | `E-SHADOW-001` | nem |
+| ATC finomabb, mint a DPO `max_atc_level` (default 5 = 7 karakter **elfogadott**) | `E-SHADOW-001` csak ha a DPO durvít | nem, ha default |
 | Nap-szintű `authoredOn` | `E-SHADOW-001` | nem |
 | Nyers ritka diplotípus / k-alatti sejt | `E-SHADOW-003` (202) | nem; számláló |
 | Nem gateway service-account | `E-SHADOW-002` (403) | nem |
@@ -168,8 +169,8 @@ A PCE **nem bízik** a gatewayben.
 
 Minimum SYN esetek (kitalált PII **nincs**; opák ID-k). Gold V0: [tests/fixtures/gold-v0](../../../tests/fixtures/gold-v0/README.md) · [index.json](../../../tests/fixtures/gold-v0/index.json).
 
-1. ATC5 → ATC4 csonkolás (`N06AB10` → `N06AB`) — `gw-v0-01`.
-2. ATC5 leak a PCE-re → `E-SHADOW-001` — `gw-v0-03`.
+1. ATC5 megtartás (`N06AB10`) — `gw-v0-01`. DPO ATC4 csonkolás továbbra is tesztelt.
+2. ATC5 a PCE-n default **202** — `gw-v0-03`. DPO `max_atc_level=4` → `E-SHADOW-001`.
 3. `authoredOn` nap → `YYYY-Qn` — `gw-v0-01`; ingest védelem `gw-v0-09`.
 4. `doseQuantity` jelen van a HIS mockban → kimenetben nincs — `gw-v0-01`.
 5. Cella count 4, k = 5, COARSEN → `CLASS` — `gw-v0-04` (`*4/*4`, freq ≥ 0,5%).

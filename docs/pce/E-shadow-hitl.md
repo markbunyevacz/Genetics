@@ -53,7 +53,7 @@ A gateway **nem** a PCE felhőjében fut. Kimenet csak akkor hagyja el az intéz
 | `Patient.birthDate` | Legfeljebb **év** | Legfeljebb év, hacsak a protokoll indokolja |
 | `Patient.gender` | Megtartható | Megtartható |
 | `Observation` PGx | kód + **coarsened** value (FR-461); callability | nyers diplotípus a DPIA szerint |
-| `MedicationRequest` | ATC **≤ 4. szint**; **nincs** doseQuantity; `authoredOn` → negyedév | ATC5 a DPIA szerint; FR-115 |
+| `MedicationRequest` | ATC **5. szint, 7 karakter** (hatóanyag-kód); **nincs** doseQuantity; `authoredOn` → negyedév | DPO durvíthat ATC4/ATC3-ra; akkor párosítás szünetel |
 | `Practitioner`, org, ward, username | Törölve | Törölve vagy intézményi kód |
 | Meta `source`, `lastUpdated` belső ID-k | Tisztítva | Tisztítva |
 
@@ -69,7 +69,7 @@ WHO ATC szintek `[V]` (S032): 1. anatómiai (1 betű) → 2. terápiás (3 karak
 
 | Kontroll | Default (A14) | Ha a DPO szigorít | Ár a G3 metrikának |
 | --- | --- | --- | --- |
-| ATC | max 4. szint | 3. vagy 2. szint | FR-410-LIVE nem különbözteti a paroxetint más SSRI-től, ha csak N06A megy ki (R-020) |
+| ATC | **5. szint, 7 karakter** (hatóanyag) | 4. vagy 3. szint | FR-410-LIVE nem különbözteti a paroxetint más SSRI-től, ha csak N06AB / N06A megy ki (R-020) |
 | Diplotípus | nyers, ha a cella ≥ k és freq ≥ küszöb | csak fenotípus-osztály / drop | ritka allél recall csökken |
 | Idő | naptári negyedév | év | longitudinális összekötés nehezebb (álnevesített úton kell) |
 | k | ≥ 5 intézményi cella | nagyobb k | több drop (`E-SHADOW-003`) |
@@ -87,7 +87,7 @@ WHO ATC szintek `[V]` (S032): 1. anatómiai (1 betű) → 2. terápiás (3 karak
         │
         ▼
 [ Esetlista — opák ID, pl. A87F3 ]
-        │  látszik: gén + (coarsened) diplotípus/osztály + ATC3/4 + negyedév
+        │  látszik: gén + (coarsened) diplotípus/osztály + hatóanyag-kód (7 karakter) + negyedév
         │  nem látszik: név, kor, intézmény, orvos
         ▼
 [ FR-450-BLIND 1: reviewer saját strukturált döntése, motor tipp rejtve ]
@@ -176,5 +176,5 @@ In-house F2 (A.7) más jogi doboz, mint a gyártó felhőjében futó shadow.
 - [ ] Given `clinician` szerep, When a klinikai API-t hívja, Then 404/403 a `/shadow/**` és `/hitl/**` útvonalakra.
 - [ ] CI: call-graph a report-renderer és a cds-hooks modul **nem** függ a shadow-writer kimeneti táblájától (csak fordítva tilos; a shadow olvashatja a diplotípust).
 - [ ] Feature flag `LIVE_CDS=true` csak signed release-ben, REG-010 F2/F3 intended purpose mellett; F1+ buildben a flag compile-time false.
-- [ ] Anonim ingest: ATC5 vagy nap-szintű `authoredOn` → elutasítva.
+- [ ] Anonim ingest: nap-szintű `authoredOn` / TAJ / dózis → elutasítva. 7 karakteres hatóanyag-kód **elfogadott**, hacsak a DPO nem durvít.
 - [ ] F1+ renderer: `MedicationEntry` nincs a call-graphben; tiltott token → `E-EDU-001`.

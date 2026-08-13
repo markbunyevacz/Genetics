@@ -1,0 +1,933 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>ATCDDD - Structure and principles</title>
+<meta http-equiv="Content-type" content="text/html; charset=iso-8859-1"/>
+<meta name="author" content="WHOCC" />
+<style type="text/css">
+* {margin:0;padding:0;border:0}
+div,img {float:left}
+div,h1,h2,h3,li,.clr {clear:both}
+div.noclr {clear:none}
+a:link, a:visited {color:#f17c0e;text-decoration:none;border-bottom:1px solid #a7a2a0}
+a:hover,th a:hover {border-color:#000;color:#000}
+a.noborder:link,a.noborder:visited,a.noborder:hover,#menu ul li a {border:none}
+p {padding-bottom:20px;line-height:18px}
+ul,ol {margin:0 0 20px 25px}
+.r {text-align:right}
+.hidden {display:none}
+td {padding-right:10px}
+.odd td, .even td  {padding:0 5px}
+table.order_form td {padding:5px 5px}
+th {text-align:left;font-weight:bold;line-height:15px;padding:0 20px 5px 0}
+th,th a:link, th a:visited {color:#226}
+tr.odd, tr.rowbg1 {background:#f8f8f8}
+tr.even, tr.rowbg0 {background:#f0f0f0}
+form table, .listtable, .listtable table {width:100%}
+table {margin-bottom:30px}
+h1 {color:#00529b;padding-bottom:10px;font-size:24px;line-height:28px}
+h2 {font-size:18px;line-height:22px;padding-bottom:10px}
+h3 {font-size:16px;line-height:20px;padding-bottom:10px}
+h4 {font-size:14px;line-height:18px}
+.date {font-size:10px;line-height:14px;font-weight:normal;color:#000;font-style:italic}
+.date a:link,.date a:visited {color:#000}
+#main_column {width:469px;clear:none}
+#main_column .summary, #main_column .body, #main_column h1, #main_column h2 {width:469px}
+#main_column h2 a:link,#main_column h2 a:visited {border-color:#fff}
+#main_column h2 a:hover {border-color:#000}
+.item {width:100%;padding-bottom:0;margin-bottom:10px;border-bottom:1px dashed #000}
+.item.last {border:0}
+#right_col_box {clear:none;float:right}
+#right_col_box_top {width:250px;background:url('/img/top-bg-right-corner.gif') top right no-repeat #a7a2a0}
+#right_col_box_top h3 {color:#fff;padding:4px 9px;font-size:12px;line-height:16px}
+#right_col_box_border {border:1px solid #a7a2a0;padding:8px 9px 8px 9px}
+#right_col_box .w,#right_col_box .item {width:230px}
+#right_col_box .hl {clear:none;width:136px}
+#right_col_box .d {width:64px}
+#right_col_box .item {padding-bottom:10px}
+#older_news {clear:none;float:right}
+#older_news_border {border:1px solid #a7a2a0;padding:4px}
+#older_news div div {width:240px;padding-top:10px}
+#older_news h3 {background:#a7a2a0;color:#fff;font-size:12px;line-height:16px;width:250px;padding-bottom:0}
+label {display:block}
+body {padding:10px 0;font-family:Verdana,Arial,Helvetica,Sans-Serif;font-size:12px;line-height:18px;color:#000;background:#fff}
+#wrapper {margin:0 auto;float:none;width:960px}
+#topnav {width:960px;padding-bottom:3px}
+#topnav ul {list-style:none;float:right;margin:0}
+#topnav ul input {line-height:17px;margin:0 0 0 20px;padding:2px 4px}
+#topnav li {clear:none;float:left;line-height:22px}
+#topnav li a {display:block;margin:0 0 3px 20px;font-size:11px;font-weight:bold;text-decoration:none;border-color:#fff}
+#topnav a:link,#topnav a:visited {color:#226;border:0}
+#topnav a:hover {color:#f17c0e}
+#top {width:960px;background:url('/img/top-bg-left.gif') top left no-repeat #aba099}
+#top_right {width:960px;height:81px}
+#main {background:url('/img/left-bg.gif') top left repeat-y;width:960px}
+#left_padding {padding:0 1px}
+#left {width:179px}
+#left_bottom {clear:both;background:url('/img/bottom-left-bg.gif') top left no-repeat;width:181px;height:11px}
+#content_padding {clear:right;background:#fff;padding:20px 0 20px 20px}
+#content,.body,.summary {width:639px}
+#content.two_col {width:759px}
+#menu ul {list-style:none;margin:0;line-height:15px}
+#menu ul li {display:block;width:179px;border-top:1px solid #bdb6b0;background:#a7a2a0}
+#menu ul li li {background:#fff}
+#menu ul li li a {color:#226;padding-left:20px;font-size:11px;border:0}
+#menu ul li li li a {padding-left:30px;font-weight:normal}
+#menu ul li li li li a {padding-left:40px}
+#menu ul li li li li li a {padding-left:50px}
+#menu ul li a {display:block;font-weight:bold;padding:4px 10px;color:#fff;text-decoration:none}
+#menu ul li a:hover, #menu ul li a.chosen {background:#f17c0e}
+#menu ul li li a:hover, #menu ul li li a.chosen {background:#fff;color:#f17c0e}
+#address div {padding:20px 10px}
+#address {font-size:10px;line-height:12px;width:159px}
+.footnotes {width:100%;margin:-10px 0 20px 0}
+#last_updated {width:100%;padding-top:10px}
+input.textinput, textarea.textinput {background:#eee;border:1px solid #ddd;padding:4px;width:250px;margin:5px;font-family:Verdana,Arial,Helvetica,Sans-Serif;font-size:12px;line-height:18px;color:#000}
+select {border:1px solid #ddd}
+input.qtt {width:20px}
+.button {float:left;border:1px solid #bbb;background:#eee;color:#666;font-weight:bold;font-size:14px;padding:4px 10px;cursor:pointer;margin:0 20px 20px 0;white-space:nowrap}
+.button:hover,.button.hovered,.button.focused {border-color:#666;background-color:#999;color:#fff;text-decoration:none}
+.blurred {color:#666}
+.mouseout {border-color:#bbb}
+input.hovered {border-color:#666}
+input.focused {background:#fff;border-color:#666}
+.submitted {color:#060;background:#dfd;border-color:#060}
+@media print {
+#topnav,#left_padding,#fhi_logo {display:none}
+}
+</style>
+<script type="text/javascript">
+/* <![CDATA[ */
+function bluritem(e){e=getobject(e);e.className=e.className.replace('focused','blurred')}
+function focusitem(e){e=getobject(e);e.className=e.className.replace('blurred','focused');e.className=e.className.replace('submitted','focused')}
+function mouseover(e){e.className=e.className.replace('mouseout','hovered')}
+function mouseout(e){e.className=e.className.replace('hovered','mouseout')}
+function getobject(e){
+if(typeof(e)=='object')return(e)
+return(document.getElementById(e))
+if(document.getElementById)return(document.getElementById(e))
+return(eval(e))
+}
+/* ]]> */
+</script>
+</head>
+<body>
+<div id="wrapper">
+<div id="topnav">
+<form action="/sok/" method="get" style="float:right">
+<ul>
+<li><a href="/">Home</a></li>
+<li><a href="/atc/application_form/">ATC/DDD application form</a></li>
+<li><a href="https://orders.atcddd.fhi.no/">Order ATC Index</a></li>
+<li><a href="/atc_ddd_methodology/who_collaborating_centre/">WHO Centre</a></li>
+<li><a href="/contact_us/">Contact us</a></li>
+<li><a href="https://www.whocc.no/log_in/">Log in</a></li>
+<li><input type="text" name="q" value="Search" maxlength="40" style="width:80px"
+class="textinput blurred mouseout" onfocus="if(this.value=='Search')this.value='';focusitem(this)" onblur="if(this.value=='')this.value='Search';bluritem(this)" onmouseover="mouseover(this)" onmouseout="mouseout(this)"/></li>
+</ul>
+</form>
+</div>
+<div id="top" style="border-radius:15px 15px 0 0;overflow:hidden">
+<div id="top_right">
+<div style="clear:left;float:left;display:block;position:relative;background-color:rgb(57 60 97)" id="fhi_logo"><a href="https://www.fhi.no/" target="_top" class="noborder"><img src="/img/NIPH_logo_large_english_white.webp" style="height:80px;width:233px;padding:0px 15px;border-right:15px solid #f17c0e" alt="Norwegian Institute of Public Health"/></a></div>
+<div style="clear:right;float:right"><a href="/" target="_top" style="display:block;float:left;padding:22px" class="noborder"><img src="/img/WHOCC_2024.png" style="width:247px;height:35px" alt="WHOCC"/></a></div>
+</div>
+</div>
+<div id="main">
+<div id="left_padding">
+<div id="left">
+<div id="menu">
+<ul>
+<li><a href="/news/">News</a></li>
+<li><a href="/atc_ddd_index/">ATC/DDD Index</a></li>
+<li><a href="/atc_ddd_methodology/">ATC/DDD methodology</a></li>
+<li><a class="chosen" href="/atc/">ATC</a><ul>
+<li><a class="chosen" href="/atc/structure_and_principles/">Structure and principles</a></li>
+<li><a href="/atc/application_for_atc_codes/">Application for ATC codes</a></li>
+<li><a href="/atc/application_for_atc_alterations/">Application for ATC alterations</a></li>
+<li><a href="/atc/application_form/">Application form</a></li>
+</ul></li>
+<li><a href="/ddd/">DDD</a></li>
+<li><a href="/lists_of__temporary_atc_ddds_and_alterations/">Lists of  temporary ATC/DDDs and alterations</a></li>
+<li><a href="/atc_ddd_alterations__cumulative/">ATC/DDD alterations, cumulative lists</a></li>
+<li><a href="/atc_ddd_index_and_guidelines/">ATC/DDD Index and Guidelines</a></li>
+<li><a href="/use_of_atc_ddd/">Use of ATC/DDD</a></li>
+<li><a href="/courses/">Courses</a></li>
+<li><a href="/meetings_open_session/">Meetings/open session</a></li>
+<li><a href="/deadlines/">Deadlines</a></li>
+<li><a href="/links/">Links</a></li>
+</ul>
+</div>
+<div id="address">
+<div>
+Postal address:<br />
+Norwegian Institute of Public Health<br />
+WHO Collaborating Centre for Drug Statistics Methodology<br />
+Postboks 222 Skøyen<br />
+0213 Oslo<br />
+Norway<br /><br />Visiting/delivery address:<br />
+Myrens verksted 6H<br />
+0473 Oslo<br/>
+Norway<br />
+<br />
+Tel:&nbsp;&nbsp;+47 21 07 81 60<br />E-mail: <script type="text/javascript">
+/* <![CDATA[ */
+m2='9d%mw`c8\'hdliqj'+'?rmjffEcml+kj\';'+'rmjffEcml+kj9*d'+';'
+for(i=0;i<m2.length;i++)document.write(String.fromCharCode(5^m2.charCodeAt(i)))
+/* ]]> */
+</script><noscript>Du m&aring; sl&aring; p&aring; Javascript for &aring; kunne lese denne epostadressen.</noscript>
+<br/>&nbsp;
+<br/>
+<a href="/copyright_disclaimer/">Copyright/Disclaimer</a>
+</div>
+</div>
+</div>
+</div>
+<div id="content_padding">
+<div id="content" class="two_col">
+<div id="main_column"">
+<div class="item last">
+<h1 class="headline">Structure and principles</h1>
+<div class="body"><p><strong><a name="Structure"></a>Structure <br /></strong><!--[if gte mso 9]><xml>
+<o:OfficeDocumentSettings>
+<o:AllowPNG/>
+</o:OfficeDocumentSettings>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<w:WordDocument>
+<w:View>Normal</w:View>
+<w:Zoom>0</w:Zoom>
+<w:TrackMoves/>
+<w:TrackFormatting/>
+<w:HyphenationZone>21</w:HyphenationZone>
+<w:PunctuationKerning/>
+<w:ValidateAgainstSchemas/>
+<w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+<w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+<w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+<w:DoNotPromoteQF/>
+<w:LidThemeOther>NO-BOK</w:LidThemeOther>
+<w:LidThemeAsian>X-NONE</w:LidThemeAsian>
+<w:LidThemeComplexScript>X-NONE</w:LidThemeComplexScript>
+<w:Compatibility>
+<w:BreakWrappedTables/>
+<w:SnapToGridInCell/>
+<w:WrapTextWithPunct/>
+<w:UseAsianBreakRules/>
+<w:DontGrowAutofit/>
+<w:SplitPgBreakAndParaMark/>
+<w:EnableOpenTypeKerning/>
+<w:DontFlipMirrorIndents/>
+<w:OverrideTableStyleHps/>
+</w:Compatibility>
+<m:mathPr>
+<m:mathFont m:val="Cambria Math"/>
+<m:brkBin m:val="before"/>
+<m:brkBinSub m:val="&#45;-"/>
+<m:smallFrac m:val="off"/>
+<m:dispDef/>
+<m:lMargin m:val="0"/>
+<m:rMargin m:val="0"/>
+<m:defJc m:val="centerGroup"/>
+<m:wrapIndent m:val="1440"/>
+<m:intLim m:val="subSup"/>
+<m:naryLim m:val="undOvr"/>
+</m:mathPr></w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<w:LatentStyles DefLockedState="false" DefUnhideWhenUsed="false"
+DefSemiHidden="false" DefQFormat="false" DefPriority="99"
+LatentStyleCount="371">
+<w:LsdException Locked="false" Priority="0" QFormat="true" Name="Normal"/>
+<w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 1"/>
+<w:LsdException Locked="false" Priority="9" SemiHidden="true"
+UnhideWhenUsed="true" QFormat="true" Name="heading 2"/>
+<w:LsdException Locked="false" Priority="9" SemiHidden="true"
+UnhideWhenUsed="true" QFormat="true" Name="heading 3"/>
+<w:LsdException Locked="false" Priority="9" SemiHidden="true"
+UnhideWhenUsed="true" QFormat="true" Name="heading 4"/>
+<w:LsdException Locked="false" Priority="9" SemiHidden="true"
+UnhideWhenUsed="true" QFormat="true" Name="heading 5"/>
+<w:LsdException Locked="false" Priority="9" SemiHidden="true"
+UnhideWhenUsed="true" QFormat="true" Name="heading 6"/>
+<w:LsdException Locked="false" Priority="9" SemiHidden="true"
+UnhideWhenUsed="true" QFormat="true" Name="heading 7"/>
+<w:LsdException Locked="false" Priority="9" SemiHidden="true"
+UnhideWhenUsed="true" QFormat="true" Name="heading 8"/>
+<w:LsdException Locked="false" Priority="9" SemiHidden="true"
+UnhideWhenUsed="true" QFormat="true" Name="heading 9"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="index 1"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="index 2"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="index 3"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="index 4"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="index 5"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="index 6"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="index 7"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="index 8"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="index 9"/>
+<w:LsdException Locked="false" Priority="39" SemiHidden="true"
+UnhideWhenUsed="true" Name="toc 1"/>
+<w:LsdException Locked="false" Priority="39" SemiHidden="true"
+UnhideWhenUsed="true" Name="toc 2"/>
+<w:LsdException Locked="false" Priority="39" SemiHidden="true"
+UnhideWhenUsed="true" Name="toc 3"/>
+<w:LsdException Locked="false" Priority="39" SemiHidden="true"
+UnhideWhenUsed="true" Name="toc 4"/>
+<w:LsdException Locked="false" Priority="39" SemiHidden="true"
+UnhideWhenUsed="true" Name="toc 5"/>
+<w:LsdException Locked="false" Priority="39" SemiHidden="true"
+UnhideWhenUsed="true" Name="toc 6"/>
+<w:LsdException Locked="false" Priority="39" SemiHidden="true"
+UnhideWhenUsed="true" Name="toc 7"/>
+<w:LsdException Locked="false" Priority="39" SemiHidden="true"
+UnhideWhenUsed="true" Name="toc 8"/>
+<w:LsdException Locked="false" Priority="39" SemiHidden="true"
+UnhideWhenUsed="true" Name="toc 9"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Normal Indent"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="footnote text"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="annotation text"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="header"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="footer"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="index heading"/>
+<w:LsdException Locked="false" Priority="35" SemiHidden="true"
+UnhideWhenUsed="true" QFormat="true" Name="caption"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="table of figures"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="envelope address"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="envelope return"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="footnote reference"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="annotation reference"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="line number"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="page number"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="endnote reference"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="endnote text"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="table of authorities"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="macro"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="toa heading"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="List"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="List Bullet"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="List Number"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="List 2"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="List 3"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="List 4"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="List 5"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="List Bullet 2"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="List Bullet 3"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="List Bullet 4"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="List Bullet 5"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="List Number 2"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="List Number 3"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="List Number 4"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="List Number 5"/>
+<w:LsdException Locked="false" Priority="10" QFormat="true" Name="Title"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Closing"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Signature"/>
+<w:LsdException Locked="false" Priority="1" SemiHidden="true"
+UnhideWhenUsed="true" Name="Default Paragraph Font"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Body Text"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Body Text Indent"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="List Continue"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="List Continue 2"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="List Continue 3"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="List Continue 4"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="List Continue 5"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Message Header"/>
+<w:LsdException Locked="false" Priority="11" QFormat="true" Name="Subtitle"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Salutation"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Date"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Body Text First Indent"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Body Text First Indent 2"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Note Heading"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Body Text 2"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Body Text 3"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Body Text Indent 2"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Body Text Indent 3"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Block Text"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Hyperlink"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="FollowedHyperlink"/>
+<w:LsdException Locked="false" Priority="22" QFormat="true" Name="Strong"/>
+<w:LsdException Locked="false" Priority="20" QFormat="true" Name="Emphasis"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Document Map"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Plain Text"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="E-mail Signature"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="HTML Top of Form"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="HTML Bottom of Form"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Normal (Web)"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="HTML Acronym"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="HTML Address"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="HTML Cite"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="HTML Code"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="HTML Definition"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="HTML Keyboard"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="HTML Preformatted"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="HTML Sample"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="HTML Typewriter"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="HTML Variable"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Normal Table"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="annotation subject"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="No List"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Outline List 1"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Outline List 2"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Outline List 3"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Simple 1"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Simple 2"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Simple 3"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Classic 1"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Classic 2"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Classic 3"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Classic 4"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Colorful 1"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Colorful 2"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Colorful 3"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Columns 1"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Columns 2"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Columns 3"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Columns 4"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Columns 5"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Grid 1"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Grid 2"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Grid 3"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Grid 4"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Grid 5"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Grid 6"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Grid 7"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Grid 8"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table List 1"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table List 2"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table List 3"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table List 4"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table List 5"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table List 6"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table List 7"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table List 8"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table 3D effects 1"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table 3D effects 2"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table 3D effects 3"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Contemporary"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Elegant"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Professional"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Subtle 1"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Subtle 2"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Web 1"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Web 2"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Web 3"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Balloon Text"/>
+<w:LsdException Locked="false" Priority="39" Name="Table Grid"/>
+<w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+Name="Table Theme"/>
+<w:LsdException Locked="false" SemiHidden="true" Name="Placeholder Text"/>
+<w:LsdException Locked="false" Priority="1" QFormat="true" Name="No Spacing"/>
+<w:LsdException Locked="false" Priority="60" Name="Light Shading"/>
+<w:LsdException Locked="false" Priority="61" Name="Light List"/>
+<w:LsdException Locked="false" Priority="62" Name="Light Grid"/>
+<w:LsdException Locked="false" Priority="63" Name="Medium Shading 1"/>
+<w:LsdException Locked="false" Priority="64" Name="Medium Shading 2"/>
+<w:LsdException Locked="false" Priority="65" Name="Medium List 1"/>
+<w:LsdException Locked="false" Priority="66" Name="Medium List 2"/>
+<w:LsdException Locked="false" Priority="67" Name="Medium Grid 1"/>
+<w:LsdException Locked="false" Priority="68" Name="Medium Grid 2"/>
+<w:LsdException Locked="false" Priority="69" Name="Medium Grid 3"/>
+<w:LsdException Locked="false" Priority="70" Name="Dark List"/>
+<w:LsdException Locked="false" Priority="71" Name="Colorful Shading"/>
+<w:LsdException Locked="false" Priority="72" Name="Colorful List"/>
+<w:LsdException Locked="false" Priority="73" Name="Colorful Grid"/>
+<w:LsdException Locked="false" Priority="60" Name="Light Shading Accent 1"/>
+<w:LsdException Locked="false" Priority="61" Name="Light List Accent 1"/>
+<w:LsdException Locked="false" Priority="62" Name="Light Grid Accent 1"/>
+<w:LsdException Locked="false" Priority="63" Name="Medium Shading 1 Accent 1"/>
+<w:LsdException Locked="false" Priority="64" Name="Medium Shading 2 Accent 1"/>
+<w:LsdException Locked="false" Priority="65" Name="Medium List 1 Accent 1"/>
+<w:LsdException Locked="false" SemiHidden="true" Name="Revision"/>
+<w:LsdException Locked="false" Priority="34" QFormat="true"
+Name="List Paragraph"/>
+<w:LsdException Locked="false" Priority="29" QFormat="true" Name="Quote"/>
+<w:LsdException Locked="false" Priority="30" QFormat="true"
+Name="Intense Quote"/>
+<w:LsdException Locked="false" Priority="66" Name="Medium List 2 Accent 1"/>
+<w:LsdException Locked="false" Priority="67" Name="Medium Grid 1 Accent 1"/>
+<w:LsdException Locked="false" Priority="68" Name="Medium Grid 2 Accent 1"/>
+<w:LsdException Locked="false" Priority="69" Name="Medium Grid 3 Accent 1"/>
+<w:LsdException Locked="false" Priority="70" Name="Dark List Accent 1"/>
+<w:LsdException Locked="false" Priority="71" Name="Colorful Shading Accent 1"/>
+<w:LsdException Locked="false" Priority="72" Name="Colorful List Accent 1"/>
+<w:LsdException Locked="false" Priority="73" Name="Colorful Grid Accent 1"/>
+<w:LsdException Locked="false" Priority="60" Name="Light Shading Accent 2"/>
+<w:LsdException Locked="false" Priority="61" Name="Light List Accent 2"/>
+<w:LsdException Locked="false" Priority="62" Name="Light Grid Accent 2"/>
+<w:LsdException Locked="false" Priority="63" Name="Medium Shading 1 Accent 2"/>
+<w:LsdException Locked="false" Priority="64" Name="Medium Shading 2 Accent 2"/>
+<w:LsdException Locked="false" Priority="65" Name="Medium List 1 Accent 2"/>
+<w:LsdException Locked="false" Priority="66" Name="Medium List 2 Accent 2"/>
+<w:LsdException Locked="false" Priority="67" Name="Medium Grid 1 Accent 2"/>
+<w:LsdException Locked="false" Priority="68" Name="Medium Grid 2 Accent 2"/>
+<w:LsdException Locked="false" Priority="69" Name="Medium Grid 3 Accent 2"/>
+<w:LsdException Locked="false" Priority="70" Name="Dark List Accent 2"/>
+<w:LsdException Locked="false" Priority="71" Name="Colorful Shading Accent 2"/>
+<w:LsdException Locked="false" Priority="72" Name="Colorful List Accent 2"/>
+<w:LsdException Locked="false" Priority="73" Name="Colorful Grid Accent 2"/>
+<w:LsdException Locked="false" Priority="60" Name="Light Shading Accent 3"/>
+<w:LsdException Locked="false" Priority="61" Name="Light List Accent 3"/>
+<w:LsdException Locked="false" Priority="62" Name="Light Grid Accent 3"/>
+<w:LsdException Locked="false" Priority="63" Name="Medium Shading 1 Accent 3"/>
+<w:LsdException Locked="false" Priority="64" Name="Medium Shading 2 Accent 3"/>
+<w:LsdException Locked="false" Priority="65" Name="Medium List 1 Accent 3"/>
+<w:LsdException Locked="false" Priority="66" Name="Medium List 2 Accent 3"/>
+<w:LsdException Locked="false" Priority="67" Name="Medium Grid 1 Accent 3"/>
+<w:LsdException Locked="false" Priority="68" Name="Medium Grid 2 Accent 3"/>
+<w:LsdException Locked="false" Priority="69" Name="Medium Grid 3 Accent 3"/>
+<w:LsdException Locked="false" Priority="70" Name="Dark List Accent 3"/>
+<w:LsdException Locked="false" Priority="71" Name="Colorful Shading Accent 3"/>
+<w:LsdException Locked="false" Priority="72" Name="Colorful List Accent 3"/>
+<w:LsdException Locked="false" Priority="73" Name="Colorful Grid Accent 3"/>
+<w:LsdException Locked="false" Priority="60" Name="Light Shading Accent 4"/>
+<w:LsdException Locked="false" Priority="61" Name="Light List Accent 4"/>
+<w:LsdException Locked="false" Priority="62" Name="Light Grid Accent 4"/>
+<w:LsdException Locked="false" Priority="63" Name="Medium Shading 1 Accent 4"/>
+<w:LsdException Locked="false" Priority="64" Name="Medium Shading 2 Accent 4"/>
+<w:LsdException Locked="false" Priority="65" Name="Medium List 1 Accent 4"/>
+<w:LsdException Locked="false" Priority="66" Name="Medium List 2 Accent 4"/>
+<w:LsdException Locked="false" Priority="67" Name="Medium Grid 1 Accent 4"/>
+<w:LsdException Locked="false" Priority="68" Name="Medium Grid 2 Accent 4"/>
+<w:LsdException Locked="false" Priority="69" Name="Medium Grid 3 Accent 4"/>
+<w:LsdException Locked="false" Priority="70" Name="Dark List Accent 4"/>
+<w:LsdException Locked="false" Priority="71" Name="Colorful Shading Accent 4"/>
+<w:LsdException Locked="false" Priority="72" Name="Colorful List Accent 4"/>
+<w:LsdException Locked="false" Priority="73" Name="Colorful Grid Accent 4"/>
+<w:LsdException Locked="false" Priority="60" Name="Light Shading Accent 5"/>
+<w:LsdException Locked="false" Priority="61" Name="Light List Accent 5"/>
+<w:LsdException Locked="false" Priority="62" Name="Light Grid Accent 5"/>
+<w:LsdException Locked="false" Priority="63" Name="Medium Shading 1 Accent 5"/>
+<w:LsdException Locked="false" Priority="64" Name="Medium Shading 2 Accent 5"/>
+<w:LsdException Locked="false" Priority="65" Name="Medium List 1 Accent 5"/>
+<w:LsdException Locked="false" Priority="66" Name="Medium List 2 Accent 5"/>
+<w:LsdException Locked="false" Priority="67" Name="Medium Grid 1 Accent 5"/>
+<w:LsdException Locked="false" Priority="68" Name="Medium Grid 2 Accent 5"/>
+<w:LsdException Locked="false" Priority="69" Name="Medium Grid 3 Accent 5"/>
+<w:LsdException Locked="false" Priority="70" Name="Dark List Accent 5"/>
+<w:LsdException Locked="false" Priority="71" Name="Colorful Shading Accent 5"/>
+<w:LsdException Locked="false" Priority="72" Name="Colorful List Accent 5"/>
+<w:LsdException Locked="false" Priority="73" Name="Colorful Grid Accent 5"/>
+<w:LsdException Locked="false" Priority="60" Name="Light Shading Accent 6"/>
+<w:LsdException Locked="false" Priority="61" Name="Light List Accent 6"/>
+<w:LsdException Locked="false" Priority="62" Name="Light Grid Accent 6"/>
+<w:LsdException Locked="false" Priority="63" Name="Medium Shading 1 Accent 6"/>
+<w:LsdException Locked="false" Priority="64" Name="Medium Shading 2 Accent 6"/>
+<w:LsdException Locked="false" Priority="65" Name="Medium List 1 Accent 6"/>
+<w:LsdException Locked="false" Priority="66" Name="Medium List 2 Accent 6"/>
+<w:LsdException Locked="false" Priority="67" Name="Medium Grid 1 Accent 6"/>
+<w:LsdException Locked="false" Priority="68" Name="Medium Grid 2 Accent 6"/>
+<w:LsdException Locked="false" Priority="69" Name="Medium Grid 3 Accent 6"/>
+<w:LsdException Locked="false" Priority="70" Name="Dark List Accent 6"/>
+<w:LsdException Locked="false" Priority="71" Name="Colorful Shading Accent 6"/>
+<w:LsdException Locked="false" Priority="72" Name="Colorful List Accent 6"/>
+<w:LsdException Locked="false" Priority="73" Name="Colorful Grid Accent 6"/>
+<w:LsdException Locked="false" Priority="19" QFormat="true"
+Name="Subtle Emphasis"/>
+<w:LsdException Locked="false" Priority="21" QFormat="true"
+Name="Intense Emphasis"/>
+<w:LsdException Locked="false" Priority="31" QFormat="true"
+Name="Subtle Reference"/>
+<w:LsdException Locked="false" Priority="32" QFormat="true"
+Name="Intense Reference"/>
+<w:LsdException Locked="false" Priority="33" QFormat="true" Name="Book Title"/>
+<w:LsdException Locked="false" Priority="37" SemiHidden="true"
+UnhideWhenUsed="true" Name="Bibliography"/>
+<w:LsdException Locked="false" Priority="39" SemiHidden="true"
+UnhideWhenUsed="true" QFormat="true" Name="TOC Heading"/>
+<w:LsdException Locked="false" Priority="41" Name="Plain Table 1"/>
+<w:LsdException Locked="false" Priority="42" Name="Plain Table 2"/>
+<w:LsdException Locked="false" Priority="43" Name="Plain Table 3"/>
+<w:LsdException Locked="false" Priority="44" Name="Plain Table 4"/>
+<w:LsdException Locked="false" Priority="45" Name="Plain Table 5"/>
+<w:LsdException Locked="false" Priority="40" Name="Grid Table Light"/>
+<w:LsdException Locked="false" Priority="46" Name="Grid Table 1 Light"/>
+<w:LsdException Locked="false" Priority="47" Name="Grid Table 2"/>
+<w:LsdException Locked="false" Priority="48" Name="Grid Table 3"/>
+<w:LsdException Locked="false" Priority="49" Name="Grid Table 4"/>
+<w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark"/>
+<w:LsdException Locked="false" Priority="51" Name="Grid Table 6 Colorful"/>
+<w:LsdException Locked="false" Priority="52" Name="Grid Table 7 Colorful"/>
+<w:LsdException Locked="false" Priority="46"
+Name="Grid Table 1 Light Accent 1"/>
+<w:LsdException Locked="false" Priority="47" Name="Grid Table 2 Accent 1"/>
+<w:LsdException Locked="false" Priority="48" Name="Grid Table 3 Accent 1"/>
+<w:LsdException Locked="false" Priority="49" Name="Grid Table 4 Accent 1"/>
+<w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark Accent 1"/>
+<w:LsdException Locked="false" Priority="51"
+Name="Grid Table 6 Colorful Accent 1"/>
+<w:LsdException Locked="false" Priority="52"
+Name="Grid Table 7 Colorful Accent 1"/>
+<w:LsdException Locked="false" Priority="46"
+Name="Grid Table 1 Light Accent 2"/>
+<w:LsdException Locked="false" Priority="47" Name="Grid Table 2 Accent 2"/>
+<w:LsdException Locked="false" Priority="48" Name="Grid Table 3 Accent 2"/>
+<w:LsdException Locked="false" Priority="49" Name="Grid Table 4 Accent 2"/>
+<w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark Accent 2"/>
+<w:LsdException Locked="false" Priority="51"
+Name="Grid Table 6 Colorful Accent 2"/>
+<w:LsdException Locked="false" Priority="52"
+Name="Grid Table 7 Colorful Accent 2"/>
+<w:LsdException Locked="false" Priority="46"
+Name="Grid Table 1 Light Accent 3"/>
+<w:LsdException Locked="false" Priority="47" Name="Grid Table 2 Accent 3"/>
+<w:LsdException Locked="false" Priority="48" Name="Grid Table 3 Accent 3"/>
+<w:LsdException Locked="false" Priority="49" Name="Grid Table 4 Accent 3"/>
+<w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark Accent 3"/>
+<w:LsdException Locked="false" Priority="51"
+Name="Grid Table 6 Colorful Accent 3"/>
+<w:LsdException Locked="false" Priority="52"
+Name="Grid Table 7 Colorful Accent 3"/>
+<w:LsdException Locked="false" Priority="46"
+Name="Grid Table 1 Light Accent 4"/>
+<w:LsdException Locked="false" Priority="47" Name="Grid Table 2 Accent 4"/>
+<w:LsdException Locked="false" Priority="48" Name="Grid Table 3 Accent 4"/>
+<w:LsdException Locked="false" Priority="49" Name="Grid Table 4 Accent 4"/>
+<w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark Accent 4"/>
+<w:LsdException Locked="false" Priority="51"
+Name="Grid Table 6 Colorful Accent 4"/>
+<w:LsdException Locked="false" Priority="52"
+Name="Grid Table 7 Colorful Accent 4"/>
+<w:LsdException Locked="false" Priority="46"
+Name="Grid Table 1 Light Accent 5"/>
+<w:LsdException Locked="false" Priority="47" Name="Grid Table 2 Accent 5"/>
+<w:LsdException Locked="false" Priority="48" Name="Grid Table 3 Accent 5"/>
+<w:LsdException Locked="false" Priority="49" Name="Grid Table 4 Accent 5"/>
+<w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark Accent 5"/>
+<w:LsdException Locked="false" Priority="51"
+Name="Grid Table 6 Colorful Accent 5"/>
+<w:LsdException Locked="false" Priority="52"
+Name="Grid Table 7 Colorful Accent 5"/>
+<w:LsdException Locked="false" Priority="46"
+Name="Grid Table 1 Light Accent 6"/>
+<w:LsdException Locked="false" Priority="47" Name="Grid Table 2 Accent 6"/>
+<w:LsdException Locked="false" Priority="48" Name="Grid Table 3 Accent 6"/>
+<w:LsdException Locked="false" Priority="49" Name="Grid Table 4 Accent 6"/>
+<w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark Accent 6"/>
+<w:LsdException Locked="false" Priority="51"
+Name="Grid Table 6 Colorful Accent 6"/>
+<w:LsdException Locked="false" Priority="52"
+Name="Grid Table 7 Colorful Accent 6"/>
+<w:LsdException Locked="false" Priority="46" Name="List Table 1 Light"/>
+<w:LsdException Locked="false" Priority="47" Name="List Table 2"/>
+<w:LsdException Locked="false" Priority="48" Name="List Table 3"/>
+<w:LsdException Locked="false" Priority="49" Name="List Table 4"/>
+<w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark"/>
+<w:LsdException Locked="false" Priority="51" Name="List Table 6 Colorful"/>
+<w:LsdException Locked="false" Priority="52" Name="List Table 7 Colorful"/>
+<w:LsdException Locked="false" Priority="46"
+Name="List Table 1 Light Accent 1"/>
+<w:LsdException Locked="false" Priority="47" Name="List Table 2 Accent 1"/>
+<w:LsdException Locked="false" Priority="48" Name="List Table 3 Accent 1"/>
+<w:LsdException Locked="false" Priority="49" Name="List Table 4 Accent 1"/>
+<w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark Accent 1"/>
+<w:LsdException Locked="false" Priority="51"
+Name="List Table 6 Colorful Accent 1"/>
+<w:LsdException Locked="false" Priority="52"
+Name="List Table 7 Colorful Accent 1"/>
+<w:LsdException Locked="false" Priority="46"
+Name="List Table 1 Light Accent 2"/>
+<w:LsdException Locked="false" Priority="47" Name="List Table 2 Accent 2"/>
+<w:LsdException Locked="false" Priority="48" Name="List Table 3 Accent 2"/>
+<w:LsdException Locked="false" Priority="49" Name="List Table 4 Accent 2"/>
+<w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark Accent 2"/>
+<w:LsdException Locked="false" Priority="51"
+Name="List Table 6 Colorful Accent 2"/>
+<w:LsdException Locked="false" Priority="52"
+Name="List Table 7 Colorful Accent 2"/>
+<w:LsdException Locked="false" Priority="46"
+Name="List Table 1 Light Accent 3"/>
+<w:LsdException Locked="false" Priority="47" Name="List Table 2 Accent 3"/>
+<w:LsdException Locked="false" Priority="48" Name="List Table 3 Accent 3"/>
+<w:LsdException Locked="false" Priority="49" Name="List Table 4 Accent 3"/>
+<w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark Accent 3"/>
+<w:LsdException Locked="false" Priority="51"
+Name="List Table 6 Colorful Accent 3"/>
+<w:LsdException Locked="false" Priority="52"
+Name="List Table 7 Colorful Accent 3"/>
+<w:LsdException Locked="false" Priority="46"
+Name="List Table 1 Light Accent 4"/>
+<w:LsdException Locked="false" Priority="47" Name="List Table 2 Accent 4"/>
+<w:LsdException Locked="false" Priority="48" Name="List Table 3 Accent 4"/>
+<w:LsdException Locked="false" Priority="49" Name="List Table 4 Accent 4"/>
+<w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark Accent 4"/>
+<w:LsdException Locked="false" Priority="51"
+Name="List Table 6 Colorful Accent 4"/>
+<w:LsdException Locked="false" Priority="52"
+Name="List Table 7 Colorful Accent 4"/>
+<w:LsdException Locked="false" Priority="46"
+Name="List Table 1 Light Accent 5"/>
+<w:LsdException Locked="false" Priority="47" Name="List Table 2 Accent 5"/>
+<w:LsdException Locked="false" Priority="48" Name="List Table 3 Accent 5"/>
+<w:LsdException Locked="false" Priority="49" Name="List Table 4 Accent 5"/>
+<w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark Accent 5"/>
+<w:LsdException Locked="false" Priority="51"
+Name="List Table 6 Colorful Accent 5"/>
+<w:LsdException Locked="false" Priority="52"
+Name="List Table 7 Colorful Accent 5"/>
+<w:LsdException Locked="false" Priority="46"
+Name="List Table 1 Light Accent 6"/>
+<w:LsdException Locked="false" Priority="47" Name="List Table 2 Accent 6"/>
+<w:LsdException Locked="false" Priority="48" Name="List Table 3 Accent 6"/>
+<w:LsdException Locked="false" Priority="49" Name="List Table 4 Accent 6"/>
+<w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark Accent 6"/>
+<w:LsdException Locked="false" Priority="51"
+Name="List Table 6 Colorful Accent 6"/>
+<w:LsdException Locked="false" Priority="52"
+Name="List Table 7 Colorful Accent 6"/>
+</w:LatentStyles>
+</xml><![endif]--><!--[if gte mso 10]>
+<style>
+/* Style Definitions */
+table.MsoNormalTable
+{mso-style-name:"Vanlig tabell";
+mso-tstyle-rowband-size:0;
+mso-tstyle-colband-size:0;
+mso-style-noshow:yes;
+mso-style-priority:99;
+mso-style-parent:"";
+mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+mso-para-margin-top:0cm;
+mso-para-margin-right:0cm;
+mso-para-margin-bottom:8.0pt;
+mso-para-margin-left:0cm;
+line-height:107%;
+mso-pagination:widow-orphan;
+font-size:11.0pt;
+font-family:"Calibri",sans-serif;
+mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;
+mso-hansi-font-family:Calibri;
+mso-hansi-theme-font:minor-latin;
+mso-bidi-font-family:"Times New Roman";
+mso-bidi-theme-font:minor-bidi;
+mso-fareast-language:EN-US;}
+</style>
+<![endif]--><span>I</span><span>n the ATC </span><span>classification system, the active substances </span><span>are classified in a hierarchy with five different levels.&nbsp; The system has fourteen main anatomical/pharmacological groups or 1st levels.&nbsp; Each ATC main group is divided into 2nd levels which could be either pharmacological or therapeutic groups.&nbsp; </span><span>The 3rd and 4th levels are chemical, pharmacological or therapeutic subgroups and the 5th level is the chemical substance.&nbsp; The 2nd, 3rd and 4th levels are often used to identify pharmacological subgroups when that is considered more appropriate than therapeutic or chemical subgroups</span><span>.</span><span><br />The complete classification of metformin illustrates the structure of the code:</span></p>
+<table border="0">
+<tbody>
+<tr style="background-color: #d9dbdd;">
+<td valign="top">A</td>
+<td>Alimentary tract and metabolism<br /><span>(1st level, anatomical main group)</span></td>
+</tr>
+<tr style="background-color: #eaecec;">
+<td valign="top">A10</td>
+<td>Drugs used in diabetes<br />(2nd level, therapeutic subgroup)</td>
+</tr>
+<tr style="background-color: #d9dbdd;">
+<td valign="top">A10B</td>
+<td>Blood glucose lowering drugs, excl. insulins<br />(3rd level, pharmacological subgroup)</td>
+</tr>
+<tr style="background-color: #eaecec;">
+<td valign="top">A10BA</td>
+<td>Biguanides<br />(4th level, chemical subgroup)</td>
+</tr>
+<tr style="background-color: #d9dbdd;">
+<td valign="top">A10BA02&nbsp;&nbsp;&nbsp;</td>
+<td>metformin<br />(5th level, chemical substance)</td>
+</tr>
+</tbody>
+</table>
+<p><span>Thus, in the ATC system all plain metformin preparations are given the code A10BA02.<br /></span><br /><strong><a name="nomecl"></a>Nomenclature</strong> <a href="/atc/structure_and_principles">(to the top)</a></p>
+<ul><!--[if gte mso 9]><xml>
+<o:OfficeDocumentSettings>
+<o:AllowPNG/>
+</o:OfficeDocumentSettings>
+</xml><![endif]-->
+<li><span>I</span><span>n</span><span>ternational nonproprietary names </span><span>(INN) are preferred.&nbsp; If INN names are not assigned, USAN (United States Adopted Name) or BAN (British Approved Name) are usually chosen. </span></li>
+<li><span>A Biological Qualifier (BQ) is not part of the INN and the introduction of a new BQ will not have any implication on the ATC code for the specific INN. &nbsp;Further information about the Biological Qualifier can be found here: </span><a href="https://www.who.int/publications/i/item/inn-14-342"><span>http://www.who.int/medicines/services/inn/WHO_INN_BQ_proposal_2015.pdf?ua</span><span>=1</span></a></li>
+</ul>
+<p><strong><a name="Inclusion"></a>Inclusion and exclusion criteria</strong>&nbsp;<a href="/atc/structure_and_principles">(to the top)</a><br /><span>The WHO Collaborating Centre in Oslo establishes new entries in the ATC classification on requests from the users of the system.&nbsp; These include manufacturers, regulatory agencies and researchers.&nbsp; The coverage of the system is not comprehensive.&nbsp; A major reason why a substance is not included is that no request has been received.</span></p>
+<p><span>Substances which fulfil one of the following criteria will normally be included in the ATC system: </span></p>
+<ul>
+<li><span>new chemical entities or biologicals proposed for licensing. &nbsp;A new chemical entity is normally not included in the ATC system before an application for marketing authorisation is ready for submission in at least one country.<br /></span></li>
+<li><span>existing well defined chemical entities with an approved marketing authorization in one or more countries. &nbsp;An INN should preferably be established for the substance.&nbsp; Alternatively other official names, e.g. USAN or BAN names should be available.<br /></span></li>
+<li><span>herbal medicinal products assessed and approved by regulatory authorities based on dossiers including efficacy, safety, and quality data (e.g. the well-established use procedure in EU).</span></li>
+</ul>
+<p><span>Other medicinal products are considered on a case by case basis.&nbsp; Complementary, homeopathic and herbal traditional medicinal products are in general not included in the ATC system.</span></p>
+<p><strong><a name="Therapeu"></a>Therapeutic use or pharmacological class </strong><a href="/atc/structure_and_principles">(to the top)<br /></a><span>Medicinal products are classified according to the main therapeutic use of the main active ingredient. </span><span>The ATC system is, however, not strictly a therapeutic classification system</span><span>. &nbsp;</span><span>In many ATC main groups, pharmacological groups have been assigned on the 2nd, 3rd and 4th levels allowing drugs with several therapeutic uses to be included without specifying the main indication. &nbsp;For example, calcium channel blockers are classified in the pharmacological group C08 Calcium channel blockers, which avoids specifying whether the main indication is coronary heart disease or hypertension</span><span>.&nbsp; </span><span>Subdivision on the mechanism of action will, however, often be rather broad (e.g. antidepressants), since a too detailed classification according to mode of action often will result in having one substance per subgroup which as far as possible is avoided.&nbsp; Some ATC groups are subdivided in both chemical and pharmacological groups (e.g. ATC group J05A - Direct acting antivirals). &nbsp;Preference will be given to establishing a new pharmacological 4th level rather than a chemical subgroup.</span></p>
+<p><span>Many medicines are used and approved for two or more indications, while normally only one ATC code will be assigned.&nbsp; Besides, ATC codes are often assigned according to the mechanism of action rather than therapy. An ATC group may therefore include medicines with many different indications, and drugs with similar therapeutic use may be classified in different groups. </span></p>
+<p><strong><a name="only"></a>Only one ATC code for each route of administration </strong><a href="/atc/structure_and_principles">(to the top)<br /></a><span>Medicinal substances are classified according to the main therapeutic use or pharmacological class on the basic principle of only one ATC code for each</span><span> route of administration (e.g. oral formulations with similar ingredients and strength will have the same ATC code).</span><span> &nbsp;This is an important principle for ATC classification as it allows aggregation of data in drug utilization monitoring and research without counting a pharmaceutical product more than once. &nbsp;This principle is strictly handled by the WHO Centre so that users in different countries shall be able to classify a pharmaceutical product (defined by active ingredient/s, route of administration and strength) in the same way. </span></p>
+<p><span>A pharmaceutical product may be approved for two or more equally important indications, and the main therapeutic use may differ from one country to another.&nbsp; This will often give several classification alternatives.&nbsp; Such drugs are only given one code, the main indication being decided on the basis of the available information.&nbsp; Problems are discussed in the WHO International Working Group for Drug Statistics Methodology where the final classification is decided.&nbsp; Cross-references will be given in the guidelines to indicate the various uses of such drugs.</span></p>
+<p><strong><a name="more"></a>More than one ATC code for a medicinal substance </strong><a href="/atc/structure_and_principles">(to the top)<br /></a><span>A medicinal substance can be given more than one ATC code if it is available in two or more strengths or routes of administration with clearly different therapeutic uses. </span></p>
+<p><span>Example of different strengths:</span></p>
+<ul>
+<li><span>Finasteride is available in two different strengths.&nbsp; A low strength tablet for the treatment of male pattern baldness is classified under D11AX - <em>Other dermatologicals</em>.&nbsp; A high strength tablet used in the treatment of benign prostatic hypertrophy (BPH) is classified under G04C - <em>Drugs used in BPH</em>.</span><a href="/atc/structure_and_principles"></a></li>
+</ul>
+<p>&nbsp;<span>Example of different administration forms:</span></p>
+<ul>
+<li><span>Prednisolone in single ingredient products is given several ATC codes due to different therapeutic use and different formulations.</span></li>
+</ul>
+<p><span>A07EA01&nbsp;&nbsp;Intestinal antiinflammatory agents (enemas and foams)<br /></span><span>C05AA04&nbsp;&nbsp;Antihemorrhoidals for topical use&nbsp;(suppositories)<br /></span><span>D07AA03&nbsp;&nbsp;Dermatological preparations (creams, ointments and lotions)<br /></span><span>H02AB06&nbsp;&nbsp;Corticosteroids for systemic use&nbsp;(tablets, injections)<br /></span><span>R01AD02&nbsp;&nbsp;Nasal decongestants&nbsp;(nasal sprays/drops)<br /></span><span>S01BA04&nbsp;&nbsp;Ophthalmologicals&nbsp;(eye drops)<br /></span><span>S02BA03&nbsp;&nbsp;Otologicals&nbsp;(ear drops)</span></p>
+<p><strong><a name="New"></a>New ATC groups and &ldquo;other&rdquo; groups (X groups) </strong><a href="/atc/structure_and_principles">(to the top)<br /></a><span>A new medicinal substance not clearly belonging to any existing ATC 4th level will as a main rule be placed in an X group ("other" group) in the relevant 3rd level.&nbsp; </span><span>To avoid a situation of several 4th levels with only one single substance in each, new specific 4th levels are as a general rule only established when at least two substances with marketing authorisations fit in the group. &nbsp;In addition, a new 4th level should be regarded a benefit for drug utilization research. &nbsp;New and innovative pharmaceutical products will therefore often be classified in an X group and such groups could be established for only one single substance.</span></p>
+<p><strong><a name="Other"></a>Other general principles </strong><a href="/atc/structure_and_principles">(to the top)<br /></a><span>Immediate and slow release tablets will normally have the same ATC code.</span></p>
+<p><span>Different stereoisomeric forms will normally have separate ATC codes.&nbsp; Exceptions will be described in the guidelines for the respective ATC groups</span></p>
+<p><span>Prodrugs are usually assigned separate ATC codes if the dosages used are different and/or the nonproprietary name (INN) of the prodrug and the active drugs are different. </span></p>
+<p><span>Example:<br /></span><span>J01CA08&nbsp;<em>pivmecillinam</em><br /></span><span>J01CA11&nbsp;<em>mecillinam</em></span></p>
+<p><span>Obsolete drugs or drugs withdrawn from the market are kept in the ATC system, since exclusion of substances from the ATC system may create difficulties for the users of the system when considering historical data. </span></p>
+<p><span><strong><a name="combina"></a>Classification of combination products </strong><a href="/atc/structure_and_principles">(to the top)<br /></a></span><span>Pharmaceutical products containing two or more active ingredients are regarded as combinations (incl. combination packages) and given different ATC codes from plain products containing one active ingredient.&nbsp; Stereoisomeric mixtures are regarded as plain products.&nbsp; </span><span>Medicinal products which in addition to one active ingredient contain auxiliary substances intended to increase the stability of the product (e.g. vaccines containing small amounts of antibacterials), increase the duration (e.g. depot formulations) and/or increase the absorption (e.g. different solvents in various dermatologicals) are considered as plain products.</span></p>
+<p><span>The classification of combination products is a challenge in any classification system. </span><span>As for plain products, combinations are in general classified according to their main therapeutic use or pharmacological class. </span><span>A medicinal product containing an analgesic and a tranquillizer, and used primarily to ease pain, should be classified as an analgesic.&nbsp; Likewise, combinations of analgesics and antispasmodics will be classified in A03 <em>Drugs for functional gastrointestinal disorders</em> if the antispasmodic effect of the product is considered most important.&nbsp; Similar examples are described in detail in the guidelines for the relevant drug groups.</span></p>
+<p><span>In some ATC groups a ranking is introduced to help in the classification of combination products (e.g. combinations of different antihypertensives and combinations of different analgesics).&nbsp; This ranking shows which drug takes precedence over others when the classification is decided.&nbsp; This is detailed in the guidelines for the relevant drug groups.</span></p>
+<p><span>A commonly used principle for combinations with active ingredients not belonging to the same ATC 4th level, is that the main ingredient in the combination is identified and the combination is given a separate 5th level code (50-series) in the same 4th level as the main ingredient is classified. </span></p>
+<p><span>Example:<br /></span><span>N02BE01&nbsp;<em>paracetamol</em><br /></span><span>N02BE51&nbsp;<em>paracetamol, combinations excl. psycholeptics&nbsp;</em><br /> </span></p>
+<p><span>In this example different combination products share the same main active ingredient (paracetamol in the example above) and are given the same ATC code.&nbsp; Combinations of e.g. paracetamol + acetylsalicylic acid and paracetamol + caffeine are thus classified in the same code </span><span>N02BE51 <em>paracetamol, combinations excl psycholeptics</em></span><span>.</span></p>
+<p><span>The names of all active ingredients of a combination are given in some ATC 5th levels. This principle has been used more frequently in recent years in order to give a better identification of the various combinations. </span></p>
+<p><span>Example:<br /></span><span>M01AE02&nbsp;<em>naproxen</em><br /></span><span>M01AE52&nbsp;<em>naproxen and esomeprazole</em><br /></span><span>M01AE56&nbsp;<em>naproxen and misoprostol</em></span></p>
+<p><span>Some combination products containing psycholeptic drugs, which are not classified under&nbsp; N05 - Psycholeptics or N06 - Psychoanaleptics, are classified at separate 5th levels using the 70-series, e.g. N02BE71 <em>paracetamol, combinations with psycholeptics.</em>&nbsp;<br /> </span></p>
+<p><span>Most of the ATC 70-serie codes were established many years ago and the products included in these codes may be obsolete today. </span></p>
+<p><span>Combinations containing two or more active ingredients belonging to the same 4th level are in some cases classified using the 5th level code 30 (or 20).&nbsp; Further explanation is given in the relevant chapters of the guidelines.&nbsp; Only a few new codes have been established according to this principle in recent years.</span></p>
+<p><span>Example:<br /></span><span>B01AC06&nbsp;<em>acetylsalicylic acid</em><br /></span><span>B01AC07&nbsp;<em>dipyridamole</em><br /></span><span>B01AC30&nbsp;<em>combinations</em> (e.g. acetylsalicylic acid and dipyridamole)</span></p>
+<p><span>An important principle used more frequently in recent years as more rational combinations have been marketed, is to assign separate ATC 3rd or 4th levels for combinations. </span></p>
+<p><span>Examples:<br /></span><span>C10B&nbsp;<em>Lipid modifying agents, combinations</em><br /></span><span>J05AR&nbsp;<em>Antivirals for treatment of HIV infections, combinations</em><br /></span><span>N02AJ&nbsp;<em>Opioids in combination with non-opioid analgesics</em><br /></span><span>R03AL&nbsp;<em>Adrenergics in combination with anticholinergics incl triple combinations with corticosteroids</em></span></p>
+<p><span>In these ATC groups for combinations, the ATC 5th level code often specify the active ingredients (e.g. C10BX04 simvastatin, acetylsalicylic acid and ramipril).&nbsp; How specific and &ldquo;visible&rdquo; a combination appears in the ATC classification, will to some extent depend on the need for a detailed classification from a drug utilization point of view.</span></p>
+<p><span>There are some exceptions to these main principles and these are explained in the guidelines.</span>&nbsp;</p></div>
+</div>
+</div>
+<div id="right_col_box">
+<div id="right_col_box_top">
+<h3>Contents</h3>
+</div>
+<div id="right_col_box_border">
+<div class="w">
+<a href="#Structure">Structure </a><br/><a href="#nomecl">Nomenclature</a><br/><a href="#Inclusion">Inclusion and exclusion criteria</a><br/><a href="#Therapeu">Therapeutic use or pharmacological class </a><br/><a href="#only">Only one ATC code for each route of administration </a><br/><a href="#more">More than one ATC code for a medicinal substance </a><br/><a href="#New">New ATC groups and &ldquo;other&rdquo; groups (X groups) </a><br/><a href="#Other">Other general principles </a><br/><a href="#combina">Classification of combination products </a><br/>
+</div>
+</div>
+</div>
+<div id="last_updated">
+<p><i>Last updated: 
+2022-11-10</i></p>
+</div>
+</div>
+</div>
+</div>
+<div id="left_bottom">
+</div>
+</div>
+</body>
+</html>

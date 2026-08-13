@@ -5,6 +5,7 @@ import copy
 import uuid
 from typing import Any
 
+from pce_gateway.transform import DEFAULT_MAX_ATC_LEVEL
 from pce_shadow.event import event_from_payload
 from pce_shadow.table import KnowledgeTable, default_table
 
@@ -41,7 +42,7 @@ def infer(
     payload: dict[str, Any],
     table: KnowledgeTable | None = None,
     *,
-    max_atc_level: int = 4,
+    max_atc_level: int = DEFAULT_MAX_ATC_LEVEL,
 ) -> dict[str, Any]:
     """Diplotype + current meds → live_findings. Never a Report FK."""
     knowledge = table or default_table()

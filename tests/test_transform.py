@@ -26,8 +26,11 @@ GOLD = ROOT / "tests" / "fixtures" / "gold-v0"
 
 
 class TruncateAtcTests(unittest.TestCase):
+    def test_default_keeps_substance_code(self) -> None:
+        self.assertEqual(truncate_atc("N06AB10"), "N06AB10")
+
     def test_atc5_to_atc4(self) -> None:
-        self.assertEqual(truncate_atc("N06AB10"), "N06AB")
+        self.assertEqual(truncate_atc("N06AB10", max_level=4), "N06AB")
 
     def test_atc5_to_atc3(self) -> None:
         self.assertEqual(truncate_atc("N06AB10", max_level=3), "N06A")
@@ -58,7 +61,7 @@ class GoldV0TransformTests(unittest.TestCase):
         blob = json.dumps(out)
         self.assertNotIn("SYN-NAME-001", blob)
         self.assertNotIn("SYN-TAJ-001", blob)
-        self.assertNotIn("N06AB10", blob)
+        self.assertIn("N06AB10", blob)
         self.assertNotIn("escitalopram", blob)
         self.assertNotIn("patient", blob)
         self.assertNotIn("doseQuantity", blob)
@@ -89,10 +92,14 @@ class GoldV0TransformTests(unittest.TestCase):
 
 
 class IngestGuardTests(unittest.TestCase):
-    def test_atc5(self) -> None:
+    def test_atc5_accepted_by_default(self) -> None:
+        bundle = load_json(str(GOLD / "gw-v0-03-atc5-pce-ingest.json"))
+        ingest_guard(bundle)
+
+    def test_atc5_rejected_when_dpo_caps_at_level_4(self) -> None:
         bundle = load_json(str(GOLD / "gw-v0-03-atc5-pce-ingest.json"))
         with self.assertRaises(ShadowReject) as ctx:
-            ingest_guard(bundle)
+            ingest_guard(bundle, max_atc_level=4)
         self.assertEqual(ctx.exception.code, "E-SHADOW-001")
 
     def test_taj(self) -> None:

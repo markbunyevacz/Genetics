@@ -16,11 +16,11 @@ A rendszer a fagyasztott spec NOW-sávját építi (klinikai lánc + kutatási p
 
 | | |
 | --- | --- |
-| **Dátum** | 2026-08-13 (P06w: PREPARE-12 CPIC + VCF gold + forráshiány a kártyán) |
+| **Dátum** | 2026-08-13 (P06x: hivatalos PDF/HTML pin; 7 karakteres hatóanyag-kód; lelet-szöveg) |
 | **Spec** | `docs/pce/PCE-SPEC-v1.2.md` **FAGYASZTVA** (§10.2) + A, B, D, E |
 | **Terv** | [DELIVERY-PLAN.md](DELIVERY-PLAN.md) |
 | **Adatfolyam / UX** | [DATAFLOW-AND-UX.md](DATAFLOW-AND-UX.md) |
-| **Oracle** | `PYTHONPATH=src python3 -m unittest discover -s tests -v` — **89 OK** (2026-08-13) |
+| **Oracle** | `PYTHONPATH=src python3 -m unittest discover -s tests -v` |
 | **Nem** | Új FR, OQ-lezárás, kitalált gyártónév, dummy guideline-szöveg |
 
 Mérés: minden spec-tétel **FULL** / **PARTIAL** / **PLANNED** / **DEFERRED** / **NG**. A kód a 2026-08-13 `cursor/pce-clinical-gates-3690` szerint. A terv **minden NOW-tételt** nevesít Given/When/Then + B-szerződéssel.
@@ -73,15 +73,15 @@ Mérés: minden spec-tétel **FULL** / **PARTIAL** / **PLANNED** / **DEFERRED** 
 | FR-120 | Comp P0 F1+ | PARTIAL | **WP-Q** | append-only trigger + CSV/JSON | hash-chain **DEFERRED P1**; nyers VCF nincs a naplóban |
 | FR-130 | Comp P0 F1+ | PARTIAL | **WP-K** | `reid_store` külön tábla | L4 log-scanner PII: gateway + report dump |
 | FR-200 | Prod P0 VCF | PARTIAL | **WP-V** | `E-VCF-001..004`; W-CALL-010; coverage `add_vcf`-kor | 5 GB chunked; gz/tabix élesben |
-| FR-210 | Prod P0 | PARTIAL | **WP-R / V** | OC INDETERMINATE; **3 SYN VCF gold** (CYP2D6*4, CYP2C19*2, DPYD*2A) → `INDETERMINATE`, nem NORMAL; allélhívó ki | többi PREPARE-12 gén definiáló-pozíció katalógusa (`NOT_TESTED` + hiány) |
-| FR-220 | P0 F1s; F1+ nem L4 | PARTIAL | **WP-K / M** | PUT tárol; render nem olvassa; shadow `ABSENT` | FHIR medication bundle P1 |
+| FR-210 | Prod P0 | PARTIAL | **WP-R / V** | OC INDETERMINATE; **3 SYN VCF gold** → `INDETERMINATE`, nem NORMAL; a PCE nem hív csillag-allélt a VCF-ből (`MATCHER_ON=false`, magyarázat a leleten) | többi PREPARE-12 gén definiáló-pozíció katalógusa (`NOT_TESTED` + hiány) |
+| FR-220 | P0 F1s; F1+ nem L4 | PARTIAL | **WP-K / M** | PUT tárol; a renderernek nincs gyógyszerlista-argumentuma; a lelet a gén guideline-tábláját listázza (`gyogyszerlista_a_leleten=false`); shadow `ABSENT` | FHIR medication bundle P1 |
 | FR-230 | P1 | — | **WP-P1** | — | DEFERRED |
 | FR-240 | Prod P0 | PARTIAL | **WP-K** | JSON+TSV HTTP; `E-CALL-001`; `W-CALL-010` + resolve | HL7 P1 |
-| FR-250 | Prod P0 | PARTIAL | **WP-N** | ATC truncate | HGVS/VRS VCF-path; OGYÉI `E-MAP-001` |
-| FR-300 | Prod P0 VCF; F1 OFF | LOCK | **WP-I** | MATCHER_ON false | F1+ ON tilos |
+| FR-250 | Prod P0 | PARTIAL | **WP-N** | default 7 karakteres hatóanyag-kód; DPO durvíthat | HGVS/VRS VCF-path; OGYÉI `E-MAP-001` |
+| FR-300 | Prod P0 VCF; F1 OFF | LOCK | **WP-I** | `MATCHER_ON=false`; magyarázat a leleten (`diplotipus_forras_hu`) | F1+ ON tilos változáskezelés nélkül |
 | FR-310 | Prod P0 | PARTIAL | **WP-T** | PREPARE-12 + `config_id`; 12 gén CPIC `pair_view` pin (S049) | change-control rekord; HLA-A/NUDT15 külön config |
 | FR-400-STATIC | Prod P0 F1+ | PARTIAL | **WP-T / R** | 12 gén CPIC pair dump; F5/VKORC1 üres `recommendation_view` **jelezve** (nincs kitalált szöveg) | DPWG hivatalos fájl; FDA címke-kivonat a leleten |
-| FR-400-LIVE | P0 F1s | PARTIAL | **WP-M** | gén–gyógyszer párosítás; ANON ATC4 szünetelteti a gátló-állítást; PSEUDO+hozzájárulás+ATC5 `N06AB05` → Table 2a `CONTINUE` | többi gén élő párosítása; nincs FK Report-ra |
+| FR-400-LIVE | P0 F1s | PARTIAL | **WP-M** | gén–gyógyszer párosítás 7 karakteres kódon (`N06AB05` → Table 2a `CONTINUE`); 5 karakteres csoportkód szünetelteti a gátló-állítást | többi gén élő párosítása; nincs FK Report-ra |
 | FR-410-EDU | Prod P0 F1+ | PARTIAL | **WP-T / R** | token tiltás; EDU=null | forrásolt bekezdés vagy indokolt null; ≥5 ha–akkor gold |
 | FR-410-LIVE | P0 F1s | PARTIAL | **WP-M** | gén szerinti osztály immutábilis; FDA erős gátló ATC5-ön; **funkcionális szegény metabolizáló üres** + `forras_allapot` van/hiányzik magyarul a HITL-en; eGFR `organ` | SSRI NM→szegény sor, ha a CPIC/FDA kiadja |
 | FR-420 | P0 F1+ struktúra | PARTIAL | **WP-R** | génenként findings; `severity_means_replace_prescribed=false` | CRITICAL F2 card később |
@@ -90,7 +90,7 @@ Mérés: minden spec-tétel **FULL** / **PARTIAL** / **PLANNED** / **DEFERRED** 
 | FR-450 | P0 F1s | PARTIAL | **WP-H / U** | `hitl_reviewer` HTML + kártya; reason_code; clinician `E-ISO-001` | MFA éles |
 | FR-450-BLIND | P1; §10.2 SYN igen | PARTIAL | **WP-H** | `POST .../blind` majd `.../reviews`; immutábilis; default be | OQ-15 nem pecsét |
 | FR-460 | Comp P0 F1s | PARTIAL | WP-G | PII + G12 id/hash/org + G13 Practitioner | Gold HIS Practitioner nem volt; strip tesztelt |
-| FR-461 | Comp P0 F1s | PARTIAL | WP-G | TC-GW nagy része + séma mezők | monitor SYN org display |
+| FR-461 | Comp P0 F1s | PARTIAL | WP-G | default 7 karakteres kód; PII/dózis/nap továbbra is 400; k-cella a 7 karakteres kódon | monitor SYN org display |
 | FR-470 | Comp P0 | PARTIAL | **WP-I** | LIVE_CDS; grep; CDS 404; HITL 403 | tiltott JSON mezők a B.4.1-en |
 | FR-480 | P1 | — | **WP-P1** | — | DEFERRED |
 | FR-490 | Comp P0 | PARTIAL | WP-R | A.1/A.1.1 minden PDF oldal chrome | FHIR description = A.1.1 |
@@ -262,5 +262,20 @@ A user kérdése: van-e hivatalos NM→szegény metabolizáló tábla; a hiányt
 | CPIC opioid 2020 | **VAN** (erős gátló → aktivitási pont 0 → szegény metabolizáló), opioid szubsztrátra; a paroxetin-SSRI sorra **nem** alkalmazzuk. |
 | PREPARE-12 CPIC pair_view | **12/12 letöltve** (S049). F5 és VKORC1 `recommendation_view` üres → a lelet `hianyzik` listája. |
 | VCF gold ≥3 | **PASS** `tests/fixtures/vcf-gold-v0/` + `test_vcf_coverage.py` + klinikai path |
-| ANON ATC5 | **továbbra is 400** (fagyasztott spec). PSEUDO+kutatási hozzájárulás+`max_atc_level=5` megtartja a `N06AB05`-öt. |
-| Unittest | **89 OK** |
+| ANON ATC5 | **202** (D-38: 7 karakteres hatóanyag-kód). DPO `max_atc_level=4` → 400. |
+| Unittest | lásd P06x |
+
+---
+
+## 11. P06x ellenőrzés (2026-08-13)
+
+A user öt pontja: forrás-letöltés; szegény címke tiltás; „a lelet olvas”; 5 vs 7 karakter; „allélhívó”.
+
+| Szabály | Eredmény |
+| --- | --- |
+| CPIC API/PDF + FDA oldal, dátummal | **Letöltve és beépítve.** PDF/HTML: `docs/pce/Sources/official/` (2026-08-13). PREPARE-12 API JSON: `tests/fixtures/f1plus-v0/prepare12/`. Knowledge `on_disk`. A motor a pin-elt JSON-t olvassa, nem a PDF-et futáskor. |
+| Funkcionális szegény címke tilos; hiány a kártyán | **Igen, a termékben.** `functional_phenotype=[]`; `irtunk_szegeny_metabolizalot=false`; HITL `forras_allapot` van/hiányzik a vak lépés után. |
+| „A lelet olvassa a gyógyszerlistát” | **Értelmetlen mondat — javítva.** A PDF nem olvas. A lelet a gén publikált guideline-sorait **listázza**; `gyogyszerlista_a_leleten=false` + `megjegyzes_hu` a JSON/PDF-en. A renderernek nincs `medications` argumentuma. |
+| 5 vs 7 karakteres kód | **7 karakteres hatóanyag-kód a default** (WHO ATC 5. szint). Spec A14/FR-461 D-38. ANON `N06AB05`/`N06AB10` → 202. Csoportkód (5 karakter) a párosítást szünetelteti. DPO durvíthat. |
+| „Az allélhívó ki van kapcsolva” | **Magyarázat a leleten.** PharmCAT NamedAlleleMatcher = a program, amely VCF-ből csillag-allélt hívna. Ki: spec FR-300. Bekapcsolás: változáskezelés + REG-010, nem UI-kapcsoló. A diplotípust a partnerlabor adja. `diplotipus_forras_hu`. |
+| Unittest | **94 OK** |

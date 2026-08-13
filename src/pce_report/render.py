@@ -3,7 +3,12 @@ from __future__ import annotations
 
 from typing import Any
 
-from pce_report.flags import LIVE_CDS, MATCHER_ON
+from pce_report.flags import (
+    DIPLOTIPUS_FORRAS_HU,
+    GYOGYSZERLISTA_MEGJEGYZES_HU,
+    LIVE_CDS,
+    MATCHER_ON,
+)
 from pce_report.guidelines import GuidelineTable
 from pce_report.panel import CONFIG_ID_PREFIX, PREPARE_12
 from pce_report.statements import A11_DISCLAIMER, A1_INTENDED_PURPOSE, SOURCE as STATEMENT_SOURCE
@@ -94,6 +99,9 @@ def render_f1plus(
         "matcher_on": False,
         "live_cds": False,
         "medications_applied_to_recommendations": False,
+        "gyogyszerlista_a_leleten": False,
+        "megjegyzes_hu": GYOGYSZERLISTA_MEGJEGYZES_HU,
+        "diplotipus_forras_hu": DIPLOTIPUS_FORRAS_HU,
         "a1_intended_purpose": A1_INTENDED_PURPOSE,
         "a11_disclaimer": A11_DISCLAIMER,
         "statement_source": STATEMENT_SOURCE,

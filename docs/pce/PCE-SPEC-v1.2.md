@@ -33,7 +33,7 @@ Kérdés helyett rögzítve. Ha bármelyik hamis, a jelzett szakasz újraírand�
 | A11 | A v1.2 kanonikus szabályozási stratégia a **legális hibrid** (A.0–A.2): F1+ statikus lelet; F1s shadow HITL a kezelőorvos nélkül; F2/F3 csak minősítés után. | A, E, FR-440–470 |
 | A12 | Shadow default: **irreverzibilis anonimizálás** a intézményi gatewayen. Álnevesítés + FR-115 csak ha longitudinális követés kell. | E.5, FR-460 |
 | A13 | `[ASSUMPTION]` A gateway ritka gén–gyógyszer kombinációt elnyom (FR-461) vagy az álnevesített utat választják (re-ID). | E.3.1, DPIA, OQ-16 |
-| A14 | `[ASSUMPTION]` Anonim path default: ATC max **4. szint** (5 karakter, pl. N06AB); ATC5 (7 karakter, hatóanyag) **tilos**; ritka diplotípus küszöb **0,5%** (forrás a DPIA-ban); k-anonymity **k ≥ 5** intézményi cellán. A DPO szigoríthat (ATC3 / nagyobb k). | FR-461; OQ-16 |
+| A14 | `[ASSUMPTION]` **Validálva 2026-08-13 (D-38, §10.2 (c)).** Default hatóanyag-kód: WHO ATC **5. szint, 7 karakter** (pl. N06AB05 paroxetin, N06AB10 eszcitaloprám). A 5 karakteres csoportkód (4. szint, pl. N06AB) a párosításhoz **nem elég**: az SSRI-csoportban az eszcitaloprám nem erős CYP2D6-gátló. Ritka diplotípus küszöb **0,5%** (forrás a DPIA-ban); k-anonymity **k ≥ 5** intézményi cellán. A DPO **durvíthat** (ATC4 / ATC3 / nagyobb k) — akkor a gén–hatóanyag párosítás és a gátló-állítás **szünetel**, nem találunk ki hatóanyagot. A 7 karakteres kód **nem** azt jelenti, hogy egy szer azonosítja a beteget. | FR-461; OQ-16 |
 | A15 | A shadow/HITL validációs esetek megőrzése a **klinikai értékelési / vizsgálati protokoll** szerint (hónapok–évek, havi HITL). Feltétel: a rekord **már anonim** (OQ-16/A12) **vagy** van érvényes FR-115. **Nem** 72 órás puffer. | E.5.1; FR-440 |
 
 **Nem feltevés, hanem verifikált korlát:** a hazai jogi és EESZT-korlátok (§4) nem tárgyalhatók terméktervezéssel.
@@ -436,7 +436,7 @@ A tudományos differenciátor. G3 a shadow gold seten.
 #### FR-450 · HITL review UI — **Product P0 (F1s)**
 
 - [ ] Szerep `hitl_reviewer` elválasztva a felíró `clinician` tenancytől (E.4).
-- [ ] Kártya (anonim út): opák `case_display_id` (pl. `A87F3`); gén; coarsened diplotípus/fenotípus-osztály; ATC3 vagy ATC4 (FR-461); guideline-verzió. **Nincs** név, TAJ, életkor, születési év, intézményi/osztály-azonosító, orvosnév. Motor-kategória: csak FR-450-BLIND 2. lépése után, vagy ha a vak mód ki van kapcsolva.
+- [ ] Kártya (anonim út): opák `case_display_id` (pl. `A87F3`); gén; coarsened diplotípus/fenotípus-osztály; **hatóanyag-kód** (WHO ATC 5. szint, 7 karakter; ha a DPO durvított, csoportkód + párosítás szünetel); guideline-verzió. **Nincs** név, TAJ, életkor, születési év, intézményi/osztály-azonosító, orvosnév. Motor-kategória: csak FR-450-BLIND 2. lépése után, vagy ha a vak mód ki van kapcsolva.
 - [ ] Válasz: `AGREE` / `DISAGREE` / `INSUFFICIENT_DATA` + kötelező `reason_code`; szabad szöveg opcionális, PII-scanner a mentéskor.
 - [ ] Nem a vizit alatt; batch vagy bizottság.
 - [ ] **P1 (OQ-15 csomag):** vak mód (FR-450-BLIND, E.4.1) default **be** az első intézményi protokollban, amíg OQ-15 el nem dől.
@@ -453,13 +453,13 @@ A tudományos differenciátor. G3 a shadow gold seten.
 
 - [ ] A gateway a kórház/labor zónájában fut; a PCE felhő **nem** kap TAJ/nevet (E.3).
 - [ ] Anonim út: nincs re-ID kulcs a gyártónál. Álnevesített út: kulcs csak az adatkezelőnél + FR-115.
-- [ ] FR-461 aggregáció **a továbbítás előtt** fut; a PCE shadow ingest ATC5-öt / pontos timestampet / ritka nyers diplotípust `E-SHADOW-001` / `E-SHADOW-003` szerint elutasít.
+- [ ] FR-461 aggregáció **a továbbítás előtt** fut; a PCE shadow ingest TAJ-t / dózist / pontos timestampet / ritka nyers diplotípust `E-SHADOW-001` / `E-SHADOW-003` szerint elutasít. A **7 karakteres hatóanyag-kód default elfogadott** (D-38). Ha a DPO `max_atc_level < 5`, a finomabb kód `E-SHADOW-001`.
 
 #### FR-461 · Re-ID kontroll (k-anonymity / aggregáció) — **Compliance P0 (F1s anonim út)**
 
 OQ-16 technikai csomag. **Nem** zárja le az OQ-16-ot. Küszöbök: A14, a DPO felülírhatja.
 
-- [ ] **ATC csonkolás:** anonim pathen tilos az ATC **5. szint** (7 karakter, hatóanyag, pl. N06AB10). Default max **4. szint** (5 karakter, pl. N06AB). Konfig: `ATC3` (4 karakter, pl. N06A), ha a DPIA kéri.
+- [ ] **Hatóanyag-kód (WHO ATC 5. szint, 7 karakter):** default **megtartva** (pl. N06AB05, N06AB10). A csoportkód (4. szint, 5 karakter, pl. N06AB) a párosításhoz elégtelen. A DPO durvíthat ATC4/ATC3-ra; akkor a gátló-állítás szünetel (R-020). INN/márkanév az ANON payloadban **nem** megy ki, csak a kód. A 7 karakteres kód **nem** betegazonosító.
 - [ ] **Idő generalizáció:** `MedicationRequest.authoredOn` → naptári **negyedév** (pl. `2026-Q3`); nincs nap, óra, perc. `Patient.birthDate` a HITL kártyán nem jelenik meg.
 - [ ] **Ritka diplotípus:** ha a konfigurált populációs gyakoriság < A14 küszöb **vagy** az intézményi (gén-osztály × ATC-szint) cella elemszáma a gördülő ablakban < `k`, Then a gateway vagy (a) fenotípus-*osztályt* küld diplotípus helyett (`REDUCED` / `INCREASED` / `UNCERTAIN`), vagy (b) a rekordot **kihagyja** (`E-SHADOW-003`, csak számláló log).
 - [ ] Adagolási struktúra (doseQuantity) anonim pathen **nem** megy ki.
@@ -704,6 +704,8 @@ A csomagok és a **gyártói kérés** a [F mellékletben](F-decision-package.md
 ### 10.2 Spec-fagyasztás és fejlesztési start (2026-08-12)
 
 **Döntés (D-18):** a v1.2 **követelmény- és iratíró szakasz lezárva**, amíg a külső állásfoglalások (F.6) meg nem érkeznek. A spec ettől a naptól **fagyasztott**: új FR/OQ/intended-purpose csak (a) beérkezett OQ-válasz, (b) P0 klinikai biztonsági hiba (pl. FR-210), vagy (c) explicit új felhasználói kérés esetén.
+
+**2026-08-13 (D-38, §10.2 (c)):** A14 / FR-450 / FR-460 / FR-461 ATC-klauzula javítva: default **7 karakteres hatóanyag-kód**. A többi FR változatlan. Az OQ-16 pecsét ettől **nem** zárul.
 
 Az OQ-05 / OQ-15 / OQ-16 / OQ-01 / OQ-03 / OQ-17 **nem** zárulnak le. ELŐTERJESZTVE / NYITOTT maradnak.
 

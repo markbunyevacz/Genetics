@@ -3,6 +3,8 @@ from __future__ import annotations
 from dataclasses import dataclass, replace
 from pathlib import Path
 
+from pce_gateway.transform import DEFAULT_MAX_ATC_LEVEL
+
 
 class KThresholdRejected(Exception):
     """ANON k cannot be lowered at runtime (PCE-GW-461-08)."""
@@ -11,7 +13,7 @@ class KThresholdRejected(Exception):
 @dataclass(frozen=True)
 class GatewayConfig:
     mode: str = "ANON"
-    max_atc_level: int = 4
+    max_atc_level: int = DEFAULT_MAX_ATC_LEVEL
     time_grain: str = "QUARTER"
     k: int = 5
     on_small_cell: str = "COARSEN"

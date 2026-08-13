@@ -155,6 +155,8 @@ class ConsentGateTests(unittest.TestCase):
         report = svc.create_report(case["id"], "lab_signer")
         self.assertEqual(report["unsourced_claims"], 0)
         self.assertFalse(report["medications_applied_to_recommendations"])
+        self.assertFalse(report["gyogyszerlista_a_leleten"])
+        self.assertIn("publikált guideline-sorokat listázza", report["megjegyzes_hu"])
         self.assertIn("counselling", report)
         self.assertEqual(report["counselling"]["counsellor_id"], "SYN-MD-001")
         self.assertEqual(report["performing_org_license_id"], "SYN-LIC-001")

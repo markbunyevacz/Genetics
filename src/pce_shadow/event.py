@@ -5,7 +5,7 @@ import json
 from typing import Any
 
 from pce_gateway.genetics import payload_diplotypes
-from pce_gateway.transform import iter_resources, transform_bundle
+from pce_gateway.transform import DEFAULT_MAX_ATC_LEVEL, iter_resources, transform_bundle
 
 
 def _looks_like_bundle(payload: dict[str, Any]) -> bool:
@@ -55,7 +55,7 @@ def _first_loinc(obs: dict[str, Any]) -> str | None:
 def event_from_payload(
     payload: dict[str, Any],
     *,
-    max_atc_level: int = 4,
+    max_atc_level: int = DEFAULT_MAX_ATC_LEVEL,
     time_grain: str = "QUARTER",
 ) -> dict[str, Any]:
     """Normalize ingest JSON to diplotypes + medications + observations."""

@@ -29,7 +29,7 @@ FREQ = FrequencyTable(GOLD / "frequency-config.v0.json")
 
 
 def _anon_fhir(his_path: Path) -> dict:
-    """Valid ANON ingest: no Patient PII, ATC4, quarter authoredOn, genetics kept."""
+    """Valid ANON ingest: no Patient PII, 7-char ATC, quarter authoredOn, genetics kept."""
     bundle = copy.deepcopy(load_json(str(his_path)))
     for entry in bundle.get("entry") or []:
         res = entry.get("resource") or {}
@@ -51,8 +51,7 @@ def _anon_fhir(his_path: Path) -> dict:
                         ins.pop("doseAndRate", None)
             coding = (res.get("medicationCodeableConcept") or {}).get("coding") or []
             for c in coding:
-                if isinstance(c, dict) and isinstance(c.get("code"), str) and len(c["code"]) > 5:
-                    c["code"] = c["code"][:5]
+                if isinstance(c, dict) and c.get("display"):
                     c["display"] = None
     return bundle
 
@@ -98,13 +97,15 @@ class PipelineGoldTests(unittest.TestCase):
     def test_v0_01_raw_when_cell_meets_k(self) -> None:
         bundle = load_json(str(GOLD / "gw-v0-01-normal-his-in.json"))
         store = _store(self)
-        store.seed("UNCERTAIN", "N06AB", "2026-Q3", 4)
+        store.seed("UNCERTAIN", "N06AB10", "2026-Q3", 4)
         cfg = GatewayConfig()
         result = process_his_event(bundle, cfg, FREQ, store)
         self.assertFalse(result.suppressed)
         assert result.event is not None
         self.assertEqual(result.event["diplotype_granularity"], "RAW")
         self.assertEqual(result.event["diplotypes"][0]["diplotype"], "*1/*2")
+        self.assertEqual(result.event["medications"][0]["code"], "N06AB10")
+        self.assertEqual(result.event["atc_level"], 5)
         self.assertNotIn("patient", result.event)
         self.assertIsNone(result.event.get("cell_count"))
         self.assertEqual(result.event["org_id"], "SYN-ORG-001")
@@ -125,7 +126,7 @@ class PipelineGoldTests(unittest.TestCase):
     def test_v0_04_small_cell_coarsen(self) -> None:
         bundle = load_json(str(GOLD / "gw-v0-04-small-cell-his-in.json"))
         store = _store(self)
-        store.seed("REDUCED", "N06AB", "2026-Q3", 3)
+        store.seed("REDUCED", "N06AB10", "2026-Q3", 3)
         cfg = GatewayConfig(on_small_cell="COARSEN")
         result = process_his_event(bundle, cfg, FREQ, store)
         self.assertTrue(result.hitl)
@@ -137,7 +138,7 @@ class PipelineGoldTests(unittest.TestCase):
     def test_v0_05_small_cell_drop(self) -> None:
         bundle = load_json(str(GOLD / "gw-v0-04-small-cell-his-in.json"))
         store = _store(self)
-        store.seed("REDUCED", "N06AB", "2026-Q3", 3)
+        store.seed("REDUCED", "N06AB10", "2026-Q3", 3)
         cfg = GatewayConfig(on_small_cell="DROP")
         result = process_his_event(bundle, cfg, FREQ, store)
         self.assertTrue(result.suppressed)
@@ -201,6 +202,16 @@ class PceIngestTests(unittest.TestCase):
         status, body = handle_pce_ingest(
             bundle, cfg, FREQ, authorization="gw-ok", allowed_accounts={"gw-ok"}
         )
+        self.assertEqual(status, 202)
+        self.assertEqual(body["ingest"], "accepted")
+        self.assertTrue(body["hitl"])
+
+    def test_atc5_rejected_when_dpo_caps_at_level_4(self) -> None:
+        bundle = load_json(str(GOLD / "gw-v0-03-atc5-pce-ingest.json"))
+        cfg = GatewayConfig(max_atc_level=4)
+        status, body = handle_pce_ingest(
+            bundle, cfg, FREQ, authorization="gw-ok", allowed_accounts={"gw-ok"}
+        )
         self.assertEqual(status, 400)
         self.assertEqual(body["error"], "E-SHADOW-001")
         self.assertFalse(body["hitl"])
@@ -249,18 +260,18 @@ class KCellIncrementTests(unittest.TestCase):
     def test_drop_does_not_increment_cell(self) -> None:
         bundle = load_json(str(GOLD / "gw-v0-04-small-cell-his-in.json"))
         store = _store(self)
-        store.seed("REDUCED", "N06AB", "2026-Q3", 3)
+        store.seed("REDUCED", "N06AB10", "2026-Q3", 3)
         cfg = GatewayConfig(on_small_cell="DROP")
         process_his_event(bundle, cfg, FREQ, store)
-        self.assertEqual(store.peek("REDUCED", "N06AB", "2026-Q3"), 3)
+        self.assertEqual(store.peek("REDUCED", "N06AB10", "2026-Q3"), 3)
 
     def test_forward_increments_once(self) -> None:
         bundle = load_json(str(GOLD / "gw-v0-01-normal-his-in.json"))
         store = _store(self)
-        store.seed("UNCERTAIN", "N06AB", "2026-Q3", 4)
+        store.seed("UNCERTAIN", "N06AB10", "2026-Q3", 4)
         cfg = GatewayConfig()
         process_his_event(bundle, cfg, FREQ, store)
-        self.assertEqual(store.peek("UNCERTAIN", "N06AB", "2026-Q3"), 5)
+        self.assertEqual(store.peek("UNCERTAIN", "N06AB10", "2026-Q3"), 5)
 
 
 class KOverrideFixtureTests(unittest.TestCase):
@@ -290,13 +301,10 @@ class HttpIngestTests(unittest.TestCase):
             method="POST",
             headers={"Content-Type": "application/json", "Authorization": "gw-ok"},
         )
-        try:
-            urllib.request.urlopen(req, timeout=5)
-            self.fail("ATC5 ingest must not be 2xx")
-        except urllib.error.HTTPError as e:
-            self.assertEqual(e.code, 400)
-            body = json.loads(e.read().decode("utf-8"))
-            self.assertEqual(body["error"], "E-SHADOW-001")
+        with urllib.request.urlopen(req, timeout=5) as resp:
+            self.assertEqual(resp.status, 202)
+            body = json.loads(resp.read().decode("utf-8"))
+            self.assertEqual(body["ingest"], "accepted")
         req_forbidden = urllib.request.Request(
             f"http://127.0.0.1:{port}/v1/shadow/events",
             data=data,

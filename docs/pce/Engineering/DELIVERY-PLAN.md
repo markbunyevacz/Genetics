@@ -87,7 +87,7 @@ Store: `CounsellingRecord`, `ConsentRecord`, `Sample`, `DeletionCertificate` a c
 | K3 | Üres diplotípus | `E-CALL-001` 400 |
 | K4 | Outside-call + VCF egyszerre | `W-CALL-010` 409, status `NEEDS_RESOLUTION`, nincs automatikus választás |
 | K5 | callability enum CALLED/PARTIAL/INDETERMINATE/NOT_TESTED | Diplotype sor |
-| K6 | `PUT .../clinical-context` tárol; F1+ render **nem** olvassa | FR-220 |
+| K6 | `PUT .../clinical-context` tárol a kutatási úthoz; az aláírt lelet nem ebből a listából készül | FR-220 |
 | K7 | L4 log: nincs név/TAJ/születési dátum | CI scanner FR-130 |
 
 ---
@@ -201,9 +201,9 @@ Külön csomag: `src/pce_shadow/`. `pce_report` nem importálja.
 
 | ID | AC | Oracle |
 | --- | --- | --- |
-| M1 | Input: coarsened/raw diplotípus + ATC≤4 meds | GatewayEvent |
+| M1 | Input: coarsened/raw diplotípus + meds (default 7 karakteres hatóanyag-kód) | GatewayEvent |
 | M2 | Output: `live_findings[]` stratégia-kategória, **nincs** `dose_mg` | B.2.2 |
-| M3 | CYP2D6 gén szerinti **normál metabolizáló** + **ATC5** paroxetin (`N06AB05`) vagy fluoxetin (`N06AB03`): a gén szerinti osztály megmarad; FDA `strong` gátló rögzítve; **funkcionális szegény metabolizáló üres**, mert a CPIC SSRI 2023-ban **nincs** NM→szegény sor (a hiány a HITL `forras_allapot` listán). Dummy szegény címke = **fail**. ATC4 `N06AB`: hatóanyag nem ismert (az SSRI-csoportban az eszcitaloprám is benne van) → gátló-állítás szünetel. ANON ingest továbbra is elutasítja a 7 karakteres kódot; PSEUDO+kutatási hozzájárulás+`max_atc_level=5` megtartja. | TC-PHENO-001; `tests/test_shadow.py`; `tests/test_hitl.py` |
+| M3 | CYP2D6 gén szerinti **normál metabolizáló** + **7 karakteres** paroxetin (`N06AB05`) vagy fluoxetin (`N06AB03`): a gén szerinti osztály megmarad; FDA `strong` gátló rögzítve; **funkcionális szegény metabolizáló üres**, mert a CPIC SSRI 2023-ban **nincs** NM→szegény sor (a hiány a HITL `forras_allapot` listán). Dummy szegény címke = **fail**. Csoportkód `N06AB`: hatóanyag nem ismert (az SSRI-csoportban az eszcitaloprám is benne van) → gátló-állítás szünetel. ANON ingest a 7 karakteres kódot **elfogadja** (D-38). | TC-PHENO-001; `tests/test_shadow.py`; `tests/test_hitl.py` |
 | M4 | Nincs med lista → `clinical_context=ABSENT`, nem hallgatólagos NM | FR-220/410-LIVE |
 | M5 | eGFR < 30 → `reason: organ`, nem számított dózis | B.6.2 |
 | M6 | Determinisztikus | NFR-060 |
@@ -289,4 +289,4 @@ P4+P1 végigjárja a DATAFLOW §5 F1+ listát; FR-100 piros fixture nem gyárt P
 
 ## Kész definíció — F1s SYN demo
 
-HIS fixture → intézményi gateway → `POST /v1/shadow/events` 202 → sor a `hitl.sqlite`-ban → reviewer vak lépés, majd verdict → F1+ `report` tábla üres marad. ATC5/TAJ → 400, nincs HITL sor. HIS ettől függetlenül 202. Nincs kitalált PM.
+HIS fixture → intézményi gateway → `POST /v1/shadow/events` 202 → sor a `hitl.sqlite`-ban → reviewer vak lépés, majd verdict → F1+ `report` tábla üres marad. 7 karakteres kód → 202. TAJ → 400, nincs extra HITL sor. HIS ettől függetlenül 202. Nincs kitalált szegény metabolizáló.

@@ -95,6 +95,11 @@ def write_pdf(report: dict[str, Any], dest: Path) -> Path:
     line("Precision Clinical Engine — F1+ report", 12)
     line(f"config_id {cfg}  matcher_on={report.get('matcher_on')}  LIVE_CDS={report.get('live_cds')}")
     line(f"medications_applied_to_recommendations={report.get('medications_applied_to_recommendations')}")
+    line(f"gyogyszerlista_a_leleten={report.get('gyogyszerlista_a_leleten')}")
+    if report.get("megjegyzes_hu"):
+        line(str(report["megjegyzes_hu"]))
+    if report.get("diplotipus_forras_hu"):
+        line(str(report["diplotipus_forras_hu"]))
     if report.get("report_id"):
         line(f"report_id={report['report_id']} case_id={report.get('case_id')}")
     if report.get("counselling"):

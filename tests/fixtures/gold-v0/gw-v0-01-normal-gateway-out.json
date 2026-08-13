@@ -10,12 +10,12 @@
   },
   "GatewayEvent": {
     "mode": "ANON",
-    "atc_level": 4,
+    "atc_level": 5,
     "time_grain": "QUARTER",
     "diplotype_granularity": "RAW",
     "suppressed": false,
     "medications": [
-      { "system": "http://www.whocc.no/atc", "code": "N06AB", "display": "Selective serotonin reuptake inhibitors" }
+      { "system": "http://www.whocc.no/atc", "code": "N06AB10", "display": null }
     ],
     "authoredOn": "2026-Q3",
     "diplotypes": [

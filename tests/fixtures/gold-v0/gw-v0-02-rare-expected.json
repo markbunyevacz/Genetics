@@ -34,7 +34,7 @@
       "diplotype_granularity": "CLASS",
       "phenotype_class": "REDUCED",
       "raw_diplotype": null,
-      "atc_level": 4,
+      "atc_level": 5,
       "time_grain": "QUARTER",
       "authoredOn": "2026-Q3",
       "doseQuantity": null,

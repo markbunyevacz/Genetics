@@ -6,6 +6,7 @@ import json
 from datetime import datetime, timezone
 from typing import Any
 
+from pce_gateway.transform import DEFAULT_MAX_ATC_LEVEL
 from pce_hitl.errors import HitlError
 from pce_hitl.pii import pii_hits
 from pce_hitl.store import HitlStore
@@ -85,7 +86,7 @@ def persist_inference(
     store: HitlStore,
     payload: dict[str, Any],
     *,
-    max_atc_level: int = 4,
+    max_atc_level: int = DEFAULT_MAX_ATC_LEVEL,
 ) -> dict[str, Any]:
     body = infer(payload, max_atc_level=max_atc_level)
     material = body.get("payload_hash") or json.dumps(

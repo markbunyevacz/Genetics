@@ -17,6 +17,8 @@ Kérjük, a csatolt E melléklet (E.3, E.3.1, E.5, E.5.1) és a FR-461 követelm
 
 A gyártó kérése: **anonim default** a lenti kontrollok mellett, A14 küszöb **monitorozásával** akkor is, ha ez rontja a G3 metrikát (R-020).
 
+**Addendum 2026-08-13 (D-38, spec-validáció):** a 2026-08-12 tervezet ATC **4. szint** maximumot és ATC5-tiltást kért. A spec A14/FR-461 azóta: default **7 karakteres hatóanyag-kód** (WHO ATC 5. szint). A DPO továbbra is durvíthat. Az OQ-16 pecsét **nem** zárul ettől. I.3 és B2 alább a javított default.
+
 ---
 
 ## 0. Két hozzájárulás — ne keverjük
@@ -52,11 +54,13 @@ A felírási / vizsgálati időpontok (`MedicationRequest.authoredOn` és hasonl
 
 `Patient.birthDate`: a gatewayen legfeljebb **év**; a HITL kártyán születési év **nem** jelenik meg (FR-450).
 
-### I.3 ATC-kód csonkolás
+### I.3 ATC-kód — hatóanyag (7 karakter)
 
-Anonim úton **tilos** az ATC **5. szint** (7 karakter, hatóanyag, pl. N06AB10). Default maximum: ATC **4. szint** (5 karakter, pl. N06AB — szelektív szerotonin-visszavétel gátlók). Forrás: WHO ATC struktúra (S032).
+Anonim úton a default a WHO ATC **5. szint** (7 karakter, hatóanyag, pl. N06AB05 paroxetin, N06AB10 eszcitaloprám). Forrás: WHO ATC struktúra (S032); a 5. szint a chemical substance. A 4. szint (5 karakter, pl. N06AB) **csoportkód**: az SSRI-csoportban az eszcitaloprám nem erős CYP2D6-gátló, ezért a párosítás csoportkódon **szünetel**.
 
-A DPO szigoríthat ATC3-ra (4 karakter, pl. N06A). Ár: a shadow motor nem különbözteti a paroxetint más SSRI-től (R-020).
+A DPO durvíthat ATC4-re vagy ATC3-ra. Ár: a shadow motor nem különbözteti a paroxetint más SSRI-től (R-020). INN/márkanév nem megy ki, csak a kód. A 7 karakteres kód **nem** betegazonosító.
+
+(A 2026-08-12 tervezet ATC4-maximumot kért; D-38 ezt felülírta.)
 
 ### I.4 k-anonymity / ritka kombináció (A13, A14)
 
@@ -127,10 +131,10 @@ Minden sor kötelező. NEM esetén a „akkor” oszlop életbe lép.
 - [ ] IGEN
 - [ ] NEM — előírt k = ________
 
-**B2.** Elfogadja-e az ATC **4. szint** maximumot, ATC5 tiltással?
+**B2.** Elfogadja-e a default **7 karakteres hatóanyag-kódot** (WHO ATC 5. szint), azzal, hogy durvíthat ATC4/ATC3-ra (párosítás akkor szünetel)?
 
-- [ ] IGEN
-- [ ] NEM — előírt max: ATC3 / ATC2 / egyéb: ________
+- [ ] IGEN — 7 karakter default
+- [ ] NEM — előírt max: ATC4 / ATC3 / egyéb: ________
 
 **B3.** Elfogadja-e a 0,5%-os ritka-diplotípus küszöböt mint A14 feltevést, a DPIA-ban megnevezendő gyakoriság-táblával?
 

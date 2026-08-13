@@ -91,7 +91,7 @@ Részlet: [Outbound/README](Outbound/README.md).
 
 | Terület | Indul most (SYN / sandbox) | Vár telephelyi F.6-ra / minősítésre |
 | --- | --- | --- |
-| F1+ mag | L0–L2, outside-call, FR-210, PREPARE-12, FR-400-STATIC, FR-410-EDU, FR-490, PDF/FHIR, `LIVE_CDS=false`, FR-700. Matcher a **klinikai** rendererben ki. | Matcher ON a leleten; renderer, amely `MedicationEntry`-t olvas |
+| F1+ mag | L0–L2, outside-call, FR-210, PREPARE-12, FR-400-STATIC, FR-410-EDU, FR-490, PDF/FHIR, `LIVE_CDS=false`, FR-700. A PCE nem hív csillag-allélt a VCF-ből (`MATCHER_ON=false`). | Matcher ON a leleten; renderer `medications` argumentummal |
 | F1s / F2 kód | SYN, külön store/IAM; [FR-461](Engineering/FR-461-gateway-tickets.md); F2 UI **lakattal** | Éles HIS / valódi beteg (OQ-15+16); `LIVE_CDS=true` |
 | QA | ISO 9001 **folyamat** + Redmine (OQ-01) | Tanúsítvány *ténye* |
 | Sales | SKU-P `[Y*]` ajánlat; sandbox | Éles ON modul a megrendelőlap §2 szerint |

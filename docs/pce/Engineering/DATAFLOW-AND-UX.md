@@ -73,7 +73,7 @@ flowchart TB
 
 **Invariánsok**
 
-- L4-static **nem** olvassa a `MedicationEntry`-t.
+- L4-static-nak **nincs** `MedicationEntry` / `medications` argumentuma. A lelet a gén guideline-tábláját listázza, nem a felírásból szűr.
 - `functional_phenotype` / `live_findings` / `hitl_*` **nincs** a Report JSON-ban.
 - Render **409** `E-CONSENT-001..005`, ha a kapu piros — a CLI sem kerülheti meg (FR-100: admin sem).
 - Fail-closed a szivárgásra (nincs shadow a PDF-en). A HIS-t ez az út nem blokkolja (nincs HIS a klinikai pathen).
@@ -91,7 +91,7 @@ flowchart TB
 7. `GET /v1/cases/{id}/explanation` (FR-710)
 8. Visszavonás: `POST /v1/subjects/{id}/withdraw` → riport URL `410` `E-GONE-010`
 
-Opcionális: `PUT /v1/cases/{id}/clinical-context` **tárol**, a renderer **nem** használja L4-ként (FR-220).
+Opcionális: `PUT /v1/cases/{id}/clinical-context` **tárol** a kutatási úthoz. Az aláírt JSON/PDF **nem** ebből a listából készül (FR-220).
 
 ---
 
@@ -126,9 +126,9 @@ flowchart TB
 - ANON: nincs ResearchConsent kapu. PSEUDO: `E-CONSENT-006`.
 - Vak mód: 1. lépés motor nélkül; 2. lépés AGREE/DISAGREE.
 
-**HITL kártya (anonim):** `case_display_id`, gén, CLASS vagy RAW a FR-461 szerint, gyógyszerkód (ANON: WHO ATC 4. szint, 5 karakter; kutatási PSEUDO+hozzájárulás: 5. szint, 7 karakter, hatóanyag), `config_id`. Nincs név, TAJ, születési év, orvosnév. Vak lépés után: `forras_allapot` (mi van / mi hiányzik magyarul).
+**HITL kártya (anonim):** `case_display_id`, gén, CLASS vagy RAW a FR-461 szerint, **hatóanyag-kód** (WHO ATC 5. szint, 7 karakter; ha a DPO durvított: csoportkód), `config_id`. Nincs név, TAJ, születési év, orvosnév. Vak lépés után: `forras_allapot` (mi van / mi hiányzik magyarul).
 
-**SYN állapot (2026-08-13 P06w):** a 5 lépés járható. Motor: `src/pce_shadow/`. Tár: `var/hitl.sqlite`. Képernyő: `src/pce_ui/hitl.html`, `python -m pce_hitl`. Gold ATC4 nem állít paroxetint és nem ír szegény metabolizálót. ATC5 paroxetin (PSEUDO): gén szerinti normál metabolizáló megmarad, funkcionális szegény metabolizáló üres, a hiány ki van írva.
+**SYN állapot (2026-08-13 P06x):** a 5 lépés járható. Motor: `src/pce_shadow/`. Tár: `var/hitl.sqlite`. Képernyő: `src/pce_ui/hitl.html`, `python -m pce_hitl`. 7 karakteres paroxetin (`N06AB05`): gén szerinti normál metabolizáló megmarad, funkcionális szegény metabolizáló üres, a hiány ki van írva. 5 karakteres csoportkód (`N06AB`): párosítás szünetel.
 
 ---
 
@@ -158,7 +158,7 @@ Minden képernyő a B API-t hívja. Nincs kitalált kórháznév; org = `SYN-ORG
 | `Authorization: clinician` + `GET /v1/hitl/inferences` | 403/404 `E-ISO-001` |
 | `GET /cds-services/pgx-order-sign` F1+ build | 404 `E-ISO-002` |
 | Renderer kwargs `medications` | `RendererConfigError` |
-| Gateway export `SYN-TAJ` / `doseQuantity` / `N06AB10` | nincs |
+| Gateway export `SYN-TAJ` / `doseQuantity` / INN (`escitalopram`) | nincs (a **kód** `N06AB10` van) |
 
 ---
 
@@ -169,14 +169,14 @@ Minden képernyő a B API-t hívja. Nincs kitalált kórháznév; org = `SYN-ORG
 1. Tanácsadó rögzít SYN counselling + consent (`SYN-MD-001` pecsétszám-hely, nem kitalált orvosnév a gitben: placeholder slot).
 2. Labor feltölt `outside-call-cyp2d6-called.json`, **vagy** VCF-et (hiányzó definiáló pozíció → `INDETERMINATE`, nem NORMAL).
 3. Kapu enged; report `config_id=pgx-prepare-12@v0`; a meghívott gén CPIC pair sorai (12 gén pin, F5/VKORC1 rec hiány jelezve); A.1.1 minden PDF oldalon.
-4. Klinikus a PDF-et olvassa — nincs belépése a HITL-re (`E-ISO-001`).
+4. Klinikus a PDF-et kapja — nincs belépése a HITL-re (`E-ISO-001`). A PDF a gén guideline-sorait listázza; nem a beteg aktuális felírásaiból szűrt figyelmeztetés.
 5. INDETERMINATE: nincs NORMAL claim.
 6. Visszavonás: riport URL `410` `E-GONE-010`.
 
 **F1s kutatási út (WP-G+M+H) — járható**
 
 1. Fixture HIS bundle → gateway → k-cella → `POST /v1/shadow/events`.
-2. ANON ATC5/TAJ → 400, HIS ettől függetlenül „lezárt”. PSEUDO+kutatási hozzájárulás+7 karakteres kód → paroxetin-párosítás.
+2. ANON 7 karakteres kód → 202 (párosítás, ha a kód hatóanyag). TAJ → 400. HIS ettől függetlenül „lezárt”. 5 karakteres csoportkód → HITL sor, párosítás szünetel.
 3. Továbbított esemény → ShadowInference a **hitl.sqlite**-ban.
 4. Reviewer 1. lépés vak; 2. lépés verdict + `forras_allapot` (van/hiányzik).
 5. Report store üres marad ettől az eseménytől.
