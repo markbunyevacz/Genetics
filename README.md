@@ -11,6 +11,6 @@ pip install reportlab
 PYTHONPATH=src python3 -m pce_report -i tests/fixtures/f1plus-v0/outside-call-cyp2d6-called.json --pdf-out /tmp/f1plus.pdf --json-out /tmp/f1plus.json
 ```
 
-Delivery queue: [docs/pce/Engineering/DELIVERY-PLAN.md](docs/pce/Engineering/DELIVERY-PLAN.md).  
+Delivery queue: [docs/pce/Engineering/DELIVERY-PLAN.md](docs/pce/Engineering/DELIVERY-PLAN.md). Spec coverage: [SPEC-PLAN-TRACE.md](docs/pce/Engineering/SPEC-PLAN-TRACE.md). Dataflow/UX: [DATAFLOW-AND-UX.md](docs/pce/Engineering/DATAFLOW-AND-UX.md).  
 2026-08-13 tree cleanup rollback: [docs/pce/Engineering/CLEANUP.md](docs/pce/Engineering/CLEANUP.md).
 

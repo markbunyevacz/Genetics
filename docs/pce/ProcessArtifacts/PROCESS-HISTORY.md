@@ -38,6 +38,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P05p | Gateway SYN szim 461-01/02 | 2026-08-13 | 2026-08-13 | DONE | User: Python ATC4 + negyedév a Gold V0-n | `Engineering/gateway_sim/`; G1/G2/C2 üresen | — |
 | P05q | Gateway SYN szim 460 + 461-03 | 2026-08-13 | 2026-08-13 | DONE | User: PII-strip + dózis-tiltás | `strip_pii_fr460`, `suppress_dose_fr461_03`; opák ID teszt | — |
 | P05r | main-only + könyvtár-takarítás + gateway/F1+ kód | 2026-08-13 | 2026-08-13 | DONE | User: merge, csak main; nagytakarítás; prod-like terv | `src/pce_gateway/`; `src/pce_report/`; tag `archive/pre-cleanup-2026-08-13` | — |
+| P06r | Spec vs delivery plan tételes P06 | 2026-08-13 | 2026-08-13 | DONE | User: hasonlítsd a speccel; dataflow+UX teljesség | `SPEC-PLAN-TRACE.md`; `DATAFLOW-AND-UX.md`; bővített `DELIVERY-PLAN.md` | — |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -78,6 +79,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-31 | P05p | OQ-16 név + SYN kód | G1/G2/C2 kitalálása / üres + 461-01/02 szim | **Üres** helyettesítés (A9). Szim csak ATC+idő; PII/k-cella később | A9; user | user |
 | D-32 | P05q | 460+461-03 vs k-cella most | PII/dózis most / 461-04 váz | **PII+dózis most**; k-cella a 461-06 freq után (ticket-sorrend) | FR-461 sorrend; user | user |
 | D-33 | P05r | Hol dolgozzunk + duplikátumok | Feature ágak / csak `main`; docs alatti szim | **Csak `main`**, ez a repo. Gold V0 → `tests/fixtures/`; kód → `src/`. Visszaállítás: tag. | User 2026-08-13 | user |
+| D-34 | P06r | Delivery plan vs teljes spec | Részleges WP-G/R / tételes P06 + hiányzó L0–L6 WP | **36 FR mind nevesítve**; NOW 27/27 terv; kód 0 FULL. Render FR-100 után. EDU null megengedett forrás hiányában. | User 2026-08-13 | user |
 
 ## 3. Error log
 

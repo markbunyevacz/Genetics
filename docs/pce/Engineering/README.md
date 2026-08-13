@@ -7,7 +7,9 @@
 
 | Fájl | Hatókör |
 | --- | --- |
-| [DELIVERY-PLAN.md](DELIVERY-PLAN.md) | WP-G gateway → WP-R F1+ lelet → WP-H HITL |
+| [DELIVERY-PLAN.md](DELIVERY-PLAN.md) | WP-G…P1 végrehajtható sor; B-szerződés + Given/When/Then |
+| [SPEC-PLAN-TRACE.md](SPEC-PLAN-TRACE.md) | Spec ↔ terv tételes P06 (36 FR, story, API, hiba) |
+| [DATAFLOW-AND-UX.md](DATAFLOW-AND-UX.md) | F1+ / F1s adatfolyam + persona UX |
 | [CLEANUP.md](CLEANUP.md) | Könyvtár-takarítás + `archive/pre-cleanup-2026-08-13` visszaállítás |
 | [FR-461-gateway-tickets.md](FR-461-gateway-tickets.md) | Ticket-bontás |
 | [../../../src/pce_gateway/](../../../src/pce_gateway/) | Intézményi ANON gateway (Gold V0) |

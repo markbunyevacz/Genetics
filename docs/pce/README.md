@@ -25,7 +25,7 @@ A v1 / F1s **éles ON moduljához** a gyártói kérés kész ([F](F-decision-pa
 7. **[F-decision-package.md](F-decision-package.md)** — gyártói előterjesztés a v1 blokkolókra. **Nem** külső aláírás.
 8. **[Outbound/](Outbound/README.md)** — címzett-kész irattervezetek (counsel, DPO, intézményi RA, L3 term sheet, ISO/EESZT owner). Küldhető; **nem** aláírt állásfoglalás.
 9. **[Sales/](Sales/README.md)** — **rendszerlicenc** (SKU-P). F1–F3 egy bináris; HU/EU/US flag. Klinika a vevő. Labor = csatlakozó. F2 bent van, lakattal. Nem leletbolt.
-10. **[Engineering/](Engineering/README.md)** — FR-461 SYN ticketek. Nem spec-módosítás. Éles HIS pecsétig tilos.
+10. **[Engineering/](Engineering/README.md)** — FR-461 ticketek, [delivery plan](Engineering/DELIVERY-PLAN.md), [spec↔terv P06](Engineering/SPEC-PLAN-TRACE.md), [adatfolyam/UX](Engineering/DATAFLOW-AND-UX.md). Nem spec-módosítás. Éles HIS pecsétig tilos.
 
 ## Process artifacts
 
