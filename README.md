@@ -1,5 +1,16 @@
-# Genetics
+# Genetics — Precision Clinical Engine
 
-Farmakogenetikai (PGx) platformkutatás és specifikáció.
+Spec (frozen v1.2): **[docs/pce/README.md](docs/pce/README.md)**
 
-A termékkövetelmények és a szoftverspecifikáció: **[docs/pce/README.md](docs/pce/README.md)** (PCE-SPEC-v1.2).
+Work only on **`main`**. `LIVE_CDS` and the F1+ matcher are compile-time **false**.
+
+```bash
+PYTHONPATH=src python3 -m unittest discover -s tests -v
+PYTHONPATH=src python3 -m pce_gateway -i tests/fixtures/gold-v0/gw-v0-01-normal-his-in.json --seed-cell 4
+pip install reportlab
+PYTHONPATH=src python3 -m pce_report -i tests/fixtures/f1plus-v0/outside-call-cyp2d6-called.json --pdf-out /tmp/f1plus.pdf --json-out /tmp/f1plus.json
+```
+
+Delivery queue: [docs/pce/Engineering/DELIVERY-PLAN.md](docs/pce/Engineering/DELIVERY-PLAN.md).  
+2026-08-13 tree cleanup rollback: [docs/pce/Engineering/CLEANUP.md](docs/pce/Engineering/CLEANUP.md).
+

@@ -10,7 +10,7 @@
 
 | ID | Fájl / forrás | Formátum | Nyelv | Szerep | Szavak (kb.) |
 | --- | --- | --- | --- | --- | --- |
-| I-01 | PCE-SPEC-v1.0 (feltöltött vázlat, 2026-08-09); másolat: `docs/pce/Sources/PCE-SPEC-v1.0.md` | md | HU | Előző PRD-váz; **nem** kanonikus | ~6 500 |
+| I-01 | PCE-SPEC-v1.0 (feltöltött vázlat, 2026-08-09); kanonikus másolat: `docs/pce/Sources/PCE-SPEC-v1.0.md` (a gyökér duplikátum 2026-08-13 törölve) | md | HU | Előző PRD-váz; **nem** kanonikus | ~6 500 |
 | I-02 | Felhasználói brief: MDCG / 2008/XXI / EESZT / EHDS korrekciók + L0–L7 architektúra + versenytársak + árazás | md (chat) | HU | Termékstratégiai input; üzleti részek deszkópolva | n/a |
 | I-03 | 2008. évi XXI. törvény (njt / net.jogtar) | HTML | HU | Humángenetikai jog | primer |
 | I-04 | 29/2022. (I. 31.) Korm. rendelet + 294/2025. (IX. 25.) Korm. rendelet 4. melléklet | HTML | HU | EESZT fejlesztői követelmények | primer |

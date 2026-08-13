@@ -53,25 +53,16 @@ A gyártó neve ebben a csomagban **nincs kitalálva**. A9 feltevés: a gyártó
 
 ## Következő gate
 
-**Spec / Outbound / Sales iratírás:** fagyasztva (§10.2). **OQ-k:** ELŐTERJESZTVE, amíg F.6 ki nem töltődik. **Git:** [PR #1](https://github.com/markbunyevacz/genetics/pull/1) **merge-elve** a `main`-re (2026-08-12). A pecsét nem a git-merge.
+**Spec / Outbound / Sales iratírás:** fagyasztva (§10.2). **OQ-k:** ELŐTERJESZTVE, amíg F.6 ki nem töltődik. **Git:** PR #1 és PR #2 **merge-elve** a `main`-re; feature ágak törölve. További munka csak `main`. A pecsét nem a git-merge.
 
 **Kanonikus fa** (nincs `v1.2-Core-Specification.md`):
 
 ```
-docs/pce/
-├── PCE-SPEC-v1.2.md          ← zárolt PRD+SRS
-├── A–F mellékletek
-├── Outbound/
-│   ├── OQ-01, OQ-03, OQ-05, OQ-15, OQ-16
-│   └── README.md
-├── Sales/
-│   ├── market-packs.md       ← `[Y*]` mátrix; ki fizet
-│   ├── competitor-analogs.md
-│   └── literature-boundary.md
-└── Engineering/
-    ├── FR-461-gateway-tickets.md
-    ├── fixtures/gold-v0/          ← SYN TC-GW; CPIC European freq-szelet
-    └── gateway_sim/               ← FR-460 + PCE-GW-461-01..03 (SYN)
+docs/pce/          ← zárolt spec, Outbound, Sales
+src/pce_gateway/   ← intézményi ANON gateway
+src/pce_report/    ← F1+ lelet (matcher OFF, hivatalos CPIC tábla)
+tests/fixtures/gold-v0/
+tests/fixtures/f1plus-v0/
 ```
 
 **OQ-16 nincs kihagyva.** F1s HIS OQ-16 nélkül nem indul.

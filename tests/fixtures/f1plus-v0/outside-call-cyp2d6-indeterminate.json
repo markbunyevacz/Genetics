@@ -1,0 +1,11 @@
+{
+  "case_display_id": "SYN-OC-002",
+  "gene": "CYP2D6",
+  "diplotype": null,
+  "callability": "INDETERMINATE",
+  "calling_lab": "SYN-LAB-001",
+  "signing_physician": "SYN-MD-001",
+  "method": "outside-call",
+  "call_date": "2026-08-13",
+  "note": "FR-210: missing defining positions must not become NORMAL / missing-to-ref"
+}

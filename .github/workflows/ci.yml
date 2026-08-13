@@ -1,0 +1,30 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  gateway:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: System font for Hungarian PDF
+        run: sudo apt-get update -y && sudo apt-get install -y fonts-dejavu-core
+      - name: PDF dependency
+        run: pip install reportlab
+      - name: Unit tests
+        run: PYTHONPATH=src python3 -m unittest discover -s tests -v
+      - name: LIVE_CDS and matcher freeze
+        run: |
+          python3 -c "import sys; sys.path.insert(0,'src'); from pce_gateway.flags import LIVE_CDS; assert LIVE_CDS is False"
+          python3 -c "import sys; sys.path.insert(0,'src'); from pce_report.flags import MATCHER_ON, LIVE_CDS; assert MATCHER_ON is False and LIVE_CDS is False"
+      - name: FR-470 F1+ isolation
+        run: |
+          ! grep -R -n "MedicationEntry" src/pce_report
+          ! grep -R -n "pce_gateway.pipeline" src/pce_report
+          ! grep -R -n -E -i 'openai|anthropic|langchain' src/pce_report

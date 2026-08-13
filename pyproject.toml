@@ -1,0 +1,16 @@
+[project]
+name = "pce-gateway"
+version = "0.1.0"
+description = "PCE institutional ANON gateway and F1+ renderer. LIVE_CDS and matcher are compile-time false."
+requires-python = ">=3.12"
+readme = "README.md"
+
+[project.optional-dependencies]
+pdf = ["reportlab>=5"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -37,6 +37,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P05o | Gold V0 TC-GW kiegészítés | 2026-08-12 | 2026-08-12 | DONE | User: SYN folytatás; 461-11 mind a 11 | k-cella, rarest `*3x2/*3x2`, CYP2C19 keep-6, monitor | — |
 | P05p | Gateway SYN szim 461-01/02 | 2026-08-13 | 2026-08-13 | DONE | User: Python ATC4 + negyedév a Gold V0-n | `Engineering/gateway_sim/`; G1/G2/C2 üresen | — |
 | P05q | Gateway SYN szim 460 + 461-03 | 2026-08-13 | 2026-08-13 | DONE | User: PII-strip + dózis-tiltás | `strip_pii_fr460`, `suppress_dose_fr461_03`; opák ID teszt | — |
+| P05r | main-only + könyvtár-takarítás + gateway/F1+ kód | 2026-08-13 | 2026-08-13 | DONE | User: merge, csak main; nagytakarítás; prod-like terv | `src/pce_gateway/`; `src/pce_report/`; tag `archive/pre-cleanup-2026-08-13` | — |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -76,6 +77,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-30 | P05o | Freq-config bake | Teljes 4005-ös CYP2D6 lap / allowlist | **Allowlist** 34 CYP2D6 + 6 CYP2C19; ismeretlen = ritka; PharmGKB gén–gyógyszer TSV ≠ A14 | S040 | user |
 | D-31 | P05p | OQ-16 név + SYN kód | G1/G2/C2 kitalálása / üres + 461-01/02 szim | **Üres** helyettesítés (A9). Szim csak ATC+idő; PII/k-cella később | A9; user | user |
 | D-32 | P05q | 460+461-03 vs k-cella most | PII/dózis most / 461-04 váz | **PII+dózis most**; k-cella a 461-06 freq után (ticket-sorrend) | FR-461 sorrend; user | user |
+| D-33 | P05r | Hol dolgozzunk + duplikátumok | Feature ágak / csak `main`; docs alatti szim | **Csak `main`**, ez a repo. Gold V0 → `tests/fixtures/`; kód → `src/`. Visszaállítás: tag. | User 2026-08-13 | user |
 
 ## 3. Error log
 
@@ -113,4 +115,4 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | docs/pce/Sales/* | P05g | P05j (mátrix + competitor-analogs) | TERVEZET rendszerlicenc |
 | docs/pce/Sources/S028-* | P01c | P05i | L5 jegyzet + PDF |
 | docs/pce/ProcessArtifacts/* | P01–P06 | P05l (I-20, D-25) | DRAFT |
-| docs/pce/Engineering/* | P05l | P05q (PII + dózis szim) | SYN ticketek + Gold V0 + gateway_sim |
+| docs/pce/Engineering/* | P05l | P05r (takarítás + delivery plan) | SYN ticketek + Gold V0 pointer; kód `src/` |

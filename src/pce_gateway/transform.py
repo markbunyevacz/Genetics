@@ -1,21 +1,15 @@
-#!/usr/bin/env python3
-"""SYN gateway slice: FR-460 PII strip, PCE-GW-461-01..03 (ATC, time, dose).
+"""FR-460 PII strip and PCE-GW-461-01..03 (ATC, time, dose).
 
-Stdlib only. Gold V0 fixtures. Not a live HIS gateway. Does not implement
-k-cells, rare-diplotype drop, or LIVE_CDS.
-
-WHO ATC code lengths (S032): ATC3=4 chars (N06A), ATC4=5 (N06AB), ATC5=7 (N06AB10).
+Stdlib only. WHO ATC lengths (S032): ATC3=4 (N06A), ATC4=5 (N06AB), ATC5=7 (N06AB10).
 
 The GatewayEvent export has no Patient resource. Gender and birth year stay
-on a local_counter dict for later k-cell work and are not POSTed to PCE.
+on a local_counter dict and are not POSTed to PCE. CLI: python -m pce_gateway.
 """
 from __future__ import annotations
 
-import argparse
 import copy
 import json
 import re
-import sys
 from typing import Any, Iterator
 
 WHO_ATC_LEN = {1: 1, 2: 3, 3: 4, 4: 5, 5: 7}
@@ -34,6 +28,27 @@ ATC_SYSTEMS = {
 }
 DIRECT_PII_KEYS = ("name", "identifier", "telecom", "address")
 DOSE_KEYS = frozenset({"doseQuantity", "rateQuantity", "dose_mg", "doseRange", "rateRange"})
+
+
+class ShadowSuppress(Exception):
+    """Gateway drop: HIS fail-open, no HITL row, local counter only (E-SHADOW-003)."""
+
+    def __init__(self, reason: str, code: str = "E-SHADOW-003") -> None:
+        super().__init__(reason)
+        self.code = code
+        self.reason = reason
+        self.http = 202
+        self.hitl = False
+        self.counter_only = True
+
+    def as_dict(self) -> dict[str, Any]:
+        return {
+            "error": self.code,
+            "http": self.http,
+            "hitl": self.hitl,
+            "counter_only": self.counter_only,
+            "reason": self.reason,
+        }
 
 
 class ShadowReject(Exception):
@@ -321,45 +336,3 @@ def load_json(path: str) -> dict[str, Any]:
     if not isinstance(data, dict):
         raise ValueError(f"{path} is not a JSON object")
     return data
-
-
-def main(argv: list[str] | None = None) -> int:
-    p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--input", "-i", required=True, help="FHIR Bundle JSON (Gold V0 HIS-in or ingest)")
-    p.add_argument("--mode", choices=("gateway", "ingest"), default="gateway")
-    p.add_argument("--atc-level", type=int, default=4, choices=(1, 2, 3, 4, 5))
-    p.add_argument("--time-grain", default="QUARTER", choices=("QUARTER", "YEAR", "quarter", "year"))
-    p.add_argument(
-        "--with-local",
-        action="store_true",
-        help="include local_counter (gender, birth year); not a PCE payload",
-    )
-    args = p.parse_args(argv)
-    bundle = load_json(args.input)
-    try:
-        if args.mode == "ingest":
-            ingest_guard(bundle, max_atc_level=args.atc_level)
-            out = {
-                "ingest": "accepted",
-                "http": 202,
-                "hitl": False,
-                "note": "PII/dose/ATC/time guard; k-cell and rare-drop are not in this slice",
-            }
-        else:
-            out = transform_bundle(
-                bundle,
-                max_atc_level=args.atc_level,
-                time_grain=args.time_grain.upper(),
-                include_local=args.with_local,
-            )
-    except ShadowReject as e:
-        json.dump(e.as_dict(), sys.stdout, indent=2, ensure_ascii=False)
-        sys.stdout.write("\n")
-        return 2
-    json.dump(out, sys.stdout, indent=2, ensure_ascii=False)
-    sys.stdout.write("\n")
-    return 0
-
-
-if __name__ == "__main__":
-    sys.exit(main())

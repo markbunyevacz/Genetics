@@ -34,7 +34,7 @@ Csonkolás FR-461 nélkül nem szállítható: előbb le kell szedni a közvetle
 
 PSEUDO út + FR-115: **ne** kódold élesre, amíg OQ-16 = NEM. SYN-en a `mode` flag létezzen; `ResearchConsent` hiány → `E-CONSENT-006` (B.3.5).
 
-SYN szim (460-02/06): [gateway_sim/](gateway_sim/README.md) (`strip_pii_fr460`). A GatewayEvent **nem** visz `Patient` mezőt; nem/születési év csak helyi `local_counter`.
+SYN kód: [`src/pce_gateway/`](../../../src/pce_gateway/) (`strip_pii_fr460`). A GatewayEvent **nem** visz `Patient` mezőt; nem/születési év csak helyi `local_counter`.
 
 ---
 
@@ -54,7 +54,7 @@ Minden ticket ANON `mode`. Config default: A14. Nincs manuális k-override ANON 
 - Given ATC5 a PCE ingesten, When ANON, Then `E-SHADOW-001`, nincs HITL sor.
 - Tilos: hatóanyag-szint (7 karakter) az ANON payloadban.
 
-SYN szim: [gateway_sim/](gateway_sim/README.md) (`truncate_atc`).
+Kód: [`src/pce_gateway/`](../../../src/pce_gateway/) (`truncate_atc`).
 
 ### PCE-GW-461-02 — Idő generalizáció (naptári negyedév)
 
@@ -67,7 +67,7 @@ SYN szim: [gateway_sim/](gateway_sim/README.md) (`truncate_atc`).
 - Given pontos `authoredOn` a PCE ingesten, When ANON, Then `E-SHADOW-001`.
 - DPO-szigorítás (év): config `time_grain = YEAR`; default **negyedév**.
 
-SYN szim: [gateway_sim/](gateway_sim/README.md) (`generalize_time`).
+Kód: [`src/pce_gateway/`](../../../src/pce_gateway/) (`generalize_time`).
 
 ### PCE-GW-461-03 — `doseQuantity` tiltás
 
@@ -79,7 +79,7 @@ SYN szim: [gateway_sim/](gateway_sim/README.md) (`generalize_time`).
 - Given `doseQuantity` / `dose_mg`, When ANON kimenet, Then a mező **nincs**. v1 shadowban `dose_mg` tilos (B.2.2).
 - Given adagolás a PCE ingesten, When ANON, Then `E-SHADOW-001`.
 
-SYN szim: [gateway_sim/](gateway_sim/README.md) (`suppress_dose_fr461_03`).
+Kód: [`src/pce_gateway/`](../../../src/pce_gateway/) (`suppress_dose_fr461_03`).
 
 ### PCE-GW-461-04 — k-cella: coarsen
 
@@ -166,7 +166,7 @@ A PCE **nem bízik** a gatewayben.
 | **AC** | §10.2 F1s kód fixture-ön; D.2 TC-GW-010..020 |
 | **TC** | a fenti TC-k mind |
 
-Minimum SYN esetek (kitalált PII **nincs**; opák ID-k). Kész Gold V0: [fixtures/gold-v0/](fixtures/gold-v0/README.md) · [index.json](fixtures/gold-v0/index.json).
+Minimum SYN esetek (kitalált PII **nincs**; opák ID-k). Gold V0: [tests/fixtures/gold-v0](../../../tests/fixtures/gold-v0/README.md) · [index.json](../../../tests/fixtures/gold-v0/index.json).
 
 1. ATC5 → ATC4 csonkolás (`N06AB10` → `N06AB`) — `gw-v0-01`.
 2. ATC5 leak a PCE-re → `E-SHADOW-001` — `gw-v0-03`.
