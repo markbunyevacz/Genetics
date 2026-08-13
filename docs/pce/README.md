@@ -71,7 +71,7 @@ docs/pce/
 └── Engineering/
     ├── FR-461-gateway-tickets.md
     ├── fixtures/gold-v0/          ← SYN TC-GW; CPIC European freq-szelet
-    └── gateway_sim/               ← PCE-GW-461-01/02 ATC + idő (SYN)
+    └── gateway_sim/               ← FR-460 + PCE-GW-461-01..03 (SYN)
 ```
 
 **OQ-16 nincs kihagyva.** F1s HIS OQ-16 nélkül nem indul.

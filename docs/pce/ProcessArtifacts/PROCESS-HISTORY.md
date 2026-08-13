@@ -36,6 +36,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P05n | Gold V0 SYN fixture | 2026-08-12 | 2026-08-12 | DONE | User: JSON fixture + CPIC 0,5% szelet | `Engineering/fixtures/gold-v0/`; S040–S042 | — |
 | P05o | Gold V0 TC-GW kiegészítés | 2026-08-12 | 2026-08-12 | DONE | User: SYN folytatás; 461-11 mind a 11 | k-cella, rarest `*3x2/*3x2`, CYP2C19 keep-6, monitor | — |
 | P05p | Gateway SYN szim 461-01/02 | 2026-08-13 | 2026-08-13 | DONE | User: Python ATC4 + negyedév a Gold V0-n | `Engineering/gateway_sim/`; G1/G2/C2 üresen | — |
+| P05q | Gateway SYN szim 460 + 461-03 | 2026-08-13 | 2026-08-13 | DONE | User: PII-strip + dózis-tiltás | `strip_pii_fr460`, `suppress_dose_fr461_03`; opák ID teszt | — |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -74,6 +75,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-29 | P05n | SYN Gold V0 + CPIC freq | Synthea ATC mint primer / CPIC European szelet | **CPIC xlsx European**; 0,5% A14; GeT-RM ≠ freq; Synthea ≠ ATC default; opák ID | S040–S042 | user |
 | D-30 | P05o | Freq-config bake | Teljes 4005-ös CYP2D6 lap / allowlist | **Allowlist** 34 CYP2D6 + 6 CYP2C19; ismeretlen = ritka; PharmGKB gén–gyógyszer TSV ≠ A14 | S040 | user |
 | D-31 | P05p | OQ-16 név + SYN kód | G1/G2/C2 kitalálása / üres + 461-01/02 szim | **Üres** helyettesítés (A9). Szim csak ATC+idő; PII/k-cella később | A9; user | user |
+| D-32 | P05q | 460+461-03 vs k-cella most | PII/dózis most / 461-04 váz | **PII+dózis most**; k-cella a 461-06 freq után (ticket-sorrend) | FR-461 sorrend; user | user |
 
 ## 3. Error log
 
@@ -93,6 +95,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | E-12 | P05g | Scope / product mismatch | I-16 sales a klinikának leletet adott el | Retry: SKU-P rendszer; market packs | I-17; D-20 |
 | E-13 | P01c/P05i | Scope / overclaim | I-18: S028 = F1s állami SOTA; Top-5 83,1% = G3/R-020; SHAP = F2 mag; PCE-RWE | Primer PDF; CORRECTED nem silent drop | VC-13; D-21; §9.5 |
 | E-14 | P05j | Hallucinated / wrong cite | I-19: PREPARE p=0,0034; PMC7195220 mint YouScript; ClinLabomics mint k-anon; Tandem mint OQ-05 pecsét; TSI mint F1+ siker; ágyszám-ár | Primer Lancet + vendor oldalak; CORRECTED | VC-14; D-22 |
+| E-15 | P05q | Hallucinated PII / API mismatch | User-minta: „Kovács János” / TAJ 123456789; `entry.resourceType`; DSTU2 `doseQuantity` | Gold V0 opák ID; FHIR R4 `entry.resource` + `doseAndRate` | D-32 |
 
 ## 4. File timeline
 
@@ -110,4 +113,4 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | docs/pce/Sales/* | P05g | P05j (mátrix + competitor-analogs) | TERVEZET rendszerlicenc |
 | docs/pce/Sources/S028-* | P01c | P05i | L5 jegyzet + PDF |
 | docs/pce/ProcessArtifacts/* | P01–P06 | P05l (I-20, D-25) | DRAFT |
-| docs/pce/Engineering/* | P05l | P05p (gateway_sim 461-01/02) | SYN ticketek + Gold V0 + ATC/idő szim |
+| docs/pce/Engineering/* | P05l | P05q (PII + dózis szim) | SYN ticketek + Gold V0 + gateway_sim |

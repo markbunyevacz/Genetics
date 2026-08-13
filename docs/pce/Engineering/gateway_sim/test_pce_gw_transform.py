@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""TC-GW-010..013 slice tests against Gold V0 (PCE-GW-461-01 / 461-02)."""
+"""Gold V0 tests: FR-460 PII, PCE-GW-461-01..03 (ATC, time, dose)."""
 from __future__ import annotations
 
 import json
@@ -18,6 +18,9 @@ from pce_gw_transform import (  # noqa: E402
     generalize_time,
     ingest_guard,
     load_json,
+    local_counter_demographics,
+    strip_pii_fr460,
+    suppress_dose_fr461_03,
     truncate_atc,
     transform_bundle,
 )
@@ -93,6 +96,9 @@ class GoldV0GatewayTests(unittest.TestCase):
         self.assertNotIn("N06AB10", blob)
         self.assertNotIn("2026-08-13", blob)
         self.assertNotIn("escitalopram", blob)
+        self.assertNotIn("patient", blob)
+        self.assertNotIn("doseQuantity", blob)
+        self.assertNotIn('"value": 10', blob)
 
     def test_v0_02_already_atc4_still_generalizes_time(self) -> None:
         bundle = load_json(str(GOLD / "gw-v0-02-rare-diplotype-his-in.json"))
@@ -154,6 +160,123 @@ class GoldV0IngestTests(unittest.TestCase):
         ingest_guard(synthetic)
 
 
+class PiiStripTests(unittest.TestCase):
+    """PCE-GW-460-02 / 460-06. Gold V0 opaque IDs only — no invented legal names."""
+
+    def test_gold_v0_01_direct_identifiers_removed(self) -> None:
+        original = load_json(str(GOLD / "gw-v0-01-normal-his-in.json"))
+        snapshot = json.dumps(original)
+        cleaned = strip_pii_fr460(original)
+        self.assertEqual(json.dumps(original), snapshot)
+        patient = next(
+            e["resource"]
+            for e in cleaned["entry"]
+            if e["resource"]["resourceType"] == "Patient"
+        )
+        self.assertNotIn("name", patient)
+        self.assertNotIn("identifier", patient)
+        self.assertNotIn("telecom", patient)
+        self.assertNotIn("address", patient)
+        self.assertNotIn("id", patient)
+        self.assertEqual(patient["birthDate"], "1980")
+        self.assertEqual(patient["gender"], "unknown")
+        his_patient = original["entry"][0]["resource"]
+        self.assertEqual(his_patient["name"][0]["text"], "SYN-NAME-001")
+        self.assertEqual(his_patient["identifier"][0]["value"], "SYN-TAJ-001")
+
+    def test_export_omits_patient_local_keeps_year(self) -> None:
+        bundle = load_json(str(GOLD / "gw-v0-01-normal-his-in.json"))
+        event = transform_bundle(bundle)
+        self.assertNotIn("patient", event)
+        local = local_counter_demographics(strip_pii_fr460(bundle))
+        self.assertEqual(local, {"gender": "unknown", "birth_year": "1980"})
+        with_local = transform_bundle(bundle, include_local=True)
+        self.assertEqual(with_local["local_counter"]["birth_year"], "1980")
+        self.assertNotIn("patient", with_local)
+
+
+class DoseSuppressionTests(unittest.TestCase):
+    """TC-GW-014 / PCE-GW-461-03."""
+
+    def test_gold_v0_01_r4_dose_and_rate(self) -> None:
+        original = load_json(str(GOLD / "gw-v0-01-normal-his-in.json"))
+        cleaned = suppress_dose_fr461_03(original)
+        med = next(
+            e["resource"]
+            for e in cleaned["entry"]
+            if e["resource"]["resourceType"] == "MedicationRequest"
+        )
+        ins = med["dosageInstruction"][0]
+        self.assertNotIn("doseQuantity", ins)
+        self.assertNotIn("doseAndRate", ins)
+        his_med = original["entry"][2]["resource"]
+        self.assertEqual(
+            his_med["dosageInstruction"][0]["doseAndRate"][0]["doseQuantity"]["value"],
+            10,
+        )
+
+    def test_dstu2_style_dose_quantity_on_instruction(self) -> None:
+        sample = {
+            "resourceType": "Bundle",
+            "type": "collection",
+            "entry": [
+                {
+                    "resource": {
+                        "resourceType": "MedicationRequest",
+                        "dosageInstruction": [
+                            {"sequence": 1, "doseQuantity": {"value": 10, "unit": "mg"}}
+                        ],
+                    }
+                }
+            ],
+        }
+        cleaned = suppress_dose_fr461_03(sample)
+        ins = cleaned["entry"][0]["resource"]["dosageInstruction"][0]
+        self.assertNotIn("doseQuantity", ins)
+        self.assertEqual(ins.get("sequence"), 1)
+
+
+class GoldV0IngestPiiDoseTests(unittest.TestCase):
+    def test_v0_08_taj_rejected(self) -> None:
+        bundle = load_json(str(GOLD / "gw-v0-08-taj-pce-ingest.json"))
+        with self.assertRaises(ShadowReject) as ctx:
+            ingest_guard(bundle)
+        expected = load_json(str(GOLD / "gw-v0-08-taj-expected.json"))
+        self.assertEqual(ctx.exception.code, expected["expected"]["error"])
+        self.assertEqual(ctx.exception.http, expected["expected"]["http"])
+        self.assertFalse(ctx.exception.hitl)
+
+    def test_dose_on_ingest_rejected(self) -> None:
+        bundle = {
+            "resourceType": "Bundle",
+            "type": "collection",
+            "entry": [
+                {
+                    "resource": {
+                        "resourceType": "MedicationRequest",
+                        "authoredOn": "2026-Q3",
+                        "medicationCodeableConcept": {
+                            "coding": [
+                                {"system": "http://www.whocc.no/atc", "code": "N06AB"}
+                            ]
+                        },
+                        "dosageInstruction": [
+                            {
+                                "doseAndRate": [
+                                    {"doseQuantity": {"value": 10, "unit": "mg"}}
+                                ]
+                            }
+                        ],
+                    }
+                }
+            ],
+        }
+        with self.assertRaises(ShadowReject) as ctx:
+            ingest_guard(bundle)
+        self.assertEqual(ctx.exception.code, "E-SHADOW-001")
+        self.assertIn("doseQuantity", ctx.exception.reason)
+
+
 class CliTests(unittest.TestCase):
     def test_gateway_cli_gold_v0_01(self) -> None:
         proc = _cli("--input", str(GOLD / "gw-v0-01-normal-his-in.json"))
@@ -161,6 +284,9 @@ class CliTests(unittest.TestCase):
         out = json.loads(proc.stdout)
         self.assertEqual(out["medications"][0]["code"], "N06AB")
         self.assertEqual(out["authoredOn"], "2026-Q3")
+        self.assertNotIn("patient", out)
+        self.assertNotIn("doseQuantity", json.dumps(out))
+        self.assertNotIn("local_counter", out)
 
     def test_ingest_cli_atc5(self) -> None:
         proc = _cli(
@@ -173,6 +299,17 @@ class CliTests(unittest.TestCase):
         out = json.loads(proc.stdout)
         self.assertEqual(out["error"], "E-SHADOW-001")
         self.assertFalse(out["hitl"])
+
+    def test_ingest_cli_taj(self) -> None:
+        proc = _cli(
+            "--mode",
+            "ingest",
+            "--input",
+            str(GOLD / "gw-v0-08-taj-pce-ingest.json"),
+        )
+        self.assertEqual(proc.returncode, 2, proc.stdout)
+        out = json.loads(proc.stdout)
+        self.assertEqual(out["error"], "E-SHADOW-001")
 
 
 if __name__ == "__main__":

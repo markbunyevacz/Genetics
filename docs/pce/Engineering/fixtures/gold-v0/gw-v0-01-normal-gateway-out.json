@@ -14,21 +14,15 @@
     "time_grain": "QUARTER",
     "diplotype_granularity": "RAW",
     "suppressed": false,
-    "patient": {
-      "name": null,
-      "identifier": null,
-      "birthDate": "1980",
-      "id_join_key_at_manufacturer": false
-    },
     "medications": [
       { "system": "http://www.whocc.no/atc", "code": "N06AB", "display": "Selective serotonin reuptake inhibitors" }
     ],
     "authoredOn": "2026-Q3",
-    "doseQuantity": null,
     "diplotypes": [
       { "gene": "CYP2D6", "diplotype": "*1/*2", "callability": "CALLED" }
     ]
   },
+  "absent_on_export": ["patient", "doseQuantity", "dose_mg", "name", "identifier"],
   "hitl": true,
   "http_to_pce": 202
 }

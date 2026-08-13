@@ -34,6 +34,8 @@ Csonkolás FR-461 nélkül nem szállítható: előbb le kell szedni a közvetle
 
 PSEUDO út + FR-115: **ne** kódold élesre, amíg OQ-16 = NEM. SYN-en a `mode` flag létezzen; `ResearchConsent` hiány → `E-CONSENT-006` (B.3.5).
 
+SYN szim (460-02/06): [gateway_sim/](gateway_sim/README.md) (`strip_pii_fr460`). A GatewayEvent **nem** visz `Patient` mezőt; nem/születési év csak helyi `local_counter`.
+
 ---
 
 ## Epic 1 — FR-461 transzformáció (TC-GW-010..020)
@@ -76,6 +78,8 @@ SYN szim: [gateway_sim/](gateway_sim/README.md) (`generalize_time`).
 
 - Given `doseQuantity` / `dose_mg`, When ANON kimenet, Then a mező **nincs**. v1 shadowban `dose_mg` tilos (B.2.2).
 - Given adagolás a PCE ingesten, When ANON, Then `E-SHADOW-001`.
+
+SYN szim: [gateway_sim/](gateway_sim/README.md) (`suppress_dose_fr461_03`).
 
 ### PCE-GW-461-04 — k-cella: coarsen
 

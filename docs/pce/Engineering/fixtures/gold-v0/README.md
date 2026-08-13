@@ -59,7 +59,7 @@ Frissítés: töltsd le a `current/` xlsx-eket, futtasd: `python3 extract_cpic_f
 
 | Fájl | Teszt | Bemenet | Elvárt |
 | --- | --- | --- | --- |
-| [gw-v0-01-normal-his-in.json](gw-v0-01-normal-his-in.json) | TC-GW-010..014 | CYP2D6 `*1/*2` (≥ 0,5%); ATC5 `N06AB10`; nap-idő; `doseQuantity`; opák PII | [gw-v0-01-normal-gateway-out.json](gw-v0-01-normal-gateway-out.json): PII/dózis nincs; `N06AB`; `2026-Q3`; **RAW** |
+| [gw-v0-01-normal-his-in.json](gw-v0-01-normal-his-in.json) | TC-GW-010..014 | CYP2D6 `*1/*2` (≥ 0,5%); ATC5 `N06AB10`; nap-idő; `doseQuantity`; opák PII | [gw-v0-01-normal-gateway-out.json](gw-v0-01-normal-gateway-out.json): nincs `patient` / dózis; `N06AB`; `2026-Q3`; **RAW** |
 | [gw-v0-02-rare-diplotype-his-in.json](gw-v0-02-rare-diplotype-his-in.json) | TC-GW-017 | `*6/*6` (&lt; 0,5%) | [gw-v0-02-rare-expected.json](gw-v0-02-rare-expected.json): default **drop** `E-SHADOW-003`; coarsen → `REDUCED` ha `on_rare=COARSEN` |
 | [gw-v0-03-atc5-pce-ingest.json](gw-v0-03-atc5-pce-ingest.json) | TC-GW-011 | Gateway *kihagyva*: ATC5 a PCE-n | [gw-v0-03-atc5-expected.json](gw-v0-03-atc5-expected.json): `E-SHADOW-001` |
 | [gw-v0-04-small-cell-his-in.json](gw-v0-04-small-cell-his-in.json) | TC-GW-015 | `*4/*4` (freq **0.034168635** ≥ 0,5%, PM → `REDUCED`); cella **4**, k = 5 | [gw-v0-04-coarsen-expected.json](gw-v0-04-coarsen-expected.json): `CLASS` / `REDUCED`; count **nincs** a payloadban |

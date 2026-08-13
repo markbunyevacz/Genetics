@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
-"""SYN gateway slice: PCE-GW-461-01 (ATC truncate) and PCE-GW-461-02 (time grain).
+"""SYN gateway slice: FR-460 PII strip, PCE-GW-461-01..03 (ATC, time, dose).
 
-Stdlib only. Gold V0 fixtures. Not a live HIS gateway. Does not strip PII
-(FR-460), dose (FR-461-03), k-cells, or rare diplotypes.
+Stdlib only. Gold V0 fixtures. Not a live HIS gateway. Does not implement
+k-cells, rare-diplotype drop, or LIVE_CDS.
 
 WHO ATC code lengths (S032): ATC3=4 chars (N06A), ATC4=5 (N06AB), ATC5=7 (N06AB10).
+
+The GatewayEvent export has no Patient resource. Gender and birth year stay
+on a local_counter dict for later k-cell work and are not POSTed to PCE.
 """
 from __future__ import annotations
 
 import argparse
+import copy
 import json
 import re
 import sys
@@ -28,6 +32,8 @@ ATC_SYSTEMS = {
     "http://whocc.no",
     "https://whocc.no",
 }
+DIRECT_PII_KEYS = ("name", "identifier", "telecom", "address")
+DOSE_KEYS = frozenset({"doseQuantity", "rateQuantity", "dose_mg", "doseRange", "rateRange"})
 
 
 class ShadowReject(Exception):
@@ -113,7 +119,9 @@ def generalize_time(authored_on: str, time_grain: str = "QUARTER") -> str:
 
 def iter_resources(bundle: dict[str, Any], resource_type: str | None = None) -> Iterator[dict[str, Any]]:
     for entry in bundle.get("entry") or []:
-        res = entry.get("resource") if isinstance(entry, dict) else None
+        if not isinstance(entry, dict):
+            continue
+        res = entry.get("resource")
         if not isinstance(res, dict):
             continue
         if resource_type is None or res.get("resourceType") == resource_type:
@@ -130,16 +138,104 @@ def _medication_codings(medreq: dict[str, Any]) -> list[dict[str, Any]]:
     return [c for c in coding if isinstance(c, dict)]
 
 
+def _year_only_birth(birth: str) -> str | None:
+    raw = birth.strip()
+    if YEAR_RE.fullmatch(raw):
+        return raw
+    m = DATE_PREFIX_RE.match(raw)
+    if m:
+        return m.group(1)
+    return None
+
+
+def _contains_keys(obj: Any, keys: frozenset[str]) -> bool:
+    if isinstance(obj, dict):
+        if keys & obj.keys():
+            return True
+        return any(_contains_keys(v, keys) for v in obj.values())
+    if isinstance(obj, list):
+        return any(_contains_keys(v, keys) for v in obj)
+    return False
+
+
+def strip_pii_fr460(fhir_bundle: dict[str, Any]) -> dict[str, Any]:
+    """FR-460: drop direct identifiers on Patient. Does not mutate the input.
+
+    birthDate → year for the local counter. Patient.id is dropped so it cannot
+    become a manufacturer join-key. The GatewayEvent export still omits Patient.
+    """
+    out = copy.deepcopy(fhir_bundle)
+    for res in iter_resources(out, "Patient"):
+        for key in DIRECT_PII_KEYS:
+            res.pop(key, None)
+        res.pop("id", None)
+        bd = res.get("birthDate")
+        if isinstance(bd, str):
+            year = _year_only_birth(bd)
+            if year is None:
+                res.pop("birthDate", None)
+            else:
+                res["birthDate"] = year
+    return out
+
+
+def suppress_dose_fr461_03(fhir_bundle: dict[str, Any]) -> dict[str, Any]:
+    """FR-461-03: destroy doseQuantity / dose_mg (R4 doseAndRate and DSTU2)."""
+    out = copy.deepcopy(fhir_bundle)
+    for medreq in iter_resources(out, "MedicationRequest"):
+        medreq.pop("dose_mg", None)
+        instructions = medreq.get("dosageInstruction")
+        if not isinstance(instructions, list):
+            continue
+        for ins in instructions:
+            if not isinstance(ins, dict):
+                continue
+            ins.pop("doseQuantity", None)
+            ins.pop("rateQuantity", None)
+            dar = ins.get("doseAndRate")
+            if isinstance(dar, list):
+                kept: list[Any] = []
+                for item in dar:
+                    if not isinstance(item, dict):
+                        continue
+                    for k in DOSE_KEYS:
+                        item.pop(k, None)
+                    if item:
+                        kept.append(item)
+                if kept:
+                    ins["doseAndRate"] = kept
+                else:
+                    ins.pop("doseAndRate", None)
+    return out
+
+
+def local_counter_demographics(stripped_bundle: dict[str, Any]) -> dict[str, Any] | None:
+    """Gender + birth year only. Not part of the PCE payload."""
+    patients = list(iter_resources(stripped_bundle, "Patient"))
+    if not patients:
+        return None
+    p = patients[0]
+    demo: dict[str, Any] = {}
+    if "gender" in p:
+        demo["gender"] = p["gender"]
+    if "birthDate" in p:
+        demo["birth_year"] = p["birthDate"]
+    return demo or None
+
+
 def transform_bundle(
     bundle: dict[str, Any],
     *,
     max_atc_level: int = 4,
     time_grain: str = "QUARTER",
+    include_local: bool = False,
 ) -> dict[str, Any]:
-    """Gateway projection: ATC + time only. Patient / dose / genetics are omitted."""
+    """ANON GatewayEvent: ATC + time. No Patient, no dose, no genetics."""
+    stripped = strip_pii_fr460(bundle)
+    work = suppress_dose_fr461_03(stripped)
     medications: list[dict[str, Any]] = []
     times: list[str] = []
-    for medreq in iter_resources(bundle, "MedicationRequest"):
+    for medreq in iter_resources(work, "MedicationRequest"):
         authored = medreq.get("authoredOn")
         grain_out = None
         if isinstance(authored, str) and authored.strip():
@@ -171,14 +267,18 @@ def transform_bundle(
         authored_out = unique_times[0]
     else:
         authored_out = unique_times
-    return {
+    event: dict[str, Any] = {
         "mode": "ANON",
-        "scope": ["PCE-GW-461-01", "PCE-GW-461-02"],
+        "scope": ["PCE-GW-460", "PCE-GW-461-01", "PCE-GW-461-02", "PCE-GW-461-03"],
         "atc_level": max_atc_level,
         "time_grain": time_grain.upper(),
         "medications": medications,
         "authoredOn": authored_out,
     }
+    if include_local:
+        event["local_counter"] = local_counter_demographics(stripped)
+        event["local_counter_note"] = "institutional gateway only; not POSTed to PCE"
+    return event
 
 
 def ingest_guard(
@@ -186,9 +286,15 @@ def ingest_guard(
     *,
     max_atc_level: int = 4,
 ) -> None:
-    """PCE ANON ingest: ATC5 or day-level authoredOn → E-SHADOW-001."""
+    """PCE ANON ingest: PII, dose, ATC5, or day-level authoredOn → E-SHADOW-001."""
     max_len = WHO_ATC_LEN[max_atc_level]
+    for patient in iter_resources(bundle, "Patient"):
+        for key in DIRECT_PII_KEYS:
+            if key in patient:
+                raise ShadowReject(f"Patient.{key} forbidden on ANON ingest")
     for medreq in iter_resources(bundle, "MedicationRequest"):
+        if _contains_keys(medreq, DOSE_KEYS):
+            raise ShadowReject("doseQuantity forbidden on ANON ingest")
         authored = medreq.get("authoredOn")
         if isinstance(authored, str) and authored.strip():
             raw = authored.strip()
@@ -223,6 +329,11 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--mode", choices=("gateway", "ingest"), default="gateway")
     p.add_argument("--atc-level", type=int, default=4, choices=(1, 2, 3, 4, 5))
     p.add_argument("--time-grain", default="QUARTER", choices=("QUARTER", "YEAR", "quarter", "year"))
+    p.add_argument(
+        "--with-local",
+        action="store_true",
+        help="include local_counter (gender, birth year); not a PCE payload",
+    )
     args = p.parse_args(argv)
     bundle = load_json(args.input)
     try:
@@ -232,13 +343,14 @@ def main(argv: list[str] | None = None) -> int:
                 "ingest": "accepted",
                 "http": 202,
                 "hitl": False,
-                "note": "ATC/time guard only; FR-460 PII checks are not in this slice",
+                "note": "PII/dose/ATC/time guard; k-cell and rare-drop are not in this slice",
             }
         else:
             out = transform_bundle(
                 bundle,
                 max_atc_level=args.atc_level,
                 time_grain=args.time_grain.upper(),
+                include_local=args.with_local,
             )
     except ShadowReject as e:
         json.dump(e.as_dict(), sys.stdout, indent=2, ensure_ascii=False)
