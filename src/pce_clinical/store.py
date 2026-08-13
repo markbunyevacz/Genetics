@@ -136,6 +136,17 @@ CREATE TABLE IF NOT EXISTS deletion_certificate (
   legal_basis TEXT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS dsr_request (
+  id TEXT PRIMARY KEY,
+  subject_id TEXT NOT NULL,
+  received_at TEXT NOT NULL,
+  kind TEXT NOT NULL CHECK(kind IN ('withdraw','erasure','erasure_refused')),
+  response_issued_at TEXT,
+  letter_json TEXT,
+  deletion_certificate_id TEXT,
+  legal_basis TEXT NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS audit_event (
   id TEXT PRIMARY KEY,
   ts TEXT NOT NULL,

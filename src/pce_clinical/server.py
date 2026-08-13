@@ -73,6 +73,11 @@ def handle_request(
             if isinstance(loaded, dict):
                 body = loaded
 
+        if route == "/v1/compliance/dsr" and method == "GET":
+            require_role(auth, DPO)
+            as_of = (query.get("as_of") or [None])[0]
+            return _json_bytes(svc.dsr_dashboard(as_of=as_of))
+
         if route == "/v1/orgs" and method == "POST":
             role = require_role(auth, WRITE_CASE)
             return _json_bytes(svc.create_org(body, role), 201)
@@ -103,6 +108,9 @@ def handle_request(
             if rest == "/withdraw" and method == "POST":
                 role = require_role(auth, DPO)
                 return _json_bytes(svc.withdraw_subject(sid, role))
+            if rest == "/refuse-erasure" and method == "POST":
+                role = require_role(auth, DPO)
+                return _json_bytes(svc.refuse_erasure(sid, role, reason_hu=body.get("reason_hu")))
             if rest.startswith("/certificates/") and method == "GET":
                 require_role(auth, DPO)
                 cert_id = rest.rsplit("/", 1)[-1]

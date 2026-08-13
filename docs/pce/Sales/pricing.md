@@ -17,7 +17,7 @@ Egyetlen **publikus** közvetlen versenytárs-ár létezik: YouScript provider-e
 
 A magyar **plafont** odaítélt közbeszerzés adja, nem PGx-modul-ár. Semmelweis / T-Systems MedSolution keret **816.636.406 Ft nettó** (KÉ 2020/58; Semmelweis GFI 2020-04-07 pin). Zala Vármegyei Szent Rafael / Asseco MedWorkS karbantartás: a kutatás **~88,3 M Ft / 12 hó, két kórház**, hivatkozás **EKR001266472024**. Az EKR-portál ebben a környezetben karbantartási oldalt adott — az összeg **nincs** SHA-256 pinelve.
 
-A javasolt PCE-sáv **mindegyik következtetés**. Egy PGx-modul a fenti HIS-ügyletek **töredéke**.
+A javasolt PCE-sáv **mindegyik következtetés**. Egy PGx-modul a fenti HIS-ügyletek **töredéke**. **15 felíró alatt nincs platform-alapdíj** (G §5.2). A publikálandó szám **egy**: a klinikus-ülőhely közepe. A `[Yp]` ajánlatkérés-alapú.
 
 ---
 
@@ -41,14 +41,18 @@ Kitöltés: a megrendelőlapon marad `[Yp]` / `[Yc]` / … — ez a tábla a **t
 
 | Sor | Sáv | Mire támaszkodik | Jelölés |
 | --- | --- | --- | --- |
-| Platform / tenancy / év | **6–35 M Ft** | HIS-plafon töredéke; magánellátói tűrőképesség | `[ASSUMPTION]` következtetés |
-| Klinikus / év | **120–480 e Ft** | YouScript 365 USD; a kutatás ≈ **115 e Ft** átváltást használ (MNB közép **nincs** pinelve). Felső sáv: nagyobb funkció-terjedelem | alsó: analogia; Ft: `[ASSUMPTION]` FX |
-| További telephely / év | **2–8 M Ft** | site-based analogia (SMART, ár nélkül) | `[ASSUMPTION]` |
-| HIS-integráció, egyszeri | a licenc **20–50%-a** | egészségügyi IT norma, nem megfigyelt PCE-tétel | `[ASSUMPTION]` |
-| Labor white-label tenancy | **4–25 M Ft/év** | per-report komponenssel; `[Yl]`, nem viszonteladás | `[ASSUMPTION]` |
-| F2/F3 aktiválási felár | **+15–40%** | csak CE / in-house után (`[Ya]`; FR-470) | `[ASSUMPTION]` |
+| Klinikus / év `[Yc]` | **120–480 e Ft**, közép **240 e Ft** | YouScript 365 USD; a kutatás ≈ **115 e Ft** átváltást használ (MNB közép **nincs** pinelve). Felső sáv: nagyobb funkció-terjedelem | alsó: analogia; Ft: `[ESTIMATE]` FX |
+| Platform / tenancy / év `[Yp]` | **0 Ft 15 felíró alatt**; **6–35 M Ft** felette | HIS-plafon 40%-a `[I]`; megfizethetőség. A 0–35 M Ft listaárként hiteltelen — ajánlatkérés | `[ESTIMATE]` |
+| További telephely / év `[Ys]` | **2–8 M Ft** | site-based analogia (SMART, ár nélkül) | `[ESTIMATE]` |
+| HIS-integráció, egyszeri `[Yi]` | a licenc **20–50%-a** | egészségügyi IT norma, nem megfigyelt PCE-tétel | `[ESTIMATE]` |
+| Labor white-label tenancy `[Yl]` | **4–25 M Ft/év** | per-report komponenssel; nem viszonteladás | `[ESTIMATE]` |
+| F2/F3 aktiválási felár `[Ya]` | **+15–40%** | csak CE / in-house után (FR-470) | `[ESTIMATE]` |
+| HIS-vendor `[Yh]` | `[Yp]` + `[Yi]`, marzs **20–30%** | `[E]` | `[ESTIMATE]` |
+| Shadow/kutatási tenancy `[Ysh]` | **0 Ft** | G3 validáció; nem termék. Ne számlázd. | `[I]` |
 
-**Tilos mondani:** „a PCE listaára 6–35 M Ft”; „365 USD = a HU klinikus-díj”; „a DrugMap 499 e Ft a mi árunk”.
+**Tilos mondani:** „a PCE listaára 6–35 M Ft”; „365 USD = a HU klinikus-díj”; „a DrugMap 499 e Ft a mi árunk”; „Medicover 29,1 mrd Ft” (nincs pin).
+
+Levezetés: [G §5](../G-open-items.md). Mind a nyolc `[Y*]` **nem** megfigyelt PCE-tranzakció. Az első három aláírt szerződés után újraszámolni.
 
 ### Orvosigazgatói érv (nem PCE-árlista)
 
@@ -68,9 +72,9 @@ Ha a DrugMap teszt **499 000 Ft** (VC-10, egy forrás) áll, a klinikus-sáv **a
 | `pce_shadow` + `pce_hitl` | Élő párosítás árnyékban; vak HITL (human-in-the-loop) UI; nincs kitalált szegény metabolizáló | A felíró **nem** látja (NG-07) |
 | `pce_ui` | Labor / klinikai / HITL HTML a fenti API-kra | Nem EESZT-kliens |
 
-Hivatalos klinikai pin: `docs/pce/Sources/official/MANIFEST.json` — **12** fájl `ok: true`, SHA-256-tal (2026-08-13). A motor a pin-elt JSON extractet olvassa, nem a PDF-et futáskor.
+Hivatalos klinikai pin: `docs/pce/Sources/official/MANIFEST.json` — **19** fájl `ok: true`, SHA-256-tal (2026-08-13), beleértve GDPR Art. 12 HTML/PDF, EMA 0,09 űrlap-utasítás, MDCG 2021-24, Health Canada PRCI (cél-cella 11), DHCS DDG V2.2 (Wayback). A motor a pin-elt JSON extractet olvassa, nem a PDF-et futáskor.
 
-Teszt: `PYTHONPATH=src python3 -m unittest discover -s tests -v` → **111 OK** (2026-08-13, árazási pin-tesztekkel). A J-1…J-6 merge 108 volt; ez a csomag három market-tesztet ad. Nem 94.
+Teszt: `PYTHONPATH=src python3 -m unittest discover -s tests -v` → **113 OK** (2026-08-13, G DSR + pin tesztekkel). A J-1…J-6 merge 108 volt; az árazási csomag 111; ez a G két DSR-tesztet ad. Nem 94.
 
 `LIVE_CDS = false`. `MATCHER_ON = false`. Bent van ≠ be van kapcsolva.
 

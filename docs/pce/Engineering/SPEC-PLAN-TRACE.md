@@ -68,7 +68,7 @@ Mérés: minden spec-tétel **FULL** / **PARTIAL** / **PLANNED** / **DEFERRED** 
 | FR | Pri / path | Kód | Terv WP | Validáció most | Rés |
 | --- | --- | --- | --- | --- | --- |
 | FR-100 | Comp P0 F1+ | PARTIAL | **WP-C** | TC-CONSENT-001..006 HTTP | kapu nem kikapcsolható; meta tanácsadó/dátum/engedély; FHIR Consent v1.1 később |
-| FR-110 | Comp P0 F1+ | PARTIAL | **WP-C** | omit + 410 + certificate; Art. 12(3) egy hónap válasz (Irish DPC CS2025 pin) | EUR-Lex primer S055; 72 h = azonnali SYN; klinikus-példány külön jogalap nincs bekapcsolva |
+| FR-110 | Comp P0 F1+ | PARTIAL | **WP-C** | omit + 410 + certificate **és** Art. 12(3) válaszlevél; Art. 12(4) `refuse_erasure`; `E-DSR-OVERDUE` dashboard | 72 h = azonnali SYN; klinikus-példány külön jogalap nincs bekapcsolva. S055 **LEZÁRVA**. |
 | FR-115 | Comp P0 ha ≠ ANON | PARTIAL | **WP-C** / H | ingest `E-CONSENT-006`; nincs HITL sor | ANON nem blokkol |
 | FR-120 | Comp P0 F1+ | PARTIAL | **WP-Q** | append-only trigger + CSV/JSON | hash-chain **DEFERRED P1**; nyers VCF nincs a naplóban |
 | FR-130 | Comp P0 F1+ | PARTIAL | **WP-K** | `reid_store` külön tábla | L4 log-scanner PII: gateway + report dump |
@@ -290,7 +290,7 @@ A user öt pontja: forrás-letöltés; szegény címke tiltás; „a lelet olvas
 | J-6 R9↔kód | `tests/test_report.py` R9 backtick-nevek ⊆ `FORBIDDEN_B41_FIELDS`; CI lépés. |
 | J-3 F-06 pheno-gold | `tests/fixtures/pheno-gold-v0/` N=32. Elvárt funkcionális fenotípus **üres**. G3 ≥90% **csak** itt. Nincs kitalált NM→szegény. |
 | J-2 F-04 | A.4.1 tábla; NFR-070a/b; OQ-06 = osztály páronként. RA pecsét **nyitott**. |
-| J-4 F-05 | FR-110: 26. § (1) határidő nélkül; GDPR Art. 12(3) egy hónap válasz. Irish DPC pin. EUR-Lex primer **hátravan**. |
+| J-4 F-05 | FR-110: 26. § (1) határidő nélkül; GDPR Art. 12(3)/12(4)/17(1). **S055 LEZÁRVA** (EUR-Lex HTML+PDF). Két artefaktum + `E-DSR-OVERDUE`. |
 | J-5 F-01 | §0 Owner / Validation / Due / Ha hamis. A14 k≥5 / 0,5% horgonya WP29 05/2014 + EDPB 01/2025, nem a DPIA. |
 | Unittest | **108 OK** |
 
@@ -306,4 +306,27 @@ A user öt pontja: forrás-letöltés; szegény címke tiltás; „a lelet olvas
 | EKR ~88,3 M Ft | `[R]` — EKR body hátravan |
 | Javasolt Ft-sáv | **Következtetés** `Sales/pricing.md`. Nincs a spec FR-ben listaárként. |
 | Repo mögé | 5 modul (shadow+HITL egy cső); 12 official SHA-256 `ok`; **111** teszt. Nem 94, nem 7 pin. |
+
+---
+
+## 14. P06aa — G melléklet (2026-08-13)
+
+| Tétel | Eredmény |
+| --- | --- |
+| S055 | **LEZÁRVA.** EUR-Lex HTML 809 035 byte; Art. 12(3)/12(4)/17(1) a HTML-ben. |
+| FR-110 | Két artefaktum: `DeletionCertificate` + `DsrLetter`. `refuse_erasure` Art. 12(4). `E-DSR-OVERDUE`. |
+| OQ-05/06/16 | Javaslat, **nem** pecsét. Class I MDSW default; IIa-safe párlista fallback; k≥11 politika. A14 k≥5 marad. |
+| F-14 | `[Yp]=0` 15 felíró alatt; `[Yc]` közép 240 e; `[Ysh]=0`. Mind `[ESTIMATE]`. |
+| Pin | + GDPR HTML/PDF, EMA 0,09, MDCG 2021-24 → **16** official `ok: true`. Unittest **113 OK**. |
+
+---
+
+## 15. P06ab — S060 / S062 pin (2026-08-13)
+
+| Tétel | Eredmény |
+| --- | --- |
+| S060 | **LEZÁRVA `[V]`.** Teljes PRCI `document.html`: „target cell size of 11 patients” + risk=0.09. Profiloldal külön pin. |
+| S062 | **LEZÁRVA `[V]`.** DHCS DDG V2.2 (2022-12-06, 71 oldal): numerátor <11 vagy nevező <20 000. Élő DHCS Incapsula; pin Wayback `/web/2022/`. v3.0 nincs pinelve. **Nem** EU-jog. |
+| OQ-16 / A14 | k≥11 **javaslat** a DPO-nak. A14 k≥5 / 0,5% `[ASSUMPTION]` **nem** pecsét. |
+| Pin | Official **19** `ok: true`. Unittest **113 OK**. |
 

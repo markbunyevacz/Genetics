@@ -23,9 +23,10 @@ A v1 / F1s **éles ON moduljához** a gyártói kérés kész ([F](F-decision-pa
 5. **[D-risk-and-traceability.md](D-risk-and-traceability.md)** — ISO 14971 kezdeti kockázat (R-015–R-019) + FR→forrás→teszt→GSPR mátrix.
 6. **[E-shadow-hitl.md](E-shadow-hitl.md)** — shadow pipeline, intézményi gateway, HITL UI, GDPR két út, REG-090 / OQ-15.
 7. **[F-decision-package.md](F-decision-package.md)** — gyártói előterjesztés a v1 blokkolókra. **Nem** külső aláírás.
-8. **[Outbound/](Outbound/README.md)** — címzett-kész irattervezetek (counsel, DPO, intézményi RA, L3 term sheet, ISO/EESZT owner). Küldhető; **nem** aláírt állásfoglalás.
-9. **[Sales/](Sales/README.md)** — **rendszerlicenc** (SKU-P). F1–F3 egy bináris; HU/EU/US flag. Klinika a vevő. Labor = csatlakozó. F2 bent van, lakattal. Nem leletbolt.
-10. **[Engineering/](Engineering/README.md)** — [delivery plan](Engineering/DELIVERY-PLAN.md), [lefedettség](Engineering/SPEC-PLAN-TRACE.md), [adatfolyam](Engineering/DATAFLOW-AND-UX.md). Nem spec-módosítás. Éles HIS pecsétig tilos.
+8. **[G-open-items.md](G-open-items.md)** — S055 / S060 / S062 lezárva; OQ-05/06/16 és F-14 **javaslat**, nem pecsét.
+9. **[Outbound/](Outbound/README.md)** — címzett-kész irattervezetek (counsel, DPO, intézményi RA, L3 term sheet, ISO/EESZT owner). Küldhető; **nem** aláírt állásfoglalás.
+10. **[Sales/](Sales/README.md)** — **rendszerlicenc** (SKU-P). F1–F3 egy bináris; HU/EU/US flag. Klinika a vevő. Labor = csatlakozó. F2 bent van, lakattal. Nem leletbolt.
+11. **[Engineering/](Engineering/README.md)** — [delivery plan](Engineering/DELIVERY-PLAN.md), [lefedettség](Engineering/SPEC-PLAN-TRACE.md), [adatfolyam](Engineering/DATAFLOW-AND-UX.md). Nem spec-módosítás. Éles HIS pecsétig tilos.
 
 ## Process artifacts
 
@@ -84,7 +85,7 @@ Részlet: [Outbound/README](Outbound/README.md).
 
 - **OQ-16** intézményi vagy termék-DPO: első kimenő irat, [küldési csomag](Outbound/OQ-16-kuldesi-csomag.md). NEM → `PSEUDO` + **FR-115**. **Nem** a mintavételi FR-100. Partnerlabor **nem** az OQ-16 mezője.
 - **OQ-15** intézményi RA: reviewer-vak HITL. HIS: 15 **és** 16 pecsét.
-- **OQ-05** gyártói counsel: F1+ nem-MDSW *kérés*; gén-szintű CPIC lehet Rule 11a. A válasz a telephely F1+ flagje.
+- **OQ-05** gyártói counsel: F1+ nem-MDSW *kérés*; gén-szintű CPIC lehet Rule 11a. Amíg nincs pecsét: Class I MDSW dosszié `[A]` (G §3.4). A válasz a telephely F1+ flagje.
 - **OQ-03** labor REG-020 / `[Yl]`. **OQ-01** ISO folyamat + Redmine, nem „megújítás”.
 
 ### Pecsétekig — mi indul / mi nem (§10.2)
