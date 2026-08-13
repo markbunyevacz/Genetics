@@ -114,5 +114,55 @@ class RenderGoldTests(unittest.TestCase):
         self.assertEqual(report["a11_disclaimer"], A11_DISCLAIMER)
 
 
+class Prepare12TableTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        from pce_report.guidelines import prepare12_table
+
+        cls.table = prepare12_table()
+
+    def test_cyp2c19_dumps_official_pairs(self) -> None:
+        call = {
+            "gene": "CYP2C19",
+            "diplotype": "*1/*1",
+            "callability": "CALLED",
+            "case_display_id": "SYN-CASE-C19",
+        }
+        report = render_f1plus(outside_call=call, table=self.table)
+        self.assertEqual(report["pair_count"], 27)
+        self.assertEqual(report["unsourced_claims"], 0)
+        self.assertIn("clopidogrel", {p["drugname"] for p in report["pairs"]})
+        self.assertFalse(report["hianyzik"])
+
+    def test_f5_signals_missing_recommendation_without_inventing(self) -> None:
+        call = {
+            "gene": "F5",
+            "diplotype": "rs6025 het",
+            "callability": "CALLED",
+            "case_display_id": "SYN-CASE-F5",
+        }
+        report = render_f1plus(outside_call=call, table=self.table)
+        self.assertEqual(report["pair_count"], 2)
+        self.assertEqual(report["guideline_row_count"], 0)
+        blob = " ".join(report["hianyzik"])
+        self.assertIn("recommendation_view", blob)
+        self.assertIn("PharmCAT", blob)
+        self.assertEqual(report["unsourced_claims"], 0)
+
+    def test_vkorc1_pair_exists_recommendation_view_gap_is_flagged(self) -> None:
+        call = {
+            "gene": "VKORC1",
+            "diplotype": "*1/*1",
+            "callability": "CALLED",
+            "case_display_id": "SYN-CASE-VK",
+        }
+        report = render_f1plus(outside_call=call, table=self.table)
+        self.assertEqual(report["pair_count"], 1)
+        self.assertEqual(report["pairs"][0]["drugname"], "warfarin")
+        blob = " ".join(report["hianyzik"])
+        self.assertIn("recommendation_view", blob)
+        self.assertIn("Warfarin", blob)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -45,6 +45,8 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P05u | Árnyék-motor + HITL store/UI (WP-M/H) | 2026-08-13 | 2026-08-13 | DONE | P06t: 5 F1s MISSING; tilos kitalált PM | `src/pce_shadow/`; `src/pce_hitl/`; `src/pce_ui/hitl.html`; S044–S047 | VC-15 |
 | P06u | Plan-vs-content a F1s láncra | 2026-08-13 | 2026-08-13 | DONE | TRACE NOW 26/27 PARTIAL; F1s dataflow 5/5 | TRACE + DATAFLOW rescore; 78 unittest | — |
 | P06v | Felesleges plusz doksi törlése | 2026-08-13 | 2026-08-13 | DONE | User: ne generálj új doksit mindenre | `VALASZ-SPEC-TERV.md` törölve; a TRACE/DELIVERY-PLAN/DATAFLOW marad | — |
+| P05w | PREPARE-12 CPIC + VCF gold + forráshiány a termékben | 2026-08-13 | 2026-08-13 | DONE | User: van/nincs tábla; PM=szegény metabolizáló; hatóanyag-kód; teljes rendszer | `prepare12/` extract; `vcf-gold-v0/`; `forras_allapot`; PSEUDO ATC5 | VC-15 |
+| P06w | Plan-vs-content a 6 user-pontra | 2026-08-13 | 2026-08-13 | DONE | TRACE/DELIVERY/DATAFLOW/registry; 89 unittest | SPEC-PLAN-TRACE §10 | — |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -88,6 +90,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-34 | P06r | Delivery plan vs teljes spec | Részleges WP-G/R / tételes P06 + hiányzó L0–L6 WP | **36 FR mind nevesítve**; NOW 27/27 terv; kód 0 FULL. Render FR-100 után. EDU null megengedett forrás hiányában. | User 2026-08-13 | user |
 | D-35 | P05s | Klinikai lánc a fagyasztott B szerint | Terv-only / SQLite+stdlib HTTP a B.3/B.4-re | **Kód**: `pce_clinical` + labor HTML; FR-100 CLI sem kerülhető; NFR-031 TLS SYN-en localhost (dokumentált eltérés) | P06r rés FR-100 | user |
 | D-36 | P05u | NM + erős gátló → PM a shadowban | Kitalált PM / forrásolt null, amíg CPIC konszenzus nincs | **Null `functional_phenotype`**; FDA strong class ATC5-ön; ATC4 nem paroxetin; Table 2a csak stratégia-kategória | S046; B.6.2 „a tábla szerint”; user: pótold | user |
+| D-37 | P05w | Hol a NM→szegény tábla; ATC pontosság | Kitalált SSRI NM→szegény / opioid tábla keverése / hiány jelzése | **Amit van, azt írjuk; ami nincs, azt jelezzük.** SSRI 2023: nincs sor. FDA: erős gátló. Opioid 2020: van szabály, de nem a paroxetin-SSRI példa. ANON marad ATC4 (spec). Párosítás: 7 karakteres hatóanyag-kód (PSEUDO+hozzájárulás). Nem „egy szer = egy beteg”. | S045–S050; user 6 pont | user |
 
 ## 3. Error log
 
@@ -109,6 +112,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | E-14 | P05j | Hallucinated / wrong cite | I-19: PREPARE p=0,0034; PMC7195220 mint YouScript; ClinLabomics mint k-anon; Tandem mint OQ-05 pecsét; TSI mint F1+ siker; ágyszám-ár | Primer Lancet + vendor oldalak; CORRECTED | VC-14; D-22 |
 | E-15 | P05q | Hallucinated PII / API mismatch | User-minta: „Kovács János” / TAJ 123456789; `entry.resourceType`; DSTU2 `doseQuantity` | Gold V0 opák ID; FHIR R4 `entry.resource` + `doseAndRate` | D-32 |
 | E-16 | P05u | Hallucinated phenotype mapping | Spec AC „NM + erős gátló → PM/IM a tábla szerint” — CPIC 2023: konszenzus **nincs** | Switch: FDA class + sourced null; dummy PM = fail | VC-15; D-36 |
+| E-17 | P05w | Jargon / information loss | PM betűszó magyarázat nélkül; „durvább kód” / „szer azonosítja a beteget”; extra doksi | Magyar van/hiányzik a kártyán; hatóanyag-kód a párosításhoz; TRACE/DELIVERY/DATAFLOW only | D-37 |
 
 ## 4. File timeline
 
@@ -126,7 +130,10 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | docs/pce/Sales/* | P05g | P05j (mátrix + competitor-analogs) | TERVEZET rendszerlicenc |
 | docs/pce/Sources/S028-* | P01c | P05i | L5 jegyzet + PDF |
 | docs/pce/ProcessArtifacts/* | P01–P06 | P05l (I-20, D-25) | DRAFT |
-| docs/pce/Engineering/* | P05l | P06u (árnyék-motor + HITL + TRACE rescore) | SYN ticketek; P06 mátrix; kód `src/` |
-| src/pce_shadow/ | P05u | P05u | F1s élő párosítás; nem a F1+ leleten |
-| src/pce_hitl/ | P05u | P05u | vak ellenőrző API + `hitl.sqlite` |
-| src/pce_ui/hitl.html | P05u | P05u | P3 SYN képernyő, nem vizit |
+| docs/pce/Engineering/* | P05l | P06w | SYN ticketek; P06 mátrix; kód `src/` |
+| src/pce_shadow/ | P05u | P05w | F1s élő párosítás; forráshiány magyarul |
+| src/pce_hitl/ | P05u | P05w | vak ellenőrző API + `hitl.sqlite` |
+| src/pce_ui/hitl.html | P05u | P05w | van/hiányzik lista a vak lépés után |
+| src/pce_clinical/coverage.py | P05w | P05w | FR-210; allélhívó ki |
+| tests/fixtures/f1plus-v0/prepare12/ | P05w | P05w | 12 gén CPIC pin |
+| tests/fixtures/vcf-gold-v0/ | P05w | P05w | 3 SYN missing-to-ref |

@@ -111,7 +111,7 @@ OGYÉI gépi licence OQ-11 `[NEEDS VERIFICATION]` — SYN-en ATC WHO; nem kital�
 | T1 | `config_id = pgx-prepare-12@<file-version>` külső JSON, nem kód-tuple egyedül | PREPARE 12 gén a specből |
 | T2 | HLA-A / NUDT15 külön config fájl | PGx-Passport opció |
 | T3 | Change-control rekord konfigurációváltáskor | FR-310; FR-510 listázás P1 |
-| T4 | CPIC `pair_view` + `recommendation_view` a **12 génre** (extract script, mint CYP2D6) | S043 minta |
+| T4 | CPIC `pair_view` + `recommendation_view` a **12 génre** (extract script) | S049; F5/VKORC1 üres rec **jelezve**, nincs kitalált szöveg |
 | T5 | DPWG + FDA: hivatalos fájl/API vagy a leletben **nincs** kitalált DPWG sor; ha van forrás, mindkettő URL-lel, nincs szintetizált harmadik | FR-400-STATIC |
 | T6 | EDU: hivatalos osztály-szöveg + URL, **vagy** `phenoconversion_edu: null` + TC hogy null megengedett forrás hiányában | FR-410-EDU; S043 notesonusage üres volt |
 | T7 | ≥5 tiltott ha–akkor fixture → `E-EDU-001` | TC-EDU |
@@ -203,13 +203,13 @@ Külön csomag: `src/pce_shadow/`. `pce_report` nem importálja.
 | --- | --- | --- |
 | M1 | Input: coarsened/raw diplotípus + ATC≤4 meds | GatewayEvent |
 | M2 | Output: `live_findings[]` stratégia-kategória, **nincs** `dose_mg` | B.2.2 |
-| M3 | CYP2D6 NM + **ATC5** paroxetin (`N06AB05`) vagy fluoxetin (`N06AB03`): `genotype_phenotype=NM` (CPIC API); FDA `strong` gátló rögzítve; `functional_phenotype` **üres**, mert a CPIC 2023 szerint a gátló melletti fenotípus-állításra **nincs konszenzus**. Dummy PM = **fail**. ATC4 `N06AB`: `INSUFFICIENT_RESOLUTION`, nem paroxetin-állítás. | TC-PHENO-001; `tests/test_shadow.py` |
+| M3 | CYP2D6 gén szerinti **normál metabolizáló** + **ATC5** paroxetin (`N06AB05`) vagy fluoxetin (`N06AB03`): a gén szerinti osztály megmarad; FDA `strong` gátló rögzítve; **funkcionális szegény metabolizáló üres**, mert a CPIC SSRI 2023-ban **nincs** NM→szegény sor (a hiány a HITL `forras_allapot` listán). Dummy szegény címke = **fail**. ATC4 `N06AB`: hatóanyag nem ismert (az SSRI-csoportban az eszcitaloprám is benne van) → gátló-állítás szünetel. ANON ingest továbbra is elutasítja a 7 karakteres kódot; PSEUDO+kutatási hozzájárulás+`max_atc_level=5` megtartja. | TC-PHENO-001; `tests/test_shadow.py`; `tests/test_hitl.py` |
 | M4 | Nincs med lista → `clinical_context=ABSENT`, nem hallgatólagos NM | FR-220/410-LIVE |
 | M5 | eGFR < 30 → `reason: organ`, nem számított dózis | B.6.2 |
 | M6 | Determinisztikus | NFR-060 |
 | M7 | CI: `pce_report` AST-ban nincs `pce_shadow` | FR-470 |
 
-Inhibitor tábla: FDA Table 2-2 strong index (paroxetin, fluoxetin) + WHO ATC5 + CPIC SSRI 2023 Table 2a stratégia-kategória. CPIC 2023: *„Consensus approaches for adjusting … predicted phenotypes in the presence of inhibitors … have not been established.”* Ha a PM/IM sor nem forrásolható, a teszt skip helyett **fail** (nincs dummy PM).
+Inhibitor tábla: FDA Table 2-2 erős index (paroxetin, fluoxetin) + WHO ATC 5. szint (7 karakter) + CPIC SSRI 2023 Table 2a stratégia-kategória. CPIC SSRI 2023: nincs NM→szegény metabolizáló sor. CPIC opioid 2020: van ilyen szabály opioidra — a paroxetin-SSRI példára **nem** keverjük. A HITL kártya kiírja: mi van, mi hiányzik, kitől, kinek kell beszerezni.
 
 **SYN kód:** `src/pce_shadow/`, `src/pce_hitl/` + `var/hitl.sqlite`, `src/pce_ui/hitl.html`. `python -m pce_hitl`. A klinikai processzus `/v1/hitl/**` továbbra is 403/404 (FR-470).
 
@@ -251,7 +251,7 @@ F1 default marad FR-240. VCF kell a missing-to-ref P0 teszthez.
 | V2 | Csonka fájl → `E-VCF-001`, **nincs** részleges riport | story 20 |
 | V3 | Multi-sample hozzárendelés nélkül → `E-VCF-002` | |
 | V4 | > 5 GB → `E-VCF-004` | |
-| V5 | ≥3 gold: missing defining position → INDETERMINATE, nem NORMAL | FR-210; PharmCAT `--absent-to-ref` **nincs** hívva |
+| V5 | ≥3 gold: hiányzó definiáló pozíció → INDETERMINATE, nem NORMAL. Minták: `tests/fixtures/vcf-gold-v0/` (gyártó SYN, Ensembl/dbSNP pin). CDC GeT-RM fizikai minta labor-QC, nem ez a három fájl. | FR-210; PharmCAT `--absent-to-ref` **nincs** hívva |
 | V6 | NamedAlleleMatcher **ki** | FR-300 / OQ-05 |
 
 ---

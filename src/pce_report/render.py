@@ -58,11 +58,8 @@ def render_f1plus(
         raise RendererConfigError("CALLED/PARTIAL requires diplotype")
 
     pairs = table.pairs_for_gene(gene)
-    if not pairs:
-        raise RendererConfigError(f"no CPIC pair_view rows for {gene}")
     recs = table.rows_for_gene(gene)
-    if not recs:
-        raise RendererConfigError(f"no CPIC recommendation_view rows for {gene}")
+    gene_status = table.status_for_gene(gene)
 
     positive = callability == "CALLED"
     case: dict[str, Any] = {
@@ -81,6 +78,10 @@ def render_f1plus(
         )
     elif isinstance(outside_call.get("lab_phenotype"), str):
         case["lab_phenotype_claim"] = outside_call["lab_phenotype"]
+    if isinstance(outside_call.get("note_hu"), str):
+        case["note_hu"] = outside_call["note_hu"]
+    if outside_call.get("naive_missing_to_ref_would_claim"):
+        case["naive_missing_to_ref_would_claim"] = outside_call["naive_missing_to_ref_would_claim"]
 
     wrapper = A1_INTENDED_PURPOSE + "\n" + A11_DISCLAIMER
     _scan_wrapper(wrapper)
@@ -101,8 +102,14 @@ def render_f1plus(
         "pair_count": len(pairs),
         "guideline_rows": recs,
         "guideline_row_count": len(recs),
-        "guideline_source": table.recs_source,
-        "pair_source": table.pairs_source,
+        "guideline_source": {
+            **(table.recs_source or {}),
+            "api": gene_status.get("rec_api") or (table.recs_source or {}).get("api"),
+        },
+        "pair_source": {
+            **(table.pairs_source or {}),
+            "api": gene_status.get("pair_api") or (table.pairs_source or {}).get("api"),
+        },
         "accessed": table.accessed,
         "unsourced_claims": 0,
         "edu_phenoconversion": None,
@@ -110,6 +117,8 @@ def render_f1plus(
             "FR-410-EDU omitted: CPIC guideline.notesonusage was empty on the "
             "fetched guideline records; no invented educational paragraph."
         ),
+        "cpic_table_status": gene_status,
+        "hianyzik": gene_status.get("hianyzik") or [],
     }
     return report
 

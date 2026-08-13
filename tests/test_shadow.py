@@ -130,6 +130,44 @@ class LivePairingTests(unittest.TestCase):
         self.assertEqual(a["config_id"], "pgx-prepare-12@v0")
 
 
+class HungarianGapSignalTests(unittest.TestCase):
+    def test_paroxetine_card_says_what_exists_and_what_is_missing(self) -> None:
+        inf = infer(
+            _event(
+                medications=[
+                    {"system": "http://www.whocc.no/atc", "code": "N06AB05", "display": "paroxetine"}
+                ]
+            )
+        )
+        self.assertEqual(
+            inf["genotype_phenotype"][0]["genotype_phenotype_hu"],
+            "normál metabolizáló (a gén alapján az enzim rendesen működik)",
+        )
+        fa = inf["forras_allapot"]
+        van_text = " ".join(row["hu"] for row in fa["van"])
+        missing_text = " ".join(row["hu"] for row in fa["hianyzik"])
+        self.assertIn("FDA", van_text)
+        self.assertIn("N06AB05", van_text)
+        self.assertIn("erős", van_text)
+        self.assertIn("nincs olyan sor", missing_text.lower())
+        self.assertIn("szegény metabolizáló", missing_text)
+        self.assertFalse(fa["functional_phenotype_iras"]["irtunk_szegeny_metabolizalot"])
+        self.assertIn("gyártó", fa["beszerzes"]["kinek"])
+        self.assertEqual(inf["functional_phenotype"], [])
+        self.assertIn("paroxetin", inf["live_findings"][0]["strategy_category_hu"] or "")
+
+    def test_atc4_explains_substance_code_not_patient_identity(self) -> None:
+        inf = infer(
+            _event(medications=[{"system": "http://www.whocc.no/atc", "code": "N06AB"}])
+        )
+        hu = inf["live_findings"][0]["strategy_category_hu"] or ""
+        self.assertIn("hatóanyag", hu)
+        self.assertIn("eszcitaloprám", hu)
+        self.assertNotIn("azonosít a beteget", hu.lower())
+        missing = " ".join(row["hu"] or "" for row in inf["forras_allapot"]["hianyzik"])
+        self.assertIn("7 karakter", missing)
+
+
 class IsolationFromReportTests(unittest.TestCase):
     def test_shadow_package_does_not_import_report_renderer(self) -> None:
         src_root = ROOT / "src" / "pce_shadow"

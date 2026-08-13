@@ -1,0 +1,401 @@
+{
+  "id": "pce-f1plus-cyp2c9-cpic-pair-view",
+  "version": "v0",
+  "accessed": "2026-08-13",
+  "source": {
+    "name": "CPIC/ClinPGx pair_view",
+    "api": "https://api.cpicpgx.org/v1/pair_view?genesymbol=eq.CYP2C9"
+  },
+  "pair_count": 25,
+  "pairs": [
+    {
+      "pairid": 110067,
+      "drugid": "RxNorm:41493",
+      "drugname": "meloxicam",
+      "genesymbol": "CYP2C9",
+      "guidelinename": "CYP2C9 and NSAIDs",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251464",
+      "cpiclevel": "A",
+      "clinpgxlevel": "1A",
+      "pgxtesting": "Informative PGx",
+      "pmids": [
+        "32189324"
+      ],
+      "usedforrecommendation": "Yes",
+      "provisional": false
+    },
+    {
+      "pairid": 110060,
+      "drugid": "RxNorm:1191",
+      "drugname": "aspirin",
+      "genesymbol": "CYP2C9",
+      "guidelinename": "CYP2C9 and NSAIDs",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251464",
+      "cpiclevel": "C",
+      "clinpgxlevel": null,
+      "pgxtesting": null,
+      "pmids": [
+        "32189324"
+      ],
+      "usedforrecommendation": "No",
+      "provisional": false
+    },
+    {
+      "pairid": 110101,
+      "drugid": "RxNorm:72236",
+      "drugname": "fosphenytoin",
+      "genesymbol": "CYP2C9",
+      "guidelinename": "CYP2C9, HLA-B and Phenytoin",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251461",
+      "cpiclevel": "A",
+      "clinpgxlevel": null,
+      "pgxtesting": "Actionable PGx",
+      "pmids": [
+        "25099164",
+        "32779747"
+      ],
+      "usedforrecommendation": "Yes",
+      "provisional": false
+    },
+    {
+      "pairid": 110269,
+      "drugid": "RxNorm:1731031",
+      "drugname": "lesinurad",
+      "genesymbol": "CYP2C9",
+      "guidelinename": null,
+      "guidelineurl": null,
+      "cpiclevel": "B/C",
+      "clinpgxlevel": null,
+      "pgxtesting": "Actionable PGx",
+      "pmids": null,
+      "usedforrecommendation": "n/a",
+      "provisional": true
+    },
+    {
+      "pairid": 110148,
+      "drugid": "RxNorm:11289",
+      "drugname": "warfarin",
+      "genesymbol": "CYP2C9",
+      "guidelinename": "CYP2C9, VKORC1, CYP4F2 and Warfarin",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251465",
+      "cpiclevel": "A",
+      "clinpgxlevel": "1A",
+      "pgxtesting": "Actionable PGx",
+      "pmids": [
+        "21900891",
+        "28198005"
+      ],
+      "usedforrecommendation": "Yes",
+      "provisional": false
+    },
+    {
+      "pairid": 110065,
+      "drugid": "RxNorm:20890",
+      "drugname": "lornoxicam",
+      "genesymbol": "CYP2C9",
+      "guidelinename": "CYP2C9 and NSAIDs",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251464",
+      "cpiclevel": "A",
+      "clinpgxlevel": "1A",
+      "pgxtesting": null,
+      "pmids": [
+        "32189324"
+      ],
+      "usedforrecommendation": "Yes",
+      "provisional": false
+    },
+    {
+      "pairid": 110066,
+      "drugid": "ATC:M01AH06",
+      "drugname": "lumiracoxib",
+      "genesymbol": "CYP2C9",
+      "guidelinename": "CYP2C9 and NSAIDs",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251464",
+      "cpiclevel": "C",
+      "clinpgxlevel": null,
+      "pgxtesting": null,
+      "pmids": [
+        "32189324"
+      ],
+      "usedforrecommendation": "No",
+      "provisional": false
+    },
+    {
+      "pairid": 1556302,
+      "drugid": "RxNorm:41127",
+      "drugname": "fluvastatin",
+      "genesymbol": "CYP2C9",
+      "guidelinename": "SLCO1B1, ABCG2, CYP2C9, and Statins",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166264281",
+      "cpiclevel": "A",
+      "clinpgxlevel": "1A",
+      "pgxtesting": null,
+      "pmids": [
+        "35152405"
+      ],
+      "usedforrecommendation": "Yes",
+      "provisional": false
+    },
+    {
+      "pairid": 110064,
+      "drugid": "RxNorm:5781",
+      "drugname": "indomethacin",
+      "genesymbol": "CYP2C9",
+      "guidelinename": "CYP2C9 and NSAIDs",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251464",
+      "cpiclevel": "C",
+      "clinpgxlevel": "3",
+      "pgxtesting": null,
+      "pmids": [
+        "32189324"
+      ],
+      "usedforrecommendation": "No",
+      "provisional": false
+    },
+    {
+      "pairid": 110260,
+      "drugid": "RxNorm:2123125",
+      "drugname": "erdafitinib",
+      "genesymbol": "CYP2C9",
+      "guidelinename": null,
+      "guidelineurl": null,
+      "cpiclevel": "B/C",
+      "clinpgxlevel": null,
+      "pgxtesting": "Actionable PGx",
+      "pmids": null,
+      "usedforrecommendation": "n/a",
+      "provisional": true
+    },
+    {
+      "pairid": 110070,
+      "drugid": "RxNorm:7258",
+      "drugname": "naproxen",
+      "genesymbol": "CYP2C9",
+      "guidelinename": "CYP2C9 and NSAIDs",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251464",
+      "cpiclevel": "C",
+      "clinpgxlevel": "3",
+      "pgxtesting": null,
+      "pmids": [
+        "32189324"
+      ],
+      "usedforrecommendation": "No",
+      "provisional": false
+    },
+    {
+      "pairid": 110069,
+      "drugid": "RxNorm:31448",
+      "drugname": "nabumetone",
+      "genesymbol": "CYP2C9",
+      "guidelinename": "CYP2C9 and NSAIDs",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251464",
+      "cpiclevel": "C",
+      "clinpgxlevel": null,
+      "pgxtesting": null,
+      "pmids": [
+        "32189324"
+      ],
+      "usedforrecommendation": "No",
+      "provisional": false
+    },
+    {
+      "pairid": 110239,
+      "drugid": "RxNorm:2045726",
+      "drugname": "avatrombopag",
+      "genesymbol": "CYP2C9",
+      "guidelinename": null,
+      "guidelineurl": null,
+      "cpiclevel": "B/C",
+      "clinpgxlevel": null,
+      "pgxtesting": "Informative PGx",
+      "pmids": null,
+      "usedforrecommendation": "n/a",
+      "provisional": true
+    },
+    {
+      "pairid": 110258,
+      "drugid": "RxNorm:224925",
+      "drugname": "dronabinol",
+      "genesymbol": "CYP2C9",
+      "guidelinename": null,
+      "guidelineurl": null,
+      "cpiclevel": "B/C",
+      "clinpgxlevel": null,
+      "pgxtesting": "Actionable PGx",
+      "pmids": null,
+      "usedforrecommendation": "n/a",
+      "provisional": true
+    },
+    {
+      "pairid": 110339,
+      "drugid": "RxNorm:1665509",
+      "drugname": "flibanserin",
+      "genesymbol": "CYP2C9",
+      "guidelinename": null,
+      "guidelineurl": null,
+      "cpiclevel": "C",
+      "clinpgxlevel": null,
+      "pgxtesting": "Informative PGx",
+      "pmids": null,
+      "usedforrecommendation": "n/a",
+      "provisional": true
+    },
+    {
+      "pairid": 110127,
+      "drugid": "RxNorm:8183",
+      "drugname": "phenytoin",
+      "genesymbol": "CYP2C9",
+      "guidelinename": "CYP2C9, HLA-B and Phenytoin",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251461",
+      "cpiclevel": "A",
+      "clinpgxlevel": "1A",
+      "pgxtesting": "Actionable PGx",
+      "pmids": [
+        "25099164",
+        "32779747"
+      ],
+      "usedforrecommendation": "Yes",
+      "provisional": false
+    },
+    {
+      "pairid": 110071,
+      "drugid": "RxNorm:8356",
+      "drugname": "piroxicam",
+      "genesymbol": "CYP2C9",
+      "guidelinename": "CYP2C9 and NSAIDs",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251464",
+      "cpiclevel": "A",
+      "clinpgxlevel": "1A",
+      "pgxtesting": "Actionable PGx",
+      "pmids": [
+        "32189324"
+      ],
+      "usedforrecommendation": "Yes",
+      "provisional": false
+    },
+    {
+      "pairid": 110089,
+      "drugid": "RxNorm:140587",
+      "drugname": "celecoxib",
+      "genesymbol": "CYP2C9",
+      "guidelinename": "CYP2C9 and NSAIDs",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251464",
+      "cpiclevel": "A",
+      "clinpgxlevel": "1A",
+      "pgxtesting": "Actionable PGx",
+      "pmids": [
+        "32189324"
+      ],
+      "usedforrecommendation": "Yes",
+      "provisional": false
+    },
+    {
+      "pairid": 110136,
+      "drugid": "RxNorm:2121085",
+      "drugname": "siponimod",
+      "genesymbol": "CYP2C9",
+      "guidelinename": null,
+      "guidelineurl": null,
+      "cpiclevel": "A",
+      "clinpgxlevel": "1A",
+      "pgxtesting": "Testing Required",
+      "pmids": null,
+      "usedforrecommendation": "n/a",
+      "provisional": true
+    },
+    {
+      "pairid": 110326,
+      "drugid": "RxNorm:3355",
+      "drugname": "diclofenac",
+      "genesymbol": "CYP2C9",
+      "guidelinename": "CYP2C9 and NSAIDs",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251464",
+      "cpiclevel": "C",
+      "clinpgxlevel": "3",
+      "pgxtesting": null,
+      "pmids": [
+        "32189324"
+      ],
+      "usedforrecommendation": "No",
+      "provisional": false
+    },
+    {
+      "pairid": 110063,
+      "drugid": "RxNorm:5640",
+      "drugname": "ibuprofen",
+      "genesymbol": "CYP2C9",
+      "guidelinename": "CYP2C9 and NSAIDs",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251464",
+      "cpiclevel": "A",
+      "clinpgxlevel": "1A",
+      "pgxtesting": null,
+      "pmids": [
+        "32189324"
+      ],
+      "usedforrecommendation": "Yes",
+      "provisional": false
+    },
+    {
+      "pairid": 110100,
+      "drugid": "RxNorm:4502",
+      "drugname": "flurbiprofen",
+      "genesymbol": "CYP2C9",
+      "guidelinename": "CYP2C9 and NSAIDs",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251464",
+      "cpiclevel": "A",
+      "clinpgxlevel": "1A",
+      "pgxtesting": "Actionable PGx",
+      "pmids": [
+        "32189324"
+      ],
+      "usedforrecommendation": "Yes",
+      "provisional": false
+    },
+    {
+      "pairid": 110169,
+      "drugid": "RxNorm:154",
+      "drugname": "acenocoumarol",
+      "genesymbol": "CYP2C9",
+      "guidelinename": null,
+      "guidelineurl": null,
+      "cpiclevel": "B",
+      "clinpgxlevel": "1B",
+      "pgxtesting": null,
+      "pmids": null,
+      "usedforrecommendation": "n/a",
+      "provisional": true
+    },
+    {
+      "pairid": 110072,
+      "drugid": "RxNorm:37790",
+      "drugname": "tenoxicam",
+      "genesymbol": "CYP2C9",
+      "guidelinename": "CYP2C9 and NSAIDs",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251464",
+      "cpiclevel": "A",
+      "clinpgxlevel": "1A",
+      "pgxtesting": null,
+      "pmids": [
+        "32189324"
+      ],
+      "usedforrecommendation": "Yes",
+      "provisional": false
+    },
+    {
+      "pairid": 110062,
+      "drugid": "RxNorm:16689",
+      "drugname": "aceclofenac",
+      "genesymbol": "CYP2C9",
+      "guidelinename": "CYP2C9 and NSAIDs",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251464",
+      "cpiclevel": "C",
+      "clinpgxlevel": null,
+      "pgxtesting": null,
+      "pmids": [
+        "32189324"
+      ],
+      "usedforrecommendation": "No",
+      "provisional": false
+    }
+  ]
+}

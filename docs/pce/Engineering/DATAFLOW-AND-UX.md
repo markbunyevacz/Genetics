@@ -126,9 +126,9 @@ flowchart TB
 - ANON: nincs ResearchConsent kapu. PSEUDO: `E-CONSENT-006`.
 - Vak mód: 1. lépés motor nélkül; 2. lépés AGREE/DISAGREE.
 
-**HITL kártya (anonim):** `case_display_id`, gén, CLASS vagy RAW a FR-461 szerint, ATC≤4, `config_id`. Nincs név, TAJ, születési év, orvosnév.
+**HITL kártya (anonim):** `case_display_id`, gén, CLASS vagy RAW a FR-461 szerint, gyógyszerkód (ANON: WHO ATC 4. szint, 5 karakter; kutatási PSEUDO+hozzájárulás: 5. szint, 7 karakter, hatóanyag), `config_id`. Nincs név, TAJ, születési év, orvosnév. Vak lépés után: `forras_allapot` (mi van / mi hiányzik magyarul).
 
-**SYN állapot (2026-08-13 P06u):** a 5 lépés járható. Motor: `src/pce_shadow/`. Tár: `var/hitl.sqlite`. Képernyő: `src/pce_ui/hitl.html`, `python -m pce_hitl`. Gold ATC4 nem állít paroxetint és nem ír PM-et. ATC5 paroxetin teszt: NM megmarad, `functional_phenotype` üres (CPIC 2023: nincs konszenzusos leképezés).
+**SYN állapot (2026-08-13 P06w):** a 5 lépés járható. Motor: `src/pce_shadow/`. Tár: `var/hitl.sqlite`. Képernyő: `src/pce_ui/hitl.html`, `python -m pce_hitl`. Gold ATC4 nem állít paroxetint és nem ír szegény metabolizálót. ATC5 paroxetin (PSEUDO): gén szerinti normál metabolizáló megmarad, funkcionális szegény metabolizáló üres, a hiány ki van írva.
 
 ---
 
@@ -164,19 +164,19 @@ Minden képernyő a B API-t hívja. Nincs kitalált kórháznév; org = `SYN-ORG
 
 ## 5. Teljes út — SYN gold (nincs zsákutca)
 
-**F1+ minimum demo (WP-C+K+R+F+U) — járható**
+**F1+ klinikai út (WP-C+K+R+F+U+V) — járható**
 
 1. Tanácsadó rögzít SYN counselling + consent (`SYN-MD-001` pecsétszám-hely, nem kitalált orvosnév a gitben: placeholder slot).
-2. Labor feltölt `outside-call-cyp2d6-called.json`.
-3. Kapu enged; report `config_id=pgx-prepare-12@v0`; 79 pair + guideline rows; A.1.1 minden PDF oldalon.
+2. Labor feltölt `outside-call-cyp2d6-called.json`, **vagy** VCF-et (hiányzó definiáló pozíció → `INDETERMINATE`, nem NORMAL).
+3. Kapu enged; report `config_id=pgx-prepare-12@v0`; a meghívott gén CPIC pair sorai (12 gén pin, F5/VKORC1 rec hiány jelezve); A.1.1 minden PDF oldalon.
 4. Klinikus a PDF-et olvassa — nincs belépése a HITL-re (`E-ISO-001`).
-5. INDETERMINATE fixture: nincs NORMAL claim.
+5. INDETERMINATE: nincs NORMAL claim.
 6. Visszavonás: riport URL `410` `E-GONE-010`.
 
-**F1s minimum demo (WP-G+M+H) — járható**
+**F1s kutatási út (WP-G+M+H) — járható**
 
 1. Fixture HIS bundle → gateway → k-cella → `POST /v1/shadow/events`.
-2. ATC5/TAJ → 400, HIS ettől függetlenül „lezárt”.
+2. ANON ATC5/TAJ → 400, HIS ettől függetlenül „lezárt”. PSEUDO+kutatási hozzájárulás+7 karakteres kód → paroxetin-párosítás.
 3. Továbbított esemény → ShadowInference a **hitl.sqlite**-ban.
-4. Reviewer 1. lépés vak; 2. lépés verdict.
+4. Reviewer 1. lépés vak; 2. lépés verdict + `forras_allapot` (van/hiányzik).
 5. Report store üres marad ettől az eseménytől.

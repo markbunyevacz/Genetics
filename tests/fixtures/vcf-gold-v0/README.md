@@ -1,0 +1,21 @@
+# VCF gold — hiányzó definiáló pozíció (FR-210)
+
+Nem betegadat. Az allélhívó ki van kapcsolva. A PharmCAT `--absent-to-ref` nincs hívva.
+
+## Honnan van a három minta?
+
+| Kérdés | Válasz |
+| --- | --- |
+| Hol van? | Ebben a mappában, a gyártó készítette a teszthez. |
+| Kitől? | Nem a labor. Nem CDC-küldemény. SYN fájl. |
+| Milyen pozíció? | Ensembl + NCBI dbSNP, lásd `defining-positions.v0.json` (accessed 2026-08-13). |
+| CDC GeT-RM? | Fizikai referenciaanyag labor-QC-hez: https://www.cdc.gov/lab-quality/php/get-rm/reference-materials.html — **nem** ez a három fájl. |
+| PharmCAT GitHub teszt-VCF? | Létezik; itt nem másoljuk, mert a `--absent-to-ref` vakon tilos. |
+
+| Fájl | Hiányzó hely | Naiv missing-to-ref | Elvárt státusz |
+| --- | --- | --- | --- |
+| `missing-cyp2d6-star4.vcf` | rs3892097 CYP2D6*4 GRCh38 22:42128945 | Normal Metabolizer | `INDETERMINATE`, nem NORMAL |
+| `missing-cyp2c19-star2.vcf` | rs4244285 CYP2C19*2 GRCh38 10:94781859 | Normal Metabolizer | `INDETERMINATE`, nem NORMAL |
+| `missing-dpyd-star2a.vcf` | rs3918290 DPYD*2A GRCh38 1:97450058 | Normal Metabolizer | `INDETERMINATE`, nem NORMAL |
+
+A többi PREPARE-12 gén a katalógusban még nincs pin-elve → `NOT_TESTED` + hiány jelzés, nem kitalált NORMAL.

@@ -73,6 +73,18 @@ CREATE TABLE IF NOT EXISTS genomic_file (
   size INTEGER NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS gene_coverage (
+  id TEXT PRIMARY KEY,
+  genomic_file_id TEXT NOT NULL,
+  case_id TEXT NOT NULL,
+  gene TEXT NOT NULL,
+  callability TEXT NOT NULL,
+  missing_json TEXT NOT NULL,
+  naive_missing_to_ref_would_claim TEXT,
+  note_hu TEXT NOT NULL,
+  FOREIGN KEY(genomic_file_id) REFERENCES genomic_file(id)
+);
+
 CREATE TABLE IF NOT EXISTS outside_call (
   id TEXT PRIMARY KEY,
   case_id TEXT NOT NULL,

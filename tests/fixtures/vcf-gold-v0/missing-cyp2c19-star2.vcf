@@ -1,0 +1,12 @@
+##fileformat=VCFv4.2
+##fileDate=20260813
+##source=PCE-SYN-gold-FR-210; not a patient; matcher OFF
+##reference=GRCh38
+##contig=<ID=1,length=248956422>
+##contig=<ID=10,length=133797422>
+##contig=<ID=22,length=50818468>
+##INFO=<ID=SYN,Number=0,Type=Flag,Description="Synthetic fixture">
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	syn1
+22	42128945	rs3892097	C	T	.	PASS	SYN	GT	0/0
+1	97450058	rs3918290	C	T	.	PASS	SYN	GT	0/0
+10	94781000	.	G	A	.	PASS	SYN	GT	0/1

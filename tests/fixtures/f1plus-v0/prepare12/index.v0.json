@@ -1,0 +1,128 @@
+{
+  "id": "pce-f1plus-prepare12-cpic-index",
+  "version": "v0",
+  "accessed": "2026-08-13",
+  "source": {
+    "name": "CPIC/ClinPGx pair_view + recommendation_view",
+    "pair_api_template": "https://api.cpicpgx.org/v1/pair_view?genesymbol=eq.{GENE}",
+    "rec_api_template": "https://api.cpicpgx.org/v1/recommendation_view?lookupkey->>{GENE}=not.is.null",
+    "do_not_invent_recommendation_text": true,
+    "who_obtains": "manufacturer",
+    "who_obtains_hu": "A gyártó (ez a repo) tölti le a nyilvános CPIC API-t, és rögzíti az accessed dátumot. Nem a labor és nem a kórház feladata."
+  },
+  "genes": {
+    "CYP2B6": {
+      "pairs_file": "prepare12/cyp2b6-cpic-pair-view.v0.json",
+      "recs_file": "prepare12/cyp2b6-cpic-recommendation-view.v0.json",
+      "pair_count": 5,
+      "recommendation_count": 68,
+      "pair_api": "https://api.cpicpgx.org/v1/pair_view?genesymbol=eq.CYP2B6",
+      "rec_api": "https://api.cpicpgx.org/v1/recommendation_view?lookupkey->>CYP2B6=not.is.null",
+      "hianyzik": []
+    },
+    "CYP2C9": {
+      "pairs_file": "prepare12/cyp2c9-cpic-pair-view.v0.json",
+      "recs_file": "prepare12/cyp2c9-cpic-recommendation-view.v0.json",
+      "pair_count": 25,
+      "recommendation_count": 170,
+      "pair_api": "https://api.cpicpgx.org/v1/pair_view?genesymbol=eq.CYP2C9",
+      "rec_api": "https://api.cpicpgx.org/v1/recommendation_view?lookupkey->>CYP2C9=not.is.null",
+      "hianyzik": []
+    },
+    "CYP2C19": {
+      "pairs_file": "prepare12/cyp2c19-cpic-pair-view.v0.json",
+      "recs_file": "prepare12/cyp2c19-cpic-recommendation-view.v0.json",
+      "pair_count": 27,
+      "recommendation_count": 1180,
+      "pair_api": "https://api.cpicpgx.org/v1/pair_view?genesymbol=eq.CYP2C19",
+      "rec_api": "https://api.cpicpgx.org/v1/recommendation_view?lookupkey->>CYP2C19=not.is.null",
+      "hianyzik": []
+    },
+    "CYP2D6": {
+      "pairs_file": "prepare12/cyp2d6-cpic-pair-view.v0.json",
+      "recs_file": "prepare12/cyp2d6-cpic-recommendation-view.v0.json",
+      "pair_count": 79,
+      "recommendation_count": 1316,
+      "pair_api": "https://api.cpicpgx.org/v1/pair_view?genesymbol=eq.CYP2D6",
+      "rec_api": "https://api.cpicpgx.org/v1/recommendation_view?lookupkey->>CYP2D6=not.is.null",
+      "hianyzik": []
+    },
+    "CYP3A5": {
+      "pairs_file": "prepare12/cyp3a5-cpic-pair-view.v0.json",
+      "recs_file": "prepare12/cyp3a5-cpic-recommendation-view.v0.json",
+      "pair_count": 11,
+      "recommendation_count": 5,
+      "pair_api": "https://api.cpicpgx.org/v1/pair_view?genesymbol=eq.CYP3A5",
+      "rec_api": "https://api.cpicpgx.org/v1/recommendation_view?lookupkey->>CYP3A5=not.is.null",
+      "hianyzik": []
+    },
+    "DPYD": {
+      "pairs_file": "prepare12/dpyd-cpic-pair-view.v0.json",
+      "recs_file": "prepare12/dpyd-cpic-recommendation-view.v0.json",
+      "pair_count": 3,
+      "recommendation_count": 10,
+      "pair_api": "https://api.cpicpgx.org/v1/pair_view?genesymbol=eq.DPYD",
+      "rec_api": "https://api.cpicpgx.org/v1/recommendation_view?lookupkey->>DPYD=not.is.null",
+      "hianyzik": []
+    },
+    "F5": {
+      "pairs_file": "prepare12/f5-cpic-pair-view.v0.json",
+      "recs_file": "prepare12/f5-cpic-recommendation-view.v0.json",
+      "pair_count": 2,
+      "recommendation_count": 0,
+      "pair_api": "https://api.cpicpgx.org/v1/pair_view?genesymbol=eq.F5",
+      "rec_api": "https://api.cpicpgx.org/v1/recommendation_view?lookupkey->>F5=not.is.null",
+      "hianyzik": [
+        "CPIC recommendation_view üres vagy nem olvasható ehhez a génhez",
+        "A PharmCAT 2.11.0 eltávolította az F5-öt, mert a DPWG visszavonta az F5–szisztémás hormonális kontraceptívum ajánlást. A CPIC pair_view sorai megmaradnak, kitalált ajánlásszöveg nincs."
+      ]
+    },
+    "HLA-B": {
+      "pairs_file": "prepare12/hlab-cpic-pair-view.v0.json",
+      "recs_file": "prepare12/hlab-cpic-recommendation-view.v0.json",
+      "pair_count": 13,
+      "recommendation_count": 112,
+      "pair_api": "https://api.cpicpgx.org/v1/pair_view?genesymbol=eq.HLA-B",
+      "rec_api": "https://api.cpicpgx.org/v1/recommendation_view?lookupkey-%3E%3EHLA-B=not.is.null",
+      "hianyzik": []
+    },
+    "SLCO1B1": {
+      "pairs_file": "prepare12/slco1b1-cpic-pair-view.v0.json",
+      "recs_file": "prepare12/slco1b1-cpic-recommendation-view.v0.json",
+      "pair_count": 9,
+      "recommendation_count": 105,
+      "pair_api": "https://api.cpicpgx.org/v1/pair_view?genesymbol=eq.SLCO1B1",
+      "rec_api": "https://api.cpicpgx.org/v1/recommendation_view?lookupkey->>SLCO1B1=not.is.null",
+      "hianyzik": []
+    },
+    "TPMT": {
+      "pairs_file": "prepare12/tpmt-cpic-pair-view.v0.json",
+      "recs_file": "prepare12/tpmt-cpic-recommendation-view.v0.json",
+      "pair_count": 3,
+      "recommendation_count": 105,
+      "pair_api": "https://api.cpicpgx.org/v1/pair_view?genesymbol=eq.TPMT",
+      "rec_api": "https://api.cpicpgx.org/v1/recommendation_view?lookupkey->>TPMT=not.is.null",
+      "hianyzik": []
+    },
+    "UGT1A1": {
+      "pairs_file": "prepare12/ugt1a1-cpic-pair-view.v0.json",
+      "recs_file": "prepare12/ugt1a1-cpic-recommendation-view.v0.json",
+      "pair_count": 7,
+      "recommendation_count": 4,
+      "pair_api": "https://api.cpicpgx.org/v1/pair_view?genesymbol=eq.UGT1A1",
+      "rec_api": "https://api.cpicpgx.org/v1/recommendation_view?lookupkey->>UGT1A1=not.is.null",
+      "hianyzik": []
+    },
+    "VKORC1": {
+      "pairs_file": "prepare12/vkorc1-cpic-pair-view.v0.json",
+      "recs_file": "prepare12/vkorc1-cpic-recommendation-view.v0.json",
+      "pair_count": 1,
+      "recommendation_count": 0,
+      "pair_api": "https://api.cpicpgx.org/v1/pair_view?genesymbol=eq.VKORC1",
+      "rec_api": "https://api.cpicpgx.org/v1/recommendation_view?lookupkey->>VKORC1=not.is.null",
+      "hianyzik": [
+        "CPIC recommendation_view üres vagy nem olvasható ehhez a génhez"
+      ]
+    }
+  }
+}

@@ -12,19 +12,17 @@ from pathlib import Path
 from typing import Any
 
 from pce_clinical.consent import assert_render_allowed, gate_to_meta
+from pce_clinical.coverage import assess_coverage
 from pce_clinical.errors import ClinicalError
 from pce_clinical.explanation import build_explanation
 from pce_clinical.fhir import to_stu3_bundle
 from pce_clinical.store import ClinicalStore
-from pce_report.guidelines import GuidelineTable
+from pce_report.guidelines import GuidelineTable, prepare12_table
 from pce_report.panel import CONFIG_ID_PREFIX
 from pce_report.pdf import write_pdf
 from pce_report.render import RendererConfigError
 from pce_report.schema import assemble_b41, render_gene_engine
 
-ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_PAIRS = ROOT / "tests" / "fixtures" / "f1plus-v0" / "cyp2d6-cpic-pair-view.v0.json"
-DEFAULT_RECS = ROOT / "tests" / "fixtures" / "f1plus-v0" / "cyp2d6-cpic-recommendation-view.v0.json"
 CALLABILITY_OK = {"CALLED", "PARTIAL", "INDETERMINATE", "NOT_TESTED"}
 REF_OK = ("GRCh37", "GRCh38", "hg19", "hg38")
 VCF_MAX = 5 * 1024 * 1024 * 1024
@@ -59,7 +57,7 @@ class ClinicalService:
         table: GuidelineTable | None = None,
     ) -> None:
         self.store = store
-        self.table = table or GuidelineTable(DEFAULT_PAIRS, DEFAULT_RECS)
+        self.table = table or prepare12_table()
 
     def audit(
         self,
@@ -309,7 +307,43 @@ class ClinicalService:
             (case_id,),
         )
         self.audit(actor, "vcf", "GenomicFile", rid, "FR-200")
-        return {"id": rid, "format": fmt, "reference": reference, "sha256": digest, "size": len(raw)}
+        coverage = assess_coverage(text, reference=reference)
+        genes: list[dict[str, Any]] = []
+        for row in coverage:
+            cid = _id()
+            self.store.execute(
+                "INSERT INTO gene_coverage(id, genomic_file_id, case_id, gene, callability, "
+                "missing_json, naive_missing_to_ref_would_claim, note_hu) "
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                (
+                    cid,
+                    rid,
+                    case_id,
+                    row["gene"],
+                    row["callability"],
+                    json.dumps(row.get("missing") or [], ensure_ascii=False),
+                    row.get("naive_missing_to_ref_would_claim"),
+                    row["note_hu"],
+                ),
+            )
+            genes.append(
+                {
+                    "gene": row["gene"],
+                    "callability": row["callability"],
+                    "naive_missing_to_ref_would_claim": row.get("naive_missing_to_ref_would_claim"),
+                    "note_hu": row["note_hu"],
+                    "pharmcat_absent_to_ref": False,
+                }
+            )
+        return {
+            "id": rid,
+            "format": fmt,
+            "reference": reference,
+            "sha256": digest,
+            "size": len(raw),
+            "matcher_on": False,
+            "coverage": genes,
+        }
 
     def put_clinical_context(self, case_id: str, body: dict[str, Any], actor: str) -> dict[str, Any]:
         self._require_case(case_id)
@@ -346,6 +380,44 @@ class ClinicalService:
         self.audit(actor, "clinical_context", "Case", case_id, "FR-220")
         return {"stored": True, "medications": len(meds), "observations": len(obs), "used_by_f1plus_l4": False}
 
+    def _coverage_as_calls(self, case_id: str, rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        sample = self.store.one("SELECT * FROM sample WHERE case_id = ?", (case_id,))
+        counselling = self.store.one("SELECT * FROM counselling WHERE case_id = ?", (case_id,))
+        origin = sample["origin"] if sample else "SYN-LAB-001"
+        signer = counselling["counsellor_id"] if counselling else "SYN-MD-001"
+        calls: list[dict[str, Any]] = []
+        for row in rows:
+            callability = row["callability"]
+            if callability not in CALLABILITY_OK:
+                callability = "INDETERMINATE"
+            calls.append(
+                {
+                    "gene": row["gene"],
+                    "diplotype": None,
+                    "calling_lab": origin,
+                    "signing_physician": signer,
+                    "method": "VCF-lefedettség (allélhívó ki)",
+                    "call_date": _now()[:10],
+                    "phenotype": None,
+                    "callability": callability,
+                    "note_hu": row.get("note_hu"),
+                    "naive_missing_to_ref_would_claim": row.get("naive_missing_to_ref_would_claim"),
+                }
+            )
+        return calls
+
+    def _calls_for_report(self, case_id: str, case: dict[str, Any]) -> list[dict[str, Any]]:
+        oc = [dict(r) for r in self.store.query("SELECT * FROM outside_call WHERE case_id = ?", (case_id,))]
+        cov = [dict(r) for r in self.store.query("SELECT * FROM gene_coverage WHERE case_id = ?", (case_id,))]
+        source = case.get("call_source")
+        if source == "VCF" and cov:
+            return self._coverage_as_calls(case_id, cov)
+        if oc:
+            return oc
+        if cov:
+            return self._coverage_as_calls(case_id, cov)
+        raise ClinicalError("E-CALL-001", extra={"reason": "no outside-call"})
+
     def create_report(
         self,
         case_id: str,
@@ -354,17 +426,21 @@ class ClinicalService:
         skip_consent: bool = False,
         role: str = "lab_signer",
     ) -> dict[str, Any]:
-        case = self._require_case(case_id)
+        case = dict(self._require_case(case_id))
         if case["status"] == "NEEDS_RESOLUTION":
             raise ClinicalError("W-CALL-010", extra={"status": "NEEDS_RESOLUTION"})
-        calls = [dict(r) for r in self.store.query("SELECT * FROM outside_call WHERE case_id = ?", (case_id,))]
-        if not calls:
-            raise ClinicalError("E-CALL-001", extra={"reason": "no outside-call"})
-        genes = [c["gene"] for c in calls]
+        calls = self._calls_for_report(case_id, case)
         snap = assert_render_allowed(
-            self.store, case_id, genes, skip_consent=skip_consent, role=role
+            self.store, case_id, [], skip_consent=skip_consent, role=role
         )
-        visible = [c for c in calls if c["gene"] not in snap.omit_from_patient]
+        extras = [c["gene"] for c in calls if c["gene"] not in snap.allowed_genes]
+        if extras and case.get("call_source") != "VCF":
+            raise ClinicalError("E-CONSENT-004", extra={"genes": extras})
+        visible = [
+            c
+            for c in calls
+            if c["gene"] in snap.allowed_genes and c["gene"] not in snap.omit_from_patient
+        ]
         if not visible:
             raise ClinicalError("E-CONSENT-004", extra={"reason": "all genes omitted or out of scope"})
         # F1+ L4 must not read medication_entry. Load them only to prove they stay unused.

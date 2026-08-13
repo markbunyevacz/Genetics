@@ -40,10 +40,12 @@ def _egfr_value(obs: dict[str, Any]) -> float | None:
 def infer(
     payload: dict[str, Any],
     table: KnowledgeTable | None = None,
+    *,
+    max_atc_level: int = 4,
 ) -> dict[str, Any]:
     """Diplotype + current meds → live_findings. Never a Report FK."""
     knowledge = table or default_table()
-    event = event_from_payload(payload)
+    event = event_from_payload(payload, max_atc_level=max_atc_level)
     meds = list(event.get("medications") or [])
     dips = list(event.get("diplotypes") or [])
     obs = list(event.get("observations") or [])
@@ -62,10 +64,12 @@ def infer(
         if not isinstance(gene, str) or not isinstance(star, str):
             continue
         mapped = knowledge.genotype_phenotype(gene, star)
+        code = mapped["genotype_phenotype"] if mapped else None
         row: dict[str, Any] = {
             "gene": gene,
             "diplotype": star if granularity != "CLASS" else None,
-            "genotype_phenotype": mapped["genotype_phenotype"] if mapped else None,
+            "genotype_phenotype": code,
+            "genotype_phenotype_hu": knowledge.phenotype_hu(code),
             "cpic_generesult": mapped["cpic_generesult"] if mapped else None,
             "immutable": True,
             "source_id": mapped["source_id"] if mapped else None,
@@ -114,8 +118,29 @@ def infer(
         mapping_status = knowledge.adjustment_status
 
     functional: list[dict[str, Any]] = []
-    # Official CPIC 2023: consensus NM+inhibitor → PM/IM mapping is not established.
-    # Do not invent PM. Record inhibitor class when ATC5 matched.
+    # CPIC SSRI 2023: no NM+inhibitor → poor-metabolizer row. Do not invent it.
+    # Record FDA strong class when ATC5 matched. Signal the missing mapping in Hungarian.
+
+    def _finding(
+        *,
+        gene: str,
+        code: str,
+        inn: str | None,
+        category: str,
+        source_id: str | None,
+        extra: dict[str, Any] | None = None,
+    ) -> dict[str, Any]:
+        rec: dict[str, Any] = {
+            "gene": gene,
+            "drug_atc": code,
+            "inn": inn,
+            "strategy_category": category,
+            "strategy_category_hu": knowledge.strategy_labels_hu.get(category),
+            "source_id": source_id,
+        }
+        if extra:
+            rec.update(extra)
+        return rec
 
     live_findings: list[dict[str, Any]] = []
     if clinical_context != "ABSENT":
@@ -128,24 +153,24 @@ def infer(
                     category = pairing["by_phenotype"].get(pheno)
                     if category:
                         live_findings.append(
-                            {
-                                "gene": gene,
-                                "drug_atc": code,
-                                "inn": pairing.get("inn"),
-                                "strategy_category": category,
-                                "source_id": pairing.get("source_id"),
-                            }
+                            _finding(
+                                gene=gene,
+                                code=code,
+                                inn=pairing.get("inn"),
+                                category=category,
+                                source_id=pairing.get("source_id"),
+                            )
                         )
                         continue
                 if pairing and pairing.get("strategy"):
                     live_findings.append(
-                        {
-                            "gene": gene,
-                            "drug_atc": code,
-                            "inn": pairing.get("inn"),
-                            "strategy_category": pairing["strategy"],
-                            "source_id": pairing.get("source_id"),
-                        }
+                        _finding(
+                            gene=gene,
+                            code=code,
+                            inn=pairing.get("inn"),
+                            category=pairing["strategy"],
+                            source_id=pairing.get("source_id"),
+                        )
                     )
                     continue
                 prefix_hit = None
@@ -155,14 +180,17 @@ def infer(
                         break
                 if prefix_hit:
                     live_findings.append(
-                        {
-                            "gene": gene,
-                            "drug_atc": code,
-                            "inn": None,
-                            "strategy_category": "INSUFFICIENT_RESOLUTION",
-                            "source_id": prefix_hit.get("source_id"),
-                            "reason": "atc4_cannot_identify_strong_inhibitor_inn",
-                        }
+                        _finding(
+                            gene=gene,
+                            code=code,
+                            inn=None,
+                            category="INSUFFICIENT_RESOLUTION",
+                            source_id=prefix_hit.get("source_id"),
+                            extra={
+                                "reason": "atc4_cannot_identify_strong_inhibitor_inn",
+                                "reason_hu": knowledge.strategy_labels_hu.get("INSUFFICIENT_RESOLUTION"),
+                            },
+                        )
                     )
 
     organ_flags: list[dict[str, Any]] = []
@@ -186,12 +214,56 @@ def infer(
         if organ_flags:
             finding["reason_organ"] = ORGAN_REASON
 
+    mapping_hu = {
+        "not_established_by_cpic_2023": knowledge.adjustment_status_hu,
+        "atc4_insufficient": knowledge.strategy_labels_hu.get("INSUFFICIENT_RESOLUTION"),
+        "no_clinical_context": (
+            "Nincs aktuális gyógyszerlista; a párosítás nem értékelhető, nem hallgatólagos normál metabolizáló."
+        ),
+        "no_strong_inhibitor_atc5": (
+            "Nincs erős CYP2D6-gátló 7 karakteres hatóanyag-kóddal (paroxetin N06AB05 / fluoxetin N06AB03) a listán."
+        ),
+    }.get(mapping_status)
+
+    inv = knowledge.inventory
+    van = list(inv.get("van") or [])
+    hianyzik = list(inv.get("hianyzik") or [])
+    if mapping_status == "atc4_insufficient":
+        hianyzik.append(
+            {
+                "id": "ATC5-HATÓANYAG",
+                "hu": knowledge.strategy_labels_hu.get("INSUFFICIENT_RESOLUTION"),
+            }
+        )
+    elif mapping_status == "no_clinical_context":
+        hianyzik.append(
+            {
+                "id": "NINCS-GYÓGYSZERLISTA",
+                "hu": "Nincs aktuális gyógyszerlista; a gén–gyógyszer párosítás nem értékelhető (clinical_context = ABSENT), nem hallgatólagos normál metabolizáló.",
+            }
+        )
+
+    forras_allapot = {
+        "van": van,
+        "hianyzik": hianyzik,
+        "beszerzes": inv.get("beszerzes") or {},
+        "functional_phenotype_iras": {
+            "irtunk_szegeny_metabolizalot": False,
+            "hu": knowledge.adjustment_status_hu
+            or (
+                "Funkcionális szegény metabolizáló címke üres: a CPIC SSRI 2023-ban nincs NM→szegény sor, "
+                "az FDA csak erős gátlót mond."
+            ),
+        },
+    }
+
     inference: dict[str, Any] = {
         "id": str(uuid.uuid4()),
         "gateway_event_id": event.get("id"),
         "config_id": knowledge.config_id,
         "guideline_versions": {
             "cpic_ssri": "2023",
+            "cpic_opioid": "2020",
             "knowledge_id": knowledge.config_id,
         },
         "diplotypes": copy.deepcopy(dips),
@@ -204,14 +276,19 @@ def infer(
         "phenoconversion": {
             "applied": False,
             "inhibitor_inn": inhibitor.get("inn") if inhibitor else None,
+            "inhibitor_inn_hu": inhibitor.get("inn_hu") if inhibitor else None,
             "inhibitor_atc5": inhibitor.get("atc5") if inhibitor else None,
             "inhibitor_class": inhibitor.get("fda_class") if inhibitor else None,
+            "inhibitor_class_hu": inhibitor.get("fda_class_hu") if inhibitor else None,
             "match": inhibitor_match,
             "mapping_status": mapping_status,
+            "mapping_status_hu": mapping_hu,
             "functional_phenotype_written": False,
         },
+        "forras_allapot": forras_allapot,
         "diplotype_granularity": granularity,
         "phenotype_class": event.get("phenotype_class"),
         "payload_hash": event.get("payload_hash"),
+        "max_atc_level": max_atc_level,
     }
     return inference

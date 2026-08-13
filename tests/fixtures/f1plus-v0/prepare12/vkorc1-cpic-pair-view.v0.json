@@ -1,0 +1,29 @@
+{
+  "id": "pce-f1plus-vkorc1-cpic-pair-view",
+  "version": "v0",
+  "accessed": "2026-08-13",
+  "source": {
+    "name": "CPIC/ClinPGx pair_view",
+    "api": "https://api.cpicpgx.org/v1/pair_view?genesymbol=eq.VKORC1"
+  },
+  "pair_count": 1,
+  "pairs": [
+    {
+      "pairid": 110150,
+      "drugid": "RxNorm:11289",
+      "drugname": "warfarin",
+      "genesymbol": "VKORC1",
+      "guidelinename": "CYP2C9, VKORC1, CYP4F2 and Warfarin",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251465",
+      "cpiclevel": "A",
+      "clinpgxlevel": "1A",
+      "pgxtesting": "Actionable PGx",
+      "pmids": [
+        "21900891",
+        "28198005"
+      ],
+      "usedforrecommendation": "Yes",
+      "provisional": false
+    }
+  ]
+}

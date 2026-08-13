@@ -56,11 +56,45 @@
     <button type="button" id="btnReview">POST .../reviews</button>
   </fieldset>
   <pre id="out"></pre>
+  <section id="huBox" hidden>
+    <h2>Mi van a hivatalos táblákban / mi hiányzik</h2>
+    <p id="phenoHu"></p>
+    <h3>Van</h3>
+    <ul id="vanList"></ul>
+    <h3>Hiányzik</h3>
+    <ul id="hianyzikList"></ul>
+    <p id="beszerzes"></p>
+    <p id="funcHu"></p>
+  </section>
   <script>
     const out = document.getElementById("out");
+    const huBox = document.getElementById("huBox");
     function role() { return document.getElementById("role").value; }
     function val(id) { return document.getElementById(id).value; }
     function set(id, v) { document.getElementById(id).value = v; }
+    function fillHu(json) {
+      const fa = json && json.forras_allapot;
+      if (!fa) { huBox.hidden = true; return; }
+      huBox.hidden = false;
+      document.getElementById("phenoHu").textContent = json.genotype_phenotype_hu || "";
+      const van = document.getElementById("vanList");
+      van.innerHTML = "";
+      (fa.van || []).forEach((row) => {
+        const li = document.createElement("li");
+        li.textContent = row.hu || JSON.stringify(row);
+        van.appendChild(li);
+      });
+      const hi = document.getElementById("hianyzikList");
+      hi.innerHTML = "";
+      (fa.hianyzik || []).forEach((row) => {
+        const li = document.createElement("li");
+        li.textContent = row.hu || JSON.stringify(row);
+        hi.appendChild(li);
+      });
+      const b = fa.beszerzes || {};
+      document.getElementById("beszerzes").textContent = [b.kinek, b.kitol, b.hogyan, b.mikorra].filter(Boolean).join(" ");
+      document.getElementById("funcHu").textContent = (fa.functional_phenotype_iras && fa.functional_phenotype_iras.hu) || "";
+    }
     async function api(method, path, body) {
       const opts = { method, headers: { Authorization: role() } };
       if (body !== undefined) {
@@ -73,7 +107,9 @@
       try { parsed = JSON.stringify(JSON.parse(text), null, 2); } catch {}
       out.className = res.ok ? "" : "err";
       out.textContent = res.status + " " + path + "\n" + parsed;
-      return { res, json: (() => { try { return JSON.parse(text); } catch { return null; } })() };
+      const json = (() => { try { return JSON.parse(text); } catch { return null; } })();
+      fillHu(json);
+      return { res, json };
     }
     document.getElementById("btnList").onclick = async () => {
       const r = await api("GET", "/v1/hitl/inferences");

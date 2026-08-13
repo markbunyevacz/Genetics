@@ -233,6 +233,47 @@ class CardAndBlindTests(unittest.TestCase):
         self.assertEqual(ctx.exception.code, "E-HITL-PII")
 
 
+class PseudoAtc5PairingTests(unittest.TestCase):
+    def test_anon_still_rejects_atc5(self) -> None:
+        hitl = _hitl_store(self)
+        bundle = load_json(str(ROOT / "tests" / "fixtures" / "shadow-v0" / "pseudo-atc5-paroxetine-pce-ingest.json"))
+        status, body = handle_pce_ingest(
+            bundle,
+            GatewayConfig(),
+            FREQ,
+            authorization="gw-ok",
+            allowed_accounts={"gw-ok"},
+            hitl_store=hitl,
+        )
+        self.assertEqual(status, 400)
+        self.assertEqual(body["error"], "E-SHADOW-001")
+        self.assertEqual(hitl.query("SELECT id FROM shadow_inference"), [])
+
+    def test_pseudo_research_consent_keeps_paroxetine_code(self) -> None:
+        hitl = _hitl_store(self)
+        bundle = load_json(str(ROOT / "tests" / "fixtures" / "shadow-v0" / "pseudo-atc5-paroxetine-pce-ingest.json"))
+        cfg = GatewayConfig(mode="PSEUDO", research_consent=True, max_atc_level=5)
+        status, body = handle_pce_ingest(
+            bundle,
+            cfg,
+            FREQ,
+            authorization="gw-ok",
+            allowed_accounts={"gw-ok"},
+            hitl_store=hitl,
+        )
+        self.assertEqual(status, 202)
+        rows = hitl.query("SELECT body_json FROM shadow_inference")
+        self.assertEqual(len(rows), 1)
+        inf = json.loads(rows[0]["body_json"])
+        self.assertEqual(inf["live_findings"][0]["drug_atc"], "N06AB05")
+        self.assertEqual(inf["live_findings"][0]["inn"], "paroxetine")
+        self.assertEqual(inf["live_findings"][0]["strategy_category"], "CONTINUE")
+        self.assertEqual(inf["genotype_phenotype"][0]["genotype_phenotype"], "NM")
+        self.assertEqual(inf["functional_phenotype"], [])
+        missing = " ".join(row["hu"] for row in inf["forras_allapot"]["hianyzik"])
+        self.assertIn("nincs olyan sor", missing.lower())
+
+
 class HitlHttpTests(unittest.TestCase):
     def setUp(self) -> None:
         store = _hitl_store(self)

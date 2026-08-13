@@ -1,7 +1,68 @@
 {
   "id": "pgx-prepare-12@v0",
   "accessed": "2026-08-13",
-  "note": "Pinned extracts only. No invented PM/IM mapping. CPIC 2023: consensus phenotype adjustment in the presence of inhibitors has not been established.",
+  "note": "Pinned extracts only. No invented NM→poor-metabolizer mapping for SSRIs.",
+  "phenotype_labels": {
+    "NM": {
+      "en": "Normal Metabolizer",
+      "hu": "normál metabolizáló (a gén alapján az enzim rendesen működik)"
+    },
+    "PM": {
+      "en": "Poor Metabolizer",
+      "hu": "szegény metabolizáló (a gén alapján az enzim alig működik)"
+    },
+    "IM": {
+      "en": "Intermediate Metabolizer",
+      "hu": "közepes metabolizáló (a gén alapján az enzim csökkent működésű)"
+    },
+    "UM": {
+      "en": "Ultrarapid Metabolizer",
+      "hu": "ultragyors metabolizáló (a gén alapján az enzim a szokásosnál gyorsabban működik)"
+    }
+  },
+  "inventory": {
+    "van": [
+      {
+        "id": "FDA-DDI-TABLE-2-2",
+        "hu": "VAN: az FDA 2-2. táblája a paroxetint (WHO ATC N06AB05, 7 karakter) és a fluoxetint (N06AB03) erős CYP2D6-gátlónak minősíti. Azt NEM mondja, hogy ettől a beteg szegény metabolizáló."
+      },
+      {
+        "id": "CPIC-SSRI-2023-TABLE-2A",
+        "hu": "VAN: a CPIC SSRI 2023 2a táblája a paroxetin adagolási stratégiáját a gén szerinti osztályhoz köti (normál metabolizáló: CONTINUE). A fluoxetinre nincs gén-alapú adagolás (CPIC C)."
+      },
+      {
+        "id": "CPIC-OPIOID-2020",
+        "hu": "VAN: a CPIC opioid 2020 guideline-ban erős CYP2D6-gátló mellett az aktivitási pont 0, a jósolt fenotípus szegény metabolizáló. Ez opioid szubsztrátra (kodein stb.) vonatkozik, nem a paroxetin-SSRI sorra."
+      },
+      {
+        "id": "WHO-ATC",
+        "hu": "VAN: a WHO ATC 5. szint (7 karakter) a hatóanyag: N06AB05 = paroxetin, N06AB03 = fluoxetin. Az N06AB (5 karakter) a teljes SSRI-csoport, benne pl. az eszcitaloprám is, ami nem erős CYP2D6-gátló."
+      }
+    ],
+    "hianyzik": [
+      {
+        "id": "CPIC-SSRI-NM-TO-PM",
+        "hu": "NINCS: a CPIC SSRI 2023-ban nincs olyan sor, amely a gén szerinti normál metabolizálót gátló mellett szegény metabolizálóvá írná át. A guideline szövege: a gátló melletti fenotípus-állításra nincs konszenzus."
+      },
+      {
+        "id": "FDA-NM-TO-PM",
+        "hu": "NINCS: az FDA gátló-listája nem tartalmaz NM→szegény metabolizáló leképezést."
+      }
+    ],
+    "beszerzes": {
+      "kinek": "A gyártó (ez a repo / engineering) tölti le és pin-eli. Nem a labor és nem a kórház.",
+      "kitol": "CPIC (files.cpicpgx.org PDF + api.cpicpgx.org), FDA DDI Table 2-2, WHOCC ATC index.",
+      "hogyan": "Nyilvános URL, accessed dátum a JSON-ban. Script: tests/fixtures/f1plus-v0/extract_cpic_prepare12_tables.py és a knowledge JSON forrásai.",
+      "mikorra": "A 2020-as opioid és a 2023-as SSRI guideline, plusz az FDA lista, 2026-08-13-án megvan. SSRI NM→szegény sor: akkor, amikor a CPIC vagy az FDA ilyet kiad — addig szegény metabolizálót funkcionális címkeként írni tilos, a hiányt jelezni kell."
+    }
+  },
+  "strategy_labels_hu": {
+    "CONTINUE": "A CPIC 2a tábla szerint a gén szerinti normál metabolizáló kategóriában a paroxetin folytatható (nem betegre számolt milligramm).",
+    "CONSIDER_DOSE_CHANGE": "A CPIC 2a tábla szerint a gén szerinti osztályban dózisváltoztatás megfontolandó (nem számolt mg).",
+    "CONSIDER_ALTERNATIVE": "A CPIC 2a tábla szerint más szer megfontolandó.",
+    "NO_GENE_BASED_DOSING": "A CPIC szerint erre a szerre nincs gén-alapú adagolás (fluoxetin: CPIC C).",
+    "INSUFFICIENT_RESOLUTION": "Csak csoportkód jött (5 karakter, pl. N06AB = SSRI-csoport). A párosításhoz hatóanyag-kód kell (7 karakter). Nem azért, mert egy szer egy beteget azonosítana: ugyanazt a hatóanyagot sok beteg szedheti. Az N06AB csoportban több hatóanyag van (paroxetin, fluoxetin, eszcitaloprám); az eszcitaloprám nem erős CYP2D6-gátló. Az anonim export a fagyasztott spec szerint csoportkódot ad; a kutatási (álnevesített, hozzájárulásos) út hatóanyag-kódot kérhet."
+  },
   "sources": [
     {
       "id": "CPIC-DIPLOTYPE-API",
@@ -24,6 +85,14 @@
       "url": "https://files.cpicpgx.org/data/guideline/publication/serotonin_reuptake_inhibitor_antidepressants/2023/37032427.pdf",
       "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10564324/",
       "claim": "Paroxetine and fluoxetine are potent inhibitors of CYP2D6. Consensus approaches for adjusting CYP2D6 predicted phenotypes in the presence of inhibitors or inducers have not been established. Table 2a: paroxetine dosing recommendations by CYP2D6 phenotype. Fluoxetine: no gene-based dosing recommendations (CPIC level C)."
+    },
+    {
+      "id": "CPIC-OPIOID-2020",
+      "authority": "L2",
+      "accessed": "2026-08-13",
+      "url": "https://files.cpicpgx.org/data/guideline/publication/opioids/2020/33387367.pdf",
+      "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8249478/",
+      "claim": "Strong CYP2D6 inhibitor: activity score 0, predicted phenotype poor metabolizer. This is the opioid guideline, not the SSRI Table 2a mapping the spec example uses."
     },
     {
       "id": "WHO-ATC-N06AB05",
@@ -76,20 +145,25 @@
   "strong_cyp2d6_inhibitors": [
     {
       "inn": "paroxetine",
+      "inn_hu": "paroxetin",
       "atc5": "N06AB05",
       "fda_class": "strong",
+      "fda_class_hu": "erős CYP2D6-gátló",
       "source_id": "FDA-DDI-TABLE-2-2"
     },
     {
       "inn": "fluoxetine",
+      "inn_hu": "fluoxetin",
       "atc5": "N06AB03",
       "fda_class": "strong",
+      "fda_class_hu": "erős CYP2D6-gátló",
       "source_id": "FDA-DDI-TABLE-2-2"
     }
   ],
   "phenotype_adjustment": {
     "nm_plus_strong_inhibitor": null,
     "status": "not_established_by_cpic_2023",
+    "status_hu": "A CPIC SSRI 2023 szerint nincs konszenzusos NM→szegény metabolizáló leképezés gátló mellett. Funkcionális szegény metabolizáló címke ezért üres marad; a hiány a kártyán szerepel.",
     "source_id": "CPIC-SSRI-2023"
   },
   "pairings": [
@@ -97,6 +171,7 @@
       "gene": "CYP2D6",
       "atc5": "N06AB05",
       "inn": "paroxetine",
+      "inn_hu": "paroxetin",
       "source_id": "CPIC-SSRI-2023",
       "table": "2a",
       "by_phenotype": {
@@ -110,6 +185,7 @@
       "gene": "CYP2D6",
       "atc5": "N06AB03",
       "inn": "fluoxetine",
+      "inn_hu": "fluoxetin",
       "source_id": "CPIC-SSRI-2023",
       "cpic_level": "C",
       "by_phenotype": null,

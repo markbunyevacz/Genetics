@@ -1,0 +1,69 @@
+{
+  "id": "pce-f1plus-tpmt-cpic-pair-view",
+  "version": "v0",
+  "accessed": "2026-08-13",
+  "source": {
+    "name": "CPIC/ClinPGx pair_view",
+    "api": "https://api.cpicpgx.org/v1/pair_view?genesymbol=eq.TPMT"
+  },
+  "pair_count": 3,
+  "pairs": [
+    {
+      "pairid": 110114,
+      "drugid": "RxNorm:103",
+      "drugname": "mercaptopurine",
+      "genesymbol": "TPMT",
+      "guidelinename": "TPMT, NUDT15 and Thiopurines",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251442",
+      "cpiclevel": "A",
+      "clinpgxlevel": "1A",
+      "pgxtesting": "Testing Recommended",
+      "pmids": [
+        "21270794",
+        "23422873",
+        "30447069",
+        "41618934"
+      ],
+      "usedforrecommendation": "Yes",
+      "provisional": false
+    },
+    {
+      "pairid": 110144,
+      "drugid": "RxNorm:10485",
+      "drugname": "thioguanine",
+      "genesymbol": "TPMT",
+      "guidelinename": "TPMT, NUDT15 and Thiopurines",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251442",
+      "cpiclevel": "A",
+      "clinpgxlevel": "1A",
+      "pgxtesting": "Testing Recommended",
+      "pmids": [
+        "21270794",
+        "23422873",
+        "30447069",
+        "41618934"
+      ],
+      "usedforrecommendation": "Yes",
+      "provisional": false
+    },
+    {
+      "pairid": 110085,
+      "drugid": "RxNorm:1256",
+      "drugname": "azathioprine",
+      "genesymbol": "TPMT",
+      "guidelinename": "TPMT, NUDT15 and Thiopurines",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251442",
+      "cpiclevel": "A",
+      "clinpgxlevel": "1A",
+      "pgxtesting": "Testing Recommended",
+      "pmids": [
+        "21270794",
+        "23422873",
+        "30447069",
+        "41618934"
+      ],
+      "usedforrecommendation": "Yes",
+      "provisional": false
+    }
+  ]
+}

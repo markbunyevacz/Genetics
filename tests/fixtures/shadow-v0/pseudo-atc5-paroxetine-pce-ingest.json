@@ -1,0 +1,83 @@
+{
+  "resourceType": "Bundle",
+  "id": "pseudo-atc5-paroxetine-pce-ingest",
+  "type": "collection",
+  "meta": {
+    "tag": [
+      { "system": "https://example.invalid/pce-fixture", "code": "shadow-v0" },
+      { "system": "https://example.invalid/pce-tc", "code": "TC-PHENO-ATC5" }
+    ]
+  },
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeee0011",
+        "gender": "unknown",
+        "birthDate": "1980"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "Observation",
+        "id": "syn-obs-cyp2d6-011",
+        "status": "final",
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "81247-9",
+              "display": "Master HL7 genetic variant reporting panel"
+            }
+          ]
+        },
+        "subject": { "reference": "Patient/aaaaaaaa-bbbb-cccc-dddd-eeeeeeee0011" },
+        "component": [
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "48018-6",
+                  "display": "Gene studied [ID]"
+                }
+              ]
+            },
+            "valueCodeableConcept": { "text": "CYP2D6" }
+          },
+          {
+            "code": {
+              "coding": [
+                {
+                  "system": "http://loinc.org",
+                  "code": "84413-4",
+                  "display": "Genotype display name"
+                }
+              ]
+            },
+            "valueString": "*1/*2"
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "syn-medreq-paroxetine",
+        "status": "active",
+        "intent": "order",
+        "subject": { "reference": "Patient/aaaaaaaa-bbbb-cccc-dddd-eeeeeeee0011" },
+        "authoredOn": "2026-Q3",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.whocc.no/atc",
+              "code": "N06AB05",
+              "display": "paroxetine"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

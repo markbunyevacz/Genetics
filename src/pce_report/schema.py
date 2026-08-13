@@ -142,6 +142,34 @@ def assemble_b41(
                     "unsourced": False,
                 }
             )
+        if not findings and (engine.get("hianyzik") or engine.get("cpic_table_status")):
+            status = engine.get("cpic_table_status") or {}
+            url = status.get("pair_api") or status.get("rec_api") or fallback_url
+            if url:
+                findings.append(
+                    {
+                        "gene": gene,
+                        "drug_class_or_table_row": None,
+                        "atc": None,
+                        "severity": None,
+                        "severity_means_replace_prescribed": False,
+                        "statements": [
+                            {
+                                "source": "CPIC",
+                                "version": engine.get("accessed") or "",
+                                "evidence": None,
+                                "url": url,
+                                "text_en": (
+                                    f"No CPIC pair_view/recommendation_view rows pinned for {gene}; "
+                                    "no invented dosing text."
+                                ),
+                                "text_hu": "; ".join(engine.get("hianyzik") or []) or None,
+                                "text_hu_status": "sourced-gap" if engine.get("hianyzik") else HU_UNTRANSLATED,
+                            }
+                        ],
+                        "unsourced": False,
+                    }
+                )
 
     callability_summary = {g["gene"]: g["callability"] for g in genes}
     for g in omit_from_patient:
@@ -187,6 +215,8 @@ def assemble_b41(
         "accessed": engine["accessed"],
         "edu_phenoconversion": engine.get("edu_phenoconversion"),
         "edu_note": engine.get("edu_note"),
+        "cpic_table_status": engine.get("cpic_table_status"),
+        "hianyzik": engine.get("hianyzik") or [],
         "immutable": True,
     }
     dumped = __import__("json").dumps(report, ensure_ascii=False)

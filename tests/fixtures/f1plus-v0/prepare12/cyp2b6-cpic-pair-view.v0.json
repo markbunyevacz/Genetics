@@ -1,0 +1,88 @@
+{
+  "id": "pce-f1plus-cyp2b6-cpic-pair-view",
+  "version": "v0",
+  "accessed": "2026-08-13",
+  "source": {
+    "name": "CPIC/ClinPGx pair_view",
+    "api": "https://api.cpicpgx.org/v1/pair_view?genesymbol=eq.CYP2B6"
+  },
+  "pair_count": 5,
+  "pairs": [
+    {
+      "pairid": 469134,
+      "drugid": "RxNorm:42347",
+      "drugname": "bupropion",
+      "genesymbol": "CYP2B6",
+      "guidelinename": null,
+      "guidelineurl": null,
+      "cpiclevel": "B/C",
+      "clinpgxlevel": "2A",
+      "pgxtesting": null,
+      "pmids": null,
+      "usedforrecommendation": "n/a",
+      "provisional": true
+    },
+    {
+      "pairid": 110200,
+      "drugid": "RxNorm:6813",
+      "drugname": "methadone",
+      "genesymbol": "CYP2B6",
+      "guidelinename": "CYP2B6 and methadone",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166411641",
+      "cpiclevel": "C",
+      "clinpgxlevel": "2A",
+      "pgxtesting": null,
+      "pmids": [
+        "38863207"
+      ],
+      "usedforrecommendation": "No",
+      "provisional": false
+    },
+    {
+      "pairid": 3122076,
+      "drugid": "RxNorm:36437",
+      "drugname": "sertraline",
+      "genesymbol": "CYP2B6",
+      "guidelinename": "CYP2D6, CYP2C19, CYP2B6, SLC6A4, HTR2A and Serotonin Reuptake Inhibitor Antidepressants",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251452",
+      "cpiclevel": "B",
+      "clinpgxlevel": "1A",
+      "pgxtesting": null,
+      "pmids": [
+        "37032427"
+      ],
+      "usedforrecommendation": "Yes",
+      "provisional": false
+    },
+    {
+      "pairid": 110282,
+      "drugid": "RxNorm:53654",
+      "drugname": "nevirapine",
+      "genesymbol": "CYP2B6",
+      "guidelinename": null,
+      "guidelineurl": null,
+      "cpiclevel": "B/C",
+      "clinpgxlevel": "2A",
+      "pgxtesting": null,
+      "pmids": null,
+      "usedforrecommendation": "n/a",
+      "provisional": true
+    },
+    {
+      "pairid": 110095,
+      "drugid": "RxNorm:195085",
+      "drugname": "efavirenz",
+      "genesymbol": "CYP2B6",
+      "guidelinename": "CYP2B6 and efavirenz",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251463",
+      "cpiclevel": "A",
+      "clinpgxlevel": "1A",
+      "pgxtesting": "Informative PGx",
+      "pmids": [
+        "31006110"
+      ],
+      "usedforrecommendation": "Yes",
+      "provisional": false
+    }
+  ]
+}

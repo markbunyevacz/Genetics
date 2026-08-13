@@ -1,0 +1,40 @@
+{
+  "id": "pce-f1plus-f5-cpic-pair-view",
+  "version": "v0",
+  "accessed": "2026-08-13",
+  "source": {
+    "name": "CPIC/ClinPGx pair_view",
+    "api": "https://api.cpicpgx.org/v1/pair_view?genesymbol=eq.F5"
+  },
+  "pair_count": 2,
+  "pairs": [
+    {
+      "pairid": 110330,
+      "drugid": "RxNorm:711942",
+      "drugname": "eltrombopag",
+      "genesymbol": "F5",
+      "guidelinename": null,
+      "guidelineurl": null,
+      "cpiclevel": "C",
+      "clinpgxlevel": null,
+      "pgxtesting": "Actionable PGx",
+      "pmids": null,
+      "usedforrecommendation": "n/a",
+      "provisional": true
+    },
+    {
+      "pairid": 110346,
+      "drugid": "ATC:G03A",
+      "drugname": "hormonal contraceptives for systemic use",
+      "genesymbol": "F5",
+      "guidelinename": null,
+      "guidelineurl": null,
+      "cpiclevel": "C",
+      "clinpgxlevel": "2B",
+      "pgxtesting": null,
+      "pmids": null,
+      "usedforrecommendation": "n/a",
+      "provisional": true
+    }
+  ]
+}

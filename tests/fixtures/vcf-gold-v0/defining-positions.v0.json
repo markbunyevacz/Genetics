@@ -1,0 +1,103 @@
+{
+  "id": "pgx-prepare-12-defining-positions@v0",
+  "accessed": "2026-08-13",
+  "matcher_on": false,
+  "pharmcat_absent_to_ref": false,
+  "note_hu": "Ez lefedettség-ellenőrzés, nem allélhívás. Hiányzó definiáló pozíció ≠ referencia-allél, és nem NORMAL / normál metabolizáló.",
+  "beszerzes": {
+    "kinek": "gyártó (ez a repo). A labor nem küld fizikai mintát ehhez a szoftverteszthez.",
+    "kitol_pozicio": "Ensembl Variation REST (GRCh38 és GRCh37 archív) + NCBI dbSNP. A rs-azonosítók a CPIC/PharmVar *4 / *2 / *2A definiáló változatok.",
+    "hol_a_harom_minta": "tests/fixtures/vcf-gold-v0/ — SYN VCF ebben a repóban, a gyártó készíti a FR-210 teszthez.",
+    "cdc_get_rm": "https://www.cdc.gov/lab-quality/php/get-rm/reference-materials.html — fizikai referenciaanyag labor-QC-hez, nem ez a három fájl.",
+    "pharmcat_teszt_vcf": "A PharmCAT GitHubon vannak teszt-VCF-ek; a --absent-to-ref és --unspecified-to-ref vakon nem hívható.",
+    "mikorra": "A három SYN fájl most a repóban van. További PREPARE-12 gének definiáló-pozíció katalógusa: amikor a gyártó pin-eli a PharmVar/CPIC allél-definíciót (addig NOT_TESTED + hiány jelzés)."
+  },
+  "sources": [
+    {
+      "id": "ENSEMBL-RS3892097",
+      "url": "https://rest.ensembl.org/variation/human/rs3892097",
+      "grch37_url": "https://grch37.rest.ensembl.org/variation/human/rs3892097",
+      "accessed": "2026-08-13",
+      "claim": "CYP2D6*4 defining splice variant rs3892097. GRCh38 chr22:42128945 C; GRCh37 chr22:42524947 C."
+    },
+    {
+      "id": "ENSEMBL-RS4244285",
+      "url": "https://rest.ensembl.org/variation/human/rs4244285",
+      "grch37_url": "https://grch37.rest.ensembl.org/variation/human/rs4244285",
+      "accessed": "2026-08-13",
+      "claim": "CYP2C19*2 defining variant rs4244285. GRCh38 chr10:94781859 G; GRCh37 chr10:96541616 G."
+    },
+    {
+      "id": "ENSEMBL-RS3918290",
+      "url": "https://rest.ensembl.org/variation/human/rs3918290",
+      "grch37_url": "https://grch37.rest.ensembl.org/variation/human/rs3918290",
+      "accessed": "2026-08-13",
+      "claim": "DPYD*2A / c.1905+1G>A defining splice variant rs3918290. GRCh38 chr1:97450058 C; GRCh37 chr1:97915614 C."
+    },
+    {
+      "id": "NCBI-DBSNP",
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=snp&id=3892097,4244285,3918290&retmode=json",
+      "accessed": "2026-08-13",
+      "claim": "Same GRCh38 chrpos: 22:42128945, 10:94781859, 1:97450058."
+    }
+  ],
+  "genes": {
+    "CYP2D6": {
+      "catalog": "pinned",
+      "positions": [
+        {
+          "id": "CYP2D6-star4",
+          "rsid": "rs3892097",
+          "allele_name": "CYP2D6*4",
+          "chrom": "22",
+          "grch38_pos": 42128945,
+          "grch37_pos": 42524947,
+          "ref": "C",
+          "naive_missing_to_ref_would_claim": "Normal Metabolizer",
+          "why_opposite_hu": "A naiv missing-to-ref a hiányzó helyet C/C referenciának venné, tehát nem *4-nek. A CPIC SSRI 2023 2a táblában a gén szerinti normál metabolizáló (NM) paroxetin-sora CONTINUE, a szegény metabolizáló (PM, *4/*4) sora CONSIDER_DOSE_CHANGE — ez ellentétes ajánlás. A rendszer INDETERMINATE-et ír, nem NORMAL-t."
+        }
+      ]
+    },
+    "CYP2C19": {
+      "catalog": "pinned",
+      "positions": [
+        {
+          "id": "CYP2C19-star2",
+          "rsid": "rs4244285",
+          "allele_name": "CYP2C19*2",
+          "chrom": "10",
+          "grch38_pos": 94781859,
+          "grch37_pos": 96541616,
+          "ref": "G",
+          "naive_missing_to_ref_would_claim": "Normal Metabolizer",
+          "why_opposite_hu": "A naiv missing-to-ref *1-szerű normál metabolizálót állítana. A CPIC clopidogrel guideline-ban a Normal Metabolizer és a Poor Metabolizer (*2/*2) sora eltér. A rendszer INDETERMINATE-et ír, nem NORMAL-t. Allélhívó ki."
+        }
+      ]
+    },
+    "DPYD": {
+      "catalog": "pinned",
+      "positions": [
+        {
+          "id": "DPYD-star2a",
+          "rsid": "rs3918290",
+          "allele_name": "DPYD*2A",
+          "chrom": "1",
+          "grch38_pos": 97450058,
+          "grch37_pos": 97915614,
+          "ref": "C",
+          "naive_missing_to_ref_would_claim": "Normal Metabolizer",
+          "why_opposite_hu": "A naiv missing-to-ref normál DPD-aktivitást feltételezne. A CPIC fluoropirimidin-táblában a Normal Metabolizer sora nem dóziscsökkentés; a no-function allél ellentétes. A rendszer INDETERMINATE-et ír, nem NORMAL-t."
+        }
+      ]
+    },
+    "CYP2B6": { "catalog": "gap", "positions": [] },
+    "CYP2C9": { "catalog": "gap", "positions": [] },
+    "CYP3A5": { "catalog": "gap", "positions": [] },
+    "F5": { "catalog": "gap", "positions": [] },
+    "HLA-B": { "catalog": "gap", "positions": [] },
+    "SLCO1B1": { "catalog": "gap", "positions": [] },
+    "TPMT": { "catalog": "gap", "positions": [] },
+    "UGT1A1": { "catalog": "gap", "positions": [] },
+    "VKORC1": { "catalog": "gap", "positions": [] }
+  }
+}

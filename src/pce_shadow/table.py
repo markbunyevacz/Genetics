@@ -26,7 +26,20 @@ class KnowledgeTable:
         adj = self.doc.get("phenotype_adjustment") or {}
         self.nm_plus_strong: str | None = adj.get("nm_plus_strong_inhibitor")
         self.adjustment_status: str = str(adj.get("status") or "unknown")
+        self.adjustment_status_hu: str = str(adj.get("status_hu") or "")
         self.egfr_threshold = int(self.doc.get("egfr_threshold") or 30)
+        self.inventory: dict[str, Any] = dict(self.doc.get("inventory") or {})
+        self.phenotype_labels: dict[str, Any] = dict(self.doc.get("phenotype_labels") or {})
+        self.strategy_labels_hu: dict[str, str] = {
+            str(k): str(v) for k, v in (self.doc.get("strategy_labels_hu") or {}).items()
+        }
+
+    def phenotype_hu(self, code: str | None) -> str | None:
+        if not code:
+            return None
+        row = self.phenotype_labels.get(code) or {}
+        hu = row.get("hu")
+        return str(hu) if hu else None
 
     def genotype_phenotype(self, gene: str, diplotype: str) -> dict[str, Any] | None:
         return self._dip.get((gene, diplotype))

@@ -268,6 +268,31 @@ class OutsideCallTests(unittest.TestCase):
             svc.add_vcf(case["id"], vcf, "lab_signer")
         self.assertEqual(ctx.exception.code, "E-VCF-003")
 
+    def test_vcf_missing_defining_position_is_indeterminate_not_normal(self) -> None:
+        gold = ROOT / "tests" / "fixtures" / "vcf-gold-v0"
+        cases = (
+            ("missing-cyp2d6-star4.vcf", "CYP2D6"),
+            ("missing-cyp2c19-star2.vcf", "CYP2C19"),
+            ("missing-dpyd-star2a.vcf", "DPYD"),
+        )
+        for name, gene in cases:
+            with self.subTest(name=name):
+                svc = _svc()
+                _, _, case = _bootstrap(svc, scopes=[gene, "pgx_report"])
+                raw = (gold / name).read_bytes()
+                stored = svc.add_vcf(case["id"], raw, "lab_signer")
+                cov = {row["gene"]: row for row in stored["coverage"]}
+                self.assertEqual(cov[gene]["callability"], "INDETERMINATE")
+                self.assertEqual(cov[gene]["naive_missing_to_ref_would_claim"], "Normal Metabolizer")
+                self.assertFalse(stored["matcher_on"])
+                report = svc.create_report(case["id"], "lab_signer")
+                summary = report["callability_summary"]
+                self.assertEqual(summary[gene], "INDETERMINATE")
+                self.assertNotEqual(summary[gene], "NORMAL")
+                gene_row = next(g for g in report["genes"] if g["gene"] == gene)
+                self.assertEqual(gene_row["callability"], "INDETERMINATE")
+                self.assertIsNone(gene_row["diplotype"])
+
 
 class HttpClinicalTests(unittest.TestCase):
     def setUp(self) -> None:

@@ -81,8 +81,13 @@ def _motor_category(body: dict[str, Any]) -> str | None:
     return None
 
 
-def persist_inference(store: HitlStore, payload: dict[str, Any]) -> dict[str, Any]:
-    body = infer(payload)
+def persist_inference(
+    store: HitlStore,
+    payload: dict[str, Any],
+    *,
+    max_atc_level: int = 4,
+) -> dict[str, Any]:
+    body = infer(payload, max_atc_level=max_atc_level)
     material = body.get("payload_hash") or json.dumps(
         {"d": body.get("diplotypes"), "m": body.get("medications")},
         sort_keys=True,
@@ -161,6 +166,10 @@ class HitlService:
             card["organ_flags"] = body.get("organ_flags") or []
             card["genotype_phenotype"] = body.get("genotype_phenotype")
             card["functional_phenotype"] = body.get("functional_phenotype") or []
+            card["forras_allapot"] = body.get("forras_allapot")
+            gp = body.get("genotype_phenotype") or []
+            if gp and isinstance(gp[0], dict) and gp[0].get("genotype_phenotype_hu"):
+                card["genotype_phenotype_hu"] = gp[0]["genotype_phenotype_hu"]
         if blind is not None:
             card["blind_decision"] = {
                 "choice": blind["choice"],

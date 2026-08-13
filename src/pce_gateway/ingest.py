@@ -46,7 +46,7 @@ def handle_pce_ingest(
         try:
             from pce_hitl.service import persist_inference
 
-            persist_inference(hitl_store, bundle)
+            persist_inference(hitl_store, bundle, max_atc_level=cfg.max_atc_level)
         except Exception:
             pass
     return 202, {"ingest": "accepted", "http": 202, "hitl": True}
