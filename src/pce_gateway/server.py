@@ -14,6 +14,7 @@ def make_ingest_handler(
     cfg: GatewayConfig,
     freq: FrequencyTable | None,
     allowed_accounts: set[str],
+    hitl_store: Any | None = None,
 ) -> type[BaseHTTPRequestHandler]:
     class Handler(BaseHTTPRequestHandler):
         def log_message(self, format: str, *args: Any) -> None:  # noqa: A003
@@ -40,6 +41,7 @@ def make_ingest_handler(
                 freq,
                 authorization=self.headers.get("Authorization"),
                 allowed_accounts=allowed_accounts,
+                hitl_store=hitl_store,
             )
             self._send(status, body)
 
@@ -61,6 +63,7 @@ def bind_ingest_server(
     *,
     host: str = "127.0.0.1",
     port: int = 0,
+    hitl_store: Any | None = None,
 ) -> ThreadingHTTPServer:
-    handler = make_ingest_handler(cfg, freq, allowed_accounts)
+    handler = make_ingest_handler(cfg, freq, allowed_accounts, hitl_store=hitl_store)
     return ThreadingHTTPServer((host, port), handler)

@@ -79,7 +79,7 @@ flowchart TB
 - Render **409** `E-CONSENT-001..005`, ha a kapu piros — a CLI sem kerülheti meg (FR-100: admin sem).
 - Fail-closed a szivárgásra (nincs shadow a PDF-en). A HIS-t ez az út nem blokkolja (nincs HIS a klinikai pathen).
 
-**SYN állapot (2026-08-13 P06s):** a 8 API-lépés HTTP-n zöld (`tests/test_clinical.py`). UI: `src/pce_ui/index.html`, `python -m pce_clinical --mode serve`.
+**SYN állapot (2026-08-13 P06u):** a 8 API-lépés HTTP-n zöld (`tests/test_clinical.py`). UI: `src/pce_ui/index.html`, `python -m pce_clinical --mode serve`.
 
 **API sorrend (B.3 / B.4) — labor egy műveletsor**
 
@@ -129,6 +129,8 @@ flowchart TB
 
 **HITL kártya (anonim):** `case_display_id`, gén, CLASS vagy RAW a FR-461 szerint, ATC≤4, `config_id`. Nincs név, TAJ, születési év, orvosnév.
 
+**SYN állapot (2026-08-13 P06u):** a 5 lépés járható. Motor: `src/pce_shadow/`. Tár: `var/hitl.sqlite`. Képernyő: `src/pce_ui/hitl.html`, `python -m pce_hitl`. Gold ATC4 nem állít paroxetint és nem ír PM-et. ATC5 paroxetin teszt: NM megmarad, `functional_phenotype` üres (CPIC 2023: nincs konszenzusos leképezés).
+
 ---
 
 ## 3. Persona UX (SYN, pecsétig)
@@ -172,12 +174,10 @@ Minden képernyő a B API-t hívja. Nincs kitalált kórháznév; org = `SYN-ORG
 5. INDETERMINATE fixture: nincs NORMAL claim.
 6. Visszavonás: riport URL `410` `E-GONE-010`.
 
-**F1s minimum demo (WP-G+M+H után)**
+**F1s minimum demo (WP-G+M+H) — járható**
 
 1. Fixture HIS bundle → gateway → k-cella → `POST /v1/shadow/events`.
 2. ATC5/TAJ → 400, HIS ettől függetlenül „lezárt”.
 3. Továbbított esemény → ShadowInference a **hitl.sqlite**-ban.
 4. Reviewer 1. lépés vak; 2. lépés verdict.
 5. Report store üres marad ettől az eseménytől.
-
-Ha bármely lépéshez nincs API vagy képernyő a tervben, a SPEC-PLAN-TRACE a sort MISSING-nek jelöli — a bővített DELIVERY-PLAN ezeket WP-kra bontja.

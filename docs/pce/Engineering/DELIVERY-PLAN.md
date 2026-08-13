@@ -203,13 +203,15 @@ Külön csomag: `src/pce_shadow/`. `pce_report` nem importálja.
 | --- | --- | --- |
 | M1 | Input: coarsened/raw diplotípus + ATC≤4 meds | GatewayEvent |
 | M2 | Output: `live_findings[]` stratégia-kategória, **nincs** `dose_mg` | B.2.2 |
-| M3 | CYP2D6 NM + paroxetin vagy fluoxetin → `genotype_phenotype=NM`, `functional_phenotype=PM` vagy `IM` a **verziózott inhibitor táblából** (hivatalos forrás, nem kitalált) | TC-PHENO-001 |
+| M3 | CYP2D6 NM + **ATC5** paroxetin (`N06AB05`) vagy fluoxetin (`N06AB03`): `genotype_phenotype=NM` (CPIC API); FDA `strong` gátló rögzítve; `functional_phenotype` **üres**, mert a CPIC 2023 szerint a gátló melletti fenotípus-állításra **nincs konszenzus**. Dummy PM = **fail**. ATC4 `N06AB`: `INSUFFICIENT_RESOLUTION`, nem paroxetin-állítás. | TC-PHENO-001; `tests/test_shadow.py` |
 | M4 | Nincs med lista → `clinical_context=ABSENT`, nem hallgatólagos NM | FR-220/410-LIVE |
 | M5 | eGFR < 30 → `reason: organ`, nem számított dózis | B.6.2 |
 | M6 | Determinisztikus | NFR-060 |
 | M7 | CI: `pce_report` AST-ban nincs `pce_shadow` | FR-470 |
 
-Inhibitor tábla: CPIC/DPWG publikált lista extract; ha a sor nem forrásolható, a teszt skip helyett **fail** (nincs dummy PM).
+Inhibitor tábla: FDA Table 2-2 strong index (paroxetin, fluoxetin) + WHO ATC5 + CPIC SSRI 2023 Table 2a stratégia-kategória. CPIC 2023: *„Consensus approaches for adjusting … predicted phenotypes in the presence of inhibitors … have not been established.”* Ha a PM/IM sor nem forrásolható, a teszt skip helyett **fail** (nincs dummy PM).
+
+**SYN kód:** `src/pce_shadow/`, `src/pce_hitl/` + `var/hitl.sqlite`, `src/pce_ui/hitl.html`. `python -m pce_hitl`. A klinikai processzus `/v1/hitl/**` továbbra is 403/404 (FR-470).
 
 ---
 
@@ -284,3 +286,7 @@ Ne másold a gateway eseményt a F1+ reportra. Ne találj ki EDU/CPIC/DPWG monda
 ## Kész definíció — F1+ SYN demo
 
 P4+P1 végigjárja a DATAFLOW §5 F1+ listát; FR-100 piros fixture nem gyárt PDF-et; INDETERMINATE nem NORMAL; B.4.1 JSON + PDF + STU3 Bundle; clinician HITL 403; TRACE NOW-F1+ sorok legalább PARTIAL.
+
+## Kész definíció — F1s SYN demo
+
+HIS fixture → intézményi gateway → `POST /v1/shadow/events` 202 → sor a `hitl.sqlite`-ban → reviewer vak lépés, majd verdict → F1+ `report` tábla üres marad. ATC5/TAJ → 400, nincs HITL sor. HIS ettől függetlenül 202. Nincs kitalált PM.

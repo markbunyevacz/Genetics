@@ -6,7 +6,7 @@
 | **Spec** | `docs/pce/PCE-SPEC-v1.2.md` **FAGYASZTVA** + A, B, D, E |
 | **Terv** | [DELIVERY-PLAN.md](DELIVERY-PLAN.md) |
 | **Dátum** | 2026-08-13 |
-| **Oracle** | `PYTHONPATH=src python3 -m unittest discover -s tests -v` — 60 OK |
+| **Oracle** | `PYTHONPATH=src python3 -m unittest discover -s tests -v` — 78 OK |
 
 Rövid státusztábla: [SPEC-PLAN-TRACE.md](SPEC-PLAN-TRACE.md). Ez a fájl a **kérésre adott válasz**, nem ticket-lista.
 
@@ -16,7 +16,7 @@ Rövid státusztábla: [SPEC-PLAN-TRACE.md](SPEC-PLAN-TRACE.md). Ez a fájl a **
 | --- | --- |
 | **P1…P6** | A spec §5.1 szereplői. P1 labor aláíró, P2 felíró orvos, **P3 klinikai farmakológus/gyógyszerész**, P4 genetikai tanácsadó, P5 DPO, P6 medikai szállító. |
 | **HITL** | Human-in-the-loop: külön, kutatási ellenőrző képernyő. Nem a aláírt laborlelet, és nem a felíró orvos napi UI-ja. A reviewer vakon (először a motor javaslata nélkül) dönt egy anonim kártyáról. |
-| **WP-C, WP-K, …** | Work package: a [DELIVERY-PLAN.md](DELIVERY-PLAN.md) egy-egy megvalósítási csomagja. **WP-M** = az árnyék-motor (diplotípus + aktuális gyógyszerlista → élő megállapítás, **nem** a F1+ leleten). **WP-H** = ennek az ellenőriző tárolója és API-ja. |
+| **WP-C, WP-K, …** | Work package: a [DELIVERY-PLAN.md](DELIVERY-PLAN.md) egy-egy megvalósítási csomagja. **WP-M** = az árnyék-motor (`src/pce_shadow/`: diplotípus + aktuális gyógyszerlista → élő megállapítás, **nem** a F1+ leleten). **WP-H** = ennek az ellenőriző tárolója és API-ja (`src/pce_hitl/`, `var/hitl.sqlite`). |
 | **F1+** | Aláírt laborlelet: statikus guideline-szöveg a meghívott génhez. |
 | **F1s** | Árnyék/kutatási út: HIS-esemény után anonim inferencia, HITL-re, nem betegnek. |
 | **B.3 / B.4** | A spec B mellékletének ingest- és kimeneti HTTP-szerződései. |
@@ -42,7 +42,7 @@ A spec §6 FR-katalógusa (36 tétel + FR-400/410 kettős üzem). Minden sor: **
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **FR-100** | Nincs counselling → `E-CONSENT-001` 409 + **6. § (2)** HU. Nincs 8. § → `003`. Tanácsadás a minta után → `002`. Extra gén 15. § → `004`. Nincs `performing_org.license_id` → `005`. Kapu **nem** kapcsolható ki. Riport meta: tanácsadó, dátumok, engedély. | WP-C C1–C7 | `POST /v1/cases/{id}/counselling\|consent\|reports`; B.5 kódok; SQLite `CounsellingRecord`/`ConsentRecord` (v1 kézi, nem FHIR Consent — spec FR-100 technikai megjegyzés) | igen | igen (`test_clinical.ConsentGateTests`, HTTP 409) | igen | FHIR Consent v1.1; pecsétszám élő orvosnév tilos (A9 slot) |
 | **FR-110** | Gén kimarad a beteg-példányból; visszavonás kaszkád + tanúsítvány; URL **410** `E-GONE-010`; audit esemény genetika nélkül | WP-C C8–C9 | `omit_from_patient`; `POST /v1/subjects/{id}/withdraw`; `DeletionCertificate`; report `gone=1` | igen | igen (410 + cert, nincs `*1/*2` a certen) | igen | 72 h = SYN-en azonnali (A10 üzem cél teljesül); klinikus-példány külön jogalap nincs bekapcsolva |
-| **FR-115** | ANON: nem blokkol. PSEUDO: nincs `ResearchConsent` → `E-CONSENT-006`, nincs HITL írás | WP-C C10 | `GatewayConfig.mode` + `research_consent`; ingest 409 | igen | igen (ANON 202 / PSEUDO 409) | igen | HITL store még nincs, ezért „nincs HITL írás” ingest-szinten teljesül |
+| **FR-115** | ANON: nem blokkol. PSEUDO: nincs `ResearchConsent` → `E-CONSENT-006`, nincs HITL írás | WP-C C10 | `GatewayConfig.mode` + `research_consent`; ingest 409 | igen | igen (ANON 202 / PSEUDO 409, nincs store-írás) | igen | — |
 | **FR-120** | 30 év, append-only, CSV+JSON export; nyers VCF nincs a naplóban. Hash-chain **P1** | WP-Q | `audit_event` + SQLite TRIGGER ABORT; `GET /v1/audit/export` | igen | igen (UPDATE → `E-AUDIT-001`) | igen | hash-chain szándékos P1; 30 év megőrzés üzem, nem F0 kód |
 | **FR-130** | L2–L5 pszeudonim; re-ID külön store; L4 logban nincs név/TAJ/szül. dátum | WP-K | `reid_store` külön tábla; gateway PII-strip | igen | részben | igen | CI PII-scanner a klinikai L4 logra még vékony |
 
@@ -52,7 +52,7 @@ A spec §6 FR-katalógusa (36 tétel + FR-400/410 kettős üzem). Minden sor: **
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **FR-200** | VCFv4.2/4.3, GRCh37/38, 5 GB, `E-VCF-001..004`; default út **nem** ez | WP-V | `POST /v1/cases/{id}/files` B.3.1 | igen | részben (`E-VCF-003`, W-CALL) | igen | ≥3 missing-to-ref gold; 5 GB éles mérés |
 | **FR-210** | CALLED/PARTIAL/INDETERMINATE/NOT_TESTED; INDETERMINATE ≠ NORMAL; missing-to-ref tilos | WP-R, WP-V | outside-call `callability`; renderer `positive_drug_assertion=false` | igen | igen OC úton | igen | VCF gold ≥3 még nincs (matcher OFF marad) |
-| **FR-220** | Lista P0 a **shadow/F2**-n. F1+ Report `medications_applied_to_recommendations: false`. Renderer nem kap gyógyszerlistát | WP-K, WP-M | `PUT .../clinical-context` tárol; `render_f1plus` keyword-only, nincs `medications` | igen | igen F1+ oldalon | igen | shadow `clinical_context=ABSENT` kártya = WP-M |
+| **FR-220** | Lista P0 a **shadow/F2**-n. F1+ Report `medications_applied_to_recommendations: false`. Renderer nem kap gyógyszerlistát | WP-K, WP-M | `PUT .../clinical-context` tárol; `render_f1plus` keyword-only, nincs `medications`; shadow `clinical_context=ABSENT` ha nincs lista | igen | igen mindkét oldalon | igen | F1+ FHIR medication bundle P1 |
 | **FR-230** | HL7 v2.5.1 ORU | WP-P1 | `POST /v1/hl7/oru` | igen (P1) | — | — | spec P1, nem F0 |
 | **FR-240** | TSV + JSON: gene, diplotype, calling_lab, signing_physician, method, call_date; üres diplotípus `E-CALL-001`; VCF ütközés `W-CALL-010`, nincs auto-választás | WP-K | B.3.2 pontos path; TSV tab UTF-8; `resolve-call` | igen | igen | igen | — |
 
@@ -69,9 +69,9 @@ A spec §6 FR-katalógusa (36 tétel + FR-400/410 kettős üzem). Minden sor: **
 | Spec tétel | Mit követel | Terv | Tech | T | V | Tech=spec | Lyuk |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | **FR-400-STATIC** | CPIC/DPWG/FDA kivonat a **génhez**; mind az N sor; nincs HIS-szűrés; `unsourced_claims==0`; nincs `dose_mg` | WP-T, WP-R | hivatalos CPIC `pair_view`/`recommendation_view`; B.4.1 `findings[]` | igen | CYP2D6 igen | igen | DPWG+FDA: **nincs kitalált sor** (forrás hiányában üres verziómező). Többi PREPARE-12 gén extract hiányzik |
-| **FR-400-LIVE** | Diplotípus + `MedicationEntry` → `live_findings`; **tilos F1+ leleten**; nincs FK a Report-ra | WP-M | `src/pce_shadow/` (csomag **még nincs**) | igen | nem | — | **NOW MISSING** |
+| **FR-400-LIVE** | Diplotípus + `MedicationEntry` → `live_findings`; **tilos F1+ leleten**; nincs FK a Report-ra | WP-M | `src/pce_shadow/`; Gold ATC4 → `INSUFFICIENT_RESOLUTION`; ATC5 paroxetin Table 2a `CONTINUE` | igen | igen CYP2D6/SSRI | igen | többi PREPARE-12 gén |
 | **FR-410-EDU** | Általános bekezdés forrással **vagy** null; ha–akkor tilos; nem olvassa a gyógyszerlistát | WP-T, WP-R | `phenoconversion_edu: null` + edu_note (CPIC notesonusage üres, 2026-08-13) | igen | token tiltás + null | igen | forrásolt EDU bekezdés, ha hivatalos szöveg lesz |
-| **FR-410-LIVE** | NM + paroxetin/fluoxetin → functional PM/IM; nincs `dose_mg` | WP-M | ugyanaz a hiányzó shadow csomag | igen | nem | — | **NOW MISSING**; tilos F1+ JSON-ban (ellenőrizve) |
+| **FR-410-LIVE** | NM + paroxetin/fluoxetin → functional PM/IM **a tábla szerint**; nincs `dose_mg` | WP-M | FDA strong ATC5; CPIC 2023: konszenzusos NM→PM **nincs** → `functional_phenotype=[]`; dummy PM teszt **fail** | igen | igen (null + inhibitor_class + eGFR organ) | igen | PM/IM csak hivatalos tábla után |
 | **FR-420** | F1+: génenként tagolt; CRITICAL ≠ „cseréld a felírt szert” | WP-R R10 | `findings[].severity` = CPIC level; `severity_means_replace_prescribed: false` | igen | igen | igen | F2 interruptive card pecsét után |
 | **FR-430** | PRS stub | — | nem épül | NG | — | — | spec P2 |
 
@@ -79,9 +79,9 @@ A spec §6 FR-katalógusa (36 tétel + FR-400/410 kettős üzem). Minden sor: **
 
 | Spec tétel | Mit követel | Terv | Tech | T | V | Tech=spec | Lyuk |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| **FR-440** | Aszinkron 202; HIS nem vár; inferencia HITL store-ba | WP-H | ingest 202 megvan; **persist nincs** | igen | 202 igen / persist nem | részben | **NOW MISSING** store |
-| **FR-450** | `hitl_reviewer` ≠ clinician; opák kártya; reason_code | WP-H, WP-U | clinician → `E-ISO-001` 403; HITL UI nincs | igen | 403 igen / UI nem | részben | **NOW MISSING** UI+store |
-| **FR-450-BLIND** | 2 lépés, immutábilis vak döntés | WP-H | tervezett `POST .../blind` majd `.../reviews` | igen | nem | — | **NOW MISSING** |
+| **FR-440** | Aszinkron 202; HIS nem vár; inferencia HITL store-ba | WP-H | ingest 202 + `hitl.sqlite`; store-hiba is 202 | igen | igen | igen | éles aszinkron worker |
+| **FR-450** | `hitl_reviewer` ≠ clinician; opák kártya; reason_code | WP-H, WP-U | `python -m pce_hitl`; `src/pce_ui/hitl.html`; clinician → `E-ISO-001` | igen | igen | igen | MFA éles |
+| **FR-450-BLIND** | 2 lépés, immutábilis vak döntés | WP-H | `POST .../blind` majd `.../reviews`; default be | igen | igen | igen | OQ-15 nem pecsét |
 | **FR-460** | Intézményi gateway; nincs PII a PCE felé | WP-G | `src/pce_gateway`; Patient/TAJ/név kiesik | igen | Gold V0 | igen | — |
 | **FR-461** | ATC≤4, negyedév, k≥5, ritka diplotípus, count nem a payloadon | WP-G | freq allowlist; k-cella SQLite; `cell_count` tiltva | igen | Gold V0 + G12 mezők | igen | monitor org display |
 | **FR-470** | `LIVE_CDS=false`; clinician nem HITL; CDS 404; renderer nem kap MedicationEntry | WP-I | flag + grep + 403/404 | igen | igen | igen | — |
@@ -102,7 +102,7 @@ A spec §6 FR-katalógusa (36 tétel + FR-400/410 kettős üzem). Minden sor: **
 | **FR-700** | Nincs LLM a klinikai úton | WP-I | CI grep openai/anthropic/langchain | igen | igen | igen | — |
 | **FR-710** | 6. § (6) kérésre magyarázat; determinisztikus; nem SHAP | WP-X | `GET .../explanation`; sablon A.1 + case mezők; sha256 | igen | igen | igen | — |
 
-**FR-összeg:** 36/36 **tervezett**. NOW 27-ből **21 validált legalább PARTIAL**, 1 LOCK (FR-300 ki), **5 nincs validálva** (LIVE+HITL).
+**FR-összeg:** 36/36 **tervezett**. NOW 27-ből **26 validált legalább PARTIAL**, 1 LOCK (FR-300 ki), **0 NOW MISSING**.
 
 ---
 
@@ -153,12 +153,12 @@ HIS esemény → intézményi gateway FR-460/461 → POST /v1/shadow/events
 | Ingest service-account | B.3.5 `E-SHADOW-002` | WP-G | `Authorization` | igen | igen | igen |
 | Fail-open 202 | E.2 | WP-G | 202 drop és accept | igen | igen | igen |
 | PSEUDO FR-115 | B.3.5 | WP-C | `E-CONSENT-006` | igen | igen | igen |
-| L4-live motor | FR-400-LIVE, 410-LIVE | WP-M | `pce_shadow` **nincs** | igen | **nem** | — |
-| HITL persist | FR-440 | WP-H | `hitl.sqlite` **nincs** | igen | **nem** | — |
-| Vak UI | FR-450/450-BLIND | WP-H/U | clinician 403 megvan; kártya nincs | igen | részben | kapu igen, folyamat nem |
+| L4-live motor | FR-400-LIVE, 410-LIVE | WP-M | `pce_shadow` CYP2D6/SSRI; nincs kitalált PM | igen | **igen** | igen |
+| HITL persist | FR-440 | WP-H | `hitl.sqlite` | igen | **igen** | igen |
+| Vak UI | FR-450/450-BLIND | WP-H/U | `hitl.html` + B.4.6; clinician 403 | igen | **igen** | igen |
 | Izoláció Report-tól | FR-470 | WP-I | nincs FK; renderer nem importál pipeline-t | igen | igen | igen |
 
-**Shadow folyamat: a gateway+ingest spec-tech, a motor+HITL csak tervezett, nem validált.** Ez a NOW 5 MISSING tétel. A HIS ettől függetlenül nem blokkol (202).
+**Shadow folyamat: gateway + motor + HITL store + vak képernyő spec-tech a B.3.5 / B.4.6 / E.4 szerint.** A Gold anonim út ATC4-en nem állítja, hogy a beteg paroxetint szed, ezért nincs „szegény metabolizáló” sem. A HIS nem blokkol (202).
 
 ### 2.3 Szándékosan nem épülő folyamatok (spec szerint)
 
@@ -182,23 +182,23 @@ Képlet (P06, SPEC-PLAN-TRACE §9):
 4. F1+ `unsourced_claims == 0`  
 5. FR-470 grepek zöldek  
 
-Oracle: **60 unittest OK** (2026-08-13).
+Oracle: **78 unittest OK** (2026-08-13).
 
 ### 3.1 Számok
 
 | Halmaz | N | Tervezett | Validált (kód ≥PARTIAL) | Validálatlan NOW |
 | --- | --- | --- | --- | --- |
-| FR katalógus | 36 | 36 (100%) | 21 + LOCK-ok / P1 / NG | 5 F1s |
-| §10.2 NOW | 27 | 27 (100%) | 21 PARTIAL + 1 LOCK | **5 = 18,5%** |
-| User story §5.2 | 21 | 21 (100%) | 10 PARTIAL + 1 + F2 LOCK | 11–12 HITL; 5 P1; 6–10 F2 |
-| B.2 entitás | 22 | 22 | 16 PARTIAL + 1 FULL flag | ShadowInference, HitlReview (+ részben ResearchConsent) |
-| B.3/B.4 API | 12 | 12 | 4 FULL + 4 PARTIAL + CDS LOCK | HITL store; HL7/encyclopedia P1 |
+| FR katalógus | 36 | 36 (100%) | 26 + LOCK-ok / P1 / NG | 0 F1s NOW |
+| §10.2 NOW | 27 | 27 (100%) | 26 PARTIAL + 1 LOCK | **0** |
+| User story §5.2 | 21 | 21 (100%) | 12 PARTIAL + 1 + F2 LOCK | 5 P1; 6–10 F2 |
+| B.2 entitás | 22 | 22 | 18 PARTIAL + 1 FULL flag | — |
+| B.3/B.4 API | 12 | 12 | 4 FULL + 5 PARTIAL + CDS LOCK | HL7/encyclopedia P1 |
 | B.5 hiba | 22 | 22 | 12 FULL + 4 PARTIAL | E-MAP-001; VCF 002/004; F2 timeout |
 
 **Terv-teljesség NOW: 27/27 = 100%.**  
-**Kód-teljesség NOW: 21/27 ≈ 78% legalább PARTIAL** (0 FR FULL, mert FULL = minden AC + D.2 TC).  
+**Kód-teljesség NOW: 26/27 ≈ 96% legalább PARTIAL** (0 FR FULL, mert FULL = minden AC + D.2 TC).  
 **F1+ dataflow: 8/8 lépés járható.**  
-**F1s dataflow a HITL-ig: 2/5** (gateway+ingest igen; persist, motor, vak UI nem).
+**F1s dataflow a HITL-ig: 5/5.**
 
 ### 3.2 User story — tételesen a spec §5.2 szövege szerint
 
@@ -210,7 +210,7 @@ Oracle: **60 unittest OK** (2026-08-13).
 | 4 | White-label + aláíró | **részben** | SYN-ORG slot + signer_slot; logo fájl nincs |
 | 5 | Újragenerálás | **nem (P1)** | FR-510 |
 | 6–10 | Felírási riasztás | **szándékos nem** | F1+ tilos; CDS 404 |
-| 11–12 | Fenokonverzió HITL/F2 | **nem** | WP-M/H |
+| 11–12 | Fenokonverzió HITL/F2 | **igen SYN-en** | vak UI + motor; **nincs kitalált PM**; F2 pecsét után |
 | 13 | Nincs riport tanácsadás/8. § nélkül | **igen** | E-CONSENT-001/003; CLI is |
 | 14 | Génenkénti hozzájárulás / nem-tudás | **igen** | scopes + omit_from_patient |
 | 15 | Visszavonás + tanúsítvány | **igen** | 410 + DeletionCertificate |
@@ -225,14 +225,15 @@ Oracle: **60 unittest OK** (2026-08-13).
 
 | Szabály | Eredmény |
 | --- | --- |
-| (1) NOW ≥ PARTIAL | 21/27 + LOCK; **FAIL a 5 F1s sorra** |
+| (1) NOW ≥ PARTIAL | 26/27 + LOCK; **PASS** |
 | (2) F1+ dataflow járható | **PASS** |
-| (3) B.5 HTTP | **PASS** a klinikai kapukra |
+| (2b) F1s dataflow járható | **PASS** |
+| (3) B.5 HTTP | **PASS** a klinikai kapukra + HITL 403 |
 | (4) unsourced_claims==0 | **PASS** |
 | (5) FR-470 | **PASS** |
 
 **F1+ SYN demo** a DELIVERY-PLAN kész-definíciója szerint: **teljesíthető**.  
-**F1s SYN demo** (motor+HITL): **nem teljesíthető**, amíg WP-M és WP-H nincs kódban.
+**F1s SYN demo** (motor+HITL): **teljesíthető** a CYP2D6/SSRI szeleten; a Gold ATC4 út nem ír PM-et.
 
 ---
 
@@ -255,17 +256,17 @@ Oracle: **60 unittest OK** (2026-08-13).
 
 Képernyő: `src/pce_ui/index.html` ugyanerre az API-ra POST-ol. `python -m pce_clinical --mode serve`.
 
-### 4.2 F1s HITL út — részben
+### 4.2 F1s HITL út — járható
 
 | # | Lépés | Járható |
 | --- | --- | --- |
 | 1 | HIS fixture → gateway → k-cella | **igen** |
 | 2 | ATC5/TAJ → 400, HIS 202 | **igen** |
-| 3 | ShadowInference `hitl.sqlite` | **nem** |
-| 4 | Vak lépés + verdict UI | **nem** |
-| 5 | Report store üres marad | **igen** (nincs keresztírás; persist sincs) |
+| 3 | ShadowInference `hitl.sqlite` | **igen** |
+| 4 | Vak lépés + verdict UI | **igen** (`python -m pce_hitl`) |
+| 5 | Report store üres marad | **igen** |
 
-Clinician HITL: **403 `E-ISO-001`** (UX-izoláció biztosítva). Reviewer kártya: **nincs**.
+Clinician HITL: **403 `E-ISO-001`**. Reviewer kártya: opák ID, ATC, gén; motor csak a vak lépés után.
 
 ### 4.3 Persona UX (spec §5.1)
 
@@ -273,7 +274,7 @@ Clinician HITL: **403 `E-ISO-001`** (UX-izoláció biztosítva). Reviewer kárty
 | --- | --- | --- | --- |
 | **P1** Labor | kézi CPIC | JSON/TSV → PDF/FHIR, verzió a leleten, HU hiba B.5 | W-CALL-010 feloldható; INDETERMINATE nem NORMAL |
 | **P2** Klinikus | PGx a felírásnál | F1+: **csak az aláírt lelet** (PDF/FHIR a labortól). Nincs vizit-UI, nincs CDS | szándékos; F2 pecsét után |
-| **P3** Farmakológus | fenokonverzió | F1+ leleten csak EDU=null; HITL nincs | **igen, amíg WP-M/H nincs** |
+| **P3** Farmakológus | fenokonverzió | külön belépés (`hitl_reviewer`); vak lépés, majd motor | Gold ATC4: elégtelen felbontás, nem PM |
 | **P4** Tanácsadó | nincs kapu | űrlap + 409 HU | nincs: piros kapu nem gyárt leletet |
 | **P5** DPO | 30 év, törlés, audit | export + withdraw + cert | A14 monitor a gatewayen; UI gomb auditra van |
 | **P6** Vendor | FHIR, ne legyen MDR-gyártó | STU3 Bundle; CDS 404; OQ-03 irat | CDS szándékos 404 |
@@ -291,15 +292,14 @@ Clinician HITL: **403 `E-ISO-001`** (UX-izoláció biztosítva). Reviewer kárty
 
 ---
 
-## 5. Ami a kérés „biztosítsd a teljes dataflow/UX” részéből **még nincs biztosítva**
+## 5. Ami a kérés „biztosítsd a teljes dataflow/UX” részéből **még részleges**
 
-Ez nem rejtett hiány: a spec NOW sávja F1s-t is tartalmaz.
+A NOW F1s út járható. Ami szándékosan nem FULL:
 
-1. **L4-live motor** (`pce_shadow`) — FR-400-LIVE, FR-410-LIVE. Hivatalos inhibitor tábla nélkül nem szabad kitalált PM-et írni.  
-2. **HITL store + vak UI** — FR-440, 450, 450-BLIND. P3 útja itt szakad.  
-3. **PREPARE-12 többi gén CPIC extract** — FR-310/400-STATIC részlegesség.  
-4. **VCF missing-to-ref gold ≥3** — FR-210 klinikai P0 csúcs VCF-úton. Default út továbbra is FR-240.
+1. **PREPARE-12 többi gén CPIC extract** — FR-310/400-STATIC és élő párosítás csak CYP2D6/SSRI szeleten.  
+2. **Hivatalos NM+gátló → PM/IM tábla** — a CPIC 2023 szerint nincs konszenzus; a motor ezért **nem** ír kitalált PM-et. Ha megjelenik L1/L2 tábla, a pinelt JSON bővíthető.  
+3. **VCF missing-to-ref gold ≥3** — FR-210 klinikai P0 csúcs VCF-úton. Default út továbbra is FR-240.
 
-A F1+ labor dataflow és a P1/P4/P5/P6 (F1+) UX **biztosított és mért**. A P2 felírási UX **szándékosan zárt**. A P3 HITL UX **nincs biztosítva**.
+A F1+ labor dataflow és a P1/P4/P5/P6 (F1+) UX **biztosított és mért**. A P2 felírási UX **szándékosan zárt**. A P3 HITL UX **biztosított** a SYN ellenőrző képernyőn, nem a viziten.
 
 Spec-t ez a dokumentum nem módosítja.

@@ -15,8 +15,13 @@ def handle_pce_ingest(
     *,
     authorization: str | None,
     allowed_accounts: set[str],
+    hitl_store: Any | None = None,
 ) -> tuple[int, dict[str, Any]]:
-    """POST /v1/shadow/events defense-in-depth. HIS fail-open is the caller's job."""
+    """POST /v1/shadow/events defense-in-depth. HIS fail-open is the caller's job.
+
+    Accepted 202 may persist a ShadowInference into the HITL store. A store
+    failure must not change the HIS HTTP code (E.2).
+    """
     if authorization not in allowed_accounts:
         return 403, {"error": "E-SHADOW-002", "http": 403, "hitl": False}
     if cfg.mode == "PSEUDO" and not cfg.research_consent:
@@ -37,4 +42,11 @@ def handle_pce_ingest(
             ):
                 err = ShadowSuppress("raw rare diplotype forbidden on ANON ingest")
                 return err.http, err.as_dict()
+    if hitl_store is not None:
+        try:
+            from pce_hitl.service import persist_inference
+
+            persist_inference(hitl_store, bundle)
+        except Exception:
+            pass
     return 202, {"ingest": "accepted", "http": 202, "hitl": True}

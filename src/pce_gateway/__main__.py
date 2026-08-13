@@ -40,6 +40,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--on-rare", default="DROP", choices=("COARSEN", "DROP"))
     p.add_argument("--frequency-table", default=str(DEFAULT_FREQ))
     p.add_argument("--kcell-db", default="var/kcell.sqlite")
+    p.add_argument("--hitl-db", default="var/hitl.sqlite")
     p.add_argument("--seed-cell", type=int, default=0, help="pre-count for the event's cell (tests)")
     p.add_argument("--port", type=int, default=8080)
     p.add_argument(
@@ -58,7 +59,16 @@ def main(argv: list[str] | None = None) -> int:
         if not args.account:
             print("serve requires --account or PCE_GW_ACCOUNT", file=sys.stderr)
             return 1
-        httpd = bind_ingest_server(cfg, freq, {args.account}, host="127.0.0.1", port=args.port)
+        from pce_hitl.store import HitlStore
+
+        httpd = bind_ingest_server(
+            cfg,
+            freq,
+            {args.account},
+            host="127.0.0.1",
+            port=args.port,
+            hitl_store=HitlStore(args.hitl_db),
+        )
         bound = httpd.server_address[1]
         print(f"pce_gateway ingest on 127.0.0.1:{bound} LIVE_CDS={LIVE_CDS}")
         try:
@@ -72,12 +82,15 @@ def main(argv: list[str] | None = None) -> int:
     bundle = load_json(args.input)
     try:
         if args.mode == "ingest":
+            from pce_hitl.store import HitlStore
+
             status, out = handle_pce_ingest(
                 bundle,
                 cfg,
                 freq,
                 authorization=args.account or "local",
                 allowed_accounts={args.account or "local"},
+                hitl_store=HitlStore(args.hitl_db),
             )
             json.dump(out, sys.stdout, indent=2, ensure_ascii=False)
             sys.stdout.write("\n")

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8" />
+  <title>PCE F1s ellenőrző képernyő (SYN)</title>
+  <style>
+    body { font-family: sans-serif; max-width: 52rem; margin: 1.5rem auto; }
+    label, input, select, button, textarea { display: block; width: 100%; margin: 0.3rem 0; }
+    button { width: auto; padding: 0.4rem 0.8rem; }
+    pre { background: #f4f4f4; padding: 0.6rem; overflow: auto; white-space: pre-wrap; }
+    .err { color: #a40000; }
+    fieldset { margin: 1rem 0; }
+  </style>
+</head>
+<body>
+  <h1>Precision Clinical Engine — kutatási ellenőrző képernyő (SYN)</h1>
+  <p>Ez <strong>nem</strong> az aláírt laborlelet, és nem a felíró orvos napi felülete. A reviewer először a motor javaslata nélkül dönt (vak lépés), utána egyetért vagy nem. Szerep: <code>hitl_reviewer</code>. Opák azonosító, nincs név, TAJ, születési év.</p>
+  <label>Szerep (Authorization)
+    <select id="role">
+      <option selected>hitl_reviewer</option>
+      <option>dpo</option>
+      <option>clinician</option>
+    </select>
+  </label>
+  <p>Inferencia ID <input id="infId" /></p>
+  <fieldset>
+    <legend>Lista</legend>
+    <button type="button" id="btnList">GET /v1/hitl/inferences</button>
+    <button type="button" id="btnOne">GET egy kártya (motor rejtve, amíg a vak lépés nincs)</button>
+  </fieldset>
+  <fieldset>
+    <legend>1. vak lépés (motor nélkül)</legend>
+    <label>Saját döntés
+      <select id="blind">
+        <option>CONTINUE</option>
+        <option>ALTERNATIVE</option>
+        <option>DOSE_CHANGE</option>
+        <option>INSUFFICIENT</option>
+      </select>
+    </label>
+    <button type="button" id="btnBlind">POST .../blind</button>
+  </fieldset>
+  <fieldset>
+    <legend>2. lépés — motor kategória után</legend>
+    <label>Verdict
+      <select id="verdict">
+        <option>AGREE</option>
+        <option>DISAGREE</option>
+        <option>INSUFFICIENT_DATA</option>
+      </select>
+    </label>
+    <label>reason_code (kötelező) <input id="reason" value="MATCH" /></label>
+    <label>Szabad szöveg (opcionális, személyes adat nélkül)
+      <textarea id="note" rows="3"></textarea>
+    </label>
+    <button type="button" id="btnReview">POST .../reviews</button>
+  </fieldset>
+  <pre id="out"></pre>
+  <script>
+    const out = document.getElementById("out");
+    function role() { return document.getElementById("role").value; }
+    function val(id) { return document.getElementById(id).value; }
+    function set(id, v) { document.getElementById(id).value = v; }
+    async function api(method, path, body) {
+      const opts = { method, headers: { Authorization: role() } };
+      if (body !== undefined) {
+        opts.headers["Content-Type"] = "application/json";
+        opts.body = JSON.stringify(body);
+      }
+      const res = await fetch(path, opts);
+      const text = await res.text();
+      let parsed = text;
+      try { parsed = JSON.stringify(JSON.parse(text), null, 2); } catch {}
+      out.className = res.ok ? "" : "err";
+      out.textContent = res.status + " " + path + "\n" + parsed;
+      return { res, json: (() => { try { return JSON.parse(text); } catch { return null; } })() };
+    }
+    document.getElementById("btnList").onclick = async () => {
+      const r = await api("GET", "/v1/hitl/inferences");
+      if (Array.isArray(r.json) && r.json[0] && r.json[0].id) set("infId", r.json[0].id);
+    };
+    document.getElementById("btnOne").onclick = () =>
+      api("GET", "/v1/hitl/inferences/" + val("infId"));
+    document.getElementById("btnBlind").onclick = async () => {
+      const r = await api("POST", "/v1/hitl/inferences/" + val("infId") + "/blind", { choice: val("blind") });
+      if (r.json && r.json.id) set("infId", r.json.id);
+    };
+    document.getElementById("btnReview").onclick = () =>
+      api("POST", "/v1/hitl/inferences/" + val("infId") + "/reviews", {
+        verdict: val("verdict"),
+        reason_code: val("reason"),
+        note: val("note") || undefined
+      });
+  </script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+{
+  "id": "pgx-prepare-12@v0",
+  "accessed": "2026-08-13",
+  "note": "Pinned extracts only. No invented PM/IM mapping. CPIC 2023: consensus phenotype adjustment in the presence of inhibitors has not been established.",
+  "sources": [
+    {
+      "id": "CPIC-DIPLOTYPE-API",
+      "authority": "L2",
+      "accessed": "2026-08-13",
+      "url": "https://api.cpicpgx.org/v1/diplotype?genesymbol=eq.CYP2D6",
+      "claim": "CYP2D6 *1/*1 and *1/*2 generesult Normal Metabolizer (activity score 2.0); *4/*4 Poor Metabolizer (activity score 0.0)."
+    },
+    {
+      "id": "FDA-DDI-TABLE-2-2",
+      "authority": "L1",
+      "accessed": "2026-08-13",
+      "url": "https://www.fda.gov/drugs/drug-interactions-labeling/drug-development-and-drug-interactions-table-substrates-inhibitors-and-inducers",
+      "claim": "Clinical index strong CYP2D6 inhibitors include fluoxetine and paroxetine. Strong inhibitors increase AUC of sensitive index substrates ≥5-fold. This table does not map NM genotype to a CPIC functional phenotype."
+    },
+    {
+      "id": "CPIC-SSRI-2023",
+      "authority": "L2",
+      "accessed": "2026-08-13",
+      "url": "https://files.cpicpgx.org/data/guideline/publication/serotonin_reuptake_inhibitor_antidepressants/2023/37032427.pdf",
+      "pmc": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10564324/",
+      "claim": "Paroxetine and fluoxetine are potent inhibitors of CYP2D6. Consensus approaches for adjusting CYP2D6 predicted phenotypes in the presence of inhibitors or inducers have not been established. Table 2a: paroxetine dosing recommendations by CYP2D6 phenotype. Fluoxetine: no gene-based dosing recommendations (CPIC level C)."
+    },
+    {
+      "id": "WHO-ATC-N06AB05",
+      "authority": "L1",
+      "accessed": "2026-08-13",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=N06AB05",
+      "claim": "N06AB05 = paroxetine. Index last updated 2026-01-20."
+    },
+    {
+      "id": "WHO-ATC-N06AB03",
+      "authority": "L1",
+      "accessed": "2026-08-13",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=N06AB03",
+      "claim": "N06AB03 = fluoxetine. Index last updated 2026-01-20."
+    },
+    {
+      "id": "PCE-SPEC-B62",
+      "authority": "L1-product",
+      "accessed": "2026-08-13",
+      "url": "docs/pce/PCE-SPEC-v1.2.md",
+      "claim": "FR-410-LIVE / B.6.2: eGFR < 30 → reason organ, not a computed dose."
+    }
+  ],
+  "diplotype_phenotype": [
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*1/*1",
+      "genotype_phenotype": "NM",
+      "cpic_generesult": "Normal Metabolizer",
+      "activity_score": "2.0",
+      "source_id": "CPIC-DIPLOTYPE-API"
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*1/*2",
+      "genotype_phenotype": "NM",
+      "cpic_generesult": "Normal Metabolizer",
+      "activity_score": "2.0",
+      "source_id": "CPIC-DIPLOTYPE-API"
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*4/*4",
+      "genotype_phenotype": "PM",
+      "cpic_generesult": "Poor Metabolizer",
+      "activity_score": "0.0",
+      "source_id": "CPIC-DIPLOTYPE-API"
+    }
+  ],
+  "strong_cyp2d6_inhibitors": [
+    {
+      "inn": "paroxetine",
+      "atc5": "N06AB05",
+      "fda_class": "strong",
+      "source_id": "FDA-DDI-TABLE-2-2"
+    },
+    {
+      "inn": "fluoxetine",
+      "atc5": "N06AB03",
+      "fda_class": "strong",
+      "source_id": "FDA-DDI-TABLE-2-2"
+    }
+  ],
+  "phenotype_adjustment": {
+    "nm_plus_strong_inhibitor": null,
+    "status": "not_established_by_cpic_2023",
+    "source_id": "CPIC-SSRI-2023"
+  },
+  "pairings": [
+    {
+      "gene": "CYP2D6",
+      "atc5": "N06AB05",
+      "inn": "paroxetine",
+      "source_id": "CPIC-SSRI-2023",
+      "table": "2a",
+      "by_phenotype": {
+        "UM": "CONSIDER_ALTERNATIVE",
+        "NM": "CONTINUE",
+        "IM": "CONSIDER_DOSE_CHANGE",
+        "PM": "CONSIDER_DOSE_CHANGE"
+      }
+    },
+    {
+      "gene": "CYP2D6",
+      "atc5": "N06AB03",
+      "inn": "fluoxetine",
+      "source_id": "CPIC-SSRI-2023",
+      "cpic_level": "C",
+      "by_phenotype": null,
+      "strategy": "NO_GENE_BASED_DOSING"
+    }
+  ],
+  "egfr_threshold": 30,
+  "egfr_threshold_source_id": "PCE-SPEC-B62"
+}

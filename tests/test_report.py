@@ -47,6 +47,8 @@ class IsolationTests(unittest.TestCase):
             blob = path.read_text(encoding="utf-8")
             self.assertNotIn("MedicationEntry", blob, msg=str(path))
             self.assertNotIn("pce_gateway.pipeline", blob, msg=str(path))
+            self.assertNotIn("pce_shadow", blob, msg=str(path))
+            self.assertNotIn("pce_hitl", blob, msg=str(path))
             for node in ast.walk(tree):
                 if isinstance(node, ast.ImportFrom) and node.module:
                     self.assertFalse(node.module.startswith("pce_gateway"))

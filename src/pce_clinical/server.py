@@ -63,7 +63,7 @@ def handle_request(
         if role == "clinician" or role not in HITL:
             err = ClinicalError("E-ISO-001")
             return err.http, json.dumps(err.as_dict()).encode("utf-8"), "application/json"
-        err = ClinicalError("E-ISO-001", http=404, message_hu="HITL store nincs ezen a clinical processen (WP-H).")
+        err = ClinicalError("E-ISO-001", http=404, message_hu="HITL store nincs ezen a clinical processen (külön pce_hitl).")
         return 404, json.dumps(err.as_dict()).encode("utf-8"), "application/json"
 
     try:
