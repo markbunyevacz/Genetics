@@ -1,0 +1,34 @@
+{
+  "fixture": "gw-v0-10-quarterly-monitor",
+  "tc": ["TC-GW-020"],
+  "scene": "SYN shape of the A14 DPO quarterly report. Counts are fixture numbers, not production traffic.",
+  "report": {
+    "report_type": "A14_quarterly_monitor",
+    "quarter": "2026-Q3",
+    "org_id": "SYN-ORG-001",
+    "mode": "ANON",
+    "k": 5,
+    "rare_diplotype_threshold": 0.005,
+    "events_seen_local": 12,
+    "forwarded_raw": 7,
+    "forwarded_class": 2,
+    "dropped_e_shadow_003": 3,
+    "drop_ratio": 0.25,
+    "k_cell_size_histogram": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 1,
+      "gte_k": 2
+    }
+  },
+  "forbidden_in_report": [
+    "Patient.name",
+    "Patient.identifier",
+    "raw_diplotype",
+    "exact_timestamp",
+    "Patient.id",
+    "cell_key_phenotype_atc_quarter"
+  ],
+  "g3_recall_drop_does_not_disable_suppression": true
+}

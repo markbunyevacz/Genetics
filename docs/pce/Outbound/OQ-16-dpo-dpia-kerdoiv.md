@@ -9,6 +9,7 @@
 | **Címzett** | Adatvédelmi tisztviselő (DPO) / DPIA munkacsoport |
 | **Tárgy** | Az F1s (Shadow Mode) gateway anonimizálási kontrolljainak jóváhagyása |
 | **OQ** | OQ-16 — **ELŐTERJESZTVE**, a jelen irat **nem** zárja |
+| **Küldés** | [OQ-16-kuldesi-csomag.md](OQ-16-kuldesi-csomag.md) — Feladó = `[Gyártó neve]` a küldő tölti (A9). Partnerlabor **nem** mező. |
 
 Tisztelt DPO / DPIA munkacsoport!
 

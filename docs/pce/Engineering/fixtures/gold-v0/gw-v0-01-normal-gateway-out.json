@@ -1,0 +1,28 @@
+{
+  "fixture": "gw-v0-01-normal",
+  "tc": ["TC-GW-010", "TC-GW-012", "TC-GW-013", "TC-GW-014"],
+  "cpic_european_frequency": {
+    "gene": "CYP2D6",
+    "diplotype": "*1/*2",
+    "frequency": 0.105658144,
+    "gte_threshold": true,
+    "source": "CPIC CYP2D6_frequency_table.xlsx Diplotype frequency / European, accessed 2026-08-12"
+  },
+  "GatewayEvent": {
+    "mode": "ANON",
+    "atc_level": 4,
+    "time_grain": "QUARTER",
+    "diplotype_granularity": "RAW",
+    "suppressed": false,
+    "medications": [
+      { "system": "http://www.whocc.no/atc", "code": "N06AB", "display": "Selective serotonin reuptake inhibitors" }
+    ],
+    "authoredOn": "2026-Q3",
+    "diplotypes": [
+      { "gene": "CYP2D6", "diplotype": "*1/*2", "callability": "CALLED" }
+    ]
+  },
+  "absent_on_export": ["patient", "doseQuantity", "dose_mg", "name", "identifier"],
+  "hitl": true,
+  "http_to_pce": 202
+}

@@ -1,0 +1,11 @@
+{
+  "fixture": "gw-v0-09-day-pce-ingest",
+  "tc": ["TC-GW-013"],
+  "scene": "Defense-in-depth: day/hour timestamp reaches POST /v1/shadow/events.",
+  "expected": {
+    "error": "E-SHADOW-001",
+    "http": 400,
+    "hitl": false,
+    "reason": "authoredOn finer than calendar quarter forbidden on ANON ingest"
+  }
+}

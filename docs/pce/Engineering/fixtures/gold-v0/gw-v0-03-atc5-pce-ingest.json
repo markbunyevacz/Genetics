@@ -1,0 +1,39 @@
+{
+  "resourceType": "Bundle",
+  "id": "gw-v0-03-atc5-pce-ingest",
+  "type": "collection",
+  "meta": {
+    "tag": [
+      { "system": "https://example.invalid/pce-fixture", "code": "gold-v0" },
+      { "system": "https://example.invalid/pce-tc", "code": "TC-GW-011" }
+    ]
+  },
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Patient",
+        "id": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeee0003",
+        "gender": "unknown"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "syn-medreq-003",
+        "status": "active",
+        "intent": "order",
+        "subject": { "reference": "Patient/aaaaaaaa-bbbb-cccc-dddd-eeeeeeee0003" },
+        "authoredOn": "2026-Q3",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.whocc.no/atc",
+              "code": "N06AB10",
+              "display": "escitalopram"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

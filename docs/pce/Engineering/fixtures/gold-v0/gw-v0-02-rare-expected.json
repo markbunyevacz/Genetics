@@ -1,0 +1,45 @@
+{
+  "fixture": "gw-v0-02-rare-diplotype",
+  "tc": ["TC-GW-017"],
+  "cpic_european_frequency": {
+    "gene": "CYP2D6",
+    "diplotype": "*6/*6",
+    "frequency": 0.00012537414,
+    "gte_threshold": false,
+    "source": "CPIC CYP2D6_frequency_table.xlsx Diplotype frequency / European, accessed 2026-08-12"
+  },
+  "cpic_phenotype": {
+    "activity_score": "0.0",
+    "summary": "CYP2D6 Poor Metabolizer",
+    "coarsen_class": "REDUCED"
+  },
+  "default_A14": {
+    "on_rare": "DROP",
+    "error": "E-SHADOW-003",
+    "http": 202,
+    "hitl": false,
+    "counter_only": true,
+    "GatewayEvent": {
+      "mode": "ANON",
+      "suppressed": true,
+      "diplotype_granularity": null,
+      "payload_genetics": null
+    }
+  },
+  "if_on_rare_COARSEN": {
+    "hitl": true,
+    "GatewayEvent": {
+      "mode": "ANON",
+      "suppressed": false,
+      "diplotype_granularity": "CLASS",
+      "phenotype_class": "REDUCED",
+      "raw_diplotype": null,
+      "atc_level": 4,
+      "time_grain": "QUARTER",
+      "authoredOn": "2026-Q3",
+      "doseQuantity": null,
+      "patient": { "name": null, "identifier": null }
+    }
+  },
+  "note": "PCE-GW-461-07 always-drop applies to the rarest positive frequency in the loaded table, not automatically to every freq<0.5% row. *6/*6 is rare (0.0125%) and is the Gold V0 rare fixture; it is not claimed to be the global minimum."
+}

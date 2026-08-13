@@ -1,0 +1,11 @@
+{
+  "fixture": "gw-v0-03-atc5-pce-ingest",
+  "tc": ["TC-GW-011"],
+  "scene": "Defense-in-depth: the institutional gateway did not truncate; ATC5 reaches POST /v1/shadow/events.",
+  "expected": {
+    "error": "E-SHADOW-001",
+    "http": 400,
+    "hitl": false,
+    "reason": "ATC5 (7-character N06AB10) forbidden on ANON ingest"
+  }
+}

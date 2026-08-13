@@ -43,6 +43,9 @@ Hozzáférés dátuma: 2026-08-12, kivéve ahol jelezve. Authority: L1 hivatalos
 | S037 | GenomeWeb: Translational Software 510(k) elutasítás / leállás | Szakmai hír | L4 | genomeweb.com business-news (TSI shutting down PGx DSS) | NG-01; OQ-05 maradék; **nem** F1+ siker-story |
 | S038 | Wen et al., BMC Bioinformatics 2022;23:387 (Clinlabomics) | Peer-reviewed review | L2 | doi:10.1186/s12859-022-04926-1 | Laboradat-bányászat. **Nem** k-anonimitás, **nem** OQ-16 |
 | S039 | Tandem Health: Why AI CDS needs MDR Class IIa (2026-06-24) | Vendor blog | L4 | https://tandemhealth.ai/resources/knowledge/why-ai-clinical-decision-support-needs-mdr-class-iia | NG-07 *összhang*; **nem** OQ-05 pecsét. Primer = S004/S020 |
+| S040 | CPIC/ClinPGx CYP2D6 & CYP2C19 frequency xlsx (`current/`) | Guideline melléklet | L2 | https://files.cpicpgx.org/data/report/current/frequency/CYP2D6_frequency_table.xlsx ; CYP2C19_frequency_table.xlsx ; index https://www.clinpgx.org/page/cyp2d6RefMaterials | A14 SYN freq-config; **European** oszlop; HW diplotípus. Letöltve 2026-08-12. **Nem** magyar referencia. |
+| S041 | CDC GeT-RM PGx reference materials | Hatósági program | L1 | https://www.cdc.gov/lab-quality/php/get-rm/reference-materials.html | Konszenzusos diplotípus labor-QC. **Nem** A14 gyakoriság, **nem** k-anonimitás. |
+| S042 | Synthea Patient Generator (MITRE) | Nyílt eszköz | L3 | https://github.com/synthetichealth/synthea | FHIR R4 SYN skála. Gyógyszerkód jellemzően RxNorm, **nem** ATC default. |
 
 **Nem került a registrybe (szándékos):** Fortune/Mordor/Straits TAM-számok (egymásnak ellentmondó L4/L5); Allelica ACC/AHA idézés (céges PR, `[C]`); YouScript 39%/71% kórházi csökkenés (céges közlés); punktum.net / mdxcro.com / IntuitionLabs mint Rule 11a primer (L4, S039-en keresztül említve).
 

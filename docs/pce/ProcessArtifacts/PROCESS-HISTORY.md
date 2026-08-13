@@ -31,6 +31,12 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P05k | SKU-P ki-fizet + lakat driver | 2026-08-12 | 2026-08-12 | DONE | I-19 „hogyan épül be” | market-packs ki-fizet; OQ-03 default; OQ-15 HITL≠ADR | — |
 | P10b | Pecsétekig megerősítés | 2026-08-12 | 2026-08-12 | DONE | User: van-e architektúra-feladat pecsétekig? | README pecsétekig tábla; F.6 + OQ-17; D-24 | — |
 | P05l | FR-461 ticket-bontás | 2026-08-12 | 2026-08-12 | DONE | Explicit kérés: gateway csonkolás ticketek | `Engineering/FR-461-gateway-tickets.md`; OQ-16 nyitva | — |
+| P10c | Ops kapuk a fagyasztott specből | 2026-08-12 | 2026-08-12 | DONE | User: kötött lánc, majd core-most / telephely-később | README G5 modell; Outbound gyártói vs telephelyi; D-26/27 | — |
+| P05m | OQ-16 küldési csomag | 2026-08-12 | 2026-08-12 | DONE | User: első kimenő irat + név-helyettesítés | `OQ-16-kuldesi-csomag.md`; nevek nincsenek kitalálva | — |
+| P05n | Gold V0 SYN fixture | 2026-08-12 | 2026-08-12 | DONE | User: JSON fixture + CPIC 0,5% szelet | `Engineering/fixtures/gold-v0/`; S040–S042 | — |
+| P05o | Gold V0 TC-GW kiegészítés | 2026-08-12 | 2026-08-12 | DONE | User: SYN folytatás; 461-11 mind a 11 | k-cella, rarest `*3x2/*3x2`, CYP2C19 keep-6, monitor | — |
+| P05p | Gateway SYN szim 461-01/02 | 2026-08-13 | 2026-08-13 | DONE | User: Python ATC4 + negyedév a Gold V0-n | `Engineering/gateway_sim/`; G1/G2/C2 üresen | — |
+| P05q | Gateway SYN szim 460 + 461-03 | 2026-08-13 | 2026-08-13 | DONE | User: PII-strip + dózis-tiltás | `strip_pii_fr460`, `suppress_dose_fr461_03`; opák ID teszt | — |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -63,6 +69,13 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-23 | P05k | Ki fizet + lakat driver | Labor viszonteladó / SKU-P SaaS + `[Yl]` opcionális | Klinika fizeti SKU-P-t; labor nem viszonteladó; lakat előbb NG-07, aztán `[Ya]` | I-19 finomítás | I-19 |
 | D-24 | P10b | Iratírás pecsétekig | Tovább spec / fagyasztva + F1+ mag | **Megerősítve** §10.2; OQ-k nyitva; nincs `v1.2-Core-Specification.md`; nincs új architektúra-fejezet | README pecsétekig; B melléklet | user |
 | D-25 | P05l | FR-461 ticketek a fagyasztott specből | Spec-módosítás / engineering bontás | **Engineering/**; SYN only; A14 assumption; nem OQ-16 pecsét | FR-461; E.3.1; TC-GW-010..020 | user |
+| D-26 | P10c | Küldési lánc | Párhuzamos OQ-15 / kötött 16→15→05→03→01 | **Kötött küldés**; HIS továbbra is 15+16 pecsét; FR-115 ≠ FR-100; ISO ≠ megújítás | §10.2 fallback; OQ-16 I.0 | user |
+| D-27 | P10c | Core most vs irat a megrendelőkor | Minden OQ most / minden OQ a vevőkor | **G5:** egy bináris SYN-en. Gyártói OQ-05/01 most. Telephelyi 16→15→03 nevesített megrendelőkor. Flag = telepítés. | SKU-P; user | user |
+| D-28 | P05m | OQ-16 küldési boríték | Nevek beírása a gitbe / boríték + A9 | **Boríték**; G1/C2 a küldőé; labor ≠ OQ-16; 16-A termék-DPO most, 16-B HIS-DPO névvel | A9; user OQ-16 első irat | user |
+| D-29 | P05n | SYN Gold V0 + CPIC freq | Synthea ATC mint primer / CPIC European szelet | **CPIC xlsx European**; 0,5% A14; GeT-RM ≠ freq; Synthea ≠ ATC default; opák ID | S040–S042 | user |
+| D-30 | P05o | Freq-config bake | Teljes 4005-ös CYP2D6 lap / allowlist | **Allowlist** 34 CYP2D6 + 6 CYP2C19; ismeretlen = ritka; PharmGKB gén–gyógyszer TSV ≠ A14 | S040 | user |
+| D-31 | P05p | OQ-16 név + SYN kód | G1/G2/C2 kitalálása / üres + 461-01/02 szim | **Üres** helyettesítés (A9). Szim csak ATC+idő; PII/k-cella később | A9; user | user |
+| D-32 | P05q | 460+461-03 vs k-cella most | PII/dózis most / 461-04 váz | **PII+dózis most**; k-cella a 461-06 freq után (ticket-sorrend) | FR-461 sorrend; user | user |
 
 ## 3. Error log
 
@@ -82,12 +95,13 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | E-12 | P05g | Scope / product mismatch | I-16 sales a klinikának leletet adott el | Retry: SKU-P rendszer; market packs | I-17; D-20 |
 | E-13 | P01c/P05i | Scope / overclaim | I-18: S028 = F1s állami SOTA; Top-5 83,1% = G3/R-020; SHAP = F2 mag; PCE-RWE | Primer PDF; CORRECTED nem silent drop | VC-13; D-21; §9.5 |
 | E-14 | P05j | Hallucinated / wrong cite | I-19: PREPARE p=0,0034; PMC7195220 mint YouScript; ClinLabomics mint k-anon; Tandem mint OQ-05 pecsét; TSI mint F1+ siker; ágyszám-ár | Primer Lancet + vendor oldalak; CORRECTED | VC-14; D-22 |
+| E-15 | P05q | Hallucinated PII / API mismatch | User-minta: „Kovács János” / TAJ 123456789; `entry.resourceType`; DSTU2 `doseQuantity` | Gold V0 opák ID; FHIR R4 `entry.resource` + `doseAndRate` | D-32 |
 
 ## 4. File timeline
 
 | Fájl | Létrehozva | Módosítva | Státusz |
 | --- | --- | --- | --- |
-| docs/pce/README.md | P00/P05 | P05l (Engineering link) | v1.2 FAGYASZTVA |
+| docs/pce/README.md | P00/P05 | P10c (G5 core-most; gyártói vs telephelyi OQ) | v1.2 FAGYASZTVA |
 | docs/pce/PCE-SPEC-v1.2.md | P05b (git mv) | P05j (§9.4 PREPARE p=0,0075) | v1.2 FAGYASZTVA; S028+PREPARE határ |
 | docs/pce/A-intended-purpose-and-modules.md | P05 | P05i (A.3 SHAP≠FR-710) | DRAFT v1.2 |
 | docs/pce/B-architecture-and-interfaces.md | P05 | P05c | DRAFT v1.2 |
@@ -95,8 +109,8 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | docs/pce/D-risk-and-traceability.md | P05 | P06j (VC-14) | DRAFT v1.2 |
 | docs/pce/E-shadow-hitl.md | P05b | P05i (E.7 SOTA-határ) | DRAFT v1.2 |
 | docs/pce/F-decision-package.md | P05e | P10b (F.6 + OQ-17) | DRAFT v1.2; OQ-k ELŐTERJESZTVE |
-| docs/pce/Outbound/* | P05f | P05j (OQ-15 PREPARE; OQ-05 L4; OQ-16 ClinLabomics) | TERVEZET küldhető |
+| docs/pce/Outbound/* | P05f | P05m (OQ-16 küldési boríték) | TERVEZET; 16 első kimenő; A9 |
 | docs/pce/Sales/* | P05g | P05j (mátrix + competitor-analogs) | TERVEZET rendszerlicenc |
 | docs/pce/Sources/S028-* | P01c | P05i | L5 jegyzet + PDF |
 | docs/pce/ProcessArtifacts/* | P01–P06 | P05l (I-20, D-25) | DRAFT |
-| docs/pce/Engineering/* | P05l | P05l | SYN ticketek; nem spec |
+| docs/pce/Engineering/* | P05l | P05q (PII + dózis szim) | SYN ticketek + Gold V0 + gateway_sim |

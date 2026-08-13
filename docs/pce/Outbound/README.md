@@ -11,7 +11,16 @@ Ez a mappa az F melléklet kéréseit **címzett-kész** iratokká alakítja. Ki
 
 **Nem** zárja le az OQ-05 / OQ-15 / OQ-16 / OQ-01 / OQ-03 kérdéseket. A F.6 tábla akkor töltődik, ha a címzett az itteni iraton dönt.
 
-A v1.2 spec **fagyasztva** ([§10.2](../PCE-SPEC-v1.2.md)). Ezeket az iratokat **most** ki kell küldeni; a spec-írás nem folytatódik a válaszokig. Pecsétekig **nincs** új architektúra-fejezet ([B](../B-architecture-and-interfaces.md) a két path). F1s HIS **nem** indul OQ-16+15 pecsét nélkül.
+A v1.2 spec **fagyasztva** ([§10.2](../PCE-SPEC-v1.2.md)). A spec-írás nem folytatódik a válaszokig. Pecsétekig **nincs** új architektúra-fejezet ([B](../B-architecture-and-interfaces.md) a két path). F1s HIS **nem** indul OQ-16+15 pecsét nélkül.
+
+**Mikor megy ki az irat**
+
+| Sáv | OQ | Mikor |
+| --- | --- | --- |
+| **Gyártói** (nincs vevő kell) | OQ-05 counsel; OQ-01 ISO/Redmine | **Most.** A nem-MDSW kérés és a 2026-09-30 QMS-kapu nem telephelyfüggő. |
+| **Telephelyi** (név kell) | OQ-16 DPO → OQ-15 RA → OQ-03 labor | Amikor van **nevesített** intézmény / labor. Addig a core SYN-en fut; a flag-mátrix üres. |
+
+A telephelyi lánc **kötött**: `OQ-16 → OQ-15 → OQ-03`. Az OQ-05 **nem** vár a kórházra; a 16→15→05 sorrend csak akkor él, ha a counsel-levelet szándékosan a telephelyi DPO után küldik. Default: OQ-05 a gyártói sávban, a telephelytől függetlenül.
 
 ## Irattár
 
@@ -19,17 +28,28 @@ A v1.2 spec **fagyasztva** ([§10.2](../PCE-SPEC-v1.2.md)). Ezeket az iratokat *
 | --- | --- | --- | --- |
 | [OQ-05-counsel-brief.md](OQ-05-counsel-brief.md) | OQ-05 | Külső jogi és szabályozási tanácsadó | Állásfoglalás-kérés |
 | [OQ-16-dpo-dpia-kerdoiv.md](OQ-16-dpo-dpia-kerdoiv.md) | OQ-16 | DPO / DPIA munkacsoport | Igen/nem kontrollcsomag |
+| [OQ-16-kuldesi-csomag.md](OQ-16-kuldesi-csomag.md) | OQ-16 | Küldő (belső) | Boríték + változó-tábla; **első kimenő irat** |
 | [OQ-15-intezmenyi-ra-egyoldalas.md](OQ-15-intezmenyi-ra-egyoldalas.md) | OQ-15 | Intézményi RA / orvosigazgató / etikai bizottság | Jóváhagyási kérelem |
 | [OQ-03-l3-term-sheet.md](OQ-03-l3-term-sheet.md) | OQ-03 | Partnerlaboratórium üzleti vezetése | Term sheet (nem szerződés) |
 | [OQ-01-iso-eeszt-owner-csomag.md](OQ-01-iso-eeszt-owner-csomag.md) | OQ-01 | Ügyvezetés / belső RA | F0 feladatlista + kapuőr |
 
-## Küldési sorrend (ajánlott)
+## Küldési sorrend
 
-1. **OQ-16** (DPO) — az F1s anonim út ettől függ.
-2. **OQ-15** (intézmény) — OQ-16 után vagy vele párhuzamosan, de F1s HIS-csatlakozás OQ-16 nélkül nem indul.
-3. **OQ-05** (counsel) — F1+ forgalmazási pozíció; független az F1s-től, de a dosszié ugyanaz.
-4. **OQ-03** (labor) — F1+ COGS / REG-020; labornevet itt **nem** találunk ki.
-5. **OQ-01** (belső) — 2026-09-30 ISO 9001 / 4. melléklet 2.1; C-000 tény azonnal.
+**Gyártói (most):** OQ-05, OQ-01 — párhuzamosan is mehetnek.
+
+**Telephelyi (nevesített megrendelőkor):**
+
+`OQ-16 → OQ-15 → OQ-03`
+
+1. **OQ-16** (DPO) — **első kimenő irat.** Boríték: [OQ-16-kuldesi-csomag.md](OQ-16-kuldesi-csomag.md). NEM → álnevesített út + FR-115 (kutatási/shadow). **Nem** kapcsolja ki a klinikai FR-100-at. Partnerlabor **nincs** ezen az iraton (az OQ-03). Gyártónév: A9, küldéskor, nem kitalálva.
+2. **OQ-15** (intézményi RA) — **csak lezárt OQ-16 után**. Reviewer-vak HITL kérelem; HIS pecsét: OQ-15 **és** OQ-16.
+3. **OQ-03** (labor) — REG-020 / opcionális `[Yl]`; labornevet itt **nem** találunk ki.
+
+**OQ-05** (gyártói counsel) — F1+ nem-MDSW *kérés*. Gén-szintű CPIC szöveg lehet Rule 11a. Nincs kórházi név kell. A válasz a telephely **F1+ ON/LOCK** (vagy IIa) flagjét adja, nem a HIS-csatlakozást.
+
+**OQ-01** (belső) — 2026-09-30 ISO 9001 / 4. melléklet 2.1; C-000. **Nem** „ISO megújítás”. Redmine ≠ EESZT FHIR (NG-05).
+
+A *pecsét* F.6. Párhuzamos telephelyi kiküldés **nincs**: a 15-ös irat OQ-16 válasz nélkül nem megy. Gyártói OQ-05/01 **nem** vár telephelyre.
 
 ## Mellékletek minden külső levélhez
 
@@ -63,6 +83,6 @@ A vázlatok **nem** lettek szó szerint átmásolva, ahol a v1.2 spec mást mond
 
 ## Ami szándékosan üres
 
-- Gyártó cégneve, labor neve, Ft-összeg, SLA-óra
+- Gyártó cégneve, labor neve, Ft-összeg, SLA-óra — a küldő tölti a *kimenő másolaton*; a git placeholder marad (A9)
 - F.6 aláírások
 - Counsel/DPO/RA *válasza*

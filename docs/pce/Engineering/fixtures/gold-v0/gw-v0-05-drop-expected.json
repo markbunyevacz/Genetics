@@ -1,0 +1,36 @@
+{
+  "fixture": "gw-v0-05-small-cell-drop",
+  "tc": ["TC-GW-016"],
+  "his_in": "gw-v0-04-small-cell-his-in.json",
+  "gateway_local": {
+    "cell": {
+      "phenotype_class": "REDUCED",
+      "atc_level": 4,
+      "quarter": "2026-Q3"
+    },
+    "cell_count_including_this_event": 4,
+    "k": 5,
+    "on_small_cell": "DROP"
+  },
+  "default_A14": {
+    "on_small_cell": "DROP",
+    "error": "E-SHADOW-003",
+    "http": 202,
+    "hitl": false,
+    "counter_only": true,
+    "his_fail_open": true,
+    "GatewayEvent": {
+      "mode": "ANON",
+      "suppressed": true,
+      "diplotype_granularity": null,
+      "payload_genetics": null,
+      "cell_count": null
+    }
+  },
+  "if_raw_record_reaches_pce": {
+    "error": "E-SHADOW-003",
+    "http": 202,
+    "store_write": false,
+    "hitl": false
+  }
+}

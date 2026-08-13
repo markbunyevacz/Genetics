@@ -1,0 +1,67 @@
+{
+  "id": "pce-gold-v0",
+  "ticket": "PCE-GW-461-11",
+  "accessed": "2026-08-12",
+  "not": ["G3 annotational SOP", "OQ-16 seal", "k-anonymity proof", "Hungarian allele frequencies"],
+  "frequency_config": "frequency-config.v0.json",
+  "cases": [
+    {
+      "id": "gw-v0-01-normal",
+      "tc": ["TC-GW-010", "TC-GW-012", "TC-GW-013", "TC-GW-014"],
+      "his_in": "gw-v0-01-normal-his-in.json",
+      "expected": "gw-v0-01-normal-gateway-out.json"
+    },
+    {
+      "id": "gw-v0-02-rare",
+      "tc": ["TC-GW-017"],
+      "his_in": "gw-v0-02-rare-diplotype-his-in.json",
+      "expected": "gw-v0-02-rare-expected.json"
+    },
+    {
+      "id": "gw-v0-03-atc5-ingest",
+      "tc": ["TC-GW-011"],
+      "pce_in": "gw-v0-03-atc5-pce-ingest.json",
+      "expected": "gw-v0-03-atc5-expected.json"
+    },
+    {
+      "id": "gw-v0-04-small-cell-coarsen",
+      "tc": ["TC-GW-015"],
+      "his_in": "gw-v0-04-small-cell-his-in.json",
+      "expected": "gw-v0-04-coarsen-expected.json"
+    },
+    {
+      "id": "gw-v0-05-small-cell-drop",
+      "tc": ["TC-GW-016"],
+      "his_in": "gw-v0-04-small-cell-his-in.json",
+      "expected": "gw-v0-05-drop-expected.json"
+    },
+    {
+      "id": "gw-v0-06-rarest",
+      "tc": ["TC-GW-018"],
+      "his_in": "gw-v0-06-rarest-his-in.json",
+      "expected": "gw-v0-06-rarest-expected.json"
+    },
+    {
+      "id": "gw-v0-07-k-override",
+      "tc": ["TC-GW-019"],
+      "request": "gw-v0-07-k-override-reject.json"
+    },
+    {
+      "id": "gw-v0-08-taj-ingest",
+      "tc": ["TC-GW-010"],
+      "pce_in": "gw-v0-08-taj-pce-ingest.json",
+      "expected": "gw-v0-08-taj-expected.json"
+    },
+    {
+      "id": "gw-v0-09-day-ingest",
+      "tc": ["TC-GW-013"],
+      "pce_in": "gw-v0-09-day-pce-ingest.json",
+      "expected": "gw-v0-09-day-expected.json"
+    },
+    {
+      "id": "gw-v0-10-monitor",
+      "tc": ["TC-GW-020"],
+      "expected": "gw-v0-10-quarterly-monitor.json"
+    }
+  ]
+}

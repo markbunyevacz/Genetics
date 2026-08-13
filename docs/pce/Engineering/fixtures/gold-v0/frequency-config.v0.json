@@ -1,0 +1,335 @@
+{
+  "id": "pce-a14-frequency-config",
+  "version": "v0",
+  "accessed": "2026-08-12",
+  "rare_diplotype_threshold": 0.005,
+  "threshold_status": "A14_ASSUMPTION",
+  "biogeographic_group_default": "European",
+  "biogeographic_group_note": "Hungary is not a CPIC biogeographic group. SYN default uses the European column. DPIA names the production group.",
+  "implementation": {
+    "bake": "allowlist of diplotypes with European HW frequency >= rare_diplotype_threshold",
+    "unknown_diplotype": "treat as below threshold (COARSEN_OR_DROP)",
+    "do_not_vendor_full_sheet": true,
+    "pharmgkb_gene_drug_tsv": "not this config — matcher/FR-400; DPIA names the production frequency source (E.3.1)"
+  },
+  "source": {
+    "cyp2d6": {
+      "name": "CPIC/ClinPGx CYP2D6 frequency table",
+      "url": "https://files.cpicpgx.org/data/report/current/frequency/CYP2D6_frequency_table.xlsx",
+      "index": "https://www.clinpgx.org/page/cyp2d6RefMaterials",
+      "sheet": "Diplotype frequency",
+      "column": "European",
+      "methods": "Hardy-Weinberg from allele frequencies (Methods and Caveats tab)",
+      "changelog_in_file": "2024-10-17",
+      "rows_with_numeric_european": 4005,
+      "keep_gte_threshold": 34,
+      "positive_below_threshold": 1001,
+      "zero": 2970
+    },
+    "cyp2c19": {
+      "name": "CPIC/ClinPGx CYP2C19 frequency table",
+      "url": "https://files.cpicpgx.org/data/report/current/frequency/CYP2C19_frequency_table.xlsx",
+      "sheet": "Diplotype frequency",
+      "column": "European",
+      "changelog_in_file": "2022-03-11",
+      "keep_gte_threshold": 6
+    }
+  },
+  "rule": {
+    "if_frequency_gte_threshold": "RAW_DIPLOTYPE_ALLOWED",
+    "if_frequency_lt_threshold": "COARSEN_OR_DROP",
+    "rarest_positive_frequency_in_loaded_table": "ALWAYS_DROP",
+    "do_not_hardcode_threshold_in_call_path": true
+  },
+  "keep_european_cyp2d6_freq_gte_0_005": [
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*1/*2",
+      "biogeographic_group": "European",
+      "frequency": 0.105658144
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*1/*4",
+      "biogeographic_group": "European",
+      "frequency": 0.10536576
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*1/*1",
+      "biogeographic_group": "European",
+      "frequency": 0.08122906
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*2/*4",
+      "biogeographic_group": "European",
+      "frequency": 0.0685269
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*1/*41",
+      "biogeographic_group": "European",
+      "frequency": 0.052655127
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*2/*2",
+      "biogeographic_group": "European",
+      "frequency": 0.034358528
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*2/*41",
+      "biogeographic_group": "European",
+      "frequency": 0.034245398
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*4/*4",
+      "biogeographic_group": "European",
+      "frequency": 0.034168635
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*4/*41",
+      "biogeographic_group": "European",
+      "frequency": 0.034150634
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*1/*35",
+      "biogeographic_group": "European",
+      "frequency": 0.03116864
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*2/*35",
+      "biogeographic_group": "European",
+      "frequency": 0.020271199
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*4/*35",
+      "biogeographic_group": "European",
+      "frequency": 0.020215103
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*1/*5",
+      "biogeographic_group": "European",
+      "frequency": 0.016805429
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*1/*9",
+      "biogeographic_group": "European",
+      "frequency": 0.015699208
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*2/*5",
+      "biogeographic_group": "European",
+      "frequency": 0.010929774
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*4/*5",
+      "biogeographic_group": "European",
+      "frequency": 0.010899528
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*2/*9",
+      "biogeographic_group": "European",
+      "frequency": 0.0102103185
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*4/*9",
+      "biogeographic_group": "European",
+      "frequency": 0.010182064
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*35/*41",
+      "biogeographic_group": "European",
+      "frequency": 0.010102226
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*1/*3",
+      "biogeographic_group": "European",
+      "frequency": 0.009076174
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*1/*10",
+      "biogeographic_group": "European",
+      "frequency": 0.008956537
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*41/*41",
+      "biogeographic_group": "European",
+      "frequency": 0.00853316
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*1/*39",
+      "biogeographic_group": "European",
+      "frequency": 0.007985917
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*1/*6",
+      "biogeographic_group": "European",
+      "frequency": 0.0063824835
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*1/*34",
+      "biogeographic_group": "European",
+      "frequency": 0.006124642
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*2/*3",
+      "biogeographic_group": "European",
+      "frequency": 0.0059028864
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*3/*4",
+      "biogeographic_group": "European",
+      "frequency": 0.0058865515
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*2/*10",
+      "biogeographic_group": "European",
+      "frequency": 0.0058250767
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*4/*10",
+      "biogeographic_group": "European",
+      "frequency": 0.0058089574
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*5/*41",
+      "biogeographic_group": "European",
+      "frequency": 0.005446893
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*1/*33",
+      "biogeographic_group": "European",
+      "frequency": 0.005419314
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*2/*39",
+      "biogeographic_group": "European",
+      "frequency": 0.0051938137
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*4/*39",
+      "biogeographic_group": "European",
+      "frequency": 0.005179441
+    },
+    {
+      "gene": "CYP2D6",
+      "diplotype": "*9/*41",
+      "biogeographic_group": "European",
+      "frequency": 0.00508835
+    }
+  ],
+  "keep_european_cyp2c19_freq_gte_0_005": [
+    {
+      "gene": "CYP2C19",
+      "diplotype": "*1/*1",
+      "biogeographic_group": "European",
+      "frequency": 0.39080182
+    },
+    {
+      "gene": "CYP2C19",
+      "diplotype": "*1/*17",
+      "biogeographic_group": "European",
+      "frequency": 0.2693592
+    },
+    {
+      "gene": "CYP2C19",
+      "diplotype": "*1/*2",
+      "biogeographic_group": "European",
+      "frequency": 0.18361284
+    },
+    {
+      "gene": "CYP2C19",
+      "diplotype": "*2/*17",
+      "biogeographic_group": "European",
+      "frequency": 0.06327735
+    },
+    {
+      "gene": "CYP2C19",
+      "diplotype": "*17/*17",
+      "biogeographic_group": "European",
+      "frequency": 0.04641379
+    },
+    {
+      "gene": "CYP2C19",
+      "diplotype": "*2/*2",
+      "biogeographic_group": "European",
+      "frequency": 0.021566989
+    }
+  ],
+  "fixture_rare": {
+    "gene": "CYP2D6",
+    "diplotype": "*6/*6",
+    "biogeographic_group": "European",
+    "frequency": 0.00012537414,
+    "role": "TC-GW-017 freq < 0.5%; not claimed as global minimum"
+  },
+  "rarest_positive_in_full_cpic_european_diplotype_sheet": {
+    "gene": "CYP2D6",
+    "diplotype": "*3x2/*3x2",
+    "biogeographic_group": "European",
+    "frequency": 9.999999e-09,
+    "role": "PCE-GW-461-07 always-drop even if on_rare=COARSEN and cell_count >= k"
+  },
+  "phenotype_for_fixtures": [
+    {
+      "diplotype": "*1/*2",
+      "activity_score": "2.0",
+      "cpic_summary": "CYP2D6 Normal Metabolizer",
+      "coarsen_class_if_needed": null,
+      "source": "https://files.cpicpgx.org/data/report/current/diplotype_phenotype/CYP2D6_Diplotype_Phenotype_Table.xlsx"
+    },
+    {
+      "diplotype": "*4/*4",
+      "activity_score": "0.0",
+      "cpic_summary": "CYP2D6 Poor Metabolizer",
+      "coarsen_class_if_needed": "REDUCED",
+      "european_frequency": 0.034168635,
+      "note": ">= 0.5% so TC-GW-015/016 isolate k-cell from the A14 frequency rule",
+      "source": "https://files.cpicpgx.org/data/report/current/diplotype_phenotype/CYP2D6_Diplotype_Phenotype_Table.xlsx"
+    },
+    {
+      "diplotype": "*6/*6",
+      "activity_score": "0.0",
+      "cpic_summary": "CYP2D6 Poor Metabolizer",
+      "coarsen_class_if_needed": "REDUCED",
+      "source": "https://files.cpicpgx.org/data/report/current/diplotype_phenotype/CYP2D6_Diplotype_Phenotype_Table.xlsx"
+    },
+    {
+      "diplotype": "*3x2/*3x2",
+      "activity_score": "0.0",
+      "cpic_summary": "CYP2D6 Poor Metabolizer",
+      "coarsen_class_if_needed": "REDUCED",
+      "note": "Always DROP under PCE-GW-461-07; coarsen class unused",
+      "source": "https://files.cpicpgx.org/data/report/current/diplotype_phenotype/CYP2D6_Diplotype_Phenotype_Table.xlsx"
+    }
+  ]
+}

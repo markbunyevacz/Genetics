@@ -53,7 +53,7 @@ A gyártó neve ebben a csomagban **nincs kitalálva**. A9 feltevés: a gyártó
 
 ## Következő gate
 
-**Spec / Outbound / Sales iratírás:** fagyasztva (§10.2). **OQ-k:** ELŐTERJESZTVE, amíg F.6 ki nem töltődik. **Merge:** a PR a kanonikus csomag; a pecsét nem a git-merge.
+**Spec / Outbound / Sales iratírás:** fagyasztva (§10.2). **OQ-k:** ELŐTERJESZTVE, amíg F.6 ki nem töltődik. **Git:** [PR #1](https://github.com/markbunyevacz/genetics/pull/1) **merge-elve** a `main`-re (2026-08-12). A pecsét nem a git-merge.
 
 **Kanonikus fa** (nincs `v1.2-Core-Specification.md`):
 
@@ -69,23 +69,49 @@ docs/pce/
 │   ├── competitor-analogs.md
 │   └── literature-boundary.md
 └── Engineering/
-    └── FR-461-gateway-tickets.md  ← SYN kódolás; nem OQ-pecsét
+    ├── FR-461-gateway-tickets.md
+    ├── fixtures/gold-v0/          ← SYN TC-GW; CPIC European freq-szelet
+    └── gateway_sim/               ← FR-460 + PCE-GW-461-01..03 (SYN)
 ```
 
 **OQ-16 nincs kihagyva.** F1s HIS OQ-16 nélkül nem indul.
 
 **Labor:** REG-020 csatlakozó = 0 szoftverdíj. `[Yl]` csak saját white-label tenancy. Nem viszonteladó, nem „fix havidíjas adatkapcsolat” mint mag-SKU.
 
+### Core most, telephely később (G5)
+
+Egy bináris: F1+ · F1s · F2 · F3 **benne van**. Tesztadat / SYN. A megrendelőkor a [market-packs](Sales/market-packs.md) ON/LOCK + `[Y*]` mondja meg, mit telepítünk / kapcsolunk / customizálunk. **Bent van ≠ be van kapcsolva** (NG-07). `LIVE_CDS` compile-time **false**, amíg CE/in-house/`[Ya]`. A F1+ matcher a klinikai rendererben **ki**; a motor SYN-en fejleszthető.
+
+### Kiküldés: gyártói most, telephely a megrendelőkor
+
+| Sáv | OQ | Mikor |
+| --- | --- | --- |
+| Gyártói | OQ-05, OQ-01 | **Most** (counsel, ISO 2026-09-30). Nincs kórházi név kell. |
+| Telephelyi | OQ-16 → OQ-15 → OQ-03 | Nevesített intézmény / labor. A 15 csak lezárt 16 után. |
+
+Részlet: [Outbound/README](Outbound/README.md).
+
+- **OQ-16** intézményi vagy termék-DPO: első kimenő irat, [küldési csomag](Outbound/OQ-16-kuldesi-csomag.md). NEM → `PSEUDO` + **FR-115**. **Nem** a mintavételi FR-100. Partnerlabor **nem** az OQ-16 mezője.
+- **OQ-15** intézményi RA: reviewer-vak HITL. HIS: 15 **és** 16 pecsét.
+- **OQ-05** gyártói counsel: F1+ nem-MDSW *kérés*; gén-szintű CPIC lehet Rule 11a. A válasz a telephely F1+ flagje.
+- **OQ-03** labor REG-020 / `[Yl]`. **OQ-01** ISO folyamat + Redmine, nem „megújítás”.
+
 ### Pecsétekig — mi indul / mi nem (§10.2)
 
-| Indul most | Vár F.6-ra |
-| --- | --- |
-| Outbound **küldése** (kitöltött névvel, a specben név nélkül) | OQ válasz; nem-MDSW *piaci* állítás |
-| F1+ **mag kód**: L0–L2, outside-call, FR-210, PREPARE-12 config, FR-400-STATIC, FR-410-EDU, FR-490, PDF/FHIR, `LIVE_CDS=false`, FR-700 | Matcher ON; `MedicationEntry` a rendererben |
-| F1s kód **SYN** adatokon, külön store; [FR-461 ticketek](Engineering/FR-461-gateway-tickets.md) | Éles HIS / valódi beteg (OQ-15+16) |
-| ISO 9001 folyamat + Redmine (OQ-01) | Tanúsítvány *ténye* |
-| SKU-P ajánlat placeholderekkel | Éles ON modul; `LIVE_CDS=true` |
+| Terület | Indul most (SYN / sandbox) | Vár telephelyi F.6-ra / minősítésre |
+| --- | --- | --- |
+| F1+ mag | L0–L2, outside-call, FR-210, PREPARE-12, FR-400-STATIC, FR-410-EDU, FR-490, PDF/FHIR, `LIVE_CDS=false`, FR-700. Matcher a **klinikai** rendererben ki. | Matcher ON a leleten; renderer, amely `MedicationEntry`-t olvas |
+| F1s / F2 kód | SYN, külön store/IAM; [FR-461](Engineering/FR-461-gateway-tickets.md); F2 UI **lakattal** | Éles HIS / valódi beteg (OQ-15+16); `LIVE_CDS=true` |
+| QA | ISO 9001 **folyamat** + Redmine (OQ-01) | Tanúsítvány *ténye* |
+| Sales | SKU-P `[Y*]` ajánlat; sandbox | Éles ON modul a megrendelőlap §2 szerint |
 
-Új architektúra-terv **nem** kell a pecsétekig: a két path a [B mellékletben](B-architecture-and-interfaces.md) van. A F1+ mag és a SYN FR-461 gateway a kódolható sáv. Gold-set annotációs SOP továbbra is §13.
+### Fallback (címzett NEM)
 
-Tilos pecsét előtt: „nem MDSW” mint tény; élő CDS a felírónak; shadow a vizit-UI-n.
+| Válasz | Architektúra | Piaci / jogi |
+| --- | --- | --- |
+| **OQ-05 = NEM** | F1+ renderer és kódalap **megmarad** | IIa / CE (REG-010). „Nem MDSW” kommunikáció **leáll**. |
+| **OQ-16 = NEM** | Gateway megmarad; `mode = PSEUDO` | FR-115 kötelező a shadow/HITL-re. FR-100 a mintavételnél ettől függetlenül kell. |
+
+Új architektúra-terv **nem** kell: a két path a [B mellékletben](B-architecture-and-interfaces.md) van. Gold-set annotációs SOP továbbra is §13.
+
+Tilos pecsét / CE előtt: „nem MDSW” mint tény; élő CDS a felírónak; shadow a vizit-UI-n; valódi beteg a shadow tárban.
