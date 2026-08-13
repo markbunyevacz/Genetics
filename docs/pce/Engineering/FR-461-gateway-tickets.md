@@ -52,6 +52,8 @@ Minden ticket ANON `mode`. Config default: A14. Nincs manuális k-override ANON 
 - Given ATC5 a PCE ingesten, When ANON, Then `E-SHADOW-001`, nincs HITL sor.
 - Tilos: hatóanyag-szint (7 karakter) az ANON payloadban.
 
+SYN szim: [gateway_sim/](gateway_sim/README.md) (`truncate_atc`).
+
 ### PCE-GW-461-02 — Idő generalizáció (naptári negyedév)
 
 | | |
@@ -62,6 +64,8 @@ Minden ticket ANON `mode`. Config default: A14. Nincs manuális k-override ANON 
 - Given `MedicationRequest.authoredOn` nap/óra/perc, When ANON, Then `2026-Q3` formátumú naptári negyedév. `time_grain = QUARTER`. Nincs nap, óra, perc.
 - Given pontos `authoredOn` a PCE ingesten, When ANON, Then `E-SHADOW-001`.
 - DPO-szigorítás (év): config `time_grain = YEAR`; default **negyedév**.
+
+SYN szim: [gateway_sim/](gateway_sim/README.md) (`generalize_time`).
 
 ### PCE-GW-461-03 — `doseQuantity` tiltás
 
