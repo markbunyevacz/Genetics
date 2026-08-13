@@ -1,5 +1,7 @@
 # Spec ↔ delivery plan — tételes lefedettség (P06)
 
+**Olvasható válasz a kérés négy pontjára:** [VALASZ-SPEC-TERV.md](VALASZ-SPEC-TERV.md) (összehasonlítás, folyamatok T/V/tech, mért számok, dataflow/UX). Ez a fájl a státusztábla.
+
 | | |
 | --- | --- |
 | **Dátum** | 2026-08-13 (P06s: klinikai kapu kód után) |

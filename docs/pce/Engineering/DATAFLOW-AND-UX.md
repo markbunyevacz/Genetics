@@ -5,6 +5,7 @@
 | **Spec** | B.1, B.2, B.3, B.4, E.2, §5.1–5.2 |
 | **Terv** | [DELIVERY-PLAN.md](DELIVERY-PLAN.md) |
 | **Mérés** | [SPEC-PLAN-TRACE.md](SPEC-PLAN-TRACE.md) |
+| **Válasz (tételes)** | [VALASZ-SPEC-TERV.md](VALASZ-SPEC-TERV.md) |
 
 Két elkülönített út. Keverés a klinikai UI-n = NG-07/08. SYN-en mindkettő **ugyanazokkal** a B-szerződésekkel fut, élő HIS/TAJ nélkül.
 

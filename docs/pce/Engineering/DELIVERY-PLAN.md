@@ -5,7 +5,7 @@
 | **Repo** | `genetics` tree only |
 | **Branch** | `main` |
 | **Spec** | `docs/pce/PCE-SPEC-v1.2.md` **FAGYASZTVA** (§10.2) |
-| **Lefedettség** | [SPEC-PLAN-TRACE.md](SPEC-PLAN-TRACE.md) — NOW 27/27 terv; kód 0 FULL / **21 PARTIAL** / 5 MISSING (F1s HITL); F1+ dataflow 8/8 |
+| **Lefedettség** | [VALASZ-SPEC-TERV.md](VALASZ-SPEC-TERV.md) (tételes válasz) · [SPEC-PLAN-TRACE.md](SPEC-PLAN-TRACE.md) — NOW 27/27 terv; kód 0 FULL / **21 PARTIAL** / 5 MISSING (F1s HITL); F1+ dataflow 8/8 |
 | **Adatfolyam / UX** | [DATAFLOW-AND-UX.md](DATAFLOW-AND-UX.md) |
 | **Adat** | Gold V0 + hivatalos CPIC/DPWG/FDA táblák. Nincs élő HIS, kitalált gyártónév, dummy guideline-szöveg. |
 | **Flag** | `LIVE_CDS = False`; F1+ `MATCHER_ON = False`. CI assert. |

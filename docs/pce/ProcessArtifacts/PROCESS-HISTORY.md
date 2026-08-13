@@ -41,6 +41,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P06r | Spec vs delivery plan tételes P06 | 2026-08-13 | 2026-08-13 | DONE | User: hasonlítsd a speccel; dataflow+UX teljesség | `SPEC-PLAN-TRACE.md`; `DATAFLOW-AND-UX.md`; bővített `DELIVERY-PLAN.md` | — |
 | P05s | Klinikai kapu + B.3/B.4 SYN (WP-C/K/F/X/Q/U) | 2026-08-13 | 2026-08-13 | DONE | P06r: FR-100 nélküli PDF = spec-sértés | `src/pce_clinical/`; `src/pce_ui/`; G12 GatewayEvent; 60 unittest | — |
 | P06s | Plan-vs-content a klinikai láncra | 2026-08-13 | 2026-08-13 | DONE | TRACE NOW 21/27 PARTIAL; F1+ dataflow 8/8 | SPEC-PLAN-TRACE §1/§9 | — |
+| P06t | Tételes válasz-dokumentum a user négy pontjára | 2026-08-13 | 2026-08-13 | DONE | User: nem látszott a válasz | `Engineering/VALASZ-SPEC-TERV.md` | — |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
