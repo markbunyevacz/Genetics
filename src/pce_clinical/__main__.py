@@ -1,4 +1,4 @@
-"""CLI: F1+ JSON (+ PDF). FR-100: requires a clinical case; cannot skip the gate."""
+"""CLI: clinical HTTP server or gated F1+ render (FR-100)."""
 from __future__ import annotations
 
 import argparse
@@ -6,19 +6,17 @@ import json
 import sys
 from pathlib import Path
 
+from pce_clinical.server import bind_clinical_server
+from pce_clinical.service import ClinicalService
+from pce_clinical.store import ClinicalStore
 from pce_report.flags import LIVE_CDS, MATCHER_ON
-
-ROOT = Path(__file__).resolve().parents[2]
 
 
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument(
-        "--outside-call",
-        "-i",
-        help="rejected: outside-call files cannot bypass FR-100",
-    )
-    p.add_argument("--clinical-db", default="var/clinical.sqlite")
+    p.add_argument("--mode", choices=("serve", "report"), default="serve")
+    p.add_argument("--db", default="var/clinical.sqlite")
+    p.add_argument("--port", type=int, default=8090)
     p.add_argument("--case-id")
     p.add_argument("--json-out", default="-")
     p.add_argument("--pdf-out")
@@ -27,27 +25,20 @@ def main(argv: list[str] | None = None) -> int:
     if MATCHER_ON or LIVE_CDS:
         print("F1+ matcher/LIVE_CDS must be false", file=sys.stderr)
         return 1
-    if args.outside_call and not args.case_id:
-        print(
-            json.dumps(
-                {
-                    "error": "E-CONSENT-001",
-                    "http": 409,
-                    "message_hu": "Mintavétel előtti genetikai tanácsadás hiányzik (2008/XXI. 6. § (2)).",
-                    "reason": "FR-100: python -m pce_report requires --clinical-db and --case-id",
-                },
-                ensure_ascii=False,
-            ),
-            file=sys.stderr,
-        )
-        return 2
+    if args.mode == "serve":
+        httpd = bind_clinical_server(args.db, port=args.port)
+        bound = httpd.server_address[1]
+        print(f"pce_clinical on 127.0.0.1:{bound} db={args.db}")
+        try:
+            httpd.serve_forever()
+        finally:
+            httpd.server_close()
+        return 0
     if not args.case_id:
-        p.error("--case-id and --clinical-db are required (FR-100)")
+        p.error("--case-id is required for --mode report")
+    svc = ClinicalService(ClinicalStore(args.db))
     from pce_clinical.errors import ClinicalError
-    from pce_clinical.service import ClinicalService
-    from pce_clinical.store import ClinicalStore
 
-    svc = ClinicalService(ClinicalStore(args.clinical_db))
     try:
         report = svc.create_report(args.case_id, args.actor, role=args.actor)
     except ClinicalError as exc:

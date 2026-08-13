@@ -5,7 +5,7 @@
 | **Repo** | `genetics` tree only |
 | **Branch** | `main` |
 | **Spec** | `docs/pce/PCE-SPEC-v1.2.md` **FAGYASZTVA** (§10.2) |
-| **Lefedettség** | [SPEC-PLAN-TRACE.md](SPEC-PLAN-TRACE.md) — NOW 27/27 terv; kód 0 FULL / 15 PARTIAL / 11 MISSING |
+| **Lefedettség** | [SPEC-PLAN-TRACE.md](SPEC-PLAN-TRACE.md) — NOW 27/27 terv; kód 0 FULL / **21 PARTIAL** / 5 MISSING (F1s HITL); F1+ dataflow 8/8 |
 | **Adatfolyam / UX** | [DATAFLOW-AND-UX.md](DATAFLOW-AND-UX.md) |
 | **Adat** | Gold V0 + hivatalos CPIC/DPWG/FDA táblák. Nincs élő HIS, kitalált gyártónév, dummy guideline-szöveg. |
 | **Flag** | `LIVE_CDS = False`; F1+ `MATCHER_ON = False`. CI assert. |
@@ -43,19 +43,19 @@ Egy szelet **kész**, ha a TRACE-ben PARTIAL vagy FULL, a B-szerződés tesztelv
 
 ---
 
-## WP-G — Gateway (F1s) — **done / PARTIAL séma**
+## WP-G — Gateway (F1s) — **done / PARTIAL séma closed G12**
 
-Gold V0 + HTTP ingest a `main`-en. Maradék, hogy FR-460/461 FULL legyen:
+Gold V0 + HTTP ingest a `main`-en. G12/G13 ezen az ágon:
 
 | ID | AC | Technológia | Oracle |
 | --- | --- | --- | --- |
-| G12 | GatewayEvent `id`, `received_at`, `org_id`, `payload_hash` (B.2.2) | `pipeline.process_his_event` | gw-v0-01 kimenet mezői |
-| G13 | Practitioner / ward / meta.source törlés | `transform` | Gold HIS-in → exportban nincs |
+| G12 | GatewayEvent `id`, `received_at`, `org_id`, `payload_hash` (B.2.2) | `pipeline.stamp_gateway_event` | `test_v0_01_raw_when_cell_meets_k` |
+| G13 | Practitioner / ward / meta.source törlés | `strip_pii_fr460` | `test_practitioner_and_meta_source_stripped` |
 | G14 | `POST /v1/shadow/events` 202 + persist **nem** ide; persist WP-H | server már 202 | test_pipeline HTTP |
 
 ---
 
-## WP-C — L0 consent kapu (FR-100/110/115)
+## WP-C — L0 consent kapu (FR-100/110/115) — **PARTIAL on this branch**
 
 Without this the F1+ PDF is not a spec-conform product (FR-100).
 
@@ -76,7 +76,7 @@ Store: `CounsellingRecord`, `ConsentRecord`, `Sample`, `DeletionCertificate` a c
 
 ---
 
-## WP-K — Klinikai case + outside-call (B.2.1, FR-240, FR-130, FR-220 tárolás)
+## WP-K — Klinikai case + outside-call (B.2.1, FR-240, FR-130, FR-220 tárolás) — **PARTIAL**
 
 | ID | AC | API |
 | --- | --- | --- |

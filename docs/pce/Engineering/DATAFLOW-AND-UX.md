@@ -78,6 +78,8 @@ flowchart TB
 - Render **409** `E-CONSENT-001..005`, ha a kapu piros — a CLI sem kerülheti meg (FR-100: admin sem).
 - Fail-closed a szivárgásra (nincs shadow a PDF-en). A HIS-t ez az út nem blokkolja (nincs HIS a klinikai pathen).
 
+**SYN állapot (2026-08-13 P06s):** a 8 API-lépés HTTP-n zöld (`tests/test_clinical.py`). UI: `src/pce_ui/index.html`, `python -m pce_clinical --mode serve`.
+
 **API sorrend (B.3 / B.4) — labor egy műveletsor**
 
 1. `POST /v1/orgs` + `POST /v1/subjects` + `POST /v1/cases` → `DRAFT`
@@ -160,13 +162,14 @@ Minden képernyő a B API-t hívja. Nincs kitalált kórháznév; org = `SYN-ORG
 
 ## 5. Teljes út — SYN gold (nincs zsákutca)
 
-**F1+ minimum demo (WP-C+K+R+F+U után)**
+**F1+ minimum demo (WP-C+K+R+F+U) — járható**
 
 1. Tanácsadó rögzít SYN counselling + consent (`SYN-MD-001` pecsétszám-hely, nem kitalált orvosnév a gitben: placeholder slot).
 2. Labor feltölt `outside-call-cyp2d6-called.json`.
 3. Kapu enged; report `config_id=pgx-prepare-12@v0`; 79 pair + guideline rows; A.1.1 minden PDF oldalon.
-4. Klinikus a PDF-et olvassa — nincs belépése a HITL-re.
+4. Klinikus a PDF-et olvassa — nincs belépése a HITL-re (`E-ISO-001`).
 5. INDETERMINATE fixture: nincs NORMAL claim.
+6. Visszavonás: riport URL `410` `E-GONE-010`.
 
 **F1s minimum demo (WP-G+M+H után)**
 

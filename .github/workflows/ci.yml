@@ -27,4 +27,5 @@ jobs:
         run: |
           ! grep -R -n "MedicationEntry" src/pce_report
           ! grep -R -n "pce_gateway.pipeline" src/pce_report
-          ! grep -R -n -E -i 'openai|anthropic|langchain' src/pce_report
+          ! grep -R -n -E -i 'openai|anthropic|langchain' src/pce_report src/pce_clinical
+          ! grep -R -n "pce_shadow" src/pce_report

@@ -19,6 +19,13 @@ def handle_pce_ingest(
     """POST /v1/shadow/events defense-in-depth. HIS fail-open is the caller's job."""
     if authorization not in allowed_accounts:
         return 403, {"error": "E-SHADOW-002", "http": 403, "hitl": False}
+    if cfg.mode == "PSEUDO" and not cfg.research_consent:
+        return 409, {
+            "error": "E-CONSENT-006",
+            "http": 409,
+            "hitl": False,
+            "message_hu": "Álnevesített shadow, nincs kutatási hozzájárulás (FR-115).",
+        }
     try:
         ingest_guard(bundle, max_atc_level=cfg.max_atc_level)
     except ShadowReject as e:

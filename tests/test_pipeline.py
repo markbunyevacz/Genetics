@@ -107,6 +107,10 @@ class PipelineGoldTests(unittest.TestCase):
         self.assertEqual(result.event["diplotypes"][0]["diplotype"], "*1/*2")
         self.assertNotIn("patient", result.event)
         self.assertIsNone(result.event.get("cell_count"))
+        self.assertEqual(result.event["org_id"], "SYN-ORG-001")
+        self.assertRegex(result.event["id"], r"^[0-9a-f-]{36}$")
+        self.assertIn("T", result.event["received_at"])
+        self.assertEqual(len(result.event["payload_hash"]), 64)
 
     def test_v0_01_coarsen_when_cell_small(self) -> None:
         bundle = load_json(str(GOLD / "gw-v0-01-normal-his-in.json"))
@@ -220,6 +224,25 @@ class PceIngestTests(unittest.TestCase):
         self.assertEqual(status, 202)
         self.assertEqual(body["ingest"], "accepted")
         self.assertTrue(body["hitl"])
+
+    def test_pseudo_without_research_consent(self) -> None:
+        bundle = _anon_fhir(GOLD / "gw-v0-01-normal-his-in.json")
+        cfg = GatewayConfig(mode="PSEUDO", research_consent=False)
+        status, body = handle_pce_ingest(
+            bundle, cfg, FREQ, authorization="gw-ok", allowed_accounts={"gw-ok"}
+        )
+        self.assertEqual(status, 409)
+        self.assertEqual(body["error"], "E-CONSENT-006")
+        self.assertFalse(body["hitl"])
+
+    def test_anon_does_not_require_research_consent(self) -> None:
+        bundle = _anon_fhir(GOLD / "gw-v0-01-normal-his-in.json")
+        cfg = GatewayConfig(mode="ANON", research_consent=False)
+        status, body = handle_pce_ingest(
+            bundle, cfg, FREQ, authorization="gw-ok", allowed_accounts={"gw-ok"}
+        )
+        self.assertEqual(status, 202)
+        self.assertEqual(body["ingest"], "accepted")
 
 
 class KCellIncrementTests(unittest.TestCase):

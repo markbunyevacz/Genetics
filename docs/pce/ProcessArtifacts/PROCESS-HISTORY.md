@@ -39,6 +39,8 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P05q | Gateway SYN szim 460 + 461-03 | 2026-08-13 | 2026-08-13 | DONE | User: PII-strip + dózis-tiltás | `strip_pii_fr460`, `suppress_dose_fr461_03`; opák ID teszt | — |
 | P05r | main-only + könyvtár-takarítás + gateway/F1+ kód | 2026-08-13 | 2026-08-13 | DONE | User: merge, csak main; nagytakarítás; prod-like terv | `src/pce_gateway/`; `src/pce_report/`; tag `archive/pre-cleanup-2026-08-13` | — |
 | P06r | Spec vs delivery plan tételes P06 | 2026-08-13 | 2026-08-13 | DONE | User: hasonlítsd a speccel; dataflow+UX teljesség | `SPEC-PLAN-TRACE.md`; `DATAFLOW-AND-UX.md`; bővített `DELIVERY-PLAN.md` | — |
+| P05s | Klinikai kapu + B.3/B.4 SYN (WP-C/K/F/X/Q/U) | 2026-08-13 | 2026-08-13 | DONE | P06r: FR-100 nélküli PDF = spec-sértés | `src/pce_clinical/`; `src/pce_ui/`; G12 GatewayEvent; 60 unittest | — |
+| P06s | Plan-vs-content a klinikai láncra | 2026-08-13 | 2026-08-13 | DONE | TRACE NOW 21/27 PARTIAL; F1+ dataflow 8/8 | SPEC-PLAN-TRACE §1/§9 | — |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -80,6 +82,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-32 | P05q | 460+461-03 vs k-cella most | PII/dózis most / 461-04 váz | **PII+dózis most**; k-cella a 461-06 freq után (ticket-sorrend) | FR-461 sorrend; user | user |
 | D-33 | P05r | Hol dolgozzunk + duplikátumok | Feature ágak / csak `main`; docs alatti szim | **Csak `main`**, ez a repo. Gold V0 → `tests/fixtures/`; kód → `src/`. Visszaállítás: tag. | User 2026-08-13 | user |
 | D-34 | P06r | Delivery plan vs teljes spec | Részleges WP-G/R / tételes P06 + hiányzó L0–L6 WP | **36 FR mind nevesítve**; NOW 27/27 terv; kód 0 FULL. Render FR-100 után. EDU null megengedett forrás hiányában. | User 2026-08-13 | user |
+| D-35 | P05s | Klinikai lánc a fagyasztott B szerint | Terv-only / SQLite+stdlib HTTP a B.3/B.4-re | **Kód**: `pce_clinical` + labor HTML; FR-100 CLI sem kerülhető; NFR-031 TLS SYN-en localhost (dokumentált eltérés) | P06r rés FR-100 | user |
 
 ## 3. Error log
 
@@ -117,4 +120,4 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | docs/pce/Sales/* | P05g | P05j (mátrix + competitor-analogs) | TERVEZET rendszerlicenc |
 | docs/pce/Sources/S028-* | P01c | P05i | L5 jegyzet + PDF |
 | docs/pce/ProcessArtifacts/* | P01–P06 | P05l (I-20, D-25) | DRAFT |
-| docs/pce/Engineering/* | P05l | P05r (takarítás + delivery plan) | SYN ticketek + Gold V0 pointer; kód `src/` |
+| docs/pce/Engineering/* | P05l | P06s (klinikai kapu + TRACE rescore) | SYN ticketek; P06 mátrix; kód `src/` |

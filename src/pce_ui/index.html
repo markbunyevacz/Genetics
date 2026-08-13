@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8" />
+  <title>PCE F1+ labor (SYN)</title>
+  <style>
+    body { font-family: sans-serif; max-width: 52rem; margin: 1.5rem auto; }
+    label, input, textarea, select, button { display: block; width: 100%; margin: 0.3rem 0; }
+    button { width: auto; padding: 0.4rem 0.8rem; }
+    pre { background: #f4f4f4; padding: 0.6rem; overflow: auto; white-space: pre-wrap; }
+    .err { color: #a40000; }
+    fieldset { margin: 1rem 0; }
+  </style>
+</head>
+<body>
+  <h1>Precision Clinical Engine — F1+ labor (SYN)</h1>
+  <p>Űrlapok a B.3/B.4 API-ra mennek. Org: <code>SYN-ORG-001</code>. Nincs kitalált kórháznév. P2 klinikusnak nincs belépése.</p>
+  <label>Szerep (Authorization)
+    <select id="role">
+      <option>counsellor</option>
+      <option selected>lab_signer</option>
+      <option>dpo</option>
+      <option>clinician</option>
+      <option>admin</option>
+    </select>
+  </label>
+  <p>IDs: org <input id="orgId" /> subject <input id="subjectId" /> case <input id="caseId" /> report <input id="reportId" /></p>
+
+  <fieldset>
+    <legend>P4 — tanácsadás és 8. § beleegyezés</legend>
+    <label>Tanácsadás dátuma <input id="counsellingAt" value="2026-08-09" /></label>
+    <label>Mintavétel dátuma (eset) <input id="collectedAt" value="2026-08-10" /></label>
+    <label>Gén-scope (vessző) <input id="scopes" value="CYP2D6,pgx_report" /></label>
+    <button type="button" id="btnBootstrap">Szervezet + alany + eset + tanácsadás + beleegyezés</button>
+  </fieldset>
+
+  <fieldset>
+    <legend>P1 — outside-call és lelet</legend>
+    <label>JSON vagy TSV
+      <textarea id="callBody" rows="8">{
+  "gene": "CYP2D6",
+  "diplotype": "*1/*2",
+  "callability": "CALLED",
+  "calling_lab": "SYN-LAB-001",
+  "signing_physician": "SYN-MD-001",
+  "method": "outside-call",
+  "call_date": "2026-08-13",
+  "lab_phenotype": "CYP2D6 Normal Metabolizer"
+}</textarea>
+    </label>
+    <button type="button" id="btnCall">POST outside-calls</button>
+    <button type="button" id="btnContext">PUT clinical-context (nem L4)</button>
+    <button type="button" id="btnReport">POST reports (FR-100 kapu)</button>
+    <button type="button" id="btnGet">GET report JSON</button>
+    <button type="button" id="btnFhir">GET FHIR STU3</button>
+    <button type="button" id="btnPdf">GET PDF</button>
+    <button type="button" id="btnExpl">GET explanation</button>
+  </fieldset>
+
+  <fieldset>
+    <legend>P5 — DPO</legend>
+    <button type="button" id="btnAudit">GET audit export</button>
+    <button type="button" id="btnWithdraw">POST withdraw (410 a riport URL-re)</button>
+  </fieldset>
+
+  <fieldset>
+    <legend>Izoláció</legend>
+    <button type="button" id="btnHitl">GET /v1/hitl/inferences (clinician → E-ISO-001)</button>
+    <button type="button" id="btnCds">GET CDS (E-ISO-002)</button>
+  </fieldset>
+
+  <pre id="out"></pre>
+  <script>
+    const out = document.getElementById("out");
+    function role() { return document.getElementById("role").value; }
+    function set(id, v) { document.getElementById(id).value = v; }
+    function val(id) { return document.getElementById(id).value; }
+    async function api(method, path, body, ctype) {
+      const opts = { method, headers: { Authorization: role() } };
+      if (body !== undefined) {
+        opts.headers["Content-Type"] = ctype || "application/json";
+        opts.body = typeof body === "string" ? body : JSON.stringify(body);
+      }
+      const res = await fetch(path, opts);
+      const text = await res.text();
+      let parsed = text;
+      try { parsed = JSON.stringify(JSON.parse(text), null, 2); } catch {}
+      out.className = res.ok ? "" : "err";
+      out.textContent = res.status + " " + path + "\n" + parsed;
+      return { res, json: (() => { try { return JSON.parse(text); } catch { return null; } })() };
+    }
+    document.getElementById("btnBootstrap").onclick = async () => {
+      const org = await api("POST", "/v1/orgs", { name: "SYN-ORG-001", license_id: "SYN-LIC-001", role: "lab" });
+      if (!org.json) return;
+      set("orgId", org.json.id);
+      const sub = await api("POST", "/v1/subjects", { org_id: org.json.id });
+      set("subjectId", sub.json.id);
+      const cse = await api("POST", "/v1/cases", {
+        org_id: org.json.id, subject_id: sub.json.id,
+        sample: { collected_at: val("collectedAt"), type: "blood", origin: "SYN-LAB-001" }
+      });
+      set("caseId", cse.json.id);
+      await api("POST", "/v1/cases/" + cse.json.id + "/counselling", {
+        counsellor_id: "SYN-MD-001", occurred_at: val("counsellingAt")
+      });
+      const scopes = val("scopes").split(",").map(s => s.trim()).filter(Boolean);
+      await api("POST", "/v1/cases/" + cse.json.id + "/consent", {
+        granted_at: val("counsellingAt"), scopes
+      });
+    };
+    document.getElementById("btnCall").onclick = () => {
+      const raw = val("callBody");
+      const tsv = raw.indexOf("\t") >= 0 && raw.trim()[0] !== "{" && raw.trim()[0] !== "[";
+      return api("POST", "/v1/cases/" + val("caseId") + "/outside-calls", raw,
+        tsv ? "text/tab-separated-values" : "application/json");
+    };
+    document.getElementById("btnContext").onclick = () => api("PUT",
+      "/v1/cases/" + val("caseId") + "/clinical-context",
+      { medications: [{ code_system: "http://www.whocc.no/atc", code: "N06AB", name: "SSRI-class", source: "MANUAL" }], observations: [] });
+    document.getElementById("btnReport").onclick = async () => {
+      const r = await api("POST", "/v1/cases/" + val("caseId") + "/reports", {});
+      if (r.json && r.json.report_id) set("reportId", r.json.report_id);
+    };
+    document.getElementById("btnGet").onclick = () =>
+      api("GET", "/v1/cases/" + val("caseId") + "/reports/" + val("reportId"));
+    document.getElementById("btnFhir").onclick = () =>
+      api("GET", "/v1/cases/" + val("caseId") + "/reports/" + val("reportId") + "/fhir");
+    document.getElementById("btnPdf").onclick = () =>
+      api("GET", "/v1/cases/" + val("caseId") + "/reports/" + val("reportId") + "/pdf");
+    document.getElementById("btnExpl").onclick = () =>
+      api("GET", "/v1/cases/" + val("caseId") + "/explanation");
+    document.getElementById("btnAudit").onclick = () => api("GET", "/v1/audit/export");
+    document.getElementById("btnWithdraw").onclick = () =>
+      api("POST", "/v1/subjects/" + val("subjectId") + "/withdraw", {});
+    document.getElementById("btnHitl").onclick = () => api("GET", "/v1/hitl/inferences");
+    document.getElementById("btnCds").onclick = () => api("GET", "/cds-services/pgx-order-sign");
+  </script>
+</body>
+</html>

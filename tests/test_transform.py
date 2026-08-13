@@ -106,5 +106,28 @@ class IngestGuardTests(unittest.TestCase):
             ingest_guard(bundle)
 
 
+    def test_practitioner_and_meta_source_stripped(self) -> None:
+        bundle = load_json(str(GOLD / "gw-v0-01-normal-his-in.json"))
+        bundle["entry"].append(
+            {
+                "resource": {
+                    "resourceType": "Practitioner",
+                    "id": "syn-md",
+                    "name": [{"text": "SYN-MD-001"}],
+                }
+            }
+        )
+        bundle["entry"][2]["resource"]["meta"] = {"source": "urn:ward:SYN-WARD"}
+        cleaned = strip_pii_fr460(bundle)
+        types = [e["resource"]["resourceType"] for e in cleaned["entry"]]
+        self.assertNotIn("Practitioner", types)
+        med = next(e["resource"] for e in cleaned["entry"] if e["resource"]["resourceType"] == "MedicationRequest")
+        self.assertNotIn("source", (med.get("meta") or {}))
+        out = transform_bundle(bundle)
+        blob = json.dumps(out)
+        self.assertNotIn("Practitioner", blob)
+        self.assertNotIn("SYN-WARD", blob)
+
+
 if __name__ == "__main__":
     unittest.main()

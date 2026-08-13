@@ -180,6 +180,24 @@ def strip_pii_fr460(fhir_bundle: dict[str, Any]) -> dict[str, Any]:
     become a manufacturer join-key. The GatewayEvent export still omits Patient.
     """
     out = copy.deepcopy(fhir_bundle)
+    entries = out.get("entry")
+    if isinstance(entries, list):
+        kept: list[Any] = []
+        for entry in entries:
+            res = entry.get("resource") if isinstance(entry, dict) else None
+            if isinstance(res, dict) and res.get("resourceType") in {
+                "Practitioner",
+                "RelatedPerson",
+                "Location",
+            }:
+                continue
+            if isinstance(res, dict):
+                res.pop("ward", None)
+                meta = res.get("meta")
+                if isinstance(meta, dict):
+                    meta.pop("source", None)
+            kept.append(entry)
+        out["entry"] = kept
     for res in iter_resources(out, "Patient"):
         for key in DIRECT_PII_KEYS:
             res.pop(key, None)
@@ -191,6 +209,9 @@ def strip_pii_fr460(fhir_bundle: dict[str, Any]) -> dict[str, Any]:
                 res.pop("birthDate", None)
             else:
                 res["birthDate"] = year
+    bundle_meta = out.get("meta")
+    if isinstance(bundle_meta, dict):
+        bundle_meta.pop("source", None)
     return out
 
 

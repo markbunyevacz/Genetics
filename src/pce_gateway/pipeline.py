@@ -1,6 +1,10 @@
 from __future__ import annotations
 
+import hashlib
+import json
+import uuid
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from typing import Any
 
 from pce_gateway.config import GatewayConfig
@@ -77,15 +81,19 @@ def process_his_event(
 
         if drop:
             store.record_drop(quarter)
-            return GatewayResult(
-                event={
+            dropped = stamp_gateway_event(
+                {
                     "mode": cfg.mode,
+                    "org_id": cfg.org_id,
                     "suppressed": True,
                     "diplotype_granularity": None,
                     "payload_genetics": None,
                     "atc_level": cfg.max_atc_level,
                     "time_grain": cfg.time_grain,
-                },
+                }
+            )
+            return GatewayResult(
+                event=dropped,
                 http=202,
                 hitl=False,
                 suppressed=True,
@@ -108,6 +116,7 @@ def process_his_event(
 
     event: dict[str, Any] = {
         "mode": cfg.mode,
+        "org_id": cfg.org_id,
         "scope": [
             "PCE-GW-460",
             "PCE-GW-461-01",
@@ -131,6 +140,7 @@ def process_his_event(
         event["diplotypes"] = None
     else:
         event["diplotypes"] = raw_dips
+    event = stamp_gateway_event(event)
     blob_keys = json_keys_must_be_absent(event)
     if blob_keys:
         raise RuntimeError(f"export leaked {blob_keys}")
@@ -138,10 +148,28 @@ def process_his_event(
     return GatewayResult(event=event, http=202, hitl=True, suppressed=False)
 
 
+def stamp_gateway_event(event: dict[str, Any]) -> dict[str, Any]:
+    """B.2.2 GatewayEvent: id, received_at, org_id, payload_hash."""
+    out = dict(event)
+    out["id"] = str(uuid.uuid4())
+    out["received_at"] = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+    canon = {k: v for k, v in out.items() if k not in {"id", "received_at", "payload_hash"}}
+    payload = json.dumps(canon, sort_keys=True, separators=(",", ":"), default=str)
+    out["payload_hash"] = hashlib.sha256(payload.encode("utf-8")).hexdigest()
+    return out
+
+
 def json_keys_must_be_absent(event: dict[str, Any]) -> list[str]:
     leaked: list[str] = []
     dumped = str(event)
-    for token in ("SYN-NAME", "SYN-TAJ", "doseQuantity", "escitalopram"):
+    for token in (
+        "SYN-NAME",
+        "SYN-TAJ",
+        "doseQuantity",
+        "escitalopram",
+        "Practitioner",
+        "RelatedPerson",
+    ):
         if token in dumped:
             leaked.append(token)
     if "patient" in event:
