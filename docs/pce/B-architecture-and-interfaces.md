@@ -158,7 +158,7 @@ disclaimer_clause,         // A.1.1, FR-490
 white_label: {org, signer_slot}
 ```
 
-**Tilos F1+ JSON-ban:** `functional_phenotype`, `shadow_recommendation`, `dose_mg`, `live_findings`, `hitl_*`.
+**Tilos F1+ JSON-ban (allow-list + deny-list):** a top-level kulcskészlet zárt (`ALLOWED_B41_TOP_LEVEL`). Tiltott mezők, nested is: `functional_phenotype`, `shadow_recommendation`, `dose_mg`, `live_findings`, `medications`, `medication_entries`, `medication_entry`, `MedicationEntry`, `medicationRequest`, `MedicationRequest`, `medicationStatement`, `MedicationStatement`, `clinical_context`, `hitl_review`, `hitl_verdict`, bármely `hitl_*`. Ismeretlen top-level kulcs = hiba. A `medications_applied_to_recommendations: false` **megengedett** (nem gyógyszerlista).
 
 Minden `statements[]` elemnek van `source` + `url`. CI: `unsourced == 0`.
 

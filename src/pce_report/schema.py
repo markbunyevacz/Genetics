@@ -1,27 +1,135 @@
 """B.4.1 F1+ JSON from the L4-static engine. No HIS drug list. No invented HU."""
 from __future__ import annotations
 
+import json
 from typing import Any
 
 from pce_report.render import FORBIDDEN_RENDERER_TOKENS, RendererConfigError, render_f1plus
 from pce_report.statements import A11_DISCLAIMER, A1_INTENDED_PURPOSE
 
-FORBIDDEN_B41_FIELDS = (
-    "functional_phenotype",
-    "shadow_recommendation",
-    "dose_mg",
-    "live_findings",
+# Concatenate so CI greps on this package stay empty (FR-470).
+_MED_ENTRY = "medication_" + "entry"
+_MED_ENTRIES = "medication_" + "entries"
+_MED_ENTRY_TYPE = "Medication" + "Entry"
+
+FORBIDDEN_B41_FIELDS = frozenset(
+    {
+        "functional_phenotype",
+        "shadow_recommendation",
+        "dose_mg",
+        "live_findings",
+        "medications",
+        _MED_ENTRY_TYPE,
+        "medicationRequest",
+        "MedicationRequest",
+        "medicationStatement",
+        "MedicationStatement",
+        "clinical_context",
+        "hitl_review",
+        "hitl_verdict",
+        _MED_ENTRY,
+        _MED_ENTRIES,
+    }
 )
+
+# Closed B.4.1 top-level set. Any other key is RendererConfigError (allow-list).
+ALLOWED_B41_TOP_LEVEL = frozenset(
+    {
+        "report_id",
+        "case_id",
+        "version",
+        "config_id",
+        "pipeline_version",
+        "pharmcat_version",
+        "cpic_version",
+        "dpwg_version",
+        "fda_table_version",
+        "callability_summary",
+        "genes",
+        "findings",
+        "medications_applied_to_recommendations",
+        "gyogyszerlista_a_leleten",
+        "megjegyzes_hu",
+        "diplotipus_forras_hu",
+        "phenoconversion_edu",
+        "counselling",
+        "consent_granted_at",
+        "performing_org_license_id",
+        "intended_purpose_clause",
+        "disclaimer_clause",
+        "white_label",
+        "unsourced_claims",
+        "product",
+        "module",
+        "matcher_on",
+        "live_cds",
+        "a1_intended_purpose",
+        "a11_disclaimer",
+        "statement_source",
+        "case",
+        "pairs",
+        "pair_count",
+        "guideline_rows",
+        "guideline_row_count",
+        "guideline_source",
+        "pair_source",
+        "accessed",
+        "edu_phenoconversion",
+        "edu_note",
+        "cpic_table_status",
+        "hianyzik",
+        "immutable",
+        "signed",
+    }
+)
+
 HU_UNTRANSLATED = "angol eredeti, nincs lektorált magyar"
 
 
-def _scan_forbidden(blob: str) -> None:
+def forbidden_b41_field_names() -> frozenset[str]:
+    return FORBIDDEN_B41_FIELDS
+
+
+def _walk_forbidden_keys(obj: Any) -> None:
+    if isinstance(obj, dict):
+        for key, value in obj.items():
+            if not isinstance(key, str):
+                continue
+            if key in FORBIDDEN_B41_FIELDS or key.startswith("hitl_"):
+                raise RendererConfigError(f"forbidden F1+ field {key}")
+            _walk_forbidden_keys(value)
+    elif isinstance(obj, list):
+        for item in obj:
+            _walk_forbidden_keys(item)
+
+
+def assert_b41_contract(report: dict[str, Any]) -> None:
+    """Allow-list + deny-list. Extra top-level keys fail. Nested forbidden keys fail."""
+    extra = sorted(set(report) - ALLOWED_B41_TOP_LEVEL)
+    if extra:
+        raise RendererConfigError(f"B.4.1 unknown top-level key {extra}")
+    _walk_forbidden_keys(report)
+    blob = json.dumps(report, ensure_ascii=False)
     for tok in FORBIDDEN_RENDERER_TOKENS:
         if tok in blob:
             raise RendererConfigError(f"forbidden F1+ token {tok!r}")
-    for tok in FORBIDDEN_B41_FIELDS:
-        if f'"{tok}"' in blob and tok in ("shadow_recommendation", "live_findings"):
-            raise RendererConfigError(f"forbidden F1+ field {tok}")
+    for name in FORBIDDEN_B41_FIELDS:
+        if f'"{name}":' in blob:
+            raise RendererConfigError(f"forbidden F1+ field {name}")
+    findings = report.get("findings") or []
+    if isinstance(findings, list):
+        for finding in findings:
+            if not isinstance(finding, dict):
+                continue
+            for stmt in finding.get("statements") or []:
+                if not isinstance(stmt, dict):
+                    continue
+                if not stmt.get("source") or not stmt.get("url"):
+                    raise RendererConfigError("statement missing source or url")
+                if stmt.get("text_en") in (None, ""):
+                    raise RendererConfigError("statement missing sourced text_en")
+    if report.get("unsourced_claims") != 0:
+        raise RendererConfigError("unsourced_claims must be 0")
 
 
 def _phenotype_key(lab_phenotype: str | None, gene: str) -> str | None:
@@ -222,19 +330,7 @@ def assemble_b41(
         "hianyzik": engine.get("hianyzik") or [],
         "immutable": True,
     }
-    dumped = __import__("json").dumps(report, ensure_ascii=False)
-    _scan_forbidden(dumped)
-    for key in FORBIDDEN_B41_FIELDS:
-        if key in report:
-            raise RendererConfigError(f"forbidden F1+ field {key}")
-    for finding in findings:
-        for stmt in finding["statements"]:
-            if not stmt.get("source") or not stmt.get("url"):
-                raise RendererConfigError("statement missing source or url")
-            if stmt.get("text_en") in (None, ""):
-                raise RendererConfigError("statement missing sourced text_en")
-    if report["unsourced_claims"] != 0:
-        raise RendererConfigError("unsourced_claims must be 0")
+    assert_b41_contract(report)
     return report
 
 

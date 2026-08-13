@@ -1,0 +1,1252 @@
+{
+  "id": "pheno-gold-v0",
+  "accessed": "2026-08-13",
+  "n": 32,
+  "purpose": "Fenokonverzió-oracle. Ground truth: pin-elt FDA DDI 1-2/2-2, CPIC SSRI 2023, WHO ATC. Elvárt funkcionális fenotípus minden soron üres: a CPIC SSRI 2023-ban nincs NM→szegény sor, az FDA gátló-lista nem ír szegény metabolizálót.",
+  "g3": "A G3 ≥90% recall csak ezen a halmazon érvényes. N=32 SYN; a 90% pontbecslés N<100 mellett széles CI. Nem körkörös PM-tábla: az oracle a hivatalos hiány.",
+  "cases": [
+    {
+      "id": "pheno-01",
+      "note": "Nincs gyógyszerlista: párosítás nem értékelhető, nem hallgatólagos NM.",
+      "ground_truth_ids": [
+        "CPIC-SSRI-2023",
+        "FDA-DDI-TABLE-2-2",
+        "WHO-ATC"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*1/*1",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": []
+      },
+      "expect": {
+        "genotype_phenotype": "NM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "no_clinical_context",
+        "inhibitor_atc5": null,
+        "inhibitor_class": null,
+        "clinical_context": "ABSENT",
+        "live_findings_categories": [],
+        "organ_flag": false
+      }
+    },
+    {
+      "id": "pheno-02",
+      "note": "Nincs gyógyszerlista: párosítás nem értékelhető, nem hallgatólagos NM.",
+      "ground_truth_ids": [
+        "CPIC-SSRI-2023",
+        "FDA-DDI-TABLE-2-2",
+        "WHO-ATC"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*1/*2",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": []
+      },
+      "expect": {
+        "genotype_phenotype": "NM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "no_clinical_context",
+        "inhibitor_atc5": null,
+        "inhibitor_class": null,
+        "clinical_context": "ABSENT",
+        "live_findings_categories": [],
+        "organ_flag": false
+      }
+    },
+    {
+      "id": "pheno-03",
+      "note": "Nincs gyógyszerlista: párosítás nem értékelhető, nem hallgatólagos NM.",
+      "ground_truth_ids": [
+        "CPIC-SSRI-2023",
+        "FDA-DDI-TABLE-2-2",
+        "WHO-ATC"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*4/*4",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": []
+      },
+      "expect": {
+        "genotype_phenotype": "PM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "no_clinical_context",
+        "inhibitor_atc5": null,
+        "inhibitor_class": null,
+        "clinical_context": "ABSENT",
+        "live_findings_categories": [],
+        "organ_flag": false
+      }
+    },
+    {
+      "id": "pheno-04",
+      "note": "FDA 2-2 erős gátló + CPIC 2a stratégia; NM→szegény sor nincs.",
+      "ground_truth_ids": [
+        "CPIC-SSRI-2023",
+        "FDA-DDI-TABLE-2-2",
+        "WHO-ATC-N06AB05"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*1/*1",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": [
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "N06AB05"
+          }
+        ]
+      },
+      "expect": {
+        "genotype_phenotype": "NM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "not_established_by_cpic_2023",
+        "inhibitor_atc5": "N06AB05",
+        "inhibitor_class": "strong",
+        "clinical_context": "MANUAL",
+        "live_findings_categories": [
+          "CONTINUE"
+        ],
+        "organ_flag": false
+      }
+    },
+    {
+      "id": "pheno-05",
+      "note": "FDA 2-2 erős gátló + CPIC 2a stratégia; NM→szegény sor nincs.",
+      "ground_truth_ids": [
+        "CPIC-SSRI-2023",
+        "FDA-DDI-TABLE-2-2",
+        "WHO-ATC-N06AB05"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*1/*2",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": [
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "N06AB05"
+          }
+        ]
+      },
+      "expect": {
+        "genotype_phenotype": "NM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "not_established_by_cpic_2023",
+        "inhibitor_atc5": "N06AB05",
+        "inhibitor_class": "strong",
+        "clinical_context": "MANUAL",
+        "live_findings_categories": [
+          "CONTINUE"
+        ],
+        "organ_flag": false
+      }
+    },
+    {
+      "id": "pheno-06",
+      "note": "FDA 2-2 erős gátló + CPIC 2a stratégia; NM→szegény sor nincs.",
+      "ground_truth_ids": [
+        "CPIC-SSRI-2023",
+        "FDA-DDI-TABLE-2-2",
+        "WHO-ATC-N06AB05"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*4/*4",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": [
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "N06AB05"
+          }
+        ]
+      },
+      "expect": {
+        "genotype_phenotype": "PM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "not_established_by_cpic_2023",
+        "inhibitor_atc5": "N06AB05",
+        "inhibitor_class": "strong",
+        "clinical_context": "MANUAL",
+        "live_findings_categories": [
+          "CONSIDER_DOSE_CHANGE"
+        ],
+        "organ_flag": false
+      }
+    },
+    {
+      "id": "pheno-07",
+      "note": "FDA 2-2 erős gátló; CPIC C, nincs gén-alapú adagolás; funkcionális fenotípus üres.",
+      "ground_truth_ids": [
+        "CPIC-SSRI-2023",
+        "FDA-DDI-TABLE-2-2",
+        "WHO-ATC-N06AB03"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*1/*1",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": [
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "N06AB03"
+          }
+        ]
+      },
+      "expect": {
+        "genotype_phenotype": "NM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "not_established_by_cpic_2023",
+        "inhibitor_atc5": "N06AB03",
+        "inhibitor_class": "strong",
+        "clinical_context": "MANUAL",
+        "live_findings_categories": [
+          "NO_GENE_BASED_DOSING"
+        ],
+        "organ_flag": false
+      }
+    },
+    {
+      "id": "pheno-08",
+      "note": "FDA 2-2 erős gátló; CPIC C, nincs gén-alapú adagolás; funkcionális fenotípus üres.",
+      "ground_truth_ids": [
+        "CPIC-SSRI-2023",
+        "FDA-DDI-TABLE-2-2",
+        "WHO-ATC-N06AB03"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*1/*2",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": [
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "N06AB03"
+          }
+        ]
+      },
+      "expect": {
+        "genotype_phenotype": "NM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "not_established_by_cpic_2023",
+        "inhibitor_atc5": "N06AB03",
+        "inhibitor_class": "strong",
+        "clinical_context": "MANUAL",
+        "live_findings_categories": [
+          "NO_GENE_BASED_DOSING"
+        ],
+        "organ_flag": false
+      }
+    },
+    {
+      "id": "pheno-09",
+      "note": "FDA 2-2 erős gátló; CPIC C, nincs gén-alapú adagolás; funkcionális fenotípus üres.",
+      "ground_truth_ids": [
+        "CPIC-SSRI-2023",
+        "FDA-DDI-TABLE-2-2",
+        "WHO-ATC-N06AB03"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*4/*4",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": [
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "N06AB03"
+          }
+        ]
+      },
+      "expect": {
+        "genotype_phenotype": "PM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "not_established_by_cpic_2023",
+        "inhibitor_atc5": "N06AB03",
+        "inhibitor_class": "strong",
+        "clinical_context": "MANUAL",
+        "live_findings_categories": [
+          "NO_GENE_BASED_DOSING"
+        ],
+        "organ_flag": false
+      }
+    },
+    {
+      "id": "pheno-10",
+      "note": "Csoportkód (5 karakter): a párosítás szünetel.",
+      "ground_truth_ids": [
+        "CPIC-SSRI-2023",
+        "FDA-DDI-TABLE-2-2",
+        "WHO-ATC"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*1/*1",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": [
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "N06AB"
+          }
+        ]
+      },
+      "expect": {
+        "genotype_phenotype": "NM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "atc4_insufficient",
+        "inhibitor_atc5": null,
+        "inhibitor_class": null,
+        "clinical_context": "MANUAL",
+        "live_findings_categories": [
+          "INSUFFICIENT_RESOLUTION"
+        ],
+        "organ_flag": false
+      }
+    },
+    {
+      "id": "pheno-11",
+      "note": "Csoportkód (5 karakter): a párosítás szünetel.",
+      "ground_truth_ids": [
+        "CPIC-SSRI-2023",
+        "FDA-DDI-TABLE-2-2",
+        "WHO-ATC"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*1/*2",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": [
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "N06AB"
+          }
+        ]
+      },
+      "expect": {
+        "genotype_phenotype": "NM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "atc4_insufficient",
+        "inhibitor_atc5": null,
+        "inhibitor_class": null,
+        "clinical_context": "MANUAL",
+        "live_findings_categories": [
+          "INSUFFICIENT_RESOLUTION"
+        ],
+        "organ_flag": false
+      }
+    },
+    {
+      "id": "pheno-12",
+      "note": "Csoportkód (5 karakter): a párosítás szünetel.",
+      "ground_truth_ids": [
+        "CPIC-SSRI-2023",
+        "FDA-DDI-TABLE-2-2",
+        "WHO-ATC"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*4/*4",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": [
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "N06AB"
+          }
+        ]
+      },
+      "expect": {
+        "genotype_phenotype": "PM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "atc4_insufficient",
+        "inhibitor_atc5": null,
+        "inhibitor_class": null,
+        "clinical_context": "MANUAL",
+        "live_findings_categories": [
+          "INSUFFICIENT_RESOLUTION"
+        ],
+        "organ_flag": false
+      }
+    },
+    {
+      "id": "pheno-13",
+      "note": "4 karakteres csoport: ugyanaz a szünet.",
+      "ground_truth_ids": [
+        "CPIC-SSRI-2023",
+        "FDA-DDI-TABLE-2-2",
+        "WHO-ATC"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*1/*1",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": [
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "N06A"
+          }
+        ]
+      },
+      "expect": {
+        "genotype_phenotype": "NM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "atc4_insufficient",
+        "inhibitor_atc5": null,
+        "inhibitor_class": null,
+        "clinical_context": "MANUAL",
+        "live_findings_categories": [
+          "INSUFFICIENT_RESOLUTION"
+        ],
+        "organ_flag": false
+      }
+    },
+    {
+      "id": "pheno-14",
+      "note": "4 karakteres csoport: ugyanaz a szünet.",
+      "ground_truth_ids": [
+        "CPIC-SSRI-2023",
+        "FDA-DDI-TABLE-2-2",
+        "WHO-ATC"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*1/*2",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": [
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "N06A"
+          }
+        ]
+      },
+      "expect": {
+        "genotype_phenotype": "NM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "atc4_insufficient",
+        "inhibitor_atc5": null,
+        "inhibitor_class": null,
+        "clinical_context": "MANUAL",
+        "live_findings_categories": [
+          "INSUFFICIENT_RESOLUTION"
+        ],
+        "organ_flag": false
+      }
+    },
+    {
+      "id": "pheno-15",
+      "note": "4 karakteres csoport: ugyanaz a szünet.",
+      "ground_truth_ids": [
+        "CPIC-SSRI-2023",
+        "FDA-DDI-TABLE-2-2",
+        "WHO-ATC"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*4/*4",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": [
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "N06A"
+          }
+        ]
+      },
+      "expect": {
+        "genotype_phenotype": "PM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "atc4_insufficient",
+        "inhibitor_atc5": null,
+        "inhibitor_class": null,
+        "clinical_context": "MANUAL",
+        "live_findings_categories": [
+          "INSUFFICIENT_RESOLUTION"
+        ],
+        "organ_flag": false
+      }
+    },
+    {
+      "id": "pheno-16",
+      "note": "N06AB10 eszcitaloprám: WHO ATC pin; FDA 2-2 nem listázza erős CYP2D6 index-gátlóként.",
+      "ground_truth_ids": [
+        "FDA-DDI-TABLE-2-2",
+        "WHO-ATC-N06AB10",
+        "CPIC-SSRI-2023"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*1/*1",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": [
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "N06AB10"
+          }
+        ]
+      },
+      "expect": {
+        "genotype_phenotype": "NM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "no_strong_inhibitor_atc5",
+        "inhibitor_atc5": null,
+        "inhibitor_class": null,
+        "clinical_context": "MANUAL",
+        "live_findings_categories": [],
+        "organ_flag": false
+      }
+    },
+    {
+      "id": "pheno-17",
+      "note": "N06AB10 eszcitaloprám: WHO ATC pin; FDA 2-2 nem listázza erős CYP2D6 index-gátlóként.",
+      "ground_truth_ids": [
+        "FDA-DDI-TABLE-2-2",
+        "WHO-ATC-N06AB10",
+        "CPIC-SSRI-2023"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*1/*2",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": [
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "N06AB10"
+          }
+        ]
+      },
+      "expect": {
+        "genotype_phenotype": "NM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "no_strong_inhibitor_atc5",
+        "inhibitor_atc5": null,
+        "inhibitor_class": null,
+        "clinical_context": "MANUAL",
+        "live_findings_categories": [],
+        "organ_flag": false
+      }
+    },
+    {
+      "id": "pheno-18",
+      "note": "N06AB10 eszcitaloprám: WHO ATC pin; FDA 2-2 nem listázza erős CYP2D6 index-gátlóként.",
+      "ground_truth_ids": [
+        "FDA-DDI-TABLE-2-2",
+        "WHO-ATC-N06AB10",
+        "CPIC-SSRI-2023"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*4/*4",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": [
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "N06AB10"
+          }
+        ]
+      },
+      "expect": {
+        "genotype_phenotype": "PM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "no_strong_inhibitor_atc5",
+        "inhibitor_atc5": null,
+        "inhibitor_class": null,
+        "clinical_context": "MANUAL",
+        "live_findings_categories": [],
+        "organ_flag": false
+      }
+    },
+    {
+      "id": "pheno-19",
+      "note": "FDA 1-2. tábla: kinidin in vitro szelektív CYP2D6-gátló. A 2-2. tábla klinikai erős indexe fluoxetin/paroxetin. A motor nem ír szegény címkét a 1-2. táblából.",
+      "ground_truth_ids": [
+        "FDA-DDI-TABLE-1-2",
+        "WHO-ATC-C01BA01",
+        "CPIC-SSRI-2023"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*1/*1",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": [
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "C01BA01"
+          }
+        ]
+      },
+      "expect": {
+        "genotype_phenotype": "NM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "no_strong_inhibitor_atc5",
+        "inhibitor_atc5": null,
+        "inhibitor_class": null,
+        "clinical_context": "MANUAL",
+        "live_findings_categories": [],
+        "organ_flag": false
+      }
+    },
+    {
+      "id": "pheno-20",
+      "note": "FDA 1-2. tábla: kinidin in vitro szelektív CYP2D6-gátló. A 2-2. tábla klinikai erős indexe fluoxetin/paroxetin. A motor nem ír szegény címkét a 1-2. táblából.",
+      "ground_truth_ids": [
+        "FDA-DDI-TABLE-1-2",
+        "WHO-ATC-C01BA01",
+        "CPIC-SSRI-2023"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*1/*2",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": [
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "C01BA01"
+          }
+        ]
+      },
+      "expect": {
+        "genotype_phenotype": "NM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "no_strong_inhibitor_atc5",
+        "inhibitor_atc5": null,
+        "inhibitor_class": null,
+        "clinical_context": "MANUAL",
+        "live_findings_categories": [],
+        "organ_flag": false
+      }
+    },
+    {
+      "id": "pheno-21",
+      "note": "FDA 1-2. tábla: kinidin in vitro szelektív CYP2D6-gátló. A 2-2. tábla klinikai erős indexe fluoxetin/paroxetin. A motor nem ír szegény címkét a 1-2. táblából.",
+      "ground_truth_ids": [
+        "FDA-DDI-TABLE-1-2",
+        "WHO-ATC-C01BA01",
+        "CPIC-SSRI-2023"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*4/*4",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": [
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "C01BA01"
+          }
+        ]
+      },
+      "expect": {
+        "genotype_phenotype": "PM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "no_strong_inhibitor_atc5",
+        "inhibitor_atc5": null,
+        "inhibitor_class": null,
+        "clinical_context": "MANUAL",
+        "live_findings_categories": [],
+        "organ_flag": false
+      }
+    },
+    {
+      "id": "pheno-22",
+      "note": "Két 7 karakteres kód; első erős gátló a paroxetin. Funkcionális fenotípus üres.",
+      "ground_truth_ids": [
+        "CPIC-SSRI-2023",
+        "FDA-DDI-TABLE-2-2",
+        "WHO-ATC-N06AB05"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*1/*1",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": [
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "N06AB05"
+          },
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "N06AB03"
+          }
+        ]
+      },
+      "expect": {
+        "genotype_phenotype": "NM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "not_established_by_cpic_2023",
+        "inhibitor_atc5": "N06AB05",
+        "inhibitor_class": "strong",
+        "clinical_context": "MANUAL",
+        "live_findings_categories": [
+          "CONTINUE",
+          "NO_GENE_BASED_DOSING"
+        ],
+        "organ_flag": false
+      }
+    },
+    {
+      "id": "pheno-23",
+      "note": "Két 7 karakteres kód; első erős gátló a paroxetin. Funkcionális fenotípus üres.",
+      "ground_truth_ids": [
+        "CPIC-SSRI-2023",
+        "FDA-DDI-TABLE-2-2",
+        "WHO-ATC-N06AB05"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*1/*2",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": [
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "N06AB05"
+          },
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "N06AB03"
+          }
+        ]
+      },
+      "expect": {
+        "genotype_phenotype": "NM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "not_established_by_cpic_2023",
+        "inhibitor_atc5": "N06AB05",
+        "inhibitor_class": "strong",
+        "clinical_context": "MANUAL",
+        "live_findings_categories": [
+          "CONTINUE",
+          "NO_GENE_BASED_DOSING"
+        ],
+        "organ_flag": false
+      }
+    },
+    {
+      "id": "pheno-24",
+      "note": "Két 7 karakteres kód; első erős gátló a paroxetin. Funkcionális fenotípus üres.",
+      "ground_truth_ids": [
+        "CPIC-SSRI-2023",
+        "FDA-DDI-TABLE-2-2",
+        "WHO-ATC-N06AB05"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*4/*4",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": [
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "N06AB05"
+          },
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "N06AB03"
+          }
+        ]
+      },
+      "expect": {
+        "genotype_phenotype": "PM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "not_established_by_cpic_2023",
+        "inhibitor_atc5": "N06AB05",
+        "inhibitor_class": "strong",
+        "clinical_context": "MANUAL",
+        "live_findings_categories": [
+          "CONSIDER_DOSE_CHANGE",
+          "NO_GENE_BASED_DOSING"
+        ],
+        "organ_flag": false
+      }
+    },
+    {
+      "id": "pheno-25",
+      "note": "eGFR < 30: organ jelzés, nem számolt mg, nem szegény címke.",
+      "ground_truth_ids": [
+        "CPIC-SSRI-2023",
+        "FDA-DDI-TABLE-2-2",
+        "WHO-ATC-N06AB05"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*1/*1",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": [
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "N06AB05"
+          }
+        ],
+        "observations": [
+          {
+            "name": "eGFR",
+            "value": 22,
+            "unit": "mL/min/1.73m2"
+          }
+        ]
+      },
+      "expect": {
+        "genotype_phenotype": "NM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "not_established_by_cpic_2023",
+        "inhibitor_atc5": "N06AB05",
+        "inhibitor_class": "strong",
+        "clinical_context": "MANUAL",
+        "live_findings_categories": [
+          "CONTINUE"
+        ],
+        "organ_flag": true
+      }
+    },
+    {
+      "id": "pheno-26",
+      "note": "eGFR < 30: organ jelzés, nem számolt mg, nem szegény címke.",
+      "ground_truth_ids": [
+        "CPIC-SSRI-2023",
+        "FDA-DDI-TABLE-2-2",
+        "WHO-ATC-N06AB05"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*1/*2",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": [
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "N06AB05"
+          }
+        ],
+        "observations": [
+          {
+            "name": "eGFR",
+            "value": 22,
+            "unit": "mL/min/1.73m2"
+          }
+        ]
+      },
+      "expect": {
+        "genotype_phenotype": "NM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "not_established_by_cpic_2023",
+        "inhibitor_atc5": "N06AB05",
+        "inhibitor_class": "strong",
+        "clinical_context": "MANUAL",
+        "live_findings_categories": [
+          "CONTINUE"
+        ],
+        "organ_flag": true
+      }
+    },
+    {
+      "id": "pheno-27",
+      "note": "eGFR < 30: organ jelzés, nem számolt mg, nem szegény címke.",
+      "ground_truth_ids": [
+        "CPIC-SSRI-2023",
+        "FDA-DDI-TABLE-2-2",
+        "WHO-ATC-N06AB05"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*4/*4",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": [
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "N06AB05"
+          }
+        ],
+        "observations": [
+          {
+            "name": "eGFR",
+            "value": 22,
+            "unit": "mL/min/1.73m2"
+          }
+        ]
+      },
+      "expect": {
+        "genotype_phenotype": "PM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "not_established_by_cpic_2023",
+        "inhibitor_atc5": "N06AB05",
+        "inhibitor_class": "strong",
+        "clinical_context": "MANUAL",
+        "live_findings_categories": [
+          "CONSIDER_DOSE_CHANGE"
+        ],
+        "organ_flag": true
+      }
+    },
+    {
+      "id": "pheno-28",
+      "note": "eGFR 90: nincs organ; funkcionális fenotípus üres.",
+      "ground_truth_ids": [
+        "CPIC-SSRI-2023",
+        "FDA-DDI-TABLE-2-2",
+        "WHO-ATC-N06AB05"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*1/*1",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": [
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "N06AB05"
+          }
+        ],
+        "observations": [
+          {
+            "name": "eGFR",
+            "value": 90,
+            "unit": "mL/min/1.73m2"
+          }
+        ]
+      },
+      "expect": {
+        "genotype_phenotype": "NM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "not_established_by_cpic_2023",
+        "inhibitor_atc5": "N06AB05",
+        "inhibitor_class": "strong",
+        "clinical_context": "MANUAL",
+        "live_findings_categories": [
+          "CONTINUE"
+        ],
+        "organ_flag": false
+      }
+    },
+    {
+      "id": "pheno-29",
+      "note": "eGFR 90: nincs organ; funkcionális fenotípus üres.",
+      "ground_truth_ids": [
+        "CPIC-SSRI-2023",
+        "FDA-DDI-TABLE-2-2",
+        "WHO-ATC-N06AB05"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*1/*2",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": [
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "N06AB05"
+          }
+        ],
+        "observations": [
+          {
+            "name": "eGFR",
+            "value": 90,
+            "unit": "mL/min/1.73m2"
+          }
+        ]
+      },
+      "expect": {
+        "genotype_phenotype": "NM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "not_established_by_cpic_2023",
+        "inhibitor_atc5": "N06AB05",
+        "inhibitor_class": "strong",
+        "clinical_context": "MANUAL",
+        "live_findings_categories": [
+          "CONTINUE"
+        ],
+        "organ_flag": false
+      }
+    },
+    {
+      "id": "pheno-30",
+      "note": "eGFR 90: nincs organ; funkcionális fenotípus üres.",
+      "ground_truth_ids": [
+        "CPIC-SSRI-2023",
+        "FDA-DDI-TABLE-2-2",
+        "WHO-ATC-N06AB05"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*4/*4",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": [
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "N06AB05"
+          }
+        ],
+        "observations": [
+          {
+            "name": "eGFR",
+            "value": 90,
+            "unit": "mL/min/1.73m2"
+          }
+        ]
+      },
+      "expect": {
+        "genotype_phenotype": "PM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "not_established_by_cpic_2023",
+        "inhibitor_atc5": "N06AB05",
+        "inhibitor_class": "strong",
+        "clinical_context": "MANUAL",
+        "live_findings_categories": [
+          "CONSIDER_DOSE_CHANGE"
+        ],
+        "organ_flag": false
+      }
+    },
+    {
+      "id": "pheno-31",
+      "note": "Ismeretlen 7 karakteres kód: nincs erős gátló, nincs kitalált párosítás.",
+      "ground_truth_ids": [
+        "CPIC-SSRI-2023",
+        "FDA-DDI-TABLE-2-2",
+        "WHO-ATC"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*1/*1",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": [
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "X99AA99"
+          }
+        ]
+      },
+      "expect": {
+        "genotype_phenotype": "NM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "no_strong_inhibitor_atc5",
+        "inhibitor_atc5": null,
+        "inhibitor_class": null,
+        "clinical_context": "MANUAL",
+        "live_findings_categories": [],
+        "organ_flag": false
+      }
+    },
+    {
+      "id": "pheno-32",
+      "note": "Sorrend: fluoxetin első erős találat. Továbbra sincs NM→szegény.",
+      "ground_truth_ids": [
+        "CPIC-SSRI-2023",
+        "FDA-DDI-TABLE-2-2",
+        "WHO-ATC-N06AB03"
+      ],
+      "payload": {
+        "diplotypes": [
+          {
+            "gene": "CYP2D6",
+            "diplotype": "*1/*2",
+            "callability": "CALLED"
+          }
+        ],
+        "medications": [
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "N06AB03"
+          },
+          {
+            "system": "http://www.whocc.no/atc",
+            "code": "N06AB05"
+          }
+        ]
+      },
+      "expect": {
+        "genotype_phenotype": "NM",
+        "functional_phenotype": [],
+        "phenoconversion_applied": false,
+        "functional_phenotype_written": false,
+        "mapping_status": "not_established_by_cpic_2023",
+        "inhibitor_atc5": "N06AB03",
+        "inhibitor_class": "strong",
+        "clinical_context": "MANUAL",
+        "live_findings_categories": [
+          "NO_GENE_BASED_DOSING",
+          "CONTINUE"
+        ],
+        "organ_flag": false
+      }
+    }
+  ]
+}

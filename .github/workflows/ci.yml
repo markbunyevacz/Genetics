@@ -25,7 +25,10 @@ jobs:
           python3 -c "import sys; sys.path.insert(0,'src'); from pce_report.flags import MATCHER_ON, LIVE_CDS; assert MATCHER_ON is False and LIVE_CDS is False"
       - name: FR-470 F1+ isolation
         run: |
-          ! grep -R -n "MedicationEntry" src/pce_report
-          ! grep -R -n "pce_gateway.pipeline" src/pce_report
-          ! grep -R -n -E -i 'openai|anthropic|langchain' src/pce_report src/pce_clinical
-          ! grep -R -n "pce_shadow" src/pce_report
+          ! grep -R -n --include='*.py' "MedicationEntry" src/pce_report
+          ! grep -R -n --include='*.py' "medication_entry" src/pce_report
+          ! grep -R -n --include='*.py' "pce_gateway.pipeline" src/pce_report
+          ! grep -R -n -E -i --include='*.py' 'openai|anthropic|langchain' src/pce_report src/pce_clinical
+          ! grep -R -n --include='*.py' "pce_shadow" src/pce_report
+      - name: FR-470 R9 deny-list matches schema
+        run: PYTHONPATH=src python3 -m unittest tests.test_report.B41ContractTests.test_delivery_plan_r9_matches_schema

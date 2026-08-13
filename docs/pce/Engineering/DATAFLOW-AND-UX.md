@@ -123,6 +123,7 @@ flowchart TB
 - HIS **nem** vár a PCE-re (E.2 fail-open).
 - `clinician` → `/v1/hitl/**` = `E-ISO-001`.
 - ShadowInference **soha** nem FK a Report-ra.
+- F1+ JSON: zárt B.4.1 kulcskészlet; `medications` / `clinical_context` / `hitl_*` reject. A lelet-összeállítás **nem** tölti a gyógyszerlista-táblát.
 - ANON: nincs ResearchConsent kapu. PSEUDO: `E-CONSENT-006`.
 - Vak mód: 1. lépés motor nélkül; 2. lépés AGREE/DISAGREE.
 

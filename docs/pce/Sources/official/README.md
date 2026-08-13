@@ -10,7 +10,12 @@ A gyártó (ez a repo) tölti le. Nem a labor és nem a kórház feladata.
 | `whocc-atc-n06ab05.html` | WHO: N06AB05 = paroxetine | 2026-08-13 |
 | `whocc-atc-n06ab03.html` | WHO: N06AB03 = fluoxetine | 2026-08-13 |
 | `whocc-atc-structure-and-principles.html` | WHO: 5. szint = hatóanyag (7 karakter) | 2026-08-13 |
-| `cpic-api-diplotype-cyp2d6-nm-pm.json` | CPIC API: `*1/*1`, `*1/*2` Normal Metabolizer; `*4/*4` Poor Metabolizer | 2026-08-13 |
+| `whocc-atc-n06ab10.html` | WHO: N06AB10 = escitalopram | 2026-08-13 |
+| `whocc-atc-c01ba01.html` | WHO: C01BA01 = quinidine | 2026-08-13 |
+| `edpb-guidelines-01-2025-pseudonymisation.pdf` | EDPB 01/2025 álnevesítés | 2026-08-13 |
+| `wp29-opinion-05-2014-wp216-anonymisation.pdf` | WP29 05/2014 k-anonimitás (technika, nem k=5) | 2026-08-13 |
+| `ie-dpc-case-studies-2025.pdf` | Irish DPC: Art. 12(3) egy hónap | 2026-08-13 |
+| EUR-Lex GDPR HTML | **Hátravan** (ez a környezet 202 empty body). Art. 12(3) a Irish DPC pinre támaszkodik. | 2026-08-13 |
 
 A PREPARE-12 gén `pair_view` / `recommendation_view` JSON: `tests/fixtures/f1plus-v0/prepare12/` (CPIC API, 2026-08-13).
 

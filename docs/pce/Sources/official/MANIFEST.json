@@ -71,6 +71,64 @@
       "bytes": 3245,
       "sha256": "e99d20ef2038ed93bbfba3ced783a780813a77cae6d192ea24241dd83a58b1cc",
       "content_type": "application/json"
+    },
+    {
+      "id": "WHO-ATC-N06AB10",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=N06AB10",
+      "path": "docs/pce/Sources/official/whocc-atc-n06ab10.html",
+      "accessed": "2026-08-13",
+      "ok": true,
+      "bytes": 11188,
+      "sha256": "e5f896da32340b119db30132da4029a9a91c85609762a7d1cceffd1ed4579d48",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-C01BA01",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=C01BA01",
+      "path": "docs/pce/Sources/official/whocc-atc-c01ba01.html",
+      "accessed": "2026-08-13",
+      "ok": true,
+      "bytes": 12173,
+      "sha256": "efc3d6fb73a07e71206883b366eda5a6dbfc750bd654b5e344e0f8d47632966e",
+      "content_type": "text/html"
+    },
+    {
+      "id": "EDPB-01-2025-PSEUDONYMISATION",
+      "url": "https://www.edpb.europa.eu/system/files/2025-01/edpb_guidelines_202501_pseudonymisation_en.pdf",
+      "path": "docs/pce/Sources/official/edpb-guidelines-01-2025-pseudonymisation.pdf",
+      "accessed": "2026-08-13",
+      "ok": true,
+      "bytes": 906500,
+      "sha256": "db1b9931b3403fab8bab846cb5868df776c415589ad925477117bc6b062bd085",
+      "content_type": "application/pdf"
+    },
+    {
+      "id": "WP29-05-2014-WP216",
+      "url": "https://ec.europa.eu/justice/article-29/documentation/opinion-recommendation/files/2014/wp216_en.pdf",
+      "path": "docs/pce/Sources/official/wp29-opinion-05-2014-wp216-anonymisation.pdf",
+      "accessed": "2026-08-13",
+      "ok": true,
+      "bytes": 738776,
+      "sha256": "814a31fc9dc6b3369f18f23d84049374964003524d54fa6a53674527c5b4dbfa",
+      "content_type": "application/pdf"
+    },
+    {
+      "id": "IE-DPC-CASE-STUDIES-2025",
+      "url": "https://www.dataprotection.ie/sites/default/files/uploads/2026-07/DPC-CaseStudies2025-Digital-AW.pdf",
+      "path": "docs/pce/Sources/official/ie-dpc-case-studies-2025.pdf",
+      "accessed": "2026-08-13",
+      "ok": true,
+      "bytes": 1187585,
+      "sha256": "9d64cd912ecce926d590c087cd90345828c4adea394c3514e7b69cb1681b2132",
+      "content_type": "application/pdf"
+    },
+    {
+      "id": "EUR-LEX-GDPR-2016-679",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32016R0679",
+      "path": null,
+      "accessed": "2026-08-13",
+      "ok": false,
+      "error": "EUR-Lex 202 empty body from this environment. Art. 12(3) text therefore cited via Irish DPC Case Studies 2025 (pin) until the OJ HTML/PDF is retrieved."
     }
   ]
 }

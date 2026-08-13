@@ -21,7 +21,7 @@ from pce_report.guidelines import GuidelineTable, prepare12_table
 from pce_report.panel import CONFIG_ID_PREFIX
 from pce_report.pdf import write_pdf
 from pce_report.render import RendererConfigError
-from pce_report.schema import assemble_b41, render_gene_engine
+from pce_report.schema import assemble_b41, assert_b41_contract, render_gene_engine
 
 CALLABILITY_OK = {"CALLED", "PARTIAL", "INDETERMINATE", "NOT_TESTED"}
 REF_OK = ("GRCh37", "GRCh38", "hg19", "hg38")
@@ -443,9 +443,6 @@ class ClinicalService:
         ]
         if not visible:
             raise ClinicalError("E-CONSENT-004", extra={"reason": "all genes omitted or out of scope"})
-        # F1+ L4 must not read medication_entry. Load them only to prove they stay unused.
-        _unused_meds = self.store.query("SELECT * FROM medication_entry WHERE case_id = ?", (case_id,))
-        del _unused_meds
 
         org = self.store.one("SELECT * FROM organization WHERE id = ?", (case["org_id"],))
         engines: list[dict[str, Any]] = []
@@ -503,6 +500,10 @@ class ClinicalService:
             raise ClinicalError("E-EDU-001", extra={"reason": str(exc)}) from exc
         assembled["consent_granted_at"] = snap.consent_granted_at
         assembled["performing_org_license_id"] = snap.license_id
+        try:
+            assert_b41_contract(assembled)
+        except RendererConfigError as exc:
+            raise ClinicalError("E-EDU-001", extra={"reason": str(exc)}) from exc
         self.store.execute(
             "INSERT INTO report(id, case_id, version, parent_report_id, formats_json, "
             "signer_slot, immutable, json_body, gone) VALUES (?, ?, 1, NULL, ?, ?, 1, ?, 0)",
@@ -559,6 +560,10 @@ class ClinicalService:
         report["white_label"] = dict(report.get("white_label") or {})
         report["white_label"]["signer_slot"] = signer_slot
         report["signed"] = True
+        try:
+            assert_b41_contract(report)
+        except RendererConfigError as exc:
+            raise ClinicalError("E-EDU-001", extra={"reason": str(exc)}) from exc
         self.store.execute(
             "UPDATE report SET signer_slot = ?, json_body = ? WHERE id = ?",
             (signer_slot, json.dumps(report, ensure_ascii=False), report_id),

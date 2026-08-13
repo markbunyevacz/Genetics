@@ -145,6 +145,29 @@ Ha a shadow kimenet bármely klinikai képernyőre kerül, az üzemmód **F2**, 
 
 F1+ default: FR-240 outside-call. FR-300 matcher ON = OQ-05 + REG-010 újra.
 
+### A.4.1 Gén–gyógyszer pár × ártalom × osztály (RA-döntés, OQ-06)
+
+A három állítás **nem tartható együtt** hallgatással:
+
+1. R-007 (DPYD–fluoropirimidin): S = 5, ártalom „súlyos toxicitás”.
+2. NFR-070 (régi egyetlen sor): IEC 62304 Class B.
+3. A.3 F3 cél: Rule 11a → **IIa**. Ugyanakkor §4.1 Rule 11a: ha a döntés **halált / irreverzibilis romlást** okozhat → **III**.
+
+A D.1 nem írja a DPYD-ártalmat „halál”-nak. Az RA **páronként** választ (OQ-06). Ez a tábla a dosszié inputja, **nem** counsel-pecsét.
+
+| Pár | Forrás a repóban | Legrosszabb kimenet (forrás) | Rule 11 (RA, OQ-06) | 62304 (gyártói javaslat) |
+| --- | --- | --- | --- | --- |
+| DPYD–fluorouracil / kapecitabin | CPIC pair_view A, Testing Required; R-007 | Súlyos toxicitás, S=5 (R-007). A D.1 **nem** ír halált. | **Nyitott.** 11a IIa default (A.3) vs 11a III, ha az RA a döntést halál/irreverzibilis romlás kockázatának minősíti. | NFR-070b **Class C** az L4-live-ra; NFR-070a **Class B** az F1+ L4-static magra |
+| CYP2C19–clopidogrel | CPIC pair_view (PREPARE-12 extract) | D.1-ben **nincs** pár-sor. `[NEEDS VERIFICATION]` RA | OQ-06 | NFR-070b javaslat, ha élő párosítás |
+| TPMT–tiopurin | CPIC pair_view TPMT (PREPARE-12) | D.1-ben **nincs** pár-sor. `[NEEDS VERIFICATION]` RA | OQ-06 | NFR-070b javaslat, ha élő párosítás |
+| NUDT15–tiopurin | **Nincs** a PREPARE-12 panelen (PGx-Passport extra, FR-310) | D.1-ben nincs. Config-opció, nem v1 default | OQ-06, ha a config bekapcsolja | NFR-070b, ha bekapcsolva |
+| CYP2D6–kodein | CPIC pair_view; opioid 2020 PDF pin | D.1-ben **nincs** pár-sor. Az opioid guideline pinelt; a spec **nem** ír ide halált. | OQ-06 | NFR-070b javaslat L4-live |
+| HLA-B\*15:02–karbamazepin | CPIC pair_view A (`carbamazepine`) | D.1-ben **nincs** pár-sor. Guideline-név a pair_view-ban; kimenet `[NEEDS VERIFICATION]` RA | OQ-06 | NFR-070b javaslat L4-live |
+
+**Indoklás, miért nem marad egyetlen Class B:** a 62304 Class B a „nem-súlyos sérülés lehetséges” sáv. Az R-007 S=5 (súlyos toxicitás) az élő DPYD-párosításra ezt a sávot **meghaladja**. Az F1+ statikus szövegtársítás marad NFR-070a Class B, mert nincs élő dózis/csere-kimenet (`dose_mg` tilos, FR-410-LIVE ki). Az L4-live a fenti párokra NFR-070b Class C **javaslat**, amíg az RA OQ-06-on mást nem ír.
+
+**OQ-06 kérdése:** melyik **osztály, páronként** — nem „melyik Notified Body”.
+
 ---
 
 ## A.5 Modul-függőségek

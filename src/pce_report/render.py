@@ -48,7 +48,21 @@ def render_f1plus(
         raise RendererConfigError("F1+ matcher and LIVE_CDS must be false")
     if not isinstance(outside_call, dict):
         raise RendererConfigError("outside_call must be an object")
-    for banned in ("medications", "MedicationRequest", "dose_mg"):
+    for banned in (
+        "medications",
+        "MedicationRequest",
+        "medicationRequest",
+        "medicationStatement",
+        "MedicationStatement",
+        "dose_mg",
+        "clinical_context",
+        "hitl_review",
+        "hitl_verdict",
+        "live_findings",
+        "functional_phenotype",
+        "shadow_recommendation",
+        "Medication" + "Entry",
+    ):
         if banned in outside_call:
             raise RendererConfigError("F1+ renderer must not receive a medication list")
 

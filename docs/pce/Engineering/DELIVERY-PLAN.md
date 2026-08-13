@@ -125,7 +125,7 @@ Már a `main`-en: CYP2D6 CPIC dump, INDETERMINATE, A.1/A.1.1, PDF, izoláció. H
 | ID | AC | Oracle |
 | --- | --- | --- |
 | R8 | B.4.1 top-level: `report_id`, `case_id`, `callability_summary`, `findings[].statements[]`, `counselling`, `white_label` | séma teszt |
-| R9 | Tiltott mezők reject: `functional_phenotype`, `shadow_recommendation`, `dose_mg`, `live_findings`, `hitl_*` | TC-ISO |
+| R9 | Tiltott mezők reject: `functional_phenotype`, `shadow_recommendation`, `dose_mg`, `live_findings`, `medications`, `medication_entries`, `medication_entry`, `MedicationEntry`, `medicationRequest`, `MedicationRequest`, `medicationStatement`, `MedicationStatement`, `clinical_context`, `hitl_review`, `hitl_verdict`, `hitl_*` | TC-ISO |
 | R10 | FR-420: génenként tagolt findings; CRITICAL nem „cseréld a felírt szert” | TC-ALRT-001 F1+ |
 | R11 | Kapu: `render_f1plus` csak WP-C zöld case-re hívható | FR-100 |
 | R12 | `unsourced_claims == 0` minden statement-en source+url | FR-400 |
@@ -203,7 +203,7 @@ Külön csomag: `src/pce_shadow/`. `pce_report` nem importálja.
 | --- | --- | --- |
 | M1 | Input: coarsened/raw diplotípus + meds (default 7 karakteres hatóanyag-kód) | GatewayEvent |
 | M2 | Output: `live_findings[]` stratégia-kategória, **nincs** `dose_mg` | B.2.2 |
-| M3 | CYP2D6 gén szerinti **normál metabolizáló** + **7 karakteres** paroxetin (`N06AB05`) vagy fluoxetin (`N06AB03`): a gén szerinti osztály megmarad; FDA `strong` gátló rögzítve; **funkcionális szegény metabolizáló üres**, mert a CPIC SSRI 2023-ban **nincs** NM→szegény sor (a hiány a HITL `forras_allapot` listán). Dummy szegény címke = **fail**. Csoportkód `N06AB`: hatóanyag nem ismert (az SSRI-csoportban az eszcitaloprám is benne van) → gátló-állítás szünetel. ANON ingest a 7 karakteres kódot **elfogadja** (D-38). | TC-PHENO-001; `tests/test_shadow.py`; `tests/test_hitl.py` |
+| M3 | CYP2D6 gén szerinti **normál metabolizáló** + **7 karakteres** paroxetin (`N06AB05`) vagy fluoxetin (`N06AB03`): a gén szerinti osztály megmarad; FDA `strong` gátló rögzítve; **funkcionális szegény metabolizáló üres**, mert a CPIC SSRI 2023-ban **nincs** NM→szegény sor (a hiány a HITL `forras_allapot` listán). Dummy szegény címke = **fail**. Csoportkód `N06AB`: hatóanyag nem ismert (az SSRI-csoportban az eszcitaloprám is benne van) → gátló-állítás szünetel. ANON ingest a 7 karakteres kódot **elfogadja** (D-38). **G3 nevező:** `tests/fixtures/pheno-gold-v0/` (N=32). | TC-PHENO-001; `tests/test_shadow.py`; `tests/test_pheno_gold.py`; `tests/test_hitl.py` |
 | M4 | Nincs med lista → `clinical_context=ABSENT`, nem hallgatólagos NM | FR-220/410-LIVE |
 | M5 | eGFR < 30 → `reason: organ`, nem számított dózis | B.6.2 |
 | M6 | Determinisztikus | NFR-060 |
@@ -233,7 +233,7 @@ Inhibitor tábla: FDA Table 2-2 erős index (paroxetin, fluoxetin) + WHO ATC 5. 
 
 | ID | Item |
 | --- | --- |
-| I1 | FR-470 grepek + clinician 403 + CDS 404 |
+| I1 | FR-470 grepek (`MedicationEntry`, `medication_entry`) + R9↔séma deny-list + clinician 403 + CDS 404 |
 | I2 | SOUP lista: CPIC API dátum+URL, reportlab, (később PharmCAT pin) SPDX váz | REG-080 |
 | I3 | OQ-01 folyamat Outboundban; nincs hamis ISO cert a gitben |
 | I4 | `MATCHER_ON is False`; `LIVE_CDS is False` |

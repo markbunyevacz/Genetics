@@ -16,7 +16,7 @@ A rendszer a fagyasztott spec NOW-sávját építi (klinikai lánc + kutatási p
 
 | | |
 | --- | --- |
-| **Dátum** | 2026-08-13 (P06x: hivatalos PDF/HTML pin; 7 karakteres hatóanyag-kód; lelet-szöveg) |
+| **Dátum** | 2026-08-13 (P06y: J-1…J-6 — B.4.1 allow-list, pheno-gold, Art. 12(3), §0 Owner/Due) |
 | **Spec** | `docs/pce/PCE-SPEC-v1.2.md` **FAGYASZTVA** (§10.2) + A, B, D, E |
 | **Terv** | [DELIVERY-PLAN.md](DELIVERY-PLAN.md) |
 | **Adatfolyam / UX** | [DATAFLOW-AND-UX.md](DATAFLOW-AND-UX.md) |
@@ -68,7 +68,7 @@ Mérés: minden spec-tétel **FULL** / **PARTIAL** / **PLANNED** / **DEFERRED** 
 | FR | Pri / path | Kód | Terv WP | Validáció most | Rés |
 | --- | --- | --- | --- | --- | --- |
 | FR-100 | Comp P0 F1+ | PARTIAL | **WP-C** | TC-CONSENT-001..006 HTTP | kapu nem kikapcsolható; meta tanácsadó/dátum/engedély; FHIR Consent v1.1 később |
-| FR-110 | Comp P0 F1+ | PARTIAL | **WP-C** | omit + 410 + certificate | 72 h = azonnali SYN; klinikus-példány külön jogalap nincs bekapcsolva |
+| FR-110 | Comp P0 F1+ | PARTIAL | **WP-C** | omit + 410 + certificate; Art. 12(3) egy hónap válasz (Irish DPC CS2025 pin) | EUR-Lex primer S055; 72 h = azonnali SYN; klinikus-példány külön jogalap nincs bekapcsolva |
 | FR-115 | Comp P0 ha ≠ ANON | PARTIAL | **WP-C** / H | ingest `E-CONSENT-006`; nincs HITL sor | ANON nem blokkol |
 | FR-120 | Comp P0 F1+ | PARTIAL | **WP-Q** | append-only trigger + CSV/JSON | hash-chain **DEFERRED P1**; nyers VCF nincs a naplóban |
 | FR-130 | Comp P0 F1+ | PARTIAL | **WP-K** | `reid_store` külön tábla | L4 log-scanner PII: gateway + report dump |
@@ -83,7 +83,7 @@ Mérés: minden spec-tétel **FULL** / **PARTIAL** / **PLANNED** / **DEFERRED** 
 | FR-400-STATIC | Prod P0 F1+ | PARTIAL | **WP-T / R** | 12 gén CPIC pair dump; F5/VKORC1 üres `recommendation_view` **jelezve** (nincs kitalált szöveg) | DPWG hivatalos fájl; FDA címke-kivonat a leleten |
 | FR-400-LIVE | P0 F1s | PARTIAL | **WP-M** | gén–gyógyszer párosítás 7 karakteres kódon (`N06AB05` → Table 2a `CONTINUE`); 5 karakteres csoportkód szünetelteti a gátló-állítást | többi gén élő párosítása; nincs FK Report-ra |
 | FR-410-EDU | Prod P0 F1+ | PARTIAL | **WP-T / R** | token tiltás; EDU=null | forrásolt bekezdés vagy indokolt null; ≥5 ha–akkor gold |
-| FR-410-LIVE | P0 F1s | PARTIAL | **WP-M** | gén szerinti osztály immutábilis; FDA erős gátló ATC5-ön; **funkcionális szegény metabolizáló üres** + `forras_allapot` van/hiányzik magyarul a HITL-en; eGFR `organ` | SSRI NM→szegény sor, ha a CPIC/FDA kiadja |
+| FR-410-LIVE | P0 F1s | PARTIAL | **WP-M** | gén szerinti osztály immutábilis; FDA erős gátló ATC5-ön; **funkcionális szegény metabolizáló üres**; **pheno-gold-v0 N=32** | SSRI NM→szegény sor, ha a CPIC/FDA kiadja |
 | FR-420 | P0 F1+ struktúra | PARTIAL | **WP-R** | génenként findings; `severity_means_replace_prescribed=false` | CRITICAL F2 card később |
 | FR-430 | P2 | NG | — | — | nem épül |
 | FR-440 | P0 F1s | PARTIAL | **WP-H** | ingest 202 persist `hitl.sqlite`; store-hiba is 202 | aszinkron worker élesben |
@@ -91,7 +91,7 @@ Mérés: minden spec-tétel **FULL** / **PARTIAL** / **PLANNED** / **DEFERRED** 
 | FR-450-BLIND | P1; §10.2 SYN igen | PARTIAL | **WP-H** | `POST .../blind` majd `.../reviews`; immutábilis; default be | OQ-15 nem pecsét |
 | FR-460 | Comp P0 F1s | PARTIAL | WP-G | PII + G12 id/hash/org + G13 Practitioner | Gold HIS Practitioner nem volt; strip tesztelt |
 | FR-461 | Comp P0 F1s | PARTIAL | WP-G | default 7 karakteres kód; PII/dózis/nap továbbra is 400; k-cella a 7 karakteres kódon | monitor SYN org display |
-| FR-470 | Comp P0 | PARTIAL | **WP-I** | LIVE_CDS; grep; CDS 404; HITL 403 | tiltott JSON mezők a B.4.1-en |
+| FR-470 | Comp P0 | PARTIAL | **WP-I** | LIVE_CDS; grep; CDS 404; HITL 403; **allow-list** B.4.1; R9↔séma; `create_report` nem SELECT a gyógyszerlista-táblára | élő CDS pecsétig LOCK (FR-520) |
 | FR-480 | P1 | — | **WP-P1** | — | DEFERRED |
 | FR-490 | Comp P0 | PARTIAL | WP-R | A.1/A.1.1 minden PDF oldal chrome | FHIR description = A.1.1 |
 | FR-500 | Prod P0 | PARTIAL | **WP-F / R** | B.4.1 + PDF + STU3 Bundle | teljes IG validátor; white-label logo fájl |
@@ -199,7 +199,7 @@ Mérés: minden spec-tétel **FULL** / **PARTIAL** / **PLANNED** / **DEFERRED** 
 | NFR-040 | WP-Q | = FR-120 |
 | NFR-050 | P2 | DEFERRED |
 | NFR-060 | WP-X + R | bitre azonos JSON |
-| NFR-070 | CI | klinikai út 100% WP-C után |
+| NFR-070 | CI | **NFR-070a** Class B mag; **NFR-070b** Class C javaslat A.4.1 — OQ-06 |
 | NFR-080 | QMS | nem F0 feature |
 | NFR-090 | P1 | DEFERRED |
 | REG-010 | A melléklet | irat |
@@ -278,4 +278,19 @@ A user öt pontja: forrás-letöltés; szegény címke tiltás; „a lelet olvas
 | „A lelet olvassa a gyógyszerlistát” | **Értelmetlen mondat — javítva.** A PDF nem olvas. A lelet a gén publikált guideline-sorait **listázza**; `gyogyszerlista_a_leleten=false` + `megjegyzes_hu` a JSON/PDF-en. A renderernek nincs `medications` argumentuma. |
 | 5 vs 7 karakteres kód | **7 karakteres hatóanyag-kód a default** (WHO ATC 5. szint). Spec A14/FR-461 D-38. ANON `N06AB05`/`N06AB10` → 202. Csoportkód (5 karakter) a párosítást szünetelteti. DPO durvíthat. |
 | „Az allélhívó ki van kapcsolva” | **Magyarázat a leleten.** PharmCAT NamedAlleleMatcher = a program, amely VCF-ből csillag-allélt hívna. Ki: spec FR-300. Bekapcsolás: változáskezelés + REG-010, nem UI-kapcsoló. A diplotípust a partnerlabor adja. `diplotipus_forras_hu`. |
-| Unittest | **94 OK** |
+| Unittest | **94 OK** (P06x). P06y: lásd §12 |
+
+---
+
+## 12. P06y — J-1…J-6 (2026-08-13)
+
+| Tétel | Eredmény |
+| --- | --- |
+| J-1 F-07 séma-zárás | B.4.1 allow-list; deny-list bővítve (`medications`, `clinical_context`, `hitl_*`, …). `_scan_forbidden` tok-szűkítés törölve. `create_report` **nem** tölti a gyógyszerlista-táblát. 7 negatív + 1 pozitív teszt. |
+| J-6 R9↔kód | `tests/test_report.py` R9 backtick-nevek ⊆ `FORBIDDEN_B41_FIELDS`; CI lépés. |
+| J-3 F-06 pheno-gold | `tests/fixtures/pheno-gold-v0/` N=32. Elvárt funkcionális fenotípus **üres**. G3 ≥90% **csak** itt. Nincs kitalált NM→szegény. |
+| J-2 F-04 | A.4.1 tábla; NFR-070a/b; OQ-06 = osztály páronként. RA pecsét **nyitott**. |
+| J-4 F-05 | FR-110: 26. § (1) határidő nélkül; GDPR Art. 12(3) egy hónap válasz. Irish DPC pin. EUR-Lex primer **hátravan**. |
+| J-5 F-01 | §0 Owner / Validation / Due / Ha hamis. A14 k≥5 / 0,5% horgonya WP29 05/2014 + EDPB 01/2025, nem a DPIA. |
+| Unittest | **108 OK** |
+

@@ -40,6 +40,8 @@ Súlyosság / előfordulás / detektálhatóság: 1–5. RPN = S×O×D. Küszöb
 
 R-001 RPN 30, de **S = 5** → v1 előtt kötelező kontroll (FR-210 P0). R-002 RPN 45 → P0 jelzés + INDETERMINATE. R-015/R-016/R-021 S = 5 → FR-470 + EDU CI a v1 klinikai release előtt.
 
+**F-04 / J-2:** R-007 S=5 + NFR-070 Class B + F3 IIa + Rule 11a (halál/irreverzibilis → III) **ellentmondás**. Páronkénti tábla: A.4.1. NFR-070a Class B a magra; NFR-070b Class C javaslat az L4-live DPYD (és a táblában felsorolt) párokra. Osztály: OQ-06, nem e sor.
+
 R-008 v1.1-ben a aláírt lelet NM-jét védte. v1.2: élő fenokonverzió **nincs** a leleten; a kockázat a shadow/F2 kártyára és a F1+ EDU félreolvasására (R-007) marad.
 
 ---
@@ -53,7 +55,7 @@ Minden funkcionális, NFR és REG sor. TC-azonosítók a gold set / CI nevei; a 
 | Req | Pri | Forrás | AC / TC | GSPR / egyéb | Fázis |
 | --- | --- | --- | --- | --- | --- |
 | FR-100 | Comp P0 | 2008/XXI. 6. § (2), 8. §, 12. § (1), 15. § | TC-CONSENT-001..006 | GSPR 14.1; 23 | F1+ |
-| FR-110 | Comp P0 | 6. § (7), 26. § (1); A10 | TC-CONSENT-010..014 | GDPR 17; GSPR 14 | F1+ |
+| FR-110 | Comp P0 | 6. § (7), 26. § (1); A10; GDPR Art. 12(3) + Art. 17 | TC-CONSENT-010..014 | GDPR 12(3), 17; GSPR 14 | F1+ |
 | FR-115 | Comp P0 ha ≠ anonim | GDPR 6(1)(a), 9(2)(a); E.6 | TC-CONSENT-020..023; E-CONSENT-006 | GDPR 9 | F1s |
 | FR-120 | Comp P0 | 26. § (1) | TC-AUDIT-001..006 | GSPR 17.2 | F1+ |
 | FR-120 hash-chain | P1 | Tervezés, nem tv. | TC-AUDIT-007 | — | F2 |
@@ -105,7 +107,8 @@ Minden funkcionális, NFR és REG sor. TC-azonosítók a gold set / CI nevei; a 
 | NFR-040 | P0 | FR-120 | TC-AUDIT | GSPR 17.2 |
 | NFR-050 | P2 | (EU) 2025/327 | Architecture review | EHDS 2031 |
 | NFR-060 | P0 | FR-710; 62304 | CI determinizmus | GSPR 17.1 |
-| NFR-070 | P0 | IEC 62304 Class B | Coverage CI | 62304 |
+| NFR-070a | P0 | IEC 62304 Class B — F1+ mag | Coverage CI | 62304 |
+| NFR-070b | P0 F1s/F2 | IEC 62304 Class C **javaslat** — A.4.1 L4-live | OQ-06 | 62304 |
 | NFR-080 | P0 | 26. § 30 év | Éves DR | GSPR 17.2 |
 | NFR-090 | P1 | Kapacitás | Load | — |
 

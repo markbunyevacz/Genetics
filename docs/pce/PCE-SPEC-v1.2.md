@@ -16,25 +16,25 @@ Jelölések: `[V]` primerben verifikált · `[R]` egy forrás · `[C]` céges k�
 
 ## 0. Hatóköri feltevések (explicit, nem validált)
 
-Kérdés helyett rögzítve. Ha bármelyik hamis, a jelzett szakasz újraírandó.
+Kérdés helyett rögzítve. Ha bármelyik hamis, a jelzett szakasz újraírandó. Owner / Validation / Due az Outbound + F.6 útvonalból; természetes személy **nincs kitalálva**.
 
-| # | Feltevés | Ha hamis, érintett szakasz |
-| --- | --- | --- |
-| A1 | A v1 klinikai termék **F1+**: statikus, verziózott guideline-társítás aláírt laborleleten. Az élő CDSS (F2/F3) CE/in-house után. A nem-MDSW státusz **OQ-05-től függ**. Az F2/F3 kimenet F1 köntösben **tilos** (NG-07). | §3, §6, §11, A, E |
-| A2 | Nincs saját ISO 15189 / CLIA labor; a genotípus-hívás **partnerlabor felelőssége**. Az F1 default útvonal: **outside-call** (FR-240), nem nyers VCF→allélhívás. | FR-240, FR-300, REG-020, A melléklet L3 |
-| A3 | Nincs jelenleg érvényes EESZT fejlesztői regisztráció. | §11, REG-040a, C melléklet |
-| A4 | A PRS-motor **nem** saját fejlesztés, hanem beszállítói integráció (F4). | §6.5, NG-02, FR-430 |
-| A5 | Első aktív-CDSS referencia egyetemi/klinikai partnernél, in-house kivétellel (F2). | REG-011, §11 F2 |
-| A6 | Csapatméret v1-re: 2–3 fejlesztő + 1 QA/RA + 1 klinikai szakértő (részidős). Minimum, nem komfortos. | §11 |
-| A7 | Elsődleges UI-nyelv magyar; a klinikai ajánlás-szöveg HU, ha szakmai lektor van, különben az angol eredeti. | FR-610 |
-| A8 | EESZT-útvonal F1-ben: **modul** az engedélyezett medikai rendszerben, nem saját EESZT-csatlakozás (NG-05). A 2026-09-30 ISO 9001 akkor is F0, ha a vevő a vendor. | REG-040a, C melléklet |
-| A9 | A gyártó a `genetics` repo tulajdonos szervezete. **Név ebben a dokumentumban nincs kitalálva.** | Fejléc, REG-031 |
-| A10 | `[ASSUMPTION]` A **klinikai** hozzájárulás-visszavonás kaszkádjának üzemi SLA-ja **72 óra** (FR-110). A 2008/XXI. 26. § (1) határidőt nem ad. **Nem** a shadow store alapértelmezett TTL-je. Visszavonáskor a álnevesített HITL-rekord: törlés **vagy** irreverzibilis anonimizálás 72 h-n belül. | FR-110; E.5.1 |
-| A11 | A v1.2 kanonikus szabályozási stratégia a **legális hibrid** (A.0–A.2): F1+ statikus lelet; F1s shadow HITL a kezelőorvos nélkül; F2/F3 csak minősítés után. | A, E, FR-440–470 |
-| A12 | Shadow default: **irreverzibilis anonimizálás** a intézményi gatewayen. Álnevesítés + FR-115 csak ha longitudinális követés kell. | E.5, FR-460 |
-| A13 | `[ASSUMPTION]` A gateway ritka gén–gyógyszer kombinációt elnyom (FR-461) vagy az álnevesített utat választják (re-ID). | E.3.1, DPIA, OQ-16 |
-| A14 | `[ASSUMPTION]` **Validálva 2026-08-13 (D-38, §10.2 (c)).** Default hatóanyag-kód: WHO ATC **5. szint, 7 karakter** (pl. N06AB05 paroxetin, N06AB10 eszcitaloprám). A 5 karakteres csoportkód (4. szint, pl. N06AB) a párosításhoz **nem elég**: az SSRI-csoportban az eszcitaloprám nem erős CYP2D6-gátló. Ritka diplotípus küszöb **0,5%** (forrás a DPIA-ban); k-anonymity **k ≥ 5** intézményi cellán. A DPO **durvíthat** (ATC4 / ATC3 / nagyobb k) — akkor a gén–hatóanyag párosítás és a gátló-állítás **szünetel**, nem találunk ki hatóanyagot. A 7 karakteres kód **nem** azt jelenti, hogy egy szer azonosítja a beteget. | FR-461; OQ-16 |
-| A15 | A shadow/HITL validációs esetek megőrzése a **klinikai értékelési / vizsgálati protokoll** szerint (hónapok–évek, havi HITL). Feltétel: a rekord **már anonim** (OQ-16/A12) **vagy** van érvényes FR-115. **Nem** 72 órás puffer. | E.5.1; FR-440 |
+| # | Feltevés | Owner | Validation | Due | Ha hamis, érintett szakasz |
+| --- | --- | --- | --- | --- | --- |
+| A1 | A v1 klinikai termék **F1+**: statikus, verziózott guideline-társítás aláírt laborleleten. Az élő CDSS (F2/F3) CE/in-house után. A nem-MDSW státusz **OQ-05-től függ**. Az F2/F3 kimenet F1 köntösben **tilos** (NG-07). | Counsel (OQ-05) | OQ-05 pecsét | v1 klinikai release előtt | §3, §6, §11, A, E |
+| A2 | Nincs saját ISO 15189 / CLIA labor; a genotípus-hívás **partnerlabor felelőssége**. Az F1 default útvonal: **outside-call** (FR-240), nem nyers VCF→allélhívás. | Üzlet + partnerlabor (OQ-03) | OQ-03 / REG-020 | Első partner előtt | FR-240, FR-300, REG-020, A melléklet L3 |
+| A3 | Nincs jelenleg érvényes EESZT fejlesztői regisztráció. | `eeszt_iso_owner` (OQ-01) | OQ-01; C melléklet | ISO 9001 kapu: **2026-09-30** | §11, REG-040a, C melléklet |
+| A4 | A PRS-motor **nem** saját fejlesztés, hanem beszállítói integráció (F4). | Üzlet (OQ-10) | OQ-10 | F4 | §6.5, NG-02, FR-430 |
+| A5 | Első aktív-CDSS referencia egyetemi/klinikai partnernél, in-house kivétellel (F2). | Intézményi RA (REG-011) | F2 szerződés | F2 indulás | REG-011, §11 F2 |
+| A6 | Csapatméret v1-re: 2–3 fejlesztő + 1 QA/RA + 1 klinikai szakértő (részidős). Minimum, nem komfortos. | Ügyvezetés | Belső (F.4/F.5) | v1 | §11 |
+| A7 | Elsődleges UI-nyelv magyar; a klinikai ajánlás-szöveg HU, ha szakmai lektor van, különben az angol eredeti. | Klinikai szakértő (OQ-14) | OQ-14 | FR-610 lektor | FR-610 |
+| A8 | EESZT-útvonal F1-ben: **modul** az engedélyezett medikai rendszerben, nem saját EESZT-csatlakozás (NG-05). A 2026-09-30 ISO 9001 akkor is F0, ha a vevő a vendor. | `eeszt_iso_owner` | C melléklet; OQ-01 | **2026-09-30** | REG-040a, C melléklet |
+| A9 | A gyártó a `genetics` repo tulajdonos szervezete. **Név ebben a dokumentumban nincs kitalálva.** | Ügyvezetés | Küldéskor, Outbound | Küldéskor | Fejléc, REG-031 |
+| A10 | `[ASSUMPTION]` A **klinikai** hozzájárulás-visszavonás kaszkádjának üzemi SLA-ja **72 óra** (FR-110). A 2008/XXI. 26. § (1) határidőt nem ad. A GDPR Art. 12(3) a kérelemre **válasz** határideje (egy hónap, +2 összetett esetben). Az A10 ennél szigorúbb. **Nem** a shadow store alapértelmezett TTL-je. Visszavonáskor a álnevesített HITL-rekord: törlés **vagy** irreverzibilis anonimizálás 72 h-n belül. | DPO + klinikai ops (OQ-16 C1) | OQ-16 C1; Irish DPC Case Studies 2025 Case Study 12 (Art. 12(3) egy hónap). EUR-Lex primer letöltése **hátravan**. | v1 előtt (FR-110) | FR-110; E.5.1 |
+| A11 | A v1.2 kanonikus szabályozási stratégia a **legális hibrid** (A.0–A.2): F1+ statikus lelet; F1s shadow HITL a kezelőorvos nélkül; F2/F3 csak minősítés után. | Counsel + RA (OQ-05) | OQ-05 | v1 előtt | A, E, FR-440–470 |
+| A12 | Shadow default: **irreverzibilis anonimizálás** a intézményi gatewayen. Álnevesítés + FR-115 csak ha longitudinális követés kell. | DPO (OQ-16 A1) | OQ-16 A1 | F1s HIS előtt | E.5, FR-460 |
+| A13 | `[ASSUMPTION]` A gateway ritka gén–gyógyszer kombinációt elnyom (FR-461) vagy az álnevesített utat választják (re-ID). | DPO (OQ-16) | OQ-16; WP29 05/2014 (k-anonimitás *technika*, nem küszöb); EDPB 01/2025 (álnevesített adat személyes adat marad, Rec. 26) | F1s HIS előtt | E.3.1, OQ-16 |
+| A14 | `[ASSUMPTION]` **7 karakteres kód validálva 2026-08-13 (D-38, §10.2 (c)).** Default hatóanyag-kód: WHO ATC **5. szint, 7 karakter** (pl. N06AB05 paroxetin, N06AB10 eszcitaloprám). A 5 karakteres csoportkód (4. szint, pl. N06AB) a párosításhoz **nem elég**. Ritka diplotípus küszöb **0,5%** és k-anonymity **k ≥ 5** intézményi cellán: **nem** a DPIA-ból jön (a DPIA nem létezik → körkörös). Külső horgony: WP29 05/2014 (k-anonimitás: legalább k másik; a nagyobb k erősebb, **k=5 nincs előírva**); EDPB 01/2025 (álnevesítés ≠ anonimitás). A számokat a DPO választja (OQ-16 III.B1–B4). A DPO **durvíthat** (ATC4 / ATC3 / nagyobb k) — akkor a gén–hatóanyag párosítás **szünetel**. A 7 karakteres kód **nem** azt jelenti, hogy egy szer azonosítja a beteget. | DPO (OQ-16 III.B1–B4) | D-38 (7 karakter) **DONE**; B1/B3 pecsét **nyitott** | OQ-16 pecsét / F1s HIS előtt | FR-461; OQ-16 |
+| A15 | A shadow/HITL validációs esetek megőrzése a **klinikai értékelési / vizsgálati protokoll** szerint (hónapok–évek, havi HITL). Feltétel: a rekord **már anonim** (OQ-16/A12) **vagy** van érvényes FR-115. **Nem** 72 órás puffer. | RA + DPO (OQ-15, OQ-16 C2) | OQ-15; OQ-16 C2 | F1s protokoll | E.5.1; FR-440 |
 
 **Nem feltevés, hanem verifikált korlát:** a hazai jogi és EESZT-korlátok (§4) nem tárgyalhatók terméktervezéssel.
 
@@ -80,7 +80,7 @@ Outcome-ok, nem output-ok.
 | --- | --- | --- | --- |
 | **G1** | A partnerlabor PGx-riport előállítási ideje csökkenjen | Kézi/félautomata baseline → **p95 < 10 perc** outside-call-tól vagy VCF-től aláírásra kész riportig | Pipeline-telemetria, `ingest→report_ready` |
 | **G2** | Az actionable találatok ne vesszenek el | A **PREPARE 12-génes** panel + aktuális CPIC/DPWG szerint actionable gén–gyógyszer párok **100%-a** megjelenik, 0 silent drop | Gold set (§9), minden release |
-| **G3** | Fenokonverzió-motor készen áll az F2-re | Shadow/HITL gold seten **≥ 90% recall**; a **aláírt F1+ leleten 0** élő fenokonverzió-alkalmazás. **Nem** a CureMD Top-5 83,10% (S028, VC-13). | Gold set §9.2; FR-470 CI |
+| **G3** | Fenokonverzió-motor készen áll az F2-re | **pheno-gold-v0**-n **≥ 90% recall**; a **aláírt F1+ leleten 0** élő fenokonverzió-alkalmazás. **Nem** a CureMD Top-5 83,10% (S028, VC-13). **Nem** a vcf-gold és **nem** az f1plus-gold. N=32 SYN: a 90% pontbecslés N<100 mellett széles CI — partnerlabor-eset nélkül nem populációs paraméter. | Gold set §9.1 pheno-gold; FR-470 CI |
 | **G4** | Bevétel a szabályozott réteg előtt | **≥ 3 fizető rendszerlicenc** (klinika / intézmény / HIS-vendor) | Aláírt SKU-P/H |
 | **G5** | A v2 (IIa) útvonal ne igényeljen újraírást | QMS + ugyanaz a L4-live motor shadowban, mint F3-on; klinikai UI-kapcsoló külön | REG-030; FR-470 flag |
 | **G6** | Nincs szabályozási bypass | 0 shadow/CDSS inferencia a klinikai pathen F1+ buildben | FR-470 CI |
@@ -96,7 +96,7 @@ Outcome-ok, nem output-ok.
 | Riport p95 átfutás | < 10 min | < 5 min | telemetria | első 30 nap / partner |
 | Callability false-NORMAL | **0** | 0 | gold set FR-210 | minden release |
 | Unsourced claim | **0** | 0 | CI `unsourced_claims` | minden release |
-| Fenokonverzió recall (shadow) | ≥ 90% | ≥ 95% | gold set FR-410-LIVE | minden release |
+| Fenokonverzió recall (shadow) | ≥ 90% | ≥ 95% | **pheno-gold-v0** FR-410-LIVE | minden release |
 | Shadow szivárgás a leletre | **0** | 0 | FR-470 CI | minden release |
 
 **Lagging (hónapok):**
@@ -257,7 +257,7 @@ Technikai megjegyzés: v1 kézi rögzítés; v1.1 FHIR `Consent` + `Encounter`.
 Hozzájárulás gén/génpanel és felhasználási cél szintjén; 6. § (7) nem-tudás joga.
 
 - [ ] Given a beteg lemondott egy adott gén eredményének megismeréséről, When riport generálódik, Then az adott gén a **beteg-példányból** kimarad. A klinikus-példányban csak akkor jelenhet meg, ha a klinikus hozzáférése külön, konfigurált jogalapon engedélyezett — kódmódosítás nélkül.
-- [ ] Given hozzájárulás-visszavonás, When rögzítésre kerül, Then a rendszer kaszkádolva töröl minden érintett genetikai adatot és nyilvántartási bejegyzést, és visszavonhatatlan törlési tanúsítványt állít ki. Az üzemi cél: **72 órán belül** `[ASSUMPTION]` A10. A törvényi minimum: megsemmisítés a 26. § (1) szerint, határidő nélkül.
+- [ ] Given hozzájárulás-visszavonás, When rögzítésre kerül, Then a rendszer kaszkádolva töröl minden érintett genetikai adatot és nyilvántartási bejegyzést, és visszavonhatatlan törlési tanúsítványt állít ki. Az üzemi cél: **72 órán belül** `[ASSUMPTION]` A10. A 2008/XXI. 26. § (1) nem ad határidőt; a GDPR Art. 12(3) szerint a törlési kérelemre legkésőbb egy hónapon belül kell **reagálni** (összetett esetben +2 hónap, értesítéssel az első hónapon belül). Az A10 72 órás SLA ennél szigorúbb. Forrás: Irish DPC Case Studies 2025, Case Study 12 (lekérdezve 2026-08-13, pin: `Sources/official/ie-dpc-case-studies-2025.pdf`). EUR-Lex (EU) 2016/679 primer letöltése **hátravan**.
 - [ ] A kaszkád **derived** adatra is kiterjed: diplotípus, fenotípus, riportok, cache, PRS-eredmény (ha van).
 - [ ] **HITL/shadow (A10 vs A15):** álnevesített rekord 72 h-n belül vagy (a) törlődik, vagy (b) irreverzibilisen anonimizálódik (nincs kulcs a PCE-nél, intézményi kulcs megsemmisül). Már anonim HITL-sor (nincs join-key): a klinikai tenancy törlése a 26. § tárgya; a HITL-sor a DPIA szerint maradhat A15 alatt. Nem „minden shadow 72 h TTL”.
 - [ ] Negatív teszt: visszavonás után a korábbi riport URL **410 Gone**, nem 200 cache-ből.
@@ -471,9 +471,12 @@ OQ-16 technikai csomag. **Nem** zárja le az OQ-16-ot. Küszöbök: A14, a DPO f
 G6. E.8 invariánsok.
 
 - [ ] F1+ Report/PDF/FHIR nem tartalmaz shadow mezőt.
+- [ ] B.4.1 **zárt** top-level kulcskészlet (allow-list). Tiltott: `functional_phenotype`, `shadow_recommendation`, `dose_mg`, `live_findings`, `medications`, `medication_entries`, `MedicationEntry`, `medicationRequest`, `MedicationRequest`, `medicationStatement`, `clinical_context`, `hitl_review`, `hitl_verdict`, bármely `hitl_*`. Ismeretlen top-level kulcs = `RendererConfigError`.
+- [ ] CI: `pce_report` forrásában nincs `medication_entry` / `MedicationEntry` folytonos sztring; a DELIVERY-PLAN R9 backtick-nevek ⊆ séma deny-list.
 - [ ] `clinician` klinikai API-n `/shadow/**` és `/hitl/**` → 403/404.
 - [ ] `LIVE_CDS` compile-time false az F1+ buildben.
 - [ ] CI call-graph: report-renderer nem olvassa a shadow kimeneti táblát.
+- [ ] `create_report` **nem** tölti a gyógyszerlista-táblát. A lista a klinikai store-ban maradhat (FR-220); a F1+ renderernek nincs `medications` argumentuma.
 
 #### FR-480 · Enciklopédia-nézet — **P1**
 
@@ -570,7 +573,8 @@ Jogalap: **6. § (6)** `[V]`.
 | **NFR-040** | Auditálhatóság | Minden genetikai adathozzáférés: ki, mit, mikor, jogalap; append-only | FR-120 | P0 |
 | **NFR-050** | EHDS-készültség | Adatmodell leképezhető EHDS/MyHealth@EU felé; nem implementált, nem kizárt | Architecture review | P2 |
 | **NFR-060** | Reprodukálhatóság | Adott bemenet + config-verzió → bitre azonos kimenet | CI determinizmus | P0 |
-| **NFR-070** | Kódminőség / 62304 | Software safety class **B** (feltétel: klinikai kár lehetséges rossz ajánlásnál); unit+integráció ≥ 80%, klinikai útvonal 100% | CI | P0 |
+| **NFR-070a** | Kódminőség / 62304 — F1+ mag | Software safety class **B** a L0–L3, L4-static, L6-report útra (consent-kapu, statikus társítás, PDF/FHIR). Unit+integráció ≥ 80%, klinikai útvonal 100% | CI | P0 |
+| **NFR-070b** | Kódminőség / 62304 — élő párosítás | Software safety class **C** **javaslat** (RA: OQ-06) az L4-live / F1s–F2–F3 útra a A.4.1 párokra, mert rossz élő ajánlásnál súlyos klinikai kár lehetséges (R-007 S=5). Amíg az RA nem választ, az F3 gyártói default **IIa** (A.3) **nem** zárja a Class C vs Rule 11a III kérdést. | OQ-06; coverage az L4-live-ra F1s-től | P0 F1s/F2 |
 | **NFR-080** | DR | RPO ≤ 1 h, RTO ≤ 8 h; 30 éves nyilvántartás külön immutábilis archívumban | Éves DR-teszt | P0 |
 | **NFR-090** | Skálázás | 10 000 eset/hó lineáris költség; PharmCAT izolált worker | Kapacitásteszt | P1 |
 
@@ -602,11 +606,17 @@ Jogalap: **6. § (6)** `[V]`.
 
 ### 9.1 Gold set
 
-Nélküle G2/G3 nem mérhető, a v2 dosszié nem védhető.
+Nélküle G2/G3 nem mérhető, a v2 dosszié nem védhető. **Három külön halmaz**, saját N-nel és ground truth-szal:
 
-- **Méret:** minimum 200 eset. 60 szintetikus (edge), 100 nyilvános referencia (GeT-RM / AMP diplotípusok), 40 deidentifikált partnerlabor-eset.
-- **Kötelező edge:** hiányzó pozíció (FR-210), CYP2D6 SV, unphased ambiguitás, CPIC–DPWG ütközés, fenokonverzió, `INDETERMINATE` + actionable gyógyszer, visszavont hozzájárulás, csonka VCF, F5 config-on/off.
-- **Ground truth:** két független annotátor (klinikai farmakológus + molekuláris genetikus); döntőbíró egyet nem értéskor. Cohen's κ **≥ 0,80**; ez alatt az annotációs útmutató újraírandó, nem a küszöb.
+| Halmaz | N (jelen) | Ground truth | Mit mér | Küszöb |
+| --- | --- | --- | --- | --- |
+| **vcf-gold** | 3 SYN missing-to-ref (CYP2D6\*4, CYP2C19\*2, DPYD\*2A) | Ensembl/dbSNP pozíció (S050) | Callability / FR-210 | 100% INDETERMINATE, 0 hamis NM |
+| **f1plus-gold** | PREPARE-12 CPIC pair/rec extract + GeT-RM tervezett 100 | CPIC API pin; CDC GeT-RM a 100-ra **még nincs** a repóban | Guideline-társítás (G2) | actionable recall **100%** a pin-elt táblán |
+| **pheno-gold** | **32** SYN (`tests/fixtures/pheno-gold-v0/`) | FDA DDI 1-2 / 2-2, CPIC SSRI 2023, WHO ATC — pin 2026-08-13 | Fenokonverzió viselkedés (G3) | **≥90% csak itt**. Elvárt funkcionális fenotípus: **üres**, ha nincs hivatalos NM→szegény sor |
+
+- **Kötelező edge** (szétosztva): hiányzó pozíció (vcf-gold), CYP2D6 SV, unphased ambiguitás, CPIC–DPWG ütközés, fenokonverzió (pheno-gold), `INDETERMINATE` + actionable gyógyszer, visszavont hozzájárulás, csonka VCF, F5 config-on/off.
+- **60 szintetikus guideline-sor** az f1plus/szabálytáblából **nem** G3 nevező (körkörös recall).
+- **Ground truth annotátor:** két független annotátor a partnerlabor-esetre (klinikai farmakológus + molekuláris genetikus); döntőbíró egyet nem értéskor. Cohen's κ **≥ 0,80**. A pheno-gold SYN N=32-n a G3 **pontbecslés**; N<100 mellett a 90% CI széles — partnerlabor-eset nélkül nem populációs paraméter.
 - **Verzió:** DVC; minden release-hez rögzített gold set verzió.
 
 ### 9.2 Metrikák és küszöbök
@@ -616,7 +626,7 @@ Nélküle G2/G3 nem mérhető, a v2 dosszié nem védhető.
 | Diplotípus-egyezés referencia-anyagokon (outside-call echo / matcher) | **100%** | Determinisztikus |
 | Actionable ajánlás recall (PREPARE 12 + aktuális CPIC/DPWG) | **100%** (0 FN) | G2 |
 | Callability-jelölés | **100%** | FR-210 |
-| Fenokonverzió recall | **≥ 90%** | G3. **Nem** S028 Top-5 accuracy 83,10%. |
+| Fenokonverzió recall | **≥ 90%** | G3. **Csak pheno-gold.** **Nem** S028 Top-5 accuracy 83,10%. |
 | Fenokonverzió precision | **≥ 75%** | FP = „nézd meg” |
 | Forrás nélküli állítás | **0** | FR-400 CI |
 
@@ -669,7 +679,7 @@ A 12 vs 14 eltérés **nem** nyitott kérdés: lásd FR-310.
 | **OQ-03** | Melyik partnerlabor vállalja az L3 aláírói felelősséget, milyen áron? | Üzletfejlesztés | **ELŐTERJESZTVE** (F.5). Tárgyalás indul; havidíj + volumensáv. Labor neve / aláírt szerződés nyitott. |
 | **OQ-04** | Magyar Genom Program / BBMRI HU csomópont: partner vagy versenytárs? | Ügyvezetés | Nyitott; hungen.hu nem datált |
 | **OQ-05** | Védhető-e az **A.1 F1+** nem-MDSW-ként? | **Külső counsel** | **ELŐTERJESZTVE** (F.1). Gyártói kérés: feltételes nem-MDSW a A.1.2 + FR-490 mellett. **Nem** counsel-aláírás. |
-| **OQ-06** | ISO 13485 tanúsító és Notified Body; HU/EU NB átfutás | RA | Nyitott |
+| **OQ-06** | **Osztály páronként** (A.4.1): Rule 11 IIa / IIb / III és IEC 62304 B / C a DPYD–fluoropirimidin, CYP2C19–clopidogrel, TPMT/NUDT15–tiopurin, CYP2D6–kodein, HLA-B\*15:02–karbamazepin párokra. **Nem** először „melyik Notified Body”. NB csak a választott osztály után. | RA | Nyitott; A.4.1 tábla a dosszié inputja |
 | **OQ-15** | Shadow = Art. 62 vizsgálat vagy evaluation? | RA + intézmény | **ELŐTERJESZTVE** (F.2). Gyártói kérés: nem Art. 62, reviewer-vak evaluation. Függ OQ-16-tól. **Nem** RA-határozat. |
 | **OQ-16** | Anonim shadow elég-e, vagy FR-115? | DPO | **ELŐTERJESZTVE** (F.3). Gyártói kérés: anonim default + A14 monitor/drop G3 rovására is. **Nem** DPIA. |
 
@@ -766,7 +776,7 @@ Ha OQ-05 = **NEM**, a már megírt F1+ mag **nem dobandó**: IIa / CE pályára 
 | Solution Architect | L5 | Több szabályozási domain |
 | RA / QA | L5 | ISO 13485 Management Representative |
 | PRRC | Jogszabályi | MDR Art. 15; nem korlátlanul outsource |
-| Senior Backend | L4 | IEC 62304 Class B |
+| Senior Backend | L4 | IEC 62304 NFR-070a Class B (F1+ mag); NFR-070b Class C javaslat L4-live (OQ-06) |
 | QA / Test | L4 | Gold set, IAA, regresszió |
 | Klinikai farmakológus / genetikus | Szakvizsga | Ground truth, lektorálás |
 
@@ -796,7 +806,7 @@ Váz:
 | Req ID | Forrás | Teszteset | MDR/AI Act |
 | --- | --- | --- | --- |
 | FR-100 | 2008/XXI. 6. § (2), 8. §, 12. § (1) | TC-CONSENT-001..006 | GSPR 14.1 |
-| FR-110 | 6. § (7), 26. § (1) | TC-CONSENT-010..014 | GDPR Art. 17; GSPR 14 |
+| FR-110 | 6. § (7), 26. § (1); GDPR Art. 12(3) | TC-CONSENT-010..014 | GDPR Art. 12(3), 17; GSPR 14 |
 | FR-120 | 26. § (1) | TC-AUDIT-001..006 | GSPR 17.2 |
 | FR-210 | Klinikai kockázat + PharmCAT preprocessor | TC-CALL-001..012 | ISO 14971 RC-003 |
 | FR-310 | PREPARE; PGx-Passport; PharmCAT 2.11.0 | TC-CONF-001..005 | IEC 62304 §6 |

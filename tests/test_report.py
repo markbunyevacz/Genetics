@@ -17,6 +17,12 @@ from pce_report.flags import LIVE_CDS, MATCHER_ON  # noqa: E402
 from pce_report.guidelines import GuidelineTable  # noqa: E402
 from pce_report.pdf import write_pdf  # noqa: E402
 from pce_report.render import RendererConfigError, render_f1plus  # noqa: E402
+from pce_report.schema import (  # noqa: E402
+    ALLOWED_B41_TOP_LEVEL,
+    assemble_b41,
+    assert_b41_contract,
+    forbidden_b41_field_names,
+)
 from pce_report.statements import A11_DISCLAIMER, A1_INTENDED_PURPOSE  # noqa: E402
 
 F1 = ROOT / "tests" / "fixtures" / "f1plus-v0"
@@ -46,6 +52,7 @@ class IsolationTests(unittest.TestCase):
             tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
             blob = path.read_text(encoding="utf-8")
             self.assertNotIn("MedicationEntry", blob, msg=str(path))
+            self.assertNotIn("medication_entry", blob, msg=str(path))
             self.assertNotIn("pce_gateway.pipeline", blob, msg=str(path))
             self.assertNotIn("pce_shadow", blob, msg=str(path))
             self.assertNotIn("pce_hitl", blob, msg=str(path))
@@ -167,6 +174,106 @@ class Prepare12TableTests(unittest.TestCase):
         blob = " ".join(report["hianyzik"])
         self.assertIn("recommendation_view", blob)
         self.assertIn("Warfarin", blob)
+
+
+def _assembled() -> dict:
+    call = json.loads((F1 / "outside-call-cyp2d6-called.json").read_text(encoding="utf-8"))
+    engine = render_f1plus(outside_call=call, table=_table())
+    return assemble_b41(
+        engine=engine,
+        report_id="SYN-RPT-B41",
+        case_id="SYN-CASE-B41",
+        counselling={"id": "SYN-C", "at": "2026-01-01T00:00:00+00:00", "counsellor_id": "SYN-MD-001"},
+        consent_granted_at="2026-01-02T00:00:00+00:00",
+        performing_org_license_id="SYN-LIC-001",
+        white_label={"org": "SYN-ORG-001", "signer_slot": "SYN-MD-001", "colophon": "Precision Clinical Engine"},
+        genes=[
+            {
+                "gene": "CYP2D6",
+                "diplotype": "*1/*2",
+                "genotype_phenotype": "CYP2D6 Normal Metabolizer",
+                "callability": "CALLED",
+            }
+        ],
+        omit_from_patient=frozenset(),
+    )
+
+
+class B41ContractTests(unittest.TestCase):
+    def test_full_allow_list_passes(self) -> None:
+        report = _assembled()
+        assert_b41_contract(report)
+        self.assertEqual(set(report.keys()), ALLOWED_B41_TOP_LEVEL - {"signed"})
+        self.assertTrue(set(report.keys()) <= ALLOWED_B41_TOP_LEVEL)
+
+    def test_rejects_medications(self) -> None:
+        report = _assembled()
+        report["medications"] = [{"atc": "N06AB05", "name": "paroxetin"}]
+        with self.assertRaises(RendererConfigError):
+            assert_b41_contract(report)
+
+    def test_rejects_medication_entry_type(self) -> None:
+        report = _assembled()
+        report["Medication" + "Entry"] = {"id": "x"}
+        with self.assertRaises(RendererConfigError):
+            assert_b41_contract(report)
+
+    def test_rejects_medication_request(self) -> None:
+        report = _assembled()
+        report["medicationRequest"] = {"id": "x"}
+        with self.assertRaises(RendererConfigError):
+            assert_b41_contract(report)
+
+    def test_rejects_medication_statement(self) -> None:
+        report = _assembled()
+        report["medicationStatement"] = {"id": "x"}
+        with self.assertRaises(RendererConfigError):
+            assert_b41_contract(report)
+
+    def test_rejects_clinical_context(self) -> None:
+        report = _assembled()
+        report["clinical_context"] = {"meds": ["paroxetin"]}
+        with self.assertRaises(RendererConfigError):
+            assert_b41_contract(report)
+
+    def test_rejects_hitl_review(self) -> None:
+        report = _assembled()
+        report["hitl_review"] = {"verdict": "AGREE"}
+        with self.assertRaises(RendererConfigError):
+            assert_b41_contract(report)
+
+    def test_rejects_hitl_verdict(self) -> None:
+        report = _assembled()
+        report["hitl_verdict"] = "AGREE"
+        with self.assertRaises(RendererConfigError):
+            assert_b41_contract(report)
+
+    def test_rejects_unknown_top_level_and_nested_medications(self) -> None:
+        report = _assembled()
+        report["future_field"] = True
+        with self.assertRaises(RendererConfigError):
+            assert_b41_contract(report)
+        report = _assembled()
+        case = dict(report["case"])
+        case["medications"] = [{"atc": "N06AB05"}]
+        report["case"] = case
+        with self.assertRaises(RendererConfigError):
+            assert_b41_contract(report)
+
+    def test_delivery_plan_r9_matches_schema(self) -> None:
+        import re
+
+        plan = (ROOT / "docs" / "pce" / "Engineering" / "DELIVERY-PLAN.md").read_text(encoding="utf-8")
+        line = next(ln for ln in plan.splitlines() if ln.startswith("| R9 |"))
+        names = re.findall(r"`([^`]+)`", line)
+        schema_names = forbidden_b41_field_names()
+        self.assertIn("hitl_*", names)
+        for name in names:
+            if name in {"hitl_*"}:
+                continue
+            self.assertIn(name, schema_names, msg=f"R9 {name!r} missing from schema deny-list")
+        for name in sorted(schema_names):
+            self.assertIn(f"`{name}`", line, msg=f"schema {name!r} missing from DELIVERY-PLAN R9")
 
 
 if __name__ == "__main__":

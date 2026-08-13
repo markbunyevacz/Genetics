@@ -2,6 +2,7 @@
 """WP-C / WP-K / WP-F / WP-Q / WP-X — FR-100 gate, B.3/B.4, B.5 HTTP."""
 from __future__ import annotations
 
+import inspect
 import json
 import sys
 import tempfile
@@ -186,6 +187,11 @@ class ConsentGateTests(unittest.TestCase):
         pdf = Path(tempfile.mkdtemp()) / "out.pdf"
         svc.write_report_pdf(case["id"], report["report_id"], pdf)
         self.assertTrue(pdf.read_bytes().startswith(b"%PDF"))
+
+    def test_create_report_does_not_load_medication_table(self) -> None:
+        src = inspect.getsource(ClinicalService.create_report)
+        self.assertNotIn("medication_entry", src)
+        self.assertNotIn("SELECT * FROM medication", src)
 
     def test_omit_from_patient(self) -> None:
         svc = _svc()
