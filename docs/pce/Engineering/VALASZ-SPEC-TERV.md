@@ -10,6 +10,17 @@
 
 Rövid státusztábla: [SPEC-PLAN-TRACE.md](SPEC-PLAN-TRACE.md). Ez a fájl a **kérésre adott válasz**, nem ticket-lista.
 
+### Szótár (első előforduláskor is így értendő)
+
+| Rövidítés | Magyarul |
+| --- | --- |
+| **P1…P6** | A spec §5.1 szereplői. P1 labor aláíró, P2 felíró orvos, **P3 klinikai farmakológus/gyógyszerész**, P4 genetikai tanácsadó, P5 DPO, P6 medikai szállító. |
+| **HITL** | Human-in-the-loop: külön, kutatási ellenőrző képernyő. Nem a aláírt laborlelet, és nem a felíró orvos napi UI-ja. A reviewer vakon (először a motor javaslata nélkül) dönt egy anonim kártyáról. |
+| **WP-C, WP-K, …** | Work package: a [DELIVERY-PLAN.md](DELIVERY-PLAN.md) egy-egy megvalósítási csomagja. **WP-M** = az árnyék-motor (diplotípus + aktuális gyógyszerlista → élő megállapítás, **nem** a F1+ leleten). **WP-H** = ennek az ellenőriző tárolója és API-ja. |
+| **F1+** | Aláírt laborlelet: statikus guideline-szöveg a meghívott génhez. |
+| **F1s** | Árnyék/kutatási út: HIS-esemény után anonim inferencia, HITL-re, nem betegnek. |
+| **B.3 / B.4** | A spec B mellékletének ingest- és kimeneti HTTP-szerződései. |
+
 Jelölés:
 
 | Szó | Jelentés |

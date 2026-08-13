@@ -12,6 +12,8 @@
 
 Egy szelet **kész**, ha a TRACE-ben PARTIAL vagy FULL, a B-szerződés tesztelve, és a DATAFLOW útja SYN-en végigjárható. Nem kész: hardcoded JSON, `NotImplementedError`, második „sim” csomag.
 
+**WP** = work package (megvalósítási csomag ebben a tervben). Például **WP-M** az árnyék-motor (élő gén–gyógyszer párosítás a kutatási úton), **WP-H** az ehhez tartozó emberi ellenőrző tároló és API. A szereplők **P1–P6** a spec §5.1 personái (P3 = klinikai farmakológus). **HITL** = human-in-the-loop, külön ellenőrző UI, nem a laborlelet.
+
 ## Hard rules
 
 - F1+ renderer nem kap `medications` / HIS gyógyszerlistát (FR-470 / R-021).
