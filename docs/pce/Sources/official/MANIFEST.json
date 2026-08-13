@@ -162,6 +162,39 @@
       "bytes": 1086327,
       "sha256": "6bd1d1f4f6733ba38d5e9e904fe0cc2d1be60b6a30a1c1750a28e555e7fa2541",
       "content_type": "application/pdf"
+    },
+    {
+      "id": "HEALTH-CANADA-PRCI-PROFILE",
+      "url": "https://www.canada.ca/en/health-canada/services/drug-health-product-review-approval/profile-public-release-clinical-information-guidance.html",
+      "path": "docs/pce/Sources/official/health-canada-prci-guidance.html",
+      "accessed": "2026-08-13",
+      "ok": true,
+      "bytes": 30748,
+      "sha256": "8dd87f135569c26586962af6263cee70fc8ea74f777bffcc57233660d53bdb8d",
+      "content_type": "text/html",
+      "note": "Profile / landing page. Full guidance is HEALTH-CANADA-PRCI-GUIDANCE."
+    },
+    {
+      "id": "HEALTH-CANADA-PRCI-GUIDANCE",
+      "url": "https://www.canada.ca/en/health-canada/services/drug-health-product-review-approval/profile-public-release-clinical-information-guidance/document.html",
+      "path": "docs/pce/Sources/official/health-canada-prci-guidance-document.html",
+      "accessed": "2026-08-13",
+      "ok": true,
+      "bytes": 119469,
+      "sha256": "375a48c29226c03c33cc137ce56e699effbbe3a20a5b79a3674b426b076810f8",
+      "content_type": "text/html"
+    },
+    {
+      "id": "DHCS-DDG-V2-2",
+      "url": "https://web.archive.org/web/2022/https://www.dhcs.ca.gov/dataandstats/Documents/DHCS-DDG-V2-2.pdf",
+      "original_url": "https://www.dhcs.ca.gov/dataandstats/Documents/DHCS-DDG-V2-2.pdf",
+      "path": "docs/pce/Sources/official/dhcs-ddg-v2-2.pdf",
+      "accessed": "2026-08-13",
+      "ok": true,
+      "bytes": 1709986,
+      "sha256": "13ac1311499ff61fb935807d2a81e42c296900c10d8e6fc21a1d1d2109b9e21d",
+      "content_type": "application/pdf",
+      "note": "Live dhcs.ca.gov returned Incapsula HTML (212 bytes) on 2026-08-13. Pin is Wayback capture of the same path. PDF title DHCS-DDG-V2.2.pdf; Version 2.2; December 6, 2022; 71 pages. DHCS public-reporting page now points to DDG v3.0 as replacement — v3.0 not pinned."
     }
   ]
 }

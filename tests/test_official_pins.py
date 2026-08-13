@@ -2,6 +2,7 @@
 """Official CPIC/FDA/WHO files are on disk with an accessed date (D-38)."""
 from __future__ import annotations
 
+import hashlib
 import json
 import sys
 import unittest
@@ -58,6 +59,31 @@ class OfficialPinTests(unittest.TestCase):
         self.assertTrue(by_id["EMA-ANON-REPORT-FORM-INSTRUCTIONS"]["ok"])
         self.assertTrue((OFFICIAL / "mdcg-2021-24-en.pdf").read_bytes().startswith(b"%PDF"))
         self.assertTrue(by_id["MDCG-2021-24"]["ok"])
+        hc = (OFFICIAL / "health-canada-prci-guidance-document.html").read_text(
+            encoding="utf-8", errors="replace"
+        )
+        self.assertIn("target cell size of 11 patients", hc)
+        self.assertIn("risk=0.09", hc)
+        self.assertIn("9% re-identification risk threshold", hc)
+        self.assertTrue(by_id["HEALTH-CANADA-PRCI-GUIDANCE"]["ok"])
+        self.assertTrue(by_id["HEALTH-CANADA-PRCI-PROFILE"]["ok"])
+        profile = (OFFICIAL / "health-canada-prci-guidance.html").read_text(
+            encoding="utf-8", errors="replace"
+        )
+        self.assertIn("Public Release of Clinical Information", profile)
+        dhcs = (OFFICIAL / "dhcs-ddg-v2-2.pdf").read_bytes()
+        self.assertTrue(dhcs.startswith(b"%PDF"))
+        self.assertTrue(by_id["DHCS-DDG-V2-2"]["ok"])
+        self.assertGreater(len(dhcs), 1_000_000)
+        for pin_id in (
+            "HEALTH-CANADA-PRCI-PROFILE",
+            "HEALTH-CANADA-PRCI-GUIDANCE",
+            "DHCS-DDG-V2-2",
+        ):
+            row = by_id[pin_id]
+            blob = (ROOT / row["path"]).read_bytes()
+            self.assertEqual(hashlib.sha256(blob).hexdigest(), row["sha256"])
+            self.assertEqual(len(blob), row["bytes"])
 
     def test_knowledge_json_points_at_on_disk_files(self) -> None:
         doc = json.loads(KNOWLEDGE.read_text(encoding="utf-8"))

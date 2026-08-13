@@ -31,6 +31,7 @@
 | I-19 | Piaci analogia + PREPARE/YouScript beillesztés; Tandem/ClinLabomics/TSI | md (chat) + URL | HU/EN | VC-14: p=0,0075; PMC7195220 ≠ YouScript; OQ-05 nyitva; k≠ClinLabomics | n/a |
 | I-20 | FR-461 gateway ticket-lista + PR merge kérés | md (chat) | HU | Engineering bontás; spec fagyasztva marad; OQ-16 nyitva | n/a |
 | I-21 | G melléklet: S055 / OQ-05 / OQ-06 / OQ-16 / F-14 kidolgozás | md (chat) | HU | S055 pin; négy javaslat pecsét nélkül; DSR két artefaktum | n/a |
+| I-22 | Health Canada PRCI URL + DHCS DDG V2.2 PDF URL | URL | EN | S060/S062 pin; k=11 HC `[V]`; DHCS 11/20 000 Wayback; A14 nem pecsét | n/a |
 
 ## Átfedés
 
@@ -48,6 +49,7 @@
 - I-19: PREPARE számok OQ-15-be; YouScript mátrix market-packs-be; Tandem/ClinLabomics/TSI túlállítás **elvetve** (VC-14).
 - I-20: ticketek a zárolt FR-461-ből; nem új küszöb; éles HIS pecsétig tilos.
 - I-21: G javaslat; OQ-k nyitva; S055 lezárva; k=11 nem A14 pecsét; Ft `[ESTIMATE]`.
+- I-22: S060/S062 primer pin; k=11 Health Canada `[V]`; DHCS élő URL Incapsula; v3.0 nincs pinelve; A14 k≥5 marad.
 
 ## Metaadat-ellentmondások
 

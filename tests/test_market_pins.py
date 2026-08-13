@@ -48,9 +48,9 @@ class MarketPinTests(unittest.TestCase):
     def test_official_pin_count_is_not_seven(self) -> None:
         manifest = json.loads((OFFICIAL / "MANIFEST.json").read_text(encoding="utf-8"))
         ok = [row for row in manifest["files"] if row.get("ok")]
-        self.assertGreaterEqual(len(ok), 16)
+        self.assertGreaterEqual(len(ok), 19)
         text = PRICING.read_text(encoding="utf-8")
-        self.assertIn("**16**", text)
+        self.assertIn("**19**", text)
 
 
 if __name__ == "__main__":

@@ -4,15 +4,15 @@
 | --- | --- |
 | **Dokumentum-ID** | PCE-G-v1.0 |
 | **Dátum** | 2026-08-13 |
-| **Bemenet** | PCE-SPEC-v1.2, A–F melléklet, `src/`, `tests/`, SOURCE-REGISTRY S001–S061 |
+| **Bemenet** | PCE-SPEC-v1.2, A–F melléklet, `src/`, `tests/`, SOURCE-REGISTRY S001–S062 |
 | **Célja** | Az OQ-05 / OQ-06 / OQ-16 / S055 / F-14 tételekhez **döntési javaslat + levezetés**. Nem pecsét. |
-| **Státusz** | S055 **LEZÁRVA**. A többi négy: javaslat a pecsételő felé. |
+| **Státusz** | S055 / S060 / S062 **LEZÁRVA**. OQ-05 / OQ-06 / OQ-16 / F-14: javaslat a pecsételő felé. |
 
 **Jelölés:** `[V]` verifikált primer forrásból (pin vagy ezen a napon olvasott) · `[S]` másodlagos forrás · `[I]` következtetés · `[E]` becslés · `[A]` feltevés
 
 Ez a melléklet **nem** zárja OQ-05 / OQ-06 / OQ-16 pecsétjét, **nem** listaár, **nem** Rule 11 határozat.
 
-A bemeneti vázlat 108 tesztet és S001–S055-öt említett. A repo ezen a napon: unittest **113 OK**; registry **S062-ig** (S060/S062 hátravan). Az F1+ allow-list **45** top-level kulcs (`ALLOWED_B41_TOP_LEVEL`), deny-list **15** (`FORBIDDEN_B41_FIELDS`) — nem 43. Official pin: **16** `ok: true`.
+A bemeneti vázlat 108 tesztet és S001–S055-öt említett. A repo ezen a napon: unittest **113 OK**; registry **S062-ig** (S060, S062 **lezárva**). Az F1+ allow-list **45** top-level kulcs (`ALLOWED_B41_TOP_LEVEL`), deny-list **15** (`FORBIDDEN_B41_FIELDS`) — nem 43. Official pin: **19** `ok: true`.
 
 ---
 
@@ -187,18 +187,17 @@ Ez a legolcsóbb visszafordítható pozíció. **Nem** dönti el az OQ-05-öt, �
 
 | Forrás | Küszöb | Kontextus | Pin |
 | --- | --- | --- | --- |
-| `[V]` **EMA + Health Canada** (közös mondat) | **9%** re-azonosítási kockázat (**risk = 0,09**) | Klinikai adat publikálás (Policy 0070 / PRCI) | S059 `ema-anonymisation-report-form-instructions.pdf` p. 7/11: *„Health Canada PRCI and EMA Policy 0070 guidance encourages a 9% re-identification risk threshold (risk=0.09).”* |
+| `[V]` **EMA** űrlap-utasítás | **9%** re-azonosítási kockázat (**risk = 0,09**) | Policy 0070 / PRCI közös mondat | S059 `ema-anonymisation-report-form-instructions.pdf` p. 7/11 |
+| `[V]` **Health Canada PRCI** teljes útmutató | **risk=0,09** **és** cél-cellaméret **11 beteg** | Klinikai adat publikálás | S060 `health-canada-prci-guidance-document.html`: *„Adopting a risk threshold of risk=0.09 equates to a target cell size of 11 patients.”* Ugyanott: *„Health Canada encourages adopting a 9% re-identification risk threshold (risk=0.09).”* Profiloldal: S060-profil. |
 | `[V]` **WP29 05/2014** | k-anonimitás technika; **k értéket nem ír elő** | EU útmutató | S053 |
 | `[V]` **EDPB 01/2025** | álnevesített adat személyes adat marad | EU útmutató | S052 |
-| `[S]` California DHCS Data De-Identification Guidelines | **11 alatti** cella elnyomandó; nevező-minimum **20 000** | HU/EU-n kívüli egészségügyi adatközlés | **nincs pin** — S062 hátravan |
+| `[V]` **California DHCS DDG V2.2** | numerátor **< 11** egyén **vagy** nevező **< 20 000** | US állami egészségügyi aggregátum-közlés | S062 `dhcs-ddg-v2-2.pdf` (2022-12-06, 71 oldal). Élő dhcs.ca.gov 2026-08-13 Incapsula HTML; pin: Wayback. A DHCS oldal most **v3.0**-t jelöl utódnak — v3.0 **nincs** pinelve. |
 | `[S]` El Emam irodalmi áttekintés | publikált cellaméret-küszöbök **3–30** között | Általános | **nincs pin** |
 | `[S]` HHS | **nincs univerzális számküszöb** a „very small” fogalomra | HIPAA expert determination | **nincs pin** |
 
-`[I]` A 0,09 kockázati küszöb **nem** „k = 11” előírás. Ha a kockázatot `1/k` maximumként olvassuk, `k ≥ 1/0,09 ≈ 11,11` → **k ≥ 11** a konzervatív egész. Ez levezetés, nem hatósági k-szám.
+`[V]` A Health Canada **nem** hagyja a 11-et levezetésnek: a 0,09-et **szó szerint** 11 fős cél-cellára fordítja. Az EMA S059 csak a 0,09-et mondja; a k=11 a kanadai primerben áll.
 
-A Health Canada **önálló** PRCI útmutató letöltése hátravan (**S060**). A 0,09 szám az EMA űrlap-utasításban `[V]`, és az űrlap **egy mondatban** nevezi a HC PRCI-t és a Policy 0070-et.
-
-`[I]` A k≥5 tehát a publikált egészségügyi *kockázati* precedens **alatt** van, ha a 0,09-et k-ra fordítjuk. Ez nem jogsértés (WP29 nem ír elő k-t), de a DPO-nak indokolnia kell, miért nem az egészségügyi precedenst alkalmazza.
+`[I]` Ez **nem** EU-s k-előírás (WP29 továbbra sem ad számot). A k≥5 ezért a publikált egészségügyi *cellaméret-precedens* (HC 11, DHCS 11) **alatt** van. Nem jogsértés, de a DPO-nak indokolnia kell, miért nem ezt a precedenst alkalmazza.
 
 ## 4.2 A 0,5% küszöb: feltevésből levezetéssé
 
@@ -226,9 +225,9 @@ N · f ≥ k        ⟹        f ≥ k / N
 
 | Paraméter | Javaslat `[A]` a DPO felé | Indoklás |
 | --- | --- | --- |
-| **k** | **k ≥ 11** a `diplotípus × ATC5` cellára; **k ≥ 5** abszolút padló minden más cellára | S059 0,09 → k≈11 `[I]`; padló = mai A14 |
+| **k** | **k ≥ 11** a `diplotípus × ATC5` cellára; **k ≥ 5** abszolút padló minden más cellára | S060 cél-cella 11 `[V]`; S059 0,09 `[V]`; padló = mai A14 |
 | **Ritka-diplotípus küszöb** | **Számított:** `f_min = k / N_intézmény`, negyedévente újraszámolva | Megszünteti az önkényes 0,5%-ot |
-| **Nevező-minimum** | Egyetlen aggregátum sem publikálható **N < 20 000** nevezővel | `[A]` DHCS; **S062 hátravan** — a DPO elvetheti |
+| **Nevező-minimum** | Egyetlen aggregátum sem publikálható **N < 20 000** nevezővel | S062 DHCS DDG V2.2 `[V]` — **nem** EU-norma; a DPO elvetheti |
 | **Ha `N · f < k`** | **Drop**, nem durvítás — a durvítás ATC-szinten a párosítást öli meg (R-020) | E.3.1 |
 | **Felülvizsgálat** | A `f_min` az intézményi N változásakor újraszámol; a gateway a `frequency-config.v0.json`-ból olvassa | FR-461 |
 
@@ -317,19 +316,20 @@ Támogatás/karbantartás: a licencdíj **15–22%**-a évente. Éves emelés **
 | **S055** | **LEZÁRVA** `[V]` | — | FR-110 kiegészítés a §1.3 szerint, két artefaktum — **kódban megvan** |
 | **OQ-06** | Javaslat kész | RA | `[A]` 2026-10-31-ig: **(a) IIa-safe párlista**, az öt magas pár live-ban kikapcsolva |
 | **OQ-05** | Javaslat kész | Counsel | `[A]` **Class I MDSW**-ként haladni — a legolcsóbb visszafordítható pozíció |
-| **OQ-16** | Javaslat kész | DPO | `[A]` **k ≥ 11** a `diplotípus × ATC5` cellára, `f_min = k/N` számított. A14 **nem** átírva |
+| **S060** | **LEZÁRVA** `[V]` | — | Health Canada PRCI: risk=0,09 **és** cél-cella 11 |
+| **S062** | **LEZÁRVA** `[V]` | — | DHCS DDG V2.2: numerátor <11 vagy nevező <20 000. Nem EU-norma. |
+| **OQ-16** | Javaslat kész | DPO | S060/S062 `[V]` háttér. A14 k≥5 / 0,5 % `[ASSUMPTION]` **változatlan**. |
 | **F-14** | Levezetve `[E]` | Ügyvezetés | Publikáld a `[Yc]` 240 e Ft-ot; `[Yp]` ajánlatkérésre; **15 felíró alatt nincs alapdíj** |
 
 ## 6.1 A három legfontosabb következtetés
 
 1. **Az F3 „IIa” cél az öt magas kockázatú páron live-ban nem védhető** (§2.4). A megoldás termékdöntés, nem jogi: IIa-safe párlista.
-2. **A k≥5 az egészségügyi kockázati precedens alatt van**, ha a S059 0,09-et k-ra fordítjuk (§4.1). A 0,5% levezethető, nem feltevés (§4.2). A DPO pecsétje nélkül az A14 **nem** változik.
+2. **A k≥5 az egészségügyi cellaméret-precedens alatt van.** A Health Canada PRCI `[V]` 11 fős cél-cellát mond a 0,09 mellé (S060). A DHCS DDG V2.2 `[V]` 11-es numerátort és 20 000-es nevezőt (S062). A 0,5% levezethető, nem feltevés (§4.2). A DPO pecsétje nélkül az A14 **nem** változik.
 3. **A jelenlegi árszerkezet kizárja a Phase-1 célcsoportot** (§5.2). 15 felíró alatt platform-alapdíj nélkül kell menni.
 
 ## 6.2 Amit nem ellenőriztem / hátravan
 
-- A Health Canada **önálló** PRCI útmutató → **S060**.
-- A California DHCS DDG primer → **S062**.
+- A DHCS **v3.0** (a nyilvános reporting-oldal szerint a V2.2 utóda) **nincs** pinelve.
 - A HU magánegészségügyi EBITDA-marzs és a Medicover/Medicare árbevétel **nincs** pinelve.
 - Egyetlen `[Y*]` érték sem megfigyelt PCE-tranzakció.
 - A DPYD „letális”, CYP2C19 stent-trombózis, CYP2D6 gyermekhalál, HLA-B\*15:02 SJS/TEN halál **nincs** a D.1-ben; az OQ-06 III-javaslat `[I]`, nem `[V]` klinikai kimenet.

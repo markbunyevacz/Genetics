@@ -72,9 +72,11 @@ Intézményi cella: (fenotípus-osztály × ATC-szint × negyedév) a gateway **
 - A legritkább diplotípus-osztály default **drop**, akkor is, ha a G3 recall csökken. Nincs manuális k-küszöb override az F1s anonim úton.
 - A gateway `E-SHADOW-003` drop-arányt, a k-cella eloszlást és a **nem mérhető cella** arányt aggregáltan (nem PII) jelenti a DPO-nak legalább **negyedévente**.
 
-**G javaslat a DPO-nak (nem pecsét, [G](../G-open-items.md) §4):** ne fix számot pecsételjen, **politikát**. `k ≥ 11` a `diplotípus × ATC5` cellára (S059: EMA/HC **risk = 0,09** `[V]`; k≈11 `[I]`); `k ≥ 5` abszolút padló más cellára; `f_min = k / N_intézmény` negyedévente. Ha `N · f < k`: **drop**, nem durvítás (R-020). A 0,5% akkor helyes, ha k=11 és N≈2 200. Kis N-nél a G3 ≥90% **rétegzendő** a mérhető cellákra.
+**G javaslat a DPO-nak (nem pecsét, [G](../G-open-items.md) §4):** ne fix számot pecsételjen, **politikát**. `k ≥ 11` a `diplotípus × ATC5` cellára; `k ≥ 5` abszolút padló más cellára; `f_min = k / N_intézmény` negyedévente. Ha `N · f < k`: **drop**, nem durvítás (R-020). A 0,5% akkor helyes, ha k=11 és N≈2 200. Kis N-nél a G3 ≥90% **rétegzendő** a mérhető cellákra.
 
-**Nem ClinLabomics.** Wen et al., BMC Bioinformatics 2022;23:387 (S038) laboradat-bányászat / „clinlabomics” review. **Nem** k-anonimitási tétel, **nem** A13/A14 matematikai igazolás, **nem** OQ-16 pecsét. A k ≥ 5 és a 0,5% `[ASSUMPTION]` A14 **marad**, amíg a DPO pecsétel. Primer a GDPR + a DPIA + S052/S053/S059, nem ez a cikk.
+Forrás a k≥11-hez: S059 EMA `[V]` **risk = 0,09** (**nem** k≥11); **S060** Health Canada PRCI `[V]` „target cell size of 11 patients” + risk=0.09; **S062** DHCS DDG V2.2 `[V]` numerátor <11 vagy nevező <20 000 (USA/CA aggregátum, **nem** EU-jog). WP29 S053 **nem** ír elő k-t.
+
+**Nem ClinLabomics.** Wen et al., BMC Bioinformatics 2022;23:387 (S038) laboradat-bányászat / „clinlabomics” review. **Nem** k-anonimitási tétel, **nem** A13/A14 matematikai igazolás, **nem** OQ-16 pecsét. A k ≥ 5 és a 0,5% `[ASSUMPTION]` A14 **marad**, amíg a DPO pecsétel. Primer a GDPR + a DPIA + S052/S053/S059/S060/S062, nem ez a cikk.
 
 ---
 
@@ -128,7 +130,7 @@ Minden sor kötelező. NEM esetén a „akkor” oszlop életbe lép.
 
 ### B. Küszöbök
 
-**B1.** Elfogadja-e a default **k ≥ 5** intézményi cellát? (G javaslat, nem előre pecsételve: k ≥ 11 a diplotípus × ATC5 cellára.)
+**B1.** Elfogadja-e a default **k ≥ 5** intézményi cellát? (G javaslat, nem előre pecsételve: k ≥ 11 a diplotípus × ATC5 cellára — S060 Health Canada `[V]` cél-cella 11; S062 DHCS `[V]` 11 / 20 000, nem EU-jog.)
 
 - [ ] IGEN — k ≥ 5 marad
 - [ ] NEM — előírt k = ________

@@ -52,6 +52,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P05y | J-1…J-6 kapuk | 2026-08-13 | 2026-08-13 | DONE | User: kódszintű F-07 injekció + tételes lista | allow-list B.4.1; pheno-gold-v0 N=32; A.4.1; FR-110 Art. 12(3); §0 Owner/Due | E-19 |
 | P05z | Árazás: megfigyelt vs következtetés | 2026-08-13 | 2026-08-13 | DONE | User: YouScript 365 USD; HIS-plafon; javasolt Ft-sáv | `Sales/pricing.md`; S056–S058; VC-16 | E-20 |
 | P05aa | G melléklet: öt nyitott tétel | 2026-08-13 | 2026-08-13 | DONE | User PCE-G-v1.0 | `G-open-items.md`; S055 LEZÁRVA; DSR két artefaktum; OQ-05/06/16 javaslat pecsét nélkül | E-19 zárva (EUR-Lex 200) |
+| P05ab | S060 Health Canada PRCI + S062 DHCS DDG V2.2 pin | 2026-08-13 | 2026-08-13 | DONE | User: PRCI guidance URL + DHCS-DDG-V2-2.pdf | S060/S062 **LEZÁRVA** `[V]`; k=11 HC primer; A14 k≥5 **nem** pecsét; DHCS élő Incapsula → Wayback | E-21 |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -100,6 +101,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-39 | P05y | J-1 vs J-3 sorrend; J-2 osztály | Csak J-1 / csak J-3 / mind a hat | **Mind a hat.** J-1 allow-list ma. J-3 pheno-gold **üres** funkcionális fenotípus (nincs kitalált NM→szegény). J-2 A.4.1 + NFR-070a/b, OQ-06 nyitott. Ár **nincs** a specben. | User 2026-08-13 kódszintű lista | user |
 | D-40 | P05z | Ft-sáv a specben vs Sales | Listaár a specbe / csak Sales következtetés | **Sales/pricing.md.** A spec §11 kötés marad; a 6–35 M Ft **nem** megfigyelt listaár. DrugMap VC-10. EKR 88,3 M Ft nincs pinelve. | User 2026-08-13 árazás | user |
 | D-41 | P05aa | G öt tétel pecsét vs javaslat | Pecsétek / csak javaslat + S055 pin | **S055 LEZÁRVA.** OQ-05/06/16 **nem** pecsét. (a) IIa-safe fallback 2026-10-31; Class I MDSW default; k≥11 javaslat A14 változatlan; 15 felíró alatt `[Yp]=0`. | User G v1.0 | user |
+| D-42 | P05ab | S060/S062 pin vs A14 átírás | k=11 pecsét / pin + javaslat | **Pin.** S060 `[V]` cél-cella 11; S062 `[V]` 11 / 20 000 (Wayback; élő Incapsula). **Nem** EU-jog. A14 k≥5 / 0,5% `[ASSUMPTION]` **marad**. DHCS v3.0 nincs pinelve. | User PRCI + DDG URL | user |
 
 ## 3. Error log
 
@@ -126,6 +128,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | E-19 | P05y | API / authority fetch | EUR-Lex GDPR HTML/PDF 202 empty body | Irish DPC CS2025 pin Art. 12(3)-ra; S055 hátravan | J-4 |
 | E-19b | P05aa | API / authority fetch (E-19 zárás) | EUR-Lex 202 empty body **lejárt**: HTML 200, 809 035 byte | Pin HTML+PDF; Art. 12(3)/12(4)/17(1) a HTML-ből; S055 LEZÁRVA | D-41 |
 | E-20 | P05z | Authority fetch | YouScript HTML urllib 403; EKR001266472024 karbantartási oldal | WebFetch 365 USD; SMART+Semmelweis pin; EKR összeg `[R]` | D-40 |
+| E-21 | P05ab | Authority fetch | Élő `dhcs.ca.gov/.../DHCS-DDG-V2-2.pdf` Incapsula HTML (212 B), nem PDF. Wayback `/web/2023/` és `/web/2024/` 429. | Wayback `/web/2022/` a V2.2 PDF-et adta (1 709 986 B, 71 oldal, CreationDate 2023-02-17). v3.0 nincs pinelve. | D-42 |
 
 ## 4. File timeline
 
@@ -148,8 +151,8 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | src/pce_hitl/ | P05u | P05w | vak ellenőrző API + `hitl.sqlite` |
 | src/pce_ui/hitl.html | P05u | P05w | van/hiányzik lista a vak lépés után |
 | src/pce_clinical/coverage.py | P05w | P05x | FR-210; diplotípus-forrás magyarul |
-| docs/pce/G-open-items.md | P05aa | P05aa | Javaslat, nem pecsét; S055 LEZÁRVA |
-| docs/pce/Sources/official/ | P05x | P05aa | + GDPR HTML/PDF; EMA 0,09; MDCG 2021-24 |
+| docs/pce/G-open-items.md | P05aa | P05ab (S060/S062 `[V]`) | Javaslat, nem pecsét; S055/S060/S062 LEZÁRVA |
+| docs/pce/Sources/official/ | P05x | P05ab | + GDPR HTML/PDF; EMA 0,09; MDCG 2021-24; HC PRCI; DHCS DDG V2.2 (19 `ok`) |
 | tests/fixtures/pheno-gold-v0/ | P05y | P05y | N=32; G3 nevező |
 | src/pce_report/schema.py | P05r | P05y | B.4.1 allow-list |
 | tests/fixtures/f1plus-v0/prepare12/ | P05w | P05w | 12 gén CPIC pin |

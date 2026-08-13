@@ -19,6 +19,9 @@ A gyártó (ez a repo) tölti le. Nem a labor és nem a kórház feladata.
 | `eur-lex-gdpr-2016-679.pdf` | GDPR OJ PDF (szövegkinyerés üres; a HTML a primer) | 2026-08-13 |
 | `ema-anonymisation-report-form-instructions.pdf` | EMA/HC risk=0,09 (Policy 0070 / PRCI) | 2026-08-13 |
 | `mdcg-2021-24-en.pdf` | MDCG Rule 11 osztályozási példatár | 2026-08-13 |
+| `health-canada-prci-guidance.html` | Health Canada PRCI profiloldal (S060) | 2026-08-13 |
+| `health-canada-prci-guidance-document.html` | Health Canada PRCI teljes útmutató: risk=0.09 **és** cél-cella 11 (S060) | 2026-08-13 |
+| `dhcs-ddg-v2-2.pdf` | DHCS DDG V2.2 (2022-12-06): numerátor <11 vagy nevező <20 000 (S062). Wayback-pin; élő DHCS Incapsula. v3.0 nincs pinelve. | 2026-08-13 |
 
 A PREPARE-12 gén `pair_view` / `recommendation_view` JSON: `tests/fixtures/f1plus-v0/prepare12/` (CPIC API, 2026-08-13).
 

@@ -319,3 +319,14 @@ A user öt pontja: forrás-letöltés; szegény címke tiltás; „a lelet olvas
 | F-14 | `[Yp]=0` 15 felíró alatt; `[Yc]` közép 240 e; `[Ysh]=0`. Mind `[ESTIMATE]`. |
 | Pin | + GDPR HTML/PDF, EMA 0,09, MDCG 2021-24 → **16** official `ok: true`. Unittest **113 OK**. |
 
+---
+
+## 15. P06ab — S060 / S062 pin (2026-08-13)
+
+| Tétel | Eredmény |
+| --- | --- |
+| S060 | **LEZÁRVA `[V]`.** Teljes PRCI `document.html`: „target cell size of 11 patients” + risk=0.09. Profiloldal külön pin. |
+| S062 | **LEZÁRVA `[V]`.** DHCS DDG V2.2 (2022-12-06, 71 oldal): numerátor <11 vagy nevező <20 000. Élő DHCS Incapsula; pin Wayback `/web/2022/`. v3.0 nincs pinelve. **Nem** EU-jog. |
+| OQ-16 / A14 | k≥11 **javaslat** a DPO-nak. A14 k≥5 / 0,5% `[ASSUMPTION]` **nem** pecsét. |
+| Pin | Official **19** `ok: true`. Unittest **113 OK**. |
+

@@ -72,7 +72,7 @@ Ha a DrugMap teszt **499 000 Ft** (VC-10, egy forrás) áll, a klinikus-sáv **a
 | `pce_shadow` + `pce_hitl` | Élő párosítás árnyékban; vak HITL (human-in-the-loop) UI; nincs kitalált szegény metabolizáló | A felíró **nem** látja (NG-07) |
 | `pce_ui` | Labor / klinikai / HITL HTML a fenti API-kra | Nem EESZT-kliens |
 
-Hivatalos klinikai pin: `docs/pce/Sources/official/MANIFEST.json` — **16** fájl `ok: true`, SHA-256-tal (2026-08-13), beleértve GDPR Art. 12 HTML/PDF, EMA 0,09 űrlap-utasítás, MDCG 2021-24. A motor a pin-elt JSON extractet olvassa, nem a PDF-et futáskor.
+Hivatalos klinikai pin: `docs/pce/Sources/official/MANIFEST.json` — **19** fájl `ok: true`, SHA-256-tal (2026-08-13), beleértve GDPR Art. 12 HTML/PDF, EMA 0,09 űrlap-utasítás, MDCG 2021-24, Health Canada PRCI (cél-cella 11), DHCS DDG V2.2 (Wayback). A motor a pin-elt JSON extractet olvassa, nem a PDF-et futáskor.
 
 Teszt: `PYTHONPATH=src python3 -m unittest discover -s tests -v` → **113 OK** (2026-08-13, G DSR + pin tesztekkel). A J-1…J-6 merge 108 volt; az árazási csomag 111; ez a G két DSR-tesztet ad. Nem 94.
 

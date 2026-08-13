@@ -119,6 +119,27 @@ TARGETS = [
         "path": DEST / "mdcg-2021-24-en.pdf",
         "expect": "pdf",
     },
+    {
+        "id": "HEALTH-CANADA-PRCI-PROFILE",
+        "url": "https://www.canada.ca/en/health-canada/services/drug-health-product-review-approval/profile-public-release-clinical-information-guidance.html",
+        "path": DEST / "health-canada-prci-guidance.html",
+        "expect": "html",
+        "note": "Profile / landing page. Full guidance is HEALTH-CANADA-PRCI-GUIDANCE.",
+    },
+    {
+        "id": "HEALTH-CANADA-PRCI-GUIDANCE",
+        "url": "https://www.canada.ca/en/health-canada/services/drug-health-product-review-approval/profile-public-release-clinical-information-guidance/document.html",
+        "path": DEST / "health-canada-prci-guidance-document.html",
+        "expect": "html",
+    },
+    {
+        "id": "DHCS-DDG-V2-2",
+        "url": "https://web.archive.org/web/2022/https://www.dhcs.ca.gov/dataandstats/Documents/DHCS-DDG-V2-2.pdf",
+        "original_url": "https://www.dhcs.ca.gov/dataandstats/Documents/DHCS-DDG-V2-2.pdf",
+        "path": DEST / "dhcs-ddg-v2-2.pdf",
+        "expect": "pdf",
+        "note": "Live dhcs.ca.gov returned Incapsula HTML (212 bytes) on 2026-08-13. Pin is Wayback capture of the same path. PDF title DHCS-DDG-V2.2.pdf; Version 2.2; December 6, 2022; 71 pages. DHCS public-reporting page now points to DDG v3.0 as replacement — v3.0 not pinned.",
+    },
 ]
 
 
@@ -175,6 +196,9 @@ def main() -> int:
         rec["sha256"] = hashlib.sha256(data).hexdigest()
         rec["content_type"] = ctype
         rec["ok"] = True
+        for extra in ("original_url", "note"):
+            if t.get(extra):
+                rec[extra] = t[extra]
         if t["expect"] == "pdf" and not data.startswith(b"%PDF"):
             rec["ok"] = False
             rec["error"] = "not a PDF"

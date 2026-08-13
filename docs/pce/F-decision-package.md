@@ -81,7 +81,7 @@ Csomag: E.4.1, E.7, FR-450-BLIND, FR-470.
 - Gateway intézményi zónában; default **7 karakteres hatóanyag-kód** (D-38); idő = negyedév; k &lt; 5 vagy ritka diplotípus → drop vagy osztály (FR-461). A DPO durvíthat ATC4/ATC3-ra.
 - A10: visszavonáskor 72 h törlés **vagy** irreverzibilis anonimizálás. A15 csak már anonim (vagy FR-115-ös) sorra.
 
-**A gyártó által várt DPO-feltétel (előre beépítve):** A14 küszöb **monitorozása** és a legritkább diplotípusok automatikus dropja akkor is, ha ez rontja a G3-at (R-020). → FR-461 utolsó AC. G §4 javaslat (nem pecsét): k ≥ 11 diplotípus×ATC5, `f_min = k/N`. Az A14 k≥5 / 0,5% **nem** átírva.
+**A gyártó által várt DPO-feltétel (előre beépítve):** A14 küszöb **monitorozása** és a legritkább diplotípusok automatikus dropja akkor is, ha ez rontja a G3-at (R-020). → FR-461 utolsó AC. G §4 javaslat (nem pecsét): k ≥ 11 diplotípus×ATC5 (S060 `[V]` cél-cella 11; S059 `[V]` risk=0,09; S062 `[V]` 11 / 20 000, **nem** EU-norma), `f_min = k/N`. Az A14 k≥5 / 0,5% **nem** átírva.
 
 **Ami ezt nem zárja:** aláírt DPIA. Ha a DPO szerint a profil így is személyes adat → A12 hamis, FR-115 kötelező.
 
