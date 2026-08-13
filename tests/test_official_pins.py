@@ -40,7 +40,24 @@ class OfficialPinTests(unittest.TestCase):
         self.assertTrue((OFFICIAL / "wp29-opinion-05-2014-wp216-anonymisation.pdf").read_bytes().startswith(b"%PDF"))
         dpc = (OFFICIAL / "ie-dpc-case-studies-2025.pdf").read_bytes()
         self.assertTrue(dpc.startswith(b"%PDF"))
-        self.assertFalse(by_id["EUR-LEX-GDPR-2016-679"]["ok"])
+        gdpr = by_id["EUR-LEX-GDPR-2016-679"]
+        self.assertTrue(gdpr["ok"])
+        html = (ROOT / gdpr["path"]).read_text(encoding="utf-8", errors="replace")
+        self.assertIn(
+            "without undue delay and in any event within one month of receipt of the request",
+            html,
+        )
+        self.assertIn(
+            "If the controller does not take action on the request of the data subject",
+            html,
+        )
+        self.assertIn("Right to erasure", html)
+        self.assertTrue((OFFICIAL / "eur-lex-gdpr-2016-679.pdf").read_bytes().startswith(b"%PDF"))
+        ema = (OFFICIAL / "ema-anonymisation-report-form-instructions.pdf").read_bytes()
+        self.assertTrue(ema.startswith(b"%PDF"))
+        self.assertTrue(by_id["EMA-ANON-REPORT-FORM-INSTRUCTIONS"]["ok"])
+        self.assertTrue((OFFICIAL / "mdcg-2021-24-en.pdf").read_bytes().startswith(b"%PDF"))
+        self.assertTrue(by_id["MDCG-2021-24"]["ok"])
 
     def test_knowledge_json_points_at_on_disk_files(self) -> None:
         doc = json.loads(KNOWLEDGE.read_text(encoding="utf-8"))

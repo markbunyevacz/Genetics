@@ -39,17 +39,18 @@ class MarketPinTests(unittest.TestCase):
         self.assertIn("következtetés", text.lower())
         self.assertIn("365 USD", text)
         self.assertIn("816.636.406", text)
-        self.assertIn("111 OK", text)
+        self.assertIn("113 OK", text)
         self.assertNotIn("94 zöld", text)
         self.assertIn("UNVERIFIABLE", text)
         self.assertIn("nem megfigyelt", text.lower())
+        self.assertIn("15 felíró", text)
 
     def test_official_pin_count_is_not_seven(self) -> None:
         manifest = json.loads((OFFICIAL / "MANIFEST.json").read_text(encoding="utf-8"))
         ok = [row for row in manifest["files"] if row.get("ok")]
-        self.assertGreaterEqual(len(ok), 12)
+        self.assertGreaterEqual(len(ok), 16)
         text = PRICING.read_text(encoding="utf-8")
-        self.assertIn("**12**", text)
+        self.assertIn("**16**", text)
 
 
 if __name__ == "__main__":

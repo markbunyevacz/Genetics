@@ -31,6 +31,10 @@ B5: dict[str, tuple[int, str]] = {
     ),
     "E-MAP-001": (409, "Ismeretlen gyógyszerkód; a riport nem megy ki hiányos listával."),
     "E-GONE-010": (410, "Visszavont / törölt riport (FR-110)."),
+    "E-DSR-OVERDUE": (
+        200,
+        "Érintetti kérelemre nincs válaszlevél egy hónapon belül (GDPR Art. 12(3)/12(4)).",
+    ),
     "E-ISO-001": (403, "A clinician szerep nem olvassa a HITL/shadow utat (FR-470)."),
     "E-ISO-002": (404, "CDS endpoint nincs az F1+ buildben (LIVE_CDS=false)."),
     "E-EDU-001": (422, "F1+ renderer tiltott ha–akkor / „Ön” token (FR-410-EDU)."),

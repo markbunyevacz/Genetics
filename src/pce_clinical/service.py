@@ -7,13 +7,13 @@ import io
 import json
 import sqlite3
 import uuid
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
 from pce_clinical.consent import assert_render_allowed, gate_to_meta
 from pce_clinical.coverage import assess_coverage
-from pce_clinical.errors import ClinicalError
+from pce_clinical.errors import B5, ClinicalError
 from pce_clinical.explanation import build_explanation
 from pce_clinical.fhir import to_stu3_bundle
 from pce_clinical.store import ClinicalStore
@@ -48,6 +48,18 @@ def _id() -> str:
 
 def _row(row: Any) -> dict[str, Any]:
     return dict(row) if row is not None else {}
+
+
+DSR_RESPONSE_DAYS = 30
+
+
+def _assert_no_genetics(blob: str) -> None:
+    if "*1/" in blob or "*4/" in blob or "##fileformat" in blob:
+        raise RuntimeError("DSR artefact leaked genetics")
+
+
+def _parse_iso(ts: str) -> datetime:
+    return datetime.fromisoformat(ts.replace("Z", "+00:00"))
 
 
 class ClinicalService:
@@ -616,17 +628,180 @@ class ClinicalService:
             ),
         )
         self.audit(actor, "withdraw", "DeletionCertificate", cert_id, "26. § (1)")
+        issued = _now()
         cert = {
             "id": cert_id,
             "subject_id": subject_id,
-            "issued_at": _now(),
+            "issued_at": issued,
             "objects_destroyed": destroyed,
             "legal_basis": "2008/XXI. 26. § (1)",
         }
-        blob = json.dumps(cert)
-        if "*1/" in blob or "*4/" in blob or "##fileformat" in blob:
-            raise RuntimeError("deletion certificate leaked genetics")
+        _assert_no_genetics(json.dumps(cert))
+        letter = self._issue_dsr_letter(
+            subject_id=subject_id,
+            actor=actor,
+            kind="withdraw",
+            action_taken="erased",
+            received_at=issued,
+            issued_at=issued,
+            legal_basis="2008/XXI. 26. § (1); GDPR Art. 12(3)",
+            deletion_certificate_id=cert_id,
+            body_hu=(
+                "Az érintetti kérelemre a genetikai tartalom megsemmisítésre került. "
+                "A megtett intézkedésről szóló tájékoztatás a GDPR 12. cikk (3) bekezdése "
+                "szerint, a kérelem beérkezésétől számított egy hónapon belül. "
+                "A 30 éves auditnapló a törlés tényét személyazonosító genetikai tartalom nélkül őrzi."
+            ),
+        )
+        cert["dsr_letter"] = letter
+        cert["dsr_request_id"] = letter["dsr_request_id"]
         return cert
+
+    def _issue_dsr_letter(
+        self,
+        *,
+        subject_id: str,
+        actor: str,
+        kind: str,
+        action_taken: str,
+        received_at: str,
+        issued_at: str,
+        legal_basis: str,
+        body_hu: str,
+        deletion_certificate_id: str | None = None,
+        reason_hu: str | None = None,
+    ) -> dict[str, Any]:
+        letter_id = _id()
+        req_id = _id()
+        refused = action_taken == "refused"
+        letter = {
+            "id": letter_id,
+            "subject_id": subject_id,
+            "issued_at": issued_at,
+            "request_received_at": received_at,
+            "kind": kind,
+            "action_taken": action_taken,
+            "legal_basis": legal_basis,
+            "gdpr_article": "12(4)" if refused else "12(3)",
+            "supervisory_complaint": refused,
+            "judicial_remedy": refused,
+            "body_hu": body_hu,
+            "dsr_request_id": req_id,
+        }
+        if reason_hu:
+            letter["reason_hu"] = reason_hu
+        blob = json.dumps(letter, ensure_ascii=False)
+        _assert_no_genetics(blob)
+        self.store.execute(
+            "INSERT INTO dsr_request(id, subject_id, received_at, kind, response_issued_at, "
+            "letter_json, deletion_certificate_id, legal_basis) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+            (
+                req_id,
+                subject_id,
+                received_at,
+                kind,
+                issued_at,
+                blob,
+                deletion_certificate_id,
+                legal_basis,
+            ),
+        )
+        self.audit(actor, "dsr_letter", "DsrLetter", letter_id, legal_basis)
+        return letter
+
+    def record_open_dsr(
+        self,
+        subject_id: str,
+        actor: str,
+        *,
+        received_at: str,
+        kind: str = "erasure",
+    ) -> dict[str, Any]:
+        """Record a data-subject request without a letter (overdue-path SYN)."""
+        subject = self.store.one("SELECT * FROM subject WHERE id = ?", (subject_id,))
+        if subject is None:
+            raise ClinicalError("E-GONE-010")
+        req_id = _id()
+        self.store.execute(
+            "INSERT INTO dsr_request(id, subject_id, received_at, kind, response_issued_at, "
+            "letter_json, deletion_certificate_id, legal_basis) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+            (
+                req_id,
+                subject_id,
+                received_at,
+                kind,
+                None,
+                None,
+                None,
+                "GDPR Art. 12(3)",
+            ),
+        )
+        self.audit(actor, "dsr_open", "DsrRequest", req_id, "GDPR Art. 12(3)")
+        return {"id": req_id, "subject_id": subject_id, "received_at": received_at, "kind": kind}
+
+    def refuse_erasure(
+        self,
+        subject_id: str,
+        actor: str,
+        *,
+        reason_hu: str | None = None,
+    ) -> dict[str, Any]:
+        """Art. 12(4) letter when erasure is refused (FR-120). Genetics stay."""
+        subject = self.store.one("SELECT * FROM subject WHERE id = ?", (subject_id,))
+        if subject is None or subject["erased"]:
+            raise ClinicalError("E-GONE-010")
+        reason = reason_hu or (
+            "A törlést a 2008/XXI. 26. § (1) szerinti legalább 30 éves nyilvántartási "
+            "kötelezettség (FR-120) miatt megtagadjuk."
+        )
+        issued = _now()
+        letter = self._issue_dsr_letter(
+            subject_id=subject_id,
+            actor=actor,
+            kind="erasure_refused",
+            action_taken="refused",
+            received_at=issued,
+            issued_at=issued,
+            legal_basis="GDPR Art. 12(4); 2008/XXI. 26. § (1); FR-120",
+            deletion_certificate_id=None,
+            reason_hu=reason,
+            body_hu=(
+                f"{reason} A megtagadásról a GDPR 12. cikk (4) bekezdése szerint "
+                "legkésőbb egy hónapon belül tájékoztatjuk. Panasz a felügyeleti "
+                "hatóságnál tehető; bírósági jogorvoslat igénybe vehető. "
+                "A genetikai tartalom ezen az úton nem semmisül meg."
+            ),
+        )
+        return {"dsr_letter": letter, "erased": False, "dsr_request_id": letter["dsr_request_id"]}
+
+    def dsr_dashboard(self, *, as_of: str | None = None) -> dict[str, Any]:
+        as_of_dt = _parse_iso(as_of) if as_of else datetime.now(timezone.utc)
+        cutoff = as_of_dt - timedelta(days=DSR_RESPONSE_DAYS)
+        rows = self.store.query("SELECT * FROM dsr_request ORDER BY received_at, id")
+        alerts: list[dict[str, Any]] = []
+        open_without_letter = 0
+        for row in rows:
+            if row["response_issued_at"]:
+                continue
+            open_without_letter += 1
+            received = _parse_iso(row["received_at"])
+            if received <= cutoff:
+                alerts.append(
+                    {
+                        "code": "E-DSR-OVERDUE",
+                        "http": 200,
+                        "message_hu": B5["E-DSR-OVERDUE"][1],
+                        "dsr_request_id": row["id"],
+                        "subject_id": row["subject_id"],
+                        "received_at": row["received_at"],
+                    }
+                )
+        return {
+            "as_of": as_of or _now(),
+            "open_without_letter": open_without_letter,
+            "overdue": len(alerts),
+            "alerts": alerts,
+        }
 
     def get_certificate(self, cert_id: str) -> dict[str, Any]:
         row = self.store.one("SELECT * FROM deletion_certificate WHERE id = ?", (cert_id,))

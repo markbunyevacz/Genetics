@@ -100,7 +100,24 @@ TARGETS = [
         "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32016R0679",
         "path": DEST / "eur-lex-gdpr-2016-679.html",
         "expect": "html",
-        "optional": True,
+    },
+    {
+        "id": "EUR-LEX-GDPR-2016-679-PDF",
+        "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32016R0679",
+        "path": DEST / "eur-lex-gdpr-2016-679.pdf",
+        "expect": "pdf",
+    },
+    {
+        "id": "EMA-ANON-REPORT-FORM-INSTRUCTIONS",
+        "url": "https://www.ema.europa.eu/en/documents/other/anonymisation-report-form-instructions_en.pdf",
+        "path": DEST / "ema-anonymisation-report-form-instructions.pdf",
+        "expect": "pdf",
+    },
+    {
+        "id": "MDCG-2021-24",
+        "url": "https://health.ec.europa.eu/document/download/cbb19821-a517-4e13-bf87-fdc6ddd1782e_en?filename=mdcg_2021-24_en.pdf",
+        "path": DEST / "mdcg-2021-24-en.pdf",
+        "expect": "pdf",
     },
 ]
 

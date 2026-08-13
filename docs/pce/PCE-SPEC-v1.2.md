@@ -29,7 +29,7 @@ Kérdés helyett rögzítve. Ha bármelyik hamis, a jelzett szakasz újraírand�
 | A7 | Elsődleges UI-nyelv magyar; a klinikai ajánlás-szöveg HU, ha szakmai lektor van, különben az angol eredeti. | Klinikai szakértő (OQ-14) | OQ-14 | FR-610 lektor | FR-610 |
 | A8 | EESZT-útvonal F1-ben: **modul** az engedélyezett medikai rendszerben, nem saját EESZT-csatlakozás (NG-05). A 2026-09-30 ISO 9001 akkor is F0, ha a vevő a vendor. | `eeszt_iso_owner` | C melléklet; OQ-01 | **2026-09-30** | REG-040a, C melléklet |
 | A9 | A gyártó a `genetics` repo tulajdonos szervezete. **Név ebben a dokumentumban nincs kitalálva.** | Ügyvezetés | Küldéskor, Outbound | Küldéskor | Fejléc, REG-031 |
-| A10 | `[ASSUMPTION]` A **klinikai** hozzájárulás-visszavonás kaszkádjának üzemi SLA-ja **72 óra** (FR-110). A 2008/XXI. 26. § (1) határidőt nem ad. A GDPR Art. 12(3) a kérelemre **válasz** határideje (egy hónap, +2 összetett esetben). Az A10 ennél szigorúbb. **Nem** a shadow store alapértelmezett TTL-je. Visszavonáskor a álnevesített HITL-rekord: törlés **vagy** irreverzibilis anonimizálás 72 h-n belül. | DPO + klinikai ops (OQ-16 C1) | OQ-16 C1; Irish DPC Case Studies 2025 Case Study 12 (Art. 12(3) egy hónap). EUR-Lex primer letöltése **hátravan**. | v1 előtt (FR-110) | FR-110; E.5.1 |
+| A10 | `[ASSUMPTION]` A **klinikai** hozzájárulás-visszavonás kaszkádjának üzemi SLA-ja **72 óra** (FR-110). A 2008/XXI. 26. § (1) határidőt nem ad. A GDPR Art. 17(1) a törlést „without undue delay” írja elő (kvantifikálatlan, nem hiányzó). A GDPR Art. 12(3) a kérelemre **válasz** határideje (egy hónap, +2 összetett esetben). Az A10 a *törlés* SLA-ja, szigorúbb a 12(3)-nál. **Nem** a shadow store alapértelmezett TTL-je. Visszavonáskor a álnevesített HITL-rekord: törlés **vagy** irreverzibilis anonimizálás 72 h-n belül. | DPO + klinikai ops (OQ-16 C1) | OQ-16 C1; S055 EUR-Lex Art. 12(3)/12(4)/17(1) pin; S054 Irish DPC CS12 | v1 előtt (FR-110) | FR-110; E.5.1; [G](G-open-items.md) §1 |
 | A11 | A v1.2 kanonikus szabályozási stratégia a **legális hibrid** (A.0–A.2): F1+ statikus lelet; F1s shadow HITL a kezelőorvos nélkül; F2/F3 csak minősítés után. | Counsel + RA (OQ-05) | OQ-05 | v1 előtt | A, E, FR-440–470 |
 | A12 | Shadow default: **irreverzibilis anonimizálás** a intézményi gatewayen. Álnevesítés + FR-115 csak ha longitudinális követés kell. | DPO (OQ-16 A1) | OQ-16 A1 | F1s HIS előtt | E.5, FR-460 |
 | A13 | `[ASSUMPTION]` A gateway ritka gén–gyógyszer kombinációt elnyom (FR-461) vagy az álnevesített utat választják (re-ID). | DPO (OQ-16) | OQ-16; WP29 05/2014 (k-anonimitás *technika*, nem küszöb); EDPB 01/2025 (álnevesített adat személyes adat marad, Rec. 26) | F1s HIS előtt | E.3.1, OQ-16 |
@@ -257,7 +257,9 @@ Technikai megjegyzés: v1 kézi rögzítés; v1.1 FHIR `Consent` + `Encounter`.
 Hozzájárulás gén/génpanel és felhasználási cél szintjén; 6. § (7) nem-tudás joga.
 
 - [ ] Given a beteg lemondott egy adott gén eredményének megismeréséről, When riport generálódik, Then az adott gén a **beteg-példányból** kimarad. A klinikus-példányban csak akkor jelenhet meg, ha a klinikus hozzáférése külön, konfigurált jogalapon engedélyezett — kódmódosítás nélkül.
-- [ ] Given hozzájárulás-visszavonás, When rögzítésre kerül, Then a rendszer kaszkádolva töröl minden érintett genetikai adatot és nyilvántartási bejegyzést, és visszavonhatatlan törlési tanúsítványt állít ki. Az üzemi cél: **72 órán belül** `[ASSUMPTION]` A10. A 2008/XXI. 26. § (1) nem ad határidőt; a GDPR Art. 12(3) szerint a törlési kérelemre legkésőbb egy hónapon belül kell **reagálni** (összetett esetben +2 hónap, értesítéssel az első hónapon belül). Az A10 72 órás SLA ennél szigorúbb. Forrás: Irish DPC Case Studies 2025, Case Study 12 (lekérdezve 2026-08-13, pin: `Sources/official/ie-dpc-case-studies-2025.pdf`). EUR-Lex (EU) 2016/679 primer letöltése **hátravan**.
+- [ ] Given hozzájárulás-visszavonás, When rögzítésre kerül, Then a rendszer kaszkádolva töröl minden érintett genetikai adatot és nyilvántartási bejegyzést, és **két artefaktumot** állít ki: (a) visszavonhatatlan törlési tanúsítvány a kaszkádról, (b) érintetti **válaszlevél** a megtett intézkedésről. Az (a) üzemi cél: **72 órán belül** `[ASSUMPTION]` A10. A 2008/XXI. 26. § (1) nem ad határidőt. A GDPR Art. 17(1) a törlést „without undue delay” írja elő (kvantifikálatlan ≠ hiányzó). A GDPR Art. 12(3) szerint a kérelemre legkésőbb egy hónapon belül kell **reagálni** (összetett esetben +2 hónap, értesítéssel az első hónapon belül) — ez a **(b)** határideje. Az A10 72 órás SLA a törlésre szigorúbb, a válaszlevélre nem helyettesíti a 12(3)-at. Forrás: S055 EUR-Lex pin (`Sources/official/eur-lex-gdpr-2016-679.html`); S054 Irish DPC CS12.
+- [ ] Given Art. 17 törlési kérelem, amelyet a 30 éves nyilvántartás (FR-120) miatt **megtagadunk**, When a kérelem rögzítésre kerül, Then **nincs** 72 órás törlési kaszkád, de a **(b) válaszlevél** Art. 12(4) szerint akkor is kiállítandó (indok + panasz + bírósági jogorvoslat). SYN: `refuse_erasure`.
+- [ ] Negatív teszt: 30 napnál régebbi, válaszlevél nélküli kérelem a compliance dashboardon `E-DSR-OVERDUE` riasztást ad (`GET /v1/compliance/dsr`).
 - [ ] A kaszkád **derived** adatra is kiterjed: diplotípus, fenotípus, riportok, cache, PRS-eredmény (ha van).
 - [ ] **HITL/shadow (A10 vs A15):** álnevesített rekord 72 h-n belül vagy (a) törlődik, vagy (b) irreverzibilisen anonimizálódik (nincs kulcs a PCE-nél, intézményi kulcs megsemmisül). Már anonim HITL-sor (nincs join-key): a klinikai tenancy törlése a 26. § tárgya; a HITL-sor a DPIA szerint maradhat A15 alatt. Nem „minden shadow 72 h TTL”.
 - [ ] Negatív teszt: visszavonás után a korábbi riport URL **410 Gone**, nem 200 cache-ből.
@@ -265,7 +267,7 @@ Hozzájárulás gén/génpanel és felhasználási cél szintjén; 6. § (7) nem
 
 #### FR-120 · 30 éves nyilvántartás — **Compliance P0** (hash-chain: **P1**)
 
-Jogalap: 26. § (1). `[CORRECTED]` A hash-chain nem törvényi P0.
+Jogalap: 26. § (1). `[CORRECTED]` A hash-chain nem törvényi P0. A 30 éves megőrzés **megalapozhatja** az Art. 17 törlés megtagadását (S054 Irish DPC CS12 analogia: foglalkozás-egészségügy, 7 év, Orvosi Kamara) — de a 12(4) válaszlevél akkor is kötelező (FR-110). OQ-06/G **nem** pecsételi, hogy a 30 év GDPR-konform; az S054 a legjobb elérhető hatósági analogia.
 
 - [ ] Minden genetikai minta/adat felvétele, vizsgálata, tárolása, feldolgozása és továbbítása naplózott; a bejegyzés tartalmazza a minta típusát, mennyiségét (ha ismert), eredetét, rendeltetési célját és a kialakított genetikai adat *kategóriáját* (gén/diplotípus azonosító, nem nyers VCF a naplóban).
 - [ ] A napló **legalább 30 évig** megőrződik, kivéve a 26. § (1) szerinti megsemmisítést.
@@ -574,7 +576,7 @@ Jogalap: **6. § (6)** `[V]`.
 | **NFR-050** | EHDS-készültség | Adatmodell leképezhető EHDS/MyHealth@EU felé; nem implementált, nem kizárt | Architecture review | P2 |
 | **NFR-060** | Reprodukálhatóság | Adott bemenet + config-verzió → bitre azonos kimenet | CI determinizmus | P0 |
 | **NFR-070a** | Kódminőség / 62304 — F1+ mag | Software safety class **B** a L0–L3, L4-static, L6-report útra (consent-kapu, statikus társítás, PDF/FHIR). Unit+integráció ≥ 80%, klinikai útvonal 100% | CI | P0 |
-| **NFR-070b** | Kódminőség / 62304 — élő párosítás | Software safety class **C** **javaslat** (RA: OQ-06) az L4-live / F1s–F2–F3 útra a A.4.1 párokra, mert rossz élő ajánlásnál súlyos klinikai kár lehetséges (R-007 S=5). Amíg az RA nem választ, az F3 gyártói default **IIa** (A.3) **nem** zárja a Class C vs Rule 11a III kérdést. | OQ-06; coverage az L4-live-ra F1s-től | P0 F1s/F2 |
+| **NFR-070b** | Kódminőség / 62304 — élő párosítás | Software safety class **C** **javaslat** (RA: OQ-06) az L4-live / F1s–F2–F3 útra a A.4.1 párokra, mert rossz élő ajánlásnál súlyos klinikai kár lehetséges (R-007 S=5). Amíg az RA nem választ, az F3 gyártói default **IIa** (A.3) **nem** zárja a Class C vs Rule 11a III kérdést. G §2.4: IIa-safe élő párlista, amíg az RA 2026-10-31-ig mást nem ír. | OQ-06; coverage az L4-live-ra F1s-től | P0 F1s/F2 |
 | **NFR-080** | DR | RPO ≤ 1 h, RTO ≤ 8 h; 30 éves nyilvántartás külön immutábilis archívumban | Éves DR-teszt | P0 |
 | **NFR-090** | Skálázás | 10 000 eset/hó lineáris költség; PharmCAT izolált worker | Kapacitásteszt | P1 |
 
@@ -678,10 +680,10 @@ A 12 vs 14 eltérés **nem** nyitott kérdés: lásd FR-310.
 | **OQ-02** | PREPARE 12 vs PGx-Passport 14 | Klinikai | **LEZÁRVA** (FR-310, VC-02) |
 | **OQ-03** | Melyik partnerlabor vállalja az L3 aláírói felelősséget, milyen áron? | Üzletfejlesztés | **ELŐTERJESZTVE** (F.5). Tárgyalás indul; havidíj + volumensáv. Labor neve / aláírt szerződés nyitott. |
 | **OQ-04** | Magyar Genom Program / BBMRI HU csomópont: partner vagy versenytárs? | Ügyvezetés | Nyitott; hungen.hu nem datált |
-| **OQ-05** | Védhető-e az **A.1 F1+** nem-MDSW-ként? | **Külső counsel** | **ELŐTERJESZTVE** (F.1). Gyártói kérés: feltételes nem-MDSW a A.1.2 + FR-490 mellett. **Nem** counsel-aláírás. |
-| **OQ-06** | **Osztály páronként** (A.4.1): Rule 11 IIa / IIb / III és IEC 62304 B / C a DPYD–fluoropirimidin, CYP2C19–clopidogrel, TPMT/NUDT15–tiopurin, CYP2D6–kodein, HLA-B\*15:02–karbamazepin párokra. **Nem** először „melyik Notified Body”. NB csak a választott osztály után. | RA | Nyitott; A.4.1 tábla a dosszié inputja |
+| **OQ-05** | Védhető-e az **A.1 F1+** nem-MDSW-ként? | **Külső counsel** | **ELŐTERJESZTVE** (F.1). Gyártói kérés: feltételes nem-MDSW a A.1.2 + FR-490 mellett. Counsel-formátum: G Q1–Q3. Amíg nincs pecsét: **Class I MDSW**-ként haladni `[A]` (G §3.4) — nem nem-eszköz. **Nem** counsel-aláírás. |
+| **OQ-06** | **Osztály páronként** (A.4.1): Rule 11 IIa / IIb / III és IEC 62304 B / C a DPYD–fluoropirimidin, CYP2C19–clopidogrel, TPMT/NUDT15–tiopurin, CYP2D6–kodein, HLA-B\*15:02–karbamazepin párokra. **Nem** először „melyik Notified Body”. NB csak a választott osztály után. | RA | Nyitott; A.4.1 tábla a dosszié inputja. Gyártói javaslat (G §2.4): **(a) IIa-safe párlista** — az öt magas pár live-ban kikapcsolva. `[A]` ha az RA 2026-10-31-ig nem dönt: (a). |
 | **OQ-15** | Shadow = Art. 62 vizsgálat vagy evaluation? | RA + intézmény | **ELŐTERJESZTVE** (F.2). Gyártói kérés: nem Art. 62, reviewer-vak evaluation. Függ OQ-16-tól. **Nem** RA-határozat. |
-| **OQ-16** | Anonim shadow elég-e, vagy FR-115? | DPO | **ELŐTERJESZTVE** (F.3). Gyártói kérés: anonim default + A14 monitor/drop G3 rovására is. **Nem** DPIA. |
+| **OQ-16** | Anonim shadow elég-e, vagy FR-115? | DPO | **ELŐTERJESZTVE** (F.3). Gyártói kérés: anonim default + A14 monitor/drop G3 rovására is. G javaslat (nem pecsét): k ≥ 11 a `diplotípus × ATC5` cellára, `f_min = k/N`. Az A14 k≥5 / 0,5% **marad** `[ASSUMPTION]`. **Nem** DPIA. |
 
 ### Nem-blokkoló
 
@@ -717,13 +719,15 @@ A csomagok és a **gyártói kérés** a [F mellékletben](F-decision-package.md
 
 **2026-08-13 (D-38, §10.2 (c)):** A14 / FR-450 / FR-460 / FR-461 ATC-klauzula javítva: default **7 karakteres hatóanyag-kód**. A többi FR változatlan. Az OQ-16 pecsét ettől **nem** zárul.
 
-Az OQ-05 / OQ-15 / OQ-16 / OQ-01 / OQ-03 / OQ-17 **nem** zárulnak le. ELŐTERJESZTVE / NYITOTT maradnak.
+**2026-08-13 (D-41, §10.2 (c)):** G melléklet — S055 LEZÁRVA; FR-110 két artefaktum. OQ-05 / OQ-06 / OQ-16 **nem** zárul. F-14 `[Y*]` a Sales-ben marad, nem FR-listaár.
+
+Az OQ-05 / OQ-15 / OQ-16 / OQ-01 / OQ-03 / OQ-17 **nem** zárulnak le. ELŐTERJESZTVE / NYITOTT maradnak. OQ-06 nyitott (RA); G §2.4 (a) fallback `[A]` 2026-10-31.
 
 A fejlesztés **elindulhat** a lenti határon. „F.6 nélkül nem indul a mérföldkő” = nincs **éles betegadat, HIS-csatlakozás, nem-MDSW forgalmazás**. Nem azt jelenti, hogy a git üresen marad.
 
 | Sáv | Indul most? | Tartalom | Vár F.6-ra? |
 | --- | --- | --- | --- |
-| **Spec / Outbound** | **Lezárva** (fagyasztva) | v1.2 + A–F + öt küldendő irat | Igen a *válaszra*; a *küldés* azonnal |
+| **Spec / Outbound** | **Lezárva** (fagyasztva) | v1.2 + A–G + küldendő irat | Igen a *válaszra*; a *küldés* azonnal |
 | **F1+ mag (kód)** | **Igen** | L0–L2, FR-240 outside-call, FR-210 callability, FR-310 PREPARE-12 config, FR-400-STATIC, FR-410-EDU, FR-490, FR-500 PDF/FHIR, FR-470 `LIVE_CDS=false`, FR-700 (nincs LLM a klinikai úton). Matcher **ki**. Gold set v0: missing-to-ref + tiltott EDU tokenek. | Nem a kódra. Igen a **nem-MDSW piaci** állításra (OQ-05). |
 | **F1s kód fixture-ön** | **Igen, zárt** | FR-440/450/450-BLIND/460/461/410-LIVE **szintetikus** adatokon, külön store, külön IAM. Nincs éles HIS, nincs valódi betegrekord. | Igen az **éles** HIS-csatlakozásra (OQ-15 + OQ-16). |
 | **ISO 9001 / Redmine** | **Igen** (F.4 BELSŐ IGEN) | C-000 tény, C-201 tanúsító; 2026-09-30 kapuőr | A tanúsítvány *ténye* nyitott; a folyamat nem vár counselre |
@@ -806,7 +810,7 @@ Váz:
 | Req ID | Forrás | Teszteset | MDR/AI Act |
 | --- | --- | --- | --- |
 | FR-100 | 2008/XXI. 6. § (2), 8. §, 12. § (1) | TC-CONSENT-001..006 | GSPR 14.1 |
-| FR-110 | 6. § (7), 26. § (1); GDPR Art. 12(3) | TC-CONSENT-010..014 | GDPR Art. 12(3), 17; GSPR 14 |
+| FR-110 | 6. § (7), 26. § (1); GDPR Art. 12(3)/12(4), 17(1); S054, S055 | TC-CONSENT-010..014; DSR levél + `E-DSR-OVERDUE` | GDPR Art. 12(3), 12(4), 17; GSPR 14 |
 | FR-120 | 26. § (1) | TC-AUDIT-001..006 | GSPR 17.2 |
 | FR-210 | Klinikai kockázat + PharmCAT preprocessor | TC-CALL-001..012 | ISO 14971 RC-003 |
 | FR-310 | PREPARE; PGx-Passport; PharmCAT 2.11.0 | TC-CONF-001..005 | IEC 62304 §6 |

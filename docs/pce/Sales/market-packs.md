@@ -124,11 +124,11 @@ A YouScript **publikus** sémája: egyéni provider-előfizetés (365 USD/év) +
 
 | Sáv | Ki fizet | PCE sor | YouScript/ActX analog (nyilvános) | Placeholder | Mikor számlázható élesen |
 | --- | --- | --- | --- | --- | --- |
-| **A. Platform** | Klinika / hálózat (SKU-P) | Éves intézményi licenc, market pack HU/EU/US | SMART: Site-Based; enterprise quote nem publikus | `[Yp]` — sáv **6–35 M Ft**/év (következtetés) | MSP + DPA + diplotípus-forrás. F1+ ON: OQ-05 *vagy* IIa/CE |
+| **A. Platform** | Klinika / hálózat (SKU-P) | Éves intézményi licenc, market pack HU/EU/US | SMART: Site-Based; enterprise quote nem publikus | `[Yp]` — **0 Ft < 15 felírónál**; 6–35 M Ft felette (következtetés, ajánlatkérés) | MSP + DPA + diplotípus-forrás. F1+ ON: OQ-05 *vagy* IIa/CE |
 | **B. Klinikus-sáv** | Ugyanaz a vevő | Per-clinician / év (vagy /hó × 12) | YouScript provider **365 USD/év** lista (US, 1 fiók, nem EHR-enterprise) | `[Yc]` — sáv **120–480 e Ft**/év (következtetés) | Ugyanaz. Nem a 365 USD átvétele |
 | **C. Telephely** | Ugyanaz | Extra site | Site-Based (ár nélkül) | `[Ys]` — sáv **2–8 M Ft**/év (következtetés) | Ugyanaz |
 | **D. Indítás / HIS** | Vevő vagy SKU-H | Egyszeri integráció | Nincs publikus YouScript-tétel | `[Y0]` / `[Yi]` — a licenc **20–50%-a** (norma, `[ASSUMPTION]`) | Szerződés |
-| **E. F1s shadow** | Vevő, ha a pack ON | A platform része vagy külön sor | Nincs YouScript-ár | `[Ysh]` vagy 0 (benne van) | OQ-15 + OQ-16 |
+| **E. F1s shadow** | Vevő, ha a pack ON | A platform része vagy külön sor | Nincs YouScript-ár | `[Ysh]` = **0 Ft** (G3 validáció, nem termék) | OQ-15 + OQ-16 |
 | **F. F2/F3 aktiválás** | Vevő | Előfizetés / aktiválási díj a **feloldott** élő CDS-re | ActX: élő order-alert a fizetett klinikai réteg (vendor). YouScript: az élő CDS *a* termék | `[Ya]` — **+15–40%** (következtetés), csak pecsét után | **Csak** CE / in-house / OQ-17 után. Nem demó-kapcsoló |
 | **G. Labor tenancy** | Csak ha a labor *is* white-label tenancyt kér | Opcionális havidíj + volumensáv | ActX lab PDF reporting (vendor). TSI volt lab-API | `[Yl]` — sáv **4–25 M Ft**/év (következtetés) | REG-020. **Nem** viszonteladás. A mag-SKU a klinika |
 

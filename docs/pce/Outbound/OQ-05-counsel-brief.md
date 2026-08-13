@@ -16,11 +16,21 @@ Kérjük, a csatolt v1.2 műszaki specifikáció és az alább **szó szerint** 
 
 ---
 
-## 0. Kérdés (A.8, szűkített)
+## 0. Kérdés (A.8, szűkített) + G Q1–Q3
 
 > Védhető-e az A.1 F1+ pozíció, ha a kimenet a labor-diplotípushoz verziózott CPIC/DPWG/FDA **gén-szintű** szövegkivonatot rendel, **nincs** aktuális-gyógyszer párosítás, **nincs** fenokonverzió-alkalmazás, **nincs** CDS Hooks, és az aláíró a labor orvosa?
 
-Ha a válasz **nem**, az F1+ klinikai kimenet IIa pályára esik (REG-010 újra; Notified Body a forgalomba hozatalhoz).
+A G melléklet szerint ez még tág. Kérjük **előbb** a három igen/nem kérdést (a pecsét marad Igen/Nem/Feltétellel a V. szakaszban):
+
+| # | Kérdés | Melléklet |
+| --- | --- | --- |
+| **Q1** | Az a kimenet, amely a vizsgált génekre a **teljes, szűretlen**, verziózott guideline-táblát nyomtatja a diplotípus mellé, anélkül hogy ismerné a beteg gyógyszerlistáját — Rule 11 hatálya, vagy Rule 11c Class I? | `tests/test_report.py`; `src/pce_report/schema.py` (`ALLOWED_B41_TOP_LEVEL` = 45, `FORBIDDEN_B41_FIELDS` = 15); példa-lelet |
+| **Q2** | Ha Rule 11 alatt áll: a beteg-specifikus szelekció hiánya elegendő-e a **IIa alatti** besoroláshoz? | ugyanaz |
+| **Q3** | Ha Q1 = Class I: elegendő-e a CI-invariáns-készlet (`LIVE_CDS is False`; `! grep MedicationEntry src/pce_report`; `! grep pce_gateway.pipeline src/pce_report`) az MDCG Rev.1 dokumentált modulhatárhoz? | `.github/workflows/ci.yml` |
+
+Ha a válasz **Q1 = Rule 11 és Q2 = nem**, az F1+ klinikai kimenet IIa pályára esik (REG-010 újra; Notified Body a forgalomba hozatalhoz).
+
+Amíg a pecsét hiányzik, a gyártó **Class I MDSW** technical file-lal halad (G §3.4), nem „nem eszköz”-ként. Ez nem előre pecsételi a nem-MDSW-t.
 
 ---
 
@@ -164,6 +174,6 @@ Az alábbi szöveg **csak akkor** használható, ha a fenti döntés IGEN vagy a
 | Aláírás / pecsét | .................................... |
 | Mellékelt dosszié verziója | PCE-SPEC-v1.2 + A melléklet (A.0, A.1, A.1.1, A.1.2, A.4, A.8) |
 
-**Mellékletek:** PCE-SPEC-v1.2; A melléklet; F.1; MDCG 2019-11 Rev.1 (a counsel saját példánya). Tandem/punktum/mdxcro **nem** a minősítés primer forrása.
+**Mellékletek:** PCE-SPEC-v1.2; A melléklet; F.1; G §3; MDCG 2019-11 Rev.1 (a counsel saját példánya); `tests/test_report.py`; `src/pce_report/schema.py`; `.github/workflows/ci.yml`. Tandem/punktum/mdxcro **nem** a minősítés primer forrása.
 
 *Ez az irat gyártói kérés. Nem helyettesíti a counsel független vizsgálatát. OQ-05 a F.6 sor kitöltéséig nyitott.*

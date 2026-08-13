@@ -68,7 +68,9 @@ Azonosítók: UUID. Genetikai tartalom a **klinikai** tenancyben pszeudonim `sub
 | **Report** | `id`, `case_id`, `version`, `parent_report_id?`, `formats[]`, `signer_slot`, `immutable` | FR-500/510; **nincs** `functional_phenotype` F1+-on |
 | **AuditEvent** | `id`, `ts`, `actor`, `action`, `object_type`, `object_id`, `legal_basis`, `prev_hash?` | FR-120; hash P1 |
 | **Explanation** | `id`, `case_id`, `report_id`, `body_hu`, `hash` | FR-710; determinisztikus |
-| **DeletionCertificate** | `id`, `subject_id`, `issued_at`, `objects_destroyed[]` | FR-110; genetikai tartalom nélkül |
+| **DeletionCertificate** | `id`, `subject_id`, `issued_at`, `objects_destroyed[]` | FR-110 (a); genetikai tartalom nélkül |
+| **DsrRequest** | `id`, `subject_id`, `received_at`, `kind` (withdraw \| erasure \| erasure_refused), `response_issued_at?`, `letter_json?` | FR-110 (b); Art. 12(3)/12(4) |
+| **DsrLetter** | a `letter_json`; `action_taken` erased \| refused | Nincs diplotípus / VCF |
 
 `callability` enum: `CALLED` | `PARTIAL` | `INDETERMINATE` | `NOT_TESTED`.
 
@@ -188,9 +190,17 @@ Query: gén és/vagy hatóanyag. Válasz: verziózott guideline-szövegek. **Nin
 
 ### B.4.6 HITL API — `/v1/hitl/**` (FR-450)
 
-Csak `hitl_reviewer` (és DPO/admin a törléshez). `clinician` → 403/404 (`E-ISO-001`).
+Külön process (`pce_hitl`). Csak `hitl_reviewer` (és DPO/admin a törléshez). `clinician` → 403/404 (`E-ISO-001`).
 
 `GET /v1/hitl/inferences` — batch kártyák (opák ID, ATC≤4, nincs PII). `POST /v1/hitl/inferences/{id}/blind` — vak döntés. `POST /v1/hitl/inferences/{id}/reviews` — verdict a motor felfedése után.
+
+### B.4.7 Érintetti kérelem (FR-110) — DPO
+
+| Út | Mikor |
+| --- | --- |
+| `POST /v1/subjects/{id}/withdraw` | 26. § (1) kaszkád + tanúsítvány **és** Art. 12(3) válaszlevél |
+| `POST /v1/subjects/{id}/refuse-erasure` | FR-120 megtagadás; genetika marad; Art. 12(4) levél |
+| `GET /v1/compliance/dsr` | 30 napnál régebbi levél nélküli kérelem → `E-DSR-OVERDUE` |
 
 ---
 
@@ -214,6 +224,8 @@ Csak `hitl_reviewer` (és DPO/admin a törléshez). `clinician` → 403/404 (`E-
 | `E-CALLABILITY` | — | génszintű, nem feltétlen HTTP | `INDETERMINATE` a riportban, nem error a case-en, ha más gének CALLED |
 | `E-TIMEOUT-CDS` | — | CDS > 2 s | Hívó fail-open; PCE logolja. **F2 only.** |
 | `E-GONE-010` | 410 | Visszavont / törölt riport | FR-110 |
+| `E-DSR-OVERDUE` | 200 (riasztás) | 30 napnál régebbi érintetti kérelem válaszlevél nélkül | FR-110 Art. 12(3)/12(4) |
+| `E-AUDIT-001` | 409 | Audit UPDATE/DELETE | FR-120 append-only |
 | `E-SHADOW-001` | 400 | Gateway kimenet PII-t vagy ATC5-öt / nap-szintű időt tartalmaz | A shadow ingest elutasít; a HIS nem blokkol. |
 | `E-SHADOW-002` | 403 | Shadow hívás nem a gateway service-accounttól | |
 | `E-SHADOW-003` | 202 | Rekord FR-461 miatt elnyomva (k / ritka diplotípus) | Nincs HITL sor; csak aggregált számláló. |

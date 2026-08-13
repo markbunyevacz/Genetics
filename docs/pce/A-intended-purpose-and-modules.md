@@ -168,6 +168,10 @@ A D.1 nem írja a DPYD-ártalmat „halál”-nak. Az RA **páronként** válasz
 
 **OQ-06 kérdése:** melyik **osztály, páronként** — nem „melyik Notified Body”.
 
+**G gyártói javaslat (nem pecsét, [G](G-open-items.md) §2.4):** az első L4-live kiadáshoz **(a) IIa-safe párlista** — a fenti öt pár élő párosítása **ki**; statikus F1+ szöveg + „élő párosítás nem elérhető”. `[A]` Ha az RA 2026-10-31-ig nem dönt, a fejlesztés (a) szerint halad. `LIVE_CDS` ezen a napon false; a kill-switch a live flag feloldásakor kell, nem most.
+
+A D.1 nem írja a DPYD-ártalmat „halál”-nak. A III-oszlop a G-ben `[I]` javaslat, nem CPIC-halálállítás.
+
 ---
 
 ## A.5 Modul-függőségek
@@ -190,6 +194,8 @@ F2/F3: L4-live ──► L6-cds  (kapcsoló csak CE / in-house után)
 
 `[CORRECTED]` VC-04. Class I létezik (11c). PGx élő terápiás információ **nem** 11c. F1+ menekülés = **nem-MDSW könyvtári társítás** (OQ-05), nem Class I.
 
+**G §3.4 fejlesztési default pecsétig `[A]`:** haladj **Class I MDSW** technical file-lal (14971, PMS, nyilatkozat), ne „nem eszköz”-ként. Ez **nem** OQ-05 pecsét és **nem** írja felül a fenti elemzést. Ha a counsel IIa-t mond, a dosszié beszámít.
+
 ---
 
 ## A.7 In-house (F2)
@@ -202,4 +208,4 @@ REG-011. Nem mentesít 2008/XXI. és GDPR alól. Intézményen kívül = F3.
 
 > Védhető-e az A.1 F1+ pozíció, ha a kimenet a labor-diplotípushoz verziózott CPIC/DPWG/FDA **gén-szintű** szövegkivonatot rendel, **nincs** aktuális-gyógyszer párosítás, **nincs** fenokonverzió-alkalmazás, **nincs** CDS Hooks, és az aláíró a labor orvosa?
 
-A v1.1 kérdés tágabb volt (gyógyszerajánlás-szöveg általában). A v1.2 szűkít. A válasz továbbra is **külső counsel**. Csomag: A.1, A.1.1, **A.1.2**, A.4, FR-400-STATIC, FR-410-EDU, FR-470, REG-010, MDCG Rev.1.
+A v1.1 kérdés tágabb volt (gyógyszerajánlás-szöveg általában). A v1.2 szűkít. A G melléklet tovább szűkít Q1–Q3-ra (Rule 11 vs 11c; szelekció hiánya vs IIa alatt; CI-invariánsok vs MDCG modulhatár). A válasz továbbra is **külső counsel**. Csomag: A.1, A.1.1, **A.1.2**, A.4, FR-400-STATIC, FR-410-EDU, FR-470, REG-010, MDCG Rev.1, [G](G-open-items.md) §3, [OQ-05 brief](Outbound/OQ-05-counsel-brief.md).

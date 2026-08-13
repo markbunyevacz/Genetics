@@ -51,6 +51,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P06x | Plan-vs-content az 5 user-pontra | 2026-08-13 | 2026-08-13 | DONE | TRACE §11; official pin teszt | SPEC-PLAN-TRACE §11 | — |
 | P05y | J-1…J-6 kapuk | 2026-08-13 | 2026-08-13 | DONE | User: kódszintű F-07 injekció + tételes lista | allow-list B.4.1; pheno-gold-v0 N=32; A.4.1; FR-110 Art. 12(3); §0 Owner/Due | E-19 |
 | P05z | Árazás: megfigyelt vs következtetés | 2026-08-13 | 2026-08-13 | DONE | User: YouScript 365 USD; HIS-plafon; javasolt Ft-sáv | `Sales/pricing.md`; S056–S058; VC-16 | E-20 |
+| P05aa | G melléklet: öt nyitott tétel | 2026-08-13 | 2026-08-13 | DONE | User PCE-G-v1.0 | `G-open-items.md`; S055 LEZÁRVA; DSR két artefaktum; OQ-05/06/16 javaslat pecsét nélkül | E-19 zárva (EUR-Lex 200) |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -98,6 +99,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-38 | P05x | Spec-validáció: 5 vs 7 karakteres kód | Fagyasztott A14 ATC4 / 7 karakteres hatóanyag-kód | **7 karakteres WHO hatóanyag-kód a default** (§10.2 (c)). A14/FR-450/460/461 javítva. DPO durvíthat; akkor párosítás szünetel. k≥5 és 0,5% marad. Nem betegazonosító. | S032; user 2026-08-13 | user |
 | D-39 | P05y | J-1 vs J-3 sorrend; J-2 osztály | Csak J-1 / csak J-3 / mind a hat | **Mind a hat.** J-1 allow-list ma. J-3 pheno-gold **üres** funkcionális fenotípus (nincs kitalált NM→szegény). J-2 A.4.1 + NFR-070a/b, OQ-06 nyitott. Ár **nincs** a specben. | User 2026-08-13 kódszintű lista | user |
 | D-40 | P05z | Ft-sáv a specben vs Sales | Listaár a specbe / csak Sales következtetés | **Sales/pricing.md.** A spec §11 kötés marad; a 6–35 M Ft **nem** megfigyelt listaár. DrugMap VC-10. EKR 88,3 M Ft nincs pinelve. | User 2026-08-13 árazás | user |
+| D-41 | P05aa | G öt tétel pecsét vs javaslat | Pecsétek / csak javaslat + S055 pin | **S055 LEZÁRVA.** OQ-05/06/16 **nem** pecsét. (a) IIa-safe fallback 2026-10-31; Class I MDSW default; k≥11 javaslat A14 változatlan; 15 felíró alatt `[Yp]=0`. | User G v1.0 | user |
 
 ## 3. Error log
 
@@ -122,6 +124,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | E-17 | P05w | Jargon / information loss | PM betűszó magyarázat nélkül; „durvább kód” / „szer azonosítja a beteget”; extra doksi | Magyar van/hiányzik a kártyán; hatóanyag-kód a párosításhoz; TRACE/DELIVERY/DATAFLOW only | D-37 |
 | E-18 | P05x | Jargon / spec mismatch | „A lelet olvassa a gyógyszerlistát”; „allélhívó ki”; fagyasztott 5 karakteres kód vs WHO 7 | Lelet-szöveg: guideline-lista, nem felírás-szűrés; PharmCAT NamedAlleleMatcher magyarázat; A14 D-38 | D-38 |
 | E-19 | P05y | API / authority fetch | EUR-Lex GDPR HTML/PDF 202 empty body | Irish DPC CS2025 pin Art. 12(3)-ra; S055 hátravan | J-4 |
+| E-19b | P05aa | API / authority fetch (E-19 zárás) | EUR-Lex 202 empty body **lejárt**: HTML 200, 809 035 byte | Pin HTML+PDF; Art. 12(3)/12(4)/17(1) a HTML-ből; S055 LEZÁRVA | D-41 |
 | E-20 | P05z | Authority fetch | YouScript HTML urllib 403; EKR001266472024 karbantartási oldal | WebFetch 365 USD; SMART+Semmelweis pin; EKR összeg `[R]` | D-40 |
 
 ## 4. File timeline
@@ -145,10 +148,11 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | src/pce_hitl/ | P05u | P05w | vak ellenőrző API + `hitl.sqlite` |
 | src/pce_ui/hitl.html | P05u | P05w | van/hiányzik lista a vak lépés után |
 | src/pce_clinical/coverage.py | P05w | P05x | FR-210; diplotípus-forrás magyarul |
-| docs/pce/Sources/official/ | P05x | P05y | + WHO N06AB10/C01BA01; EDPB 01/2025; WP29 05/2014; Irish DPC CS2025 |
+| docs/pce/G-open-items.md | P05aa | P05aa | Javaslat, nem pecsét; S055 LEZÁRVA |
+| docs/pce/Sources/official/ | P05x | P05aa | + GDPR HTML/PDF; EMA 0,09; MDCG 2021-24 |
 | tests/fixtures/pheno-gold-v0/ | P05y | P05y | N=32; G3 nevező |
 | src/pce_report/schema.py | P05r | P05y | B.4.1 allow-list |
 | tests/fixtures/f1plus-v0/prepare12/ | P05w | P05w | 12 gén CPIC pin |
 | tests/fixtures/vcf-gold-v0/ | P05w | P05w | 3 SYN missing-to-ref |
-| docs/pce/Sales/pricing.md | P05z | P05z | Következtetési sáv; nem listaár |
+| docs/pce/Sales/pricing.md | P05z | P05aa | `[Yp]=0` 15 felíró alatt; `[Y*]` ESTIMATE |
 | docs/pce/Sources/market/ | P05z | P05z | SMART + Semmelweis/KÉ pin |

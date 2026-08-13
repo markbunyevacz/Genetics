@@ -209,10 +209,44 @@ class ConsentGateTests(unittest.TestCase):
         cert = svc.withdraw_subject(sub["id"], "dpo")
         self.assertIn("objects_destroyed", cert)
         self.assertNotIn("*1/*2", json.dumps(cert))
+        self.assertEqual(cert["dsr_letter"]["gdpr_article"], "12(3)")
+        self.assertEqual(cert["dsr_letter"]["action_taken"], "erased")
+        self.assertNotIn("*1/", json.dumps(cert["dsr_letter"]))
         with self.assertRaises(ClinicalError) as ctx:
             svc.get_report(case["id"], report["report_id"])
         self.assertEqual(ctx.exception.code, "E-GONE-010")
         self.assertEqual(ctx.exception.http, 410)
+
+    def test_refuse_erasure_letter_keeps_report(self) -> None:
+        svc = _svc()
+        _, sub, case = _bootstrap(svc)
+        svc.add_outside_calls(case["id"], [_called()], "lab_signer")
+        report = svc.create_report(case["id"], "lab_signer")
+        out = svc.refuse_erasure(sub["id"], "dpo")
+        letter = out["dsr_letter"]
+        self.assertEqual(letter["gdpr_article"], "12(4)")
+        self.assertTrue(letter["supervisory_complaint"])
+        self.assertTrue(letter["judicial_remedy"])
+        self.assertEqual(letter["action_taken"], "refused")
+        self.assertFalse(out["erased"])
+        kept = svc.get_report(case["id"], report["report_id"])
+        self.assertEqual(kept["report_id"], report["report_id"])
+        dash = svc.dsr_dashboard()
+        self.assertEqual(dash["overdue"], 0)
+
+    def test_dsr_overdue_alert(self) -> None:
+        svc = _svc()
+        _, sub, _case = _bootstrap(svc)
+        svc.record_open_dsr(
+            sub["id"],
+            "dpo",
+            received_at="2026-06-01T00:00:00+00:00",
+            kind="erasure",
+        )
+        dash = svc.dsr_dashboard(as_of="2026-08-13T00:00:00+00:00")
+        self.assertGreaterEqual(dash["overdue"], 1)
+        self.assertEqual(dash["alerts"][0]["code"], "E-DSR-OVERDUE")
+        self.assertEqual(dash["alerts"][0]["subject_id"], sub["id"])
 
     def test_audit_append_only(self) -> None:
         svc = _svc()
@@ -399,6 +433,10 @@ class HttpClinicalTests(unittest.TestCase):
         self.assertEqual(status, 201)
         status, gone = self._req("POST", f"/v1/subjects/{sub['id']}/withdraw", {}, role="dpo")
         self.assertEqual(status, 200)
+        self.assertEqual(gone["dsr_letter"]["gdpr_article"], "12(3)")
+        status, dash = self._req("GET", "/v1/compliance/dsr", role="dpo")
+        self.assertEqual(status, 200)
+        self.assertEqual(dash["overdue"], 0)
         status, err = self._req("GET", f"/v1/cases/{case['id']}/reports/{report['report_id']}")
         self.assertEqual(status, 410)
         self.assertEqual(err["error"], "E-GONE-010")
