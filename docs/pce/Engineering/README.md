@@ -7,8 +7,7 @@
 
 | Fájl | Hatókör |
 | --- | --- |
-| [VALASZ-SPEC-TERV.md](VALASZ-SPEC-TERV.md) | **A kérésre adott tételes válasz** (összehasonlítás, validálás, mért teljesség, dataflow/UX) |
-| [DELIVERY-PLAN.md](DELIVERY-PLAN.md) | WP-G…P1 végrehajtható sor; B-szerződés + Given/When/Then |
+| [DELIVERY-PLAN.md](DELIVERY-PLAN.md) | Megvalósítási csomagok; B-szerződés + Given/When/Then |
 | [SPEC-PLAN-TRACE.md](SPEC-PLAN-TRACE.md) | Spec ↔ terv P06 státusztábla (36 FR, story, API, hiba) |
 | [DATAFLOW-AND-UX.md](DATAFLOW-AND-UX.md) | F1+ / F1s adatfolyam + persona UX |
 | [CLEANUP.md](CLEANUP.md) | Könyvtár-takarítás + `archive/pre-cleanup-2026-08-13` visszaállítás |

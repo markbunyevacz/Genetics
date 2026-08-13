@@ -1,6 +1,18 @@
 # Spec ↔ delivery plan — tételes lefedettség (P06)
 
-**Olvasható válasz a kérés négy pontjára:** [VALASZ-SPEC-TERV.md](VALASZ-SPEC-TERV.md) (összehasonlítás, folyamatok T/V/tech, mért számok, dataflow/UX). Ez a fájl a státusztábla.
+Ez a fájl a spec ↔ terv **státusztábla**. Terv: [DELIVERY-PLAN.md](DELIVERY-PLAN.md). Adatút: [DATAFLOW-AND-UX.md](DATAFLOW-AND-UX.md). Nincs külön „válasz” dokumentum.
+
+**Mit jelent a tábla (magyarul):**
+
+| Szó a táblában | Mit jelent | Mikor lesz belőle a következő |
+| --- | --- | --- |
+| **Kész a demón** (a táblában: PARTIAL) | A fő út SYN adatokon megy, van teszt. | — |
+| **Minden alpont zöld** (a táblában: FULL) | A spec **minden** pipája + a D melléklet **minden** tesztje zöld arra a tételre. | Pl. mind a 12 gén hivatalos táblája, nem csak a CYP2D6. |
+| **Hiányzik** (MISSING) | A mostani sávban nincs kód. | Kód + teszt. |
+| **Később** (P1 / DEFERRED) | A spec is későbbre tette. | Nem most. |
+| **Szándékos tiltás** (LOCK / NG) | Pl. élő felírási riasztás pecsét előtt. | Pecsét / más termékfázis. |
+
+Most **egy tétel sem** „minden alpont zöld”, mert az a szigorú belső küszöb. Ez **nem** azt jelenti, hogy a demo nem működik.
 
 | | |
 | --- | --- |

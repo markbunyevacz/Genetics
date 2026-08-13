@@ -43,7 +43,8 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P06s | Plan-vs-content a klinikai láncra | 2026-08-13 | 2026-08-13 | DONE | TRACE NOW 21/27 PARTIAL; F1+ dataflow 8/8 | SPEC-PLAN-TRACE §1/§9 | — |
 | P06t | Tételes válasz-dokumentum a user négy pontjára | 2026-08-13 | 2026-08-13 | DONE | User: nem látszott a válasz | `Engineering/VALASZ-SPEC-TERV.md` | — |
 | P05u | Árnyék-motor + HITL store/UI (WP-M/H) | 2026-08-13 | 2026-08-13 | DONE | P06t: 5 F1s MISSING; tilos kitalált PM | `src/pce_shadow/`; `src/pce_hitl/`; `src/pce_ui/hitl.html`; S044–S047 | VC-15 |
-| P06u | Plan-vs-content a F1s láncra | 2026-08-13 | 2026-08-13 | DONE | TRACE NOW 26/27 PARTIAL; F1s dataflow 5/5 | VALASZ + TRACE + DATAFLOW rescore; 78 unittest | — |
+| P06u | Plan-vs-content a F1s láncra | 2026-08-13 | 2026-08-13 | DONE | TRACE NOW 26/27 PARTIAL; F1s dataflow 5/5 | TRACE + DATAFLOW rescore; 78 unittest | — |
+| P06v | Felesleges plusz doksi törlése | 2026-08-13 | 2026-08-13 | DONE | User: ne generálj új doksit mindenre | `VALASZ-SPEC-TERV.md` törölve; a TRACE/DELIVERY-PLAN/DATAFLOW marad | — |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
