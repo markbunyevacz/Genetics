@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="utf-8" />
+  <title>PCE F2 CDS (lakat)</title>
+  <style>
+    body { font-family: sans-serif; max-width: 44rem; margin: 1.5rem auto; }
+    .lock { background: #fff3cd; padding: 0.8rem 1rem; border: 1px solid #e0c36a; }
+    code { background: #f4f4f4; padding: 0.1rem 0.3rem; }
+  </style>
+</head>
+<body>
+  <h1>PCE F2 — CDS Hooks cső</h1>
+  <p class="lock">
+    Ez a <strong>külön</strong> processzus (<code>python -m pce_cds</code>), nem az F1+ labor-UI.
+    A repo compile-time <code>LIVE_CDS=false</code>: a HIS-nek menő POST üres
+    <code>cards</code> tömböt ad (fail-open). A felírás nem blokkolt. Bekapcsolás:
+    signed release, nem admin-config.
+  </p>
+  <ul>
+    <li><code>GET /cds-services</code> — katalógus, <code>enabled: false</code> a lakatban</li>
+    <li><code>POST /cds-services/pgx-order-sign</code></li>
+    <li><code>POST /cds-services/pgx-order-select</code></li>
+    <li><code>GET /.well-known/smart-configuration</code> — SMART stub</li>
+  </ul>
+  <p>Az F1+ klinikai processzuson a <code>/cds-services/</code> továbbra is 404 <code>E-ISO-002</code>.</p>
+</body>
+</html>

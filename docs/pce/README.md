@@ -12,7 +12,7 @@ Ez a csomag a PCE farmakogenetikai (PGx) platform **követelménylistája és sz
 
 v1.2 a **legális hibrid**: F1+ statikus, verziózott guideline-társítás aláírt laborleleten; F1s shadow HITL a kezelőorvos nélkül; élő F2/F3 CDSS csak minősítés után. Az „F2 képesség F1 minőségben, mert az orvos dönt” útvonal **elutasítva** (NG-07).
 
-A v1 / F1s **éles ON moduljához** a gyártói kérés kész ([F](F-decision-package.md), [Outbound](Outbound/README.md)); a pecsét hiányzik. A **spec-írás lezárva**. A **PCE rendszer** (kód + [Sales](Sales/README.md) SKU-P) ettől függetlenül indul: F2/F3 a dobozban, klinikai UI **zárva**.
+A v1 / F1s **éles ON moduljához** a gyártói kérés kész ([F](F-decision-package.md), [Outbound](Outbound/README.md)); a pecsét hiányzik. A **spec-írás** D-18 szerint fagyasztott; 2026-08-14 (D-44) a G5 F2 csövet a dobozba tette, a kimenetet lakattal. A **PCE rendszer** (kód + [Sales](Sales/README.md) SKU-P) ettől függetlenül indul: F2/F3 a dobozban, klinikai UI **zárva**.
 
 ## Olvasási sorrend
 
@@ -54,7 +54,7 @@ A gyártó neve ebben a csomagban **nincs kitalálva**. A9 feltevés: a gyártó
 
 ## Következő gate
 
-**Spec / Outbound / Sales iratírás:** fagyasztva (§10.2). **OQ-k:** ELŐTERJESZTVE, amíg F.6 ki nem töltődik. **Git:** PR #1 és PR #2 **merge-elve** a `main`-re; feature ágak törölve. További munka csak `main`. A pecsét nem a git-merge.
+**Spec / Outbound / Sales iratírás:** fagyasztva (§10.2); D-44 a G5 F2 csövet a dobozba tette. **OQ-k:** ELŐTERJESZTVE, amíg F.6 ki nem töltődik. **Git:** munka feature-ágon, merge a `main`-re. A pecsét nem a git-merge.
 
 **Kanonikus fa** (nincs `v1.2-Core-Specification.md`):
 
@@ -62,6 +62,8 @@ A gyártó neve ebben a csomagban **nincs kitalálva**. A9 feltevés: a gyártó
 docs/pce/          ← zárolt spec, Outbound, Sales
 src/pce_gateway/   ← intézményi ANON gateway
 src/pce_report/    ← F1+ lelet (matcher OFF, hivatalos CPIC tábla)
+src/pce_clinical/  ← F1+ klinikai kapu; CDS 404
+src/pce_cds/       ← F2 CDS Hooks (LIVE_CDS=false)
 tests/fixtures/gold-v0/
 tests/fixtures/f1plus-v0/
 ```
@@ -72,7 +74,7 @@ tests/fixtures/f1plus-v0/
 
 ### Core most, telephely később (G5)
 
-Egy bináris: F1+ · F1s · F2 · F3 **benne van**. Tesztadat / SYN. A megrendelőkor a [market-packs](Sales/market-packs.md) ON/LOCK + `[Y*]` mondja meg, mit telepítünk / kapcsolunk / customizálunk. **Bent van ≠ be van kapcsolva** (NG-07). `LIVE_CDS` compile-time **false**, amíg CE/in-house/`[Ya]`. Az F1+ matcher a klinikai rendererben **ki van kapcsolva**; a motor SYN-en fejleszthető.
+Egy bináris: F1+ · F1s · F2 · F3 **benne van**. Tesztadat / SYN. A megrendelőkor a [market-packs](Sales/market-packs.md) ON/LOCK + `[Y*]` mondja meg, mit telepítünk / kapcsolunk / customizálunk. **Bent van ≠ be van kapcsolva** (NG-07). `LIVE_CDS` compile-time **false**, amíg CE/in-house/`[Ya]`. Az F2 cső (`python -m pce_cds`, port SYN 8092) a dobozban van: lock úton üres `cards`. Az F1+ matcher a klinikai rendererben **ki van kapcsolva**; a motor SYN-en fejleszthető.
 
 ### Kiküldés: gyártói most, telephely a megrendelőkor
 
@@ -93,7 +95,7 @@ Részlet: [Outbound/README](Outbound/README.md).
 | Terület | Indul most (SYN / sandbox) | Vár telephelyi F.6-ra / minősítésre |
 | --- | --- | --- |
 | F1+ mag | L0–L2, outside-call, FR-210, PREPARE-12, FR-400-STATIC, FR-410-EDU, FR-490, PDF/FHIR, `LIVE_CDS=false`, FR-700. A PCE nem hív csillag-allélt a VCF-ből (`MATCHER_ON=false`). | Matcher ON a leleten; renderer `medications` argumentummal |
-| F1s / F2 kód | SYN, külön store/IAM; [FR-461](Engineering/FR-461-gateway-tickets.md); F2 UI **lakattal** | Éles HIS / valódi beteg (OQ-15+16); `LIVE_CDS=true` |
+| F1s / F2 kód | SYN, külön store/IAM; [FR-461](Engineering/FR-461-gateway-tickets.md); F2 cső (`pce_cds`) **lakattal** (üres `cards`) | Éles HIS / valódi beteg (OQ-15+16); `LIVE_CDS=true` |
 | QA | ISO 9001 **folyamat** + Redmine (OQ-01) | Tanúsítvány *ténye* |
 | Sales | SKU-P `[Y*]` ajánlat; sandbox | Éles ON modul a megrendelőlap §2 szerint |
 

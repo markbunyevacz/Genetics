@@ -29,7 +29,7 @@
 | B1 | [ ] | Tenancy + `MARKET_PACK` |
 | B2 | [ ] | F1+ út: ingest → lelet **vagy** LOCK + sandbox, OQ-05 szerint |
 | B3 | [ ] | FR-210 callability a SYN gold seten |
-| B4 | [ ] | FR-470: `LIVE_CDS=false`; F2 UI lakat; CDS endpoint nem él |
+| B4 | [ ] | FR-470: `LIVE_CDS=false`; F1+ CDS 404; `pce_cds` 200 üres `cards` (lakat); F2 UI lakat |
 | B5 | [ ] | F1s store külön IAM-mel (akár üresen), nem a klinikai UI-ra ír |
 | B6 | [ ] | FR-100, ha HU |
 | B7 | [ ] | FR-700: nincs LLM a klinikai úton |

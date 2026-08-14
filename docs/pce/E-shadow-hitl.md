@@ -13,7 +13,7 @@ A shadow **nem** az F1+ klinikai termék. Külön adatút, külön IAM, külön 
 
 ## E.1 Üzleti kötés (nem TAM)
 
-Az F1+ white-label statikus lelet a labor manuális szövegezését váltja ki — ez a fizető termék. A kórházi IT-nek az F1+ „okos lelet, nem élő riasztás” könnyebb belépő, mint az interruptive CDSS. Az F1s az **ugyanazon** integrációs csövön (Subscription → gateway) építi a későbbi F2 kapcsolót; a kapcsoló CE / in-house nélkül **nem** billenhet klinikai UI-ra (FR-470).
+Az F1+ white-label statikus lelet a labor manuális szövegezését váltja ki — ez a fizető termék. A kórházi IT-nek az F1+ „okos lelet, nem élő riasztás” könnyebb belépő, mint az interruptive CDSS. Az F1s az **ugyanazon** integrációs csövön (Subscription → gateway) építi a későbbi F2 kapcsolót; a `pce_cds` cső a dobozban van. A kapcsoló CE / in-house nélkül **nem** billenhet klinikai UI-ra (FR-470, `LIVE_CDS=false`).
 
 ---
 
@@ -174,7 +174,7 @@ In-house F2 (A.7) más jogi doboz, mint a gyártó felhőjében futó shadow.
 
 - [ ] Given shadow motor kimenet, When L6-report generálódik, Then a Report JSON/PDF/FHIR **nem** tartalmaz `functional_phenotype`, `shadow_recommendation`, `dose_mg`.
 - [ ] Given `clinician` szerep, When a klinikai API-t hívja, Then 404/403 a `/shadow/**` és `/hitl/**` útvonalakra.
-- [ ] CI: call-graph a report-renderer és a cds-hooks modul **nem** függ a shadow-writer kimeneti táblájától (fordítva megengedett: a shadow olvashatja a klinikai diplotípust; a tiltott irány a report/CDS ← shadow-kimenet).
-- [ ] Feature flag `LIVE_CDS=true` csak signed release-ben, REG-010 F2/F3 intended purpose mellett; F1+ buildben a flag compile-time false.
+- [ ] CI: a report-renderer **nem** függ a shadow-writer kimeneti táblájától, és **nem** importálja a `pce_cds`-t. A `pce_clinical` processzuson a CDS 404 (`E-ISO-002`). A `pce_cds` a shadow *motort* hívhatja, ha `LIVE_CDS=true`; a HITL store-ból **nem** ír a Reportba. Fordítva megengedett: a shadow olvashatja a klinikai diplotípust.
+- [ ] Feature flag `LIVE_CDS=true` csak signed release-ben, REG-010 F2/F3 intended purpose mellett; a repo compile-time **false**. A cső (`pce_cds`) ettől még a dobozban van.
 - [ ] Anonim ingest: nap-szintű `authoredOn` / TAJ / dózis → elutasítva. 7 karakteres hatóanyag-kód **elfogadott**, hacsak a DPO nem durvít.
 - [ ] F1+ renderer: `MedicationEntry` nincs a call-graphben; tiltott token → `E-EDU-001`.

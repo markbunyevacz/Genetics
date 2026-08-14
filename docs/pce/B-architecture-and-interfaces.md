@@ -33,8 +33,8 @@ Shadow path (F1s) — külön IAM, külön store:
         → HITL store → HITL UI (FR-450)
 L6-report ──X── L4-live   (FR-470)
 
-F2/F3 (csak CE / in-house után, LIVE_CDS):
-L4-live → L6-cds (CDS Hooks, SMART)
+F2/F3 (csak CE / in-house után, LIVE_CDS=true signed):
+L4-live → L6-cds (CDS Hooks, SMART)  — a cső (`pce_cds`) már a dobozban van; a kimenet a flag
 L4/L6 → L7 audit/PMS
 ```
 
@@ -178,11 +178,11 @@ Bundle: `DiagnosticReport` + `Observation` (genotípus, **genotípus-fenotípus*
 
 F1+: **nincs** implied `functional_phenotype` Observation az aktuális gyógyszerlistából. `DocumentReference.description` = FR-490 sablon.
 
-### B.4.4 CDS Hooks — **nincs F1+ buildben**; P0 F2
+### B.4.4 CDS Hooks — **nincs a `pce_clinical` processzuson**; P0 F2 a `pce_cds`-en
 
-`POST /cds-services/pgx-order-sign` és `.../pgx-order-select`.
+`POST /cds-services/pgx-order-sign` és `.../pgx-order-select` a **`python -m pce_cds`** processzuson (port SYN: 8092).
 
-F1+ artifact: az endpoint **nincs** kitéve (404, FR-470). F2: timeout 2000 ms hard; a **hívó** fail-open. Nincs PGx-adat: info Card, nem üres 200.
+F1+ processzus (`pce_clinical`): az endpoint **nincs** kitéve (404 `E-ISO-002`, FR-470). F2 processzus: a cső megvan. `LIVE_CDS=false` (repo): discovery `enabled: false`, POST 200 üres `cards` (fail-open). `LIVE_CDS=true` (signed release): timeout 2000 ms hard → üres cards; nincs PGx-adat: info Card. IIa-safe párok: info, nincs suggestion (`IIA_SAFE_BLOCK`).
 
 ### B.4.5 Enciklopédia — `GET /v1/encyclopedia` (FR-480, P1)
 
@@ -230,7 +230,7 @@ Külön process (`pce_hitl`). Csak `hitl_reviewer` (és DPO/admin a törléshez)
 | `E-SHADOW-002` | 403 | Shadow hívás nem a gateway service-accounttól | |
 | `E-SHADOW-003` | 202 | Rekord FR-461 miatt elnyomva (k / ritka diplotípus) | Nincs HITL sor; csak aggregált számláló. |
 | `E-ISO-001` | 403/404 | `clinician` a `/shadow/**` vagy `/hitl/**` úton | FR-470 |
-| `E-ISO-002` | 404 | CDS endpoint F1+ buildben | `LIVE_CDS=false` |
+| `E-ISO-002` | 404 | CDS endpoint a `pce_clinical` processzuson | F1+ izoláció; a cső a `pce_cds`-en van |
 | `E-EDU-001` | 422 | F1+ renderer tiltott ha–akkor / „Ön” token | FR-410-EDU |
 
 Figyelmeztetés (`W-*`) nem csendes siker. A kliensnek meg kell jelenítenie.
@@ -279,7 +279,7 @@ IEC 62304 SOUP = szoftver, amelyet nem a gyártó fejlesztett a 62304 szerint, d
 | FDA PGx table / labels | Közzétett | L4 | Tudásbázis | Ugyanaz |
 | FHIR R4 + Genomics Reporting IG STU3 | HL7 | L6 | SOUP (spec+lib, ha van ref. impl.) | Verzió pin |
 | FHIR Subscription / webhook kliens | HL7 / lib | L1 F1s | SOUP ha lib | Verzió pin; csak gateway→PCE |
-| CDS Hooks spec | HL7 | L6 F2 | Spec | F1+ buildben nincs runtime |
+| CDS Hooks spec | HL7 | L6 F2 | Spec | `pce_clinical`: nincs runtime (404). `pce_cds`: külön processzus; repo `LIVE_CDS=false` |
 
 SBOM: SPDX, CI-ben. MPL 2.0 copyleft a módosított PharmCAT fájlokra: közzétételi eljárás dokumentálva a QMS-ben, nem „majd később”.
 
@@ -305,6 +305,6 @@ Részletes threat model a QMS-ben (F2); ez a melléklet nem ISO 27001 SOA.
 CI / call-graph (E.8):
 
 1. A report-renderer modul **nem** függ a shadow-writer kimeneti táblájától.
-2. F1+ build: `LIVE_CDS=false`; CDS router nincs a binaryben vagy 404.
+2. F1+ build: `LIVE_CDS=false`; a `pce_clinical` processzuson CDS 404 (`E-ISO-002`). A `pce_cds` külön processzus: lock úton üres `cards`. A `pce_report` és a `pce_clinical` **nem** importálja a `pce_cds`-t.
 3. Integrációs teszt: adott `ShadowInference` mellett a Report JSON schema rejecteli a tiltott mezőket.
 4. IAM teszt: `clinician` token → `/v1/hitl/**` = `E-ISO-001`.

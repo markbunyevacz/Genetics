@@ -507,16 +507,19 @@ G6. E.8 invariánsok.
 - [ ] Given új CPIC/DPWG verzió, When admin újraértékelést indít, Then a rendszer listázza azokat az eseteket, ahol az ajánlás **megváltozott**, riportonkénti deltával.
 - [ ] Az eredeti riport immutábilis; új verzió jön létre.
 
-#### FR-520 · CDS Hooks — **tilos F1+**; **Product P0 F2/F3**
+#### FR-520 · CDS Hooks — **tilos az F1+ processzuson**; **Product P0 F2/F3** (a cső megvan, a kimenet lakattal)
 
-- [ ] F1+ buildben a CDS endpoint nincs kitéve (FR-470).
-- [ ] F2: `order-select` / `order-sign`; `Card` + `suggestion` + evidencia-`link`.
-- [ ] Given a szolgáltatás > 2 s, Then a felírás **nem blokkolódik** (fail-open).
-- [ ] Given nincs PGx-adat F2-n, When hook, Then explicit „nincs elérhető PGx-eredmény” card.
+- [x] F1+ *processzus* (`pce_clinical`): az endpoint **nincs** kitéve (404 `E-ISO-002`, FR-470).
+- [x] F2 *processzus* (`pce_cds`, `python -m pce_cds`): a cső **megvan**. Repo default `LIVE_CDS=false`: `GET /cds-services` `enabled: false`; POST 200 üres `cards` (fail-open, nincs terápiás suggestion). Signed release `LIVE_CDS=true`: `order-select` / `order-sign`; Card + suggestion + evidencia-`link`. Admin-config **nem** elég.
+- [x] Hard timeout 2000 ms → üres `cards` (a felírás nem blokkolódik).
+- [x] Nincs PGx-adat **bekapcsolt** úton: info Card, nem csendes üres 200.
+- [x] IIa-safe párlista (G §2.4): `IIA_SAFE_BLOCK=true` default; élő suggestion **nincs**; info „élő párosítás nem elérhető”. OQ-06 pecsétig így marad.
+- [ ] Éles HIS-re mutató URL + signed `LIVE_CDS=true` — pecsét / in-house / CE (REG-011).
 
-#### FR-530 · SMART on FHIR — **P1 F2**; F1+-ban csak enciklopédia (FR-480)
+#### FR-530 · SMART on FHIR — **P1 F2 stub megvan**; F1+-ban csak enciklopédia (FR-480)
 
-- [ ] F2: EHR-launch a felírási workflow-ban, interruptive CDSS az A.3 szerint.
+- [x] `GET /.well-known/smart-configuration` a `pce_cds` processzuson. `LIVE_CDS=false`: üres capabilities, magyar lakat-üzenet. `LIVE_CDS=true`: SYN stub (launch-ehr), nem éles EHR.
+- [ ] F2 éles: EHR-launch a felírási workflow-ban, interruptive CDSS az A.3 szerint — pecsét után.
 - [ ] F1+: ha van SMART, az **csak** FR-480 (kereső), nem a nyitott recepthez párosított riasztás.
 - [ ] A v1 labor-UI átmeneti.
 
@@ -723,6 +726,8 @@ A csomagok és a **gyártói kérés** a [F mellékletben](F-decision-package.md
 
 **2026-08-13 (D-42, §10.2 (c)):** S060 Health Canada PRCI és S062 DHCS DDG V2.2 **pinelve**. A k≥11 **Health Canada `[V]`**, nem 1/0,09 `[I]`. Az A14 k≥5 / 0,5% **nem** DPO-pecsét. DHCS 20 000 **nem** EU-jog.
 
+**2026-08-14 (D-44, §10.2 (c)):** F2 CDS Hooks cső (`src/pce_cds/`, `python -m pce_cds`) a dobozban van. Repo `LIVE_CDS=false`: discovery `enabled: false`, POST 200 üres `cards` (fail-open). Bekapcsolás = signed `LIVE_CDS=true`, nem újraírás, nem admin-config. A `pce_clinical` processzuson a CDS **404** `E-ISO-002` marad. OQ-05 / OQ-06 / OQ-15 / OQ-16 **nem** zárul. A14 k≥5 / 0,5% változatlan.
+
 Az OQ-05 / OQ-15 / OQ-16 / OQ-01 / OQ-03 / OQ-17 **nem** zárulnak le. ELŐTERJESZTVE / NYITOTT maradnak. OQ-06 nyitott (RA); G §2.4 (a) fallback `[A]` 2026-10-31.
 
 A fejlesztés **elindulhat** a lenti határon. „F.6 nélkül nem indul a mérföldkő” = nincs **éles betegadat, HIS-csatlakozás, nem-MDSW forgalmazás**. Nem azt jelenti, hogy a git üresen marad.
@@ -735,11 +740,11 @@ A fejlesztés **elindulhat** a lenti határon. „F.6 nélkül nem indul a mérf
 | **ISO 9001 / Redmine** | **Igen** (F.4 BELSŐ IGEN) | C-000 tény, C-201 tanúsító; 2026-09-30 kapuőr | A tanúsítvány *ténye* nyitott; a folyamat nem vár counselre |
 | **Labor LOI** | **Igen** (F.5 BELSŐ IGEN) | [OQ-03 term sheet](Outbound/OQ-03-l3-term-sheet.md) kitöltve, név nélkül a specben | Igen az aláírt REG-020-ra |
 | **Értékesítés (G4)** | **Igen, hipotézisen** | [Sales/](Sales/README.md): **SKU-P rendszerlicenc** klinikának/kórháznak; F1–F3 egy bináris; HU/EU/US flag; F2/F3 LOCK amíg minősítés. Labor = csatlakozó, nem a termék. | Éles ON modul: piaci OQ (05/15/16/17). `LIVE_CDS=true` nem sales-flag. |
-| **F2/F3 / `LIVE_CDS=true`** | **Nem** | Interruptive CDSS, élő fenokonverzió a klinikai UI-n | CE / in-house (REG-011) + NG-07 |
+| **F2/F3 / `LIVE_CDS=true`** | **Kód: igen. Éles ON: nem** | A CDS Hooks cső (`src/pce_cds/`) a dobozban van. Repo `LIVE_CDS=false`: üres cards, fail-open. Interruptive Card a felírónak csak signed release + CE / in-house (REG-011) + NG-07. | CE / in-house (REG-011) + NG-07 |
 
 **Tilos a fagyasztás alatt kódolni / szállítani:**
 
-- `LIVE_CDS=true` F1+ / HU-EU-US **LOCK** tenancyen; CDS Hooks a felírónak; shadow kimenet a klinikai UI-ra (NG-07/08, FR-470). Az F2 **kód** a rendszer része (G5); az élő kimenet nem.
+- `LIVE_CDS=true` F1+ / HU-EU-US **LOCK** tenancyen; CDS Hooks **suggestion** a felírónak; shadow kimenet a klinikai UI-ra (NG-07/08, FR-470). Az F2 **cső** a rendszer része (`pce_cds`, G5); az élő kimenet a compile-time flag. A `pce_clinical` processzuson a CDS **404** marad.
 - F1+ renderer, amely `MedicationEntry`-t olvas, vagy ha–akkor / receptre szűrt CPIC sort ad (R-021).
 - Valódi intézményi adat a shadow tárba OQ-16 + OQ-15 nélkül.
 - „Nem MDSW / nincs NB” állítás a counsel aláírása előtt.
@@ -769,7 +774,7 @@ Ha OQ-05 = **NEM**, a már megírt F1+ mag **nem dobandó**: IIa / CE pályára 
 | **F0** | 0–3 hó | Spec fagyasztva. Outbound; ISO 9001; **SKU-P sales** (klinika veszi a rendszert); F1+ mag + F2 kód lakattal; F.6. | Rendszerlicenc-ajánlat + MSP | — |
 | **F1+** | 3–9 hó | L0–L2 + FR-240 + FR-400-STATIC + FR-410-EDU + FR-490. Matcher **ki**. FR-410-LIVE **ki a leletről**. | Fizető labor, white-label lelet | Nem MDSW **csak ha** OQ-05 igen |
 | **F1s** | F1+-szal párhuzamosan | Gateway (FR-460), shadow (FR-440), HITL (FR-450), izoláció (FR-470); REG-090/091 | G3 metrika, clinical evaluation input | Nem klinikai kimenet; OQ-15 |
-| **F2** | 6–18 hó | In-house élő CDSS (FR-520/530, FR-410-LIVE a klinikai UI-n); ISO 13485 + 62304 + 14971 | Case study | In-house (REG-011) |
+| **F2** | 6–18 hó | In-house élő CDSS: `LIVE_CDS=true` signed release a **már kiépített** `pce_cds` csövön (FR-520/530, FR-410-LIVE a klinikai UI-n); ISO 13485 + 62304 + 14971 | Case study | In-house (REG-011) |
 | **F3** | 18–36 hó | IIa CE; `LIVE_CDS` kapcsoló a már kiépített csövön | CE-jelölt CDSS | **IIa** |
 | **F4** | 36+ hó | L5 partner; EESZT-modul; EHDS | Enterprise | IIa |
 

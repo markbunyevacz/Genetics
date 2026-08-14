@@ -5,10 +5,10 @@
 | **Repo** | `genetics` tree only |
 | **Branch** | `main` |
 | **Spec** | `docs/pce/PCE-SPEC-v1.2.md` **FAGYASZTVA** (§10.2) |
-| **Lefedettség** | [SPEC-PLAN-TRACE.md](SPEC-PLAN-TRACE.md) — NOW 27/27 terv; a kódban 26 tétel a demóban kész, 1 szándékos tiltás (matcher ki); laborút 8/8, kutatási út 5/5 |
+| **Lefedettség** | [SPEC-PLAN-TRACE.md](SPEC-PLAN-TRACE.md) — NOW 27/27 terv; a kódban 26 tétel a demóban kész, 1 szándékos tiltás (matcher ki); laborút 8/8, kutatási út 5/5; F2 cső (`pce_cds`) PARTIAL lakattal |
 | **Adatfolyam / UX** | [DATAFLOW-AND-UX.md](DATAFLOW-AND-UX.md) |
 | **Adat** | Gold V0 + hivatalos CPIC/DPWG/FDA táblák. Nincs élő HIS, kitalált gyártónév, dummy guideline-szöveg. |
-| **Flag** | `LIVE_CDS = False`; F1+ `MATCHER_ON = False`. CI assert. |
+| **Flag** | `LIVE_CDS = False`; F1+ `MATCHER_ON = False`; `IIA_SAFE_BLOCK = True`. CI assert. |
 
 Egy szelet **kész**, ha a TRACE-ben PARTIAL vagy FULL, a B-szerződés tesztelve van, és a DATAFLOW útja SYN-en végigjárható. Nem kész: hardcoded JSON, `NotImplementedError`, második „sim” csomag.
 
@@ -36,10 +36,11 @@ Egy szelet **kész**, ha a TRACE-ben PARTIAL vagy FULL, a B-szerződés tesztelv
 | HITL | `src/pce_hitl/` + `var/hitl.sqlite` | B.2.2, B.4.6 |
 | L4-static | `src/pce_report/` | FR-400-STATIC |
 | L4-live | `src/pce_shadow/` — **nem** importálja `pce_report.render` | FR-400-LIVE, 410-LIVE |
+| L6-cds | `src/pce_cds/` — **nem** a `pce_clinical` processzuson; repo `LIVE_CDS=false` | FR-520, FR-530 stub |
 | IAM | SYN `Authorization` szerep: `counsellor` `lab_signer` `clinician` `hitl_reviewer` `dpo` `gateway` | E.4, FR-470 |
 | FHIR | dict Bundle STU3 (`DiagnosticReport` + `Observation`); IG v3.0.0 mezők, nem STU4 operations | B.4.3 |
 | PDF | reportlab + rendszer TTF (HU) | FR-500 |
-| UX | `src/pce_ui/` HTML formok a fenti API-ra (B.1: v1 labor-UI átmeneti) | FR-530 megjegyzés |
+| UX | `src/pce_ui/` HTML formok a fenti API-ra (B.1: v1 labor-UI átmeneti); F2 lakat: `cds.html` | FR-530 stub a `pce_cds`-en |
 
 Éles TLS 1.3 / MFA / EU régió: NFR-031/032/030 — SYN-en localhost, eltérés dokumentált; nem dummy titkosítás.
 
@@ -233,7 +234,7 @@ Inhibitor tábla: FDA Table 2-2 erős index (paroxetin, fluoxetin) + WHO ATC 5. 
 
 | ID | Item |
 | --- | --- |
-| I1 | FR-470 grepek (`MedicationEntry`, `medication_entry`) + R9↔séma deny-list + clinician 403 + CDS 404 |
+| I1 | FR-470 grepek (`MedicationEntry`, `medication_entry`, `pce_gateway.pipeline`, `pce_shadow`, `pce_cds` a `pce_report`/`pce_clinical` ellen) + R9↔séma deny-list + clinician 403 + CDS 404 a `pce_clinical`-en |
 | I2 | SOUP lista: CPIC API dátum+URL, reportlab, (később PharmCAT pin) SPDX váz | REG-080 |
 | I3 | OQ-01 folyamat Outboundban; nincs hamis ISO cert a gitben |
 | I4 | `MATCHER_ON is False`; `LIVE_CDS is False` |
@@ -256,15 +257,38 @@ F1 default marad FR-240. VCF kell a missing-to-ref P0 teszthez.
 
 ---
 
+## WP-F2 — CDS Hooks cső lakattal (FR-520 / FR-530 stub)
+
+A cső a dobozban van. A kimenet compile-time lakat. Bekapcsolás a fejlesztés végén: signed `LIVE_CDS=true`, nem újraírás. Az ON utat a tesztek **paraméterrel** járják (`live_cds=True`); a repo konstans **false** marad.
+
+| ID | AC | Spec |
+| --- | --- | --- |
+| F2-1 | `python -m pce_cds` SYN port 8092. `GET /cds-services` `enabled: false`. POST order-sign / order-select **200** `cards: []`. Header `X-PCE-LIVE-CDS: false`. | FR-520 lock |
+| F2-2 | `pce_clinical` `GET/POST /cds-services/` → 404 `E-ISO-002` | FR-470 |
+| F2-3 | Teszt `live_cds=True`: Card a shadow motorból; nincs `dose_mg`; nincs kitalált „szegény metabolizáló”; nincs PGx → info Card | FR-520 ON |
+| F2-4 | Timeout 2 s → üres `cards` (fail-open). A felírás nem blokkolódik. | NFR-011; R-010; E-TIMEOUT-CDS |
+| F2-5 | IIa-safe INN/ATC5 (A.4.1 / G §2.4): `IIA_SAFE_BLOCK=true` → info „élő párosítás nem elérhető”, üres suggestion | OQ-06 nyitott |
+| F2-6 | `GET /.well-known/smart-configuration` lakat: üres capabilities, magyar üzenet | FR-530 stub |
+| F2-7 | `pce_report` / `pce_clinical` **nem** importálja a `pce_cds`-t | FR-470 |
+
+**Given/When/Then**
+
+- Given repo `LIVE_CDS=false`, When HIS `POST /cds-services/pgx-order-sign`, Then 200 üres `cards`.
+- Given `pce_clinical`, When `GET /cds-services/pgx-order-sign`, Then 404 `E-ISO-002`.
+- Given teszt `live_cds=True` + paroxetin ATC5 + CYP2D6 NM, When order-sign, Then van Card, nincs `dose_mg`.
+- Given teszt `live_cds=True` + kodein ATC5 + `IIA_SAFE_BLOCK`, When order-sign, Then info, nincs suggestion.
+
+---
+
 ## WP-P1 — Spec P1 (nevesítve, nem F0 kód)
 
-FR-230 LRI, FR-480 enciklopédia `GET /v1/encyclopedia` (nincs order-sign Card), FR-510 delta-riport, FR-530 SMART F2, FR-540 beteg-példány (OQ-13), FR-600 override séma, FR-610 teljes EN UI, FR-120 hash-chain, FR-220 FHIR medication bundle. **F2:** FR-520 fail-open 2 s, story 6–10, 21.
+FR-230 LRI, FR-480 enciklopédia `GET /v1/encyclopedia` (nincs order-sign Card a `pce_clinical`-en), FR-510 delta-riport, FR-530 **éles** EHR-launch (a stub WP-F2), FR-540 beteg-példány (OQ-13), FR-600 override séma, FR-610 teljes EN UI, FR-120 hash-chain, FR-220 FHIR medication bundle. **F2 élő Card a felírónak:** signed `LIVE_CDS=true` + pecsét (REG-011); story 6–10 élő suggestion.
 
 ---
 
 ## Expliciten tilos pecsét / CE előtt
 
-Éles HIS, `LIVE_CDS=true`, matcher ON F1+, valódi TAJ, kitalált G1/G2/C2, US F2 (OQ-17), §13 gold-set SOP, PRS (FR-430), EESZT írás (NG-05), LLM klinikai szöveg.
+Éles HIS, `LIVE_CDS=true` a *repo konstansban* / LOCK tenancyen, matcher ON F1+, valódi TAJ, kitalált G1/G2/C2, US F2 (OQ-17), §13 gold-set SOP, PRS (FR-430), EESZT írás (NG-05), LLM klinikai szöveg. A `pce_cds` cső **nem** tilos — a suggestion a felírónak tilos.
 
 ---
 
@@ -274,11 +298,12 @@ FR-230 LRI, FR-480 enciklopédia `GET /v1/encyclopedia` (nincs order-sign Card),
 WP-C + WP-K     →  WP-R (R8–R13) + WP-T + WP-F + WP-L + WP-X
                 →  WP-U (labor UX, zsákutca nélkül)
 WP-G (kész)     →  WP-M → WP-H → WP-U HITL
-WP-I            →  végig CI
+WP-M            →  WP-F2 (CDS a shadow motort hívja lock/ON paraméterrel)
+WP-I            →  végig CI (F1+ 404 + pce_cds izoláció)
 WP-Q            →  C/K mellett
 WP-N            →  M előtt (mapping)
 WP-V            →  R FR-210 gold; matcher OFF
-WP-P1 / F2      →  pecsét után
+WP-P1 / élő F2  →  pecsét + signed LIVE_CDS=true
 ```
 
 Ne másold a gateway eseményt az F1+ reportra. Ne találj ki EDU/CPIC/DPWG mondatot.
@@ -290,3 +315,8 @@ P4+P1 végigjárja a DATAFLOW §5 F1+ listát; FR-100 piros fixture nem gyárt P
 ## Kész definíció — F1s SYN demo
 
 HIS fixture → intézményi gateway → `POST /v1/shadow/events` 202 → sor a `hitl.sqlite`-ban → reviewer vak lépés, majd verdict → F1+ `report` tábla üres marad. 7 karakteres kód → 202. TAJ → 400, nincs extra HITL sor. HIS ettől függetlenül 202. Nincs kitalált szegény metabolizáló.
+
+## Kész definíció — F2 SYN lakat
+
+`python -m pce_cds` → LOCKED. `GET /cds-services` `enabled: false`. POST üres `cards`. `pce_clinical` CDS 404. A teszt `live_cds=True` paraméterrel Card-ot ad `dose_mg` nélkül. Repo konstans false.
+

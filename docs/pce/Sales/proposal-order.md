@@ -32,7 +32,7 @@ A nem ON sorok a szoftver **részei**, klinikai használatuk tiltott. Feloldás:
 | --- | --- |
 | F1+ lelet / L4-static | `[ON / LOCK]` |
 | F1s shadow + HITL | `[ON / LOCK]` |
-| F2 élő CDSS (in-house) | **LOCK** |
+| F2 élő CDSS (in-house) | **LOCK** (cső telepítve; HIS üres `cards`) |
 | F3 élő CDSS (CE/FDA) | **LOCK** |
 | `LIVE_CDS` | **false** |
 

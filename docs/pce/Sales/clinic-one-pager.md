@@ -23,7 +23,7 @@ A PCE **szoftverrendszer**, nem laborlelet-szolgáltatás. Ti licencelitek a mot
 | **F2** | Élő CDSS a felírás pillanatában, intézményen belül | **LOCK** — in-house dosszié után |
 | **F3** | Ugyanaz a CDSS forgalomba hozatalra | **LOCK** — CE (EU) / FDA (US) után |
 
-A lakat **szándékos**. Átminősítés után signed release, nem „bekapcsoljuk configból”. Részlet: [market-packs.md](market-packs.md).
+A lakat **szándékos**. A cső (`pce_cds`) a telepítésben van; a HIS üres `cards`-ot kap. Átminősítés után signed release, nem „bekapcsoljuk configból”. Részlet: [market-packs.md](market-packs.md).
 
 ---
 

@@ -30,5 +30,6 @@ jobs:
           ! grep -R -n --include='*.py' "pce_gateway.pipeline" src/pce_report
           ! grep -R -n -E -i --include='*.py' 'openai|anthropic|langchain' src/pce_report src/pce_clinical
           ! grep -R -n --include='*.py' "pce_shadow" src/pce_report
+          ! grep -R -n --include='*.py' "pce_cds" src/pce_report src/pce_clinical
       - name: FR-470 R9 deny-list matches schema
         run: PYTHONPATH=src python3 -m unittest tests.test_report.B41ContractTests.test_delivery_plan_r9_matches_schema

@@ -66,7 +66,7 @@ NG-01: a PCE nem hív allélt FASTQ-ból. Ez nem teszi a labort a szoftver vevő
 | --- | --- | --- | --- |
 | **F1+** | Igen | Market pack szerint (HU/EU: OQ-05) | Counsel / IIa |
 | **F1s** | Igen | Soha a felírónak (ez a lényeg) | OQ-15/16; HITL külön UI |
-| **F2** | Igen, `LIVE_CDS` compile/license **false** | Csak in-house (REG-011) után, azon az intézményen | Intézményi RA + QMS |
+| **F2** | Igen, a `pce_cds` cső a binárisban; `LIVE_CDS` compile/license **false** | Csak in-house (REG-011) után, azon az intézményen; signed `LIVE_CDS=true` | Intézményi RA + QMS |
 | **F3** | Igen, ugyanaz a motor | Csak CE (EU) / FDA clearance (US) után | NB / FDA |
 | **L5 PRS** | Interfész-stub | Nem | F4 |
 

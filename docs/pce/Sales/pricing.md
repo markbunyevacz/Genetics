@@ -70,11 +70,12 @@ Ha a DrugMap teszt **499 000 Ft** (VC-10, egy forrás) áll, a klinikus-sáv **a
 | `pce_report` | Verziózott **CPIC** pair/recommendation (PREPARE-12 pin), callability, PDF, FHIR STU3 Bundle; F1+ matcher **ki** | A disclaimer **DPWG**-t említ; `dpwg_version` a JSON-ban **null** — hivatalos DPWG-tábla a leleten TRACE szerint hátravan |
 | `pce_gateway` | Intézményi anonimizálás, k-cella, 7 karakteres hatóanyag-kód default | Éles HIS pecsétig tilos |
 | `pce_shadow` + `pce_hitl` | Élő párosítás árnyékban; vak HITL (human-in-the-loop) UI; nincs kitalált szegény metabolizáló | A felíró **nem** látja (NG-07) |
-| `pce_ui` | Labor / klinikai / HITL HTML a fenti API-kra | Nem EESZT-kliens |
+| `pce_cds` | F2 CDS Hooks cső (order-sign / order-select + SMART stub); repo `LIVE_CDS=false` → üres `cards` | Signed `LIVE_CDS=true` pecsét nélkül tilos |
+| `pce_ui` | Labor / klinikai / HITL HTML + F2 lakat-UI (`cds.html`) a fenti API-kra | Nem EESZT-kliens |
 
 Hivatalos klinikai pin: `docs/pce/Sources/official/MANIFEST.json` — **19** fájl `ok: true`, SHA-256-tal (2026-08-13), beleértve GDPR Art. 12 HTML/PDF, EMA 0,09 űrlap-utasítás, MDCG 2021-24, Health Canada PRCI (cél-cella 11), DHCS DDG V2.2 (Wayback). A motor a pin-elt JSON extractet olvassa, nem a PDF-et futáskor.
 
-Teszt: `PYTHONPATH=src python3 -m unittest discover -s tests -v` → **113 OK** (2026-08-13, G DSR + pin tesztekkel). A J-1…J-6 merge 108 volt; az árazási csomag 111; ez a G két DSR-tesztet ad. Nem 94.
+Teszt: `PYTHONPATH=src python3 -m unittest discover -s tests -v` → **113 OK** (2026-08-13, G DSR + pin tesztekkel). A J-1…J-6 merge 108 volt; az árazási csomag 111; ez a G két DSR-tesztet ad. Nem 94. 2026-08-14 (D-44, `pce_cds`): **124 OK**.
 
 `LIVE_CDS = false`. `MATCHER_ON = false`. Bent van ≠ be van kapcsolva.
 

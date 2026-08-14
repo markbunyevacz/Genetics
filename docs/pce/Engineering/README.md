@@ -2,14 +2,14 @@
 
 | | |
 | --- | --- |
-| **Státusz** | v1.2 spec **FAGYASZTVA**; kód a `main`-en |
+| **Státusz** | v1.2 spec **FAGYASZTVA**; kód a `main`-en. 2026-08-14 (D-44): F2 CDS cső a dobozban, kimenet lakattal. |
 | **Nem** | Új FR, OQ-lezárás, intended purpose, DPIA, élő HIS, `LIVE_CDS=true` |
 
 | Fájl | Hatókör |
 | --- | --- |
 | [DELIVERY-PLAN.md](DELIVERY-PLAN.md) | Megvalósítási csomagok; B-szerződés + Given/When/Then |
 | [SPEC-PLAN-TRACE.md](SPEC-PLAN-TRACE.md) | Spec ↔ terv P06 státusztábla (36 FR, story, API, hiba) |
-| [DATAFLOW-AND-UX.md](DATAFLOW-AND-UX.md) | F1+ / F1s adatfolyam + persona UX |
+| [DATAFLOW-AND-UX.md](DATAFLOW-AND-UX.md) | F1+ / F1s / F2-lakat adatfolyam + persona UX |
 | [CLEANUP.md](CLEANUP.md) | Könyvtár-takarítás + `archive/pre-cleanup-2026-08-13` visszaállítás |
 | [FR-461-gateway-tickets.md](FR-461-gateway-tickets.md) | Ticket-bontás |
 | [../../../src/pce_gateway/](../../../src/pce_gateway/) | Intézményi ANON gateway (Gold V0) |
@@ -17,7 +17,8 @@
 | [../../../src/pce_report/](../../../src/pce_report/) | F1+ renderer (CPIC API szelet, matcher OFF) |
 | [../../../src/pce_shadow/](../../../src/pce_shadow/) | F1s élő párosítás (nem a leleten) |
 | [../../../src/pce_hitl/](../../../src/pce_hitl/) | Ellenőrző tár + vak API |
-| [../../../src/pce_ui/](../../../src/pce_ui/) | Labor HTML + HITL HTML |
+| [../../../src/pce_cds/](../../../src/pce_cds/) | F2 CDS Hooks + SMART stub; repo `LIVE_CDS=false` |
+| [../../../src/pce_ui/](../../../src/pce_ui/) | Labor HTML + HITL HTML + F2 lakat-UI (`cds.html`) |
 | [../../../tests/fixtures/gold-v0/](../../../tests/fixtures/gold-v0/README.md) | Gold V0 gateway csomag |
 | [../../../tests/fixtures/f1plus-v0/](../../../tests/fixtures/f1plus-v0/README.md) | F1+ outside-call + CPIC tábla |
 | [../../../tests/fixtures/shadow-v0/](../../../tests/fixtures/shadow-v0/README.md) | CYP2D6 tudás-pin (FDA/CPIC/WHO) |

@@ -11,7 +11,7 @@ Ez a mappa az F melléklet kéréseit **címzett-kész** iratokká alakítja. Ki
 
 **Nem** zárja le az OQ-05 / OQ-15 / OQ-16 / OQ-01 / OQ-03 kérdéseket. A F.6 tábla akkor töltődik, ha a címzett az itteni iraton dönt. A [G melléklet](../G-open-items.md) **javaslat** a pecsételőnek, nem lezárt pecsét.
 
-A v1.2 spec **fagyasztva** ([§10.2](../PCE-SPEC-v1.2.md)). A spec-írás nem folytatódik a válaszokig. Pecsétekig **nincs** új architektúra-fejezet ([B](../B-architecture-and-interfaces.md) a két path). F1s HIS **nem** indul OQ-16+15 pecsét nélkül.
+A v1.2 spec **fagyasztva** ([§10.2](../PCE-SPEC-v1.2.md)). 2026-08-14 (D-44): a G5 F2 cső a dobozban van, a kimenet lakattal — ez **nem** zárja az OQ-kat. Pecsétekig **nincs** új klinikai path. F1s HIS **nem** indul OQ-16+15 pecsét nélkül.
 
 **Mikor megy ki az irat**
 

@@ -26,7 +26,7 @@ Ha azt mondják, „nekünk a YouScript kell, most”:
 | 0–2 | Nyitó + market pack slide (HU/EU/US tábla) | „Egy bináris, három csomag” | „US-ben ez nem eszköz, ezért EU-ban is mehet” |
 | 2–7 | F1+: SYN-001 outside-call → lelet, teljes gén-tábla, callability fail eset | „A labor *csatlakozik*, ti licencelitek a rendszert” | „Mi eladjuk a 499 ezres vizsgálatot” |
 | 7–11 | F1s: HITL kártya **kutatási UI**, reviewer-vak; felírói képernyőn üres | „A motor fut, a vizit nem látja” | Shadow tipp a vizit-UI-n |
-| 11–16 | F2 képernyő **lakattal**: CDS-kártya mock, `LIVE_CDS=false` badge | „Ez a feloldott állapot *után*. Ma nem kattintható élesre.” | Éles order-sign a demó-HIS-ben |
+| 11–16 | F2 képernyő **lakattal**: `python -m pce_cds` UI, `LIVE_CDS=false` badge, discovery `enabled: false`, POST üres `cards` | „A cső megvan. Ma fail-open, nincs suggestion. Bekapcsolás: signed release, nem config.” | `LIVE_CDS=true` a demó-HIS-ben; suggestion a felírónak |
 | 16–18 | Feloldási út: CE / in-house / OQ-17 | „Szerződés §8, nem config” | Dátumígéret („Q4-ben biztos CE”) |
 | 18–20 | Ár: platform `[Yp]`, aktiválás `[Ya]` később | Rendszerlicenc | Labor listaár mint PCE-ár |
 
@@ -36,7 +36,7 @@ Labor a teremben: 3 perc csatlakozó (outside-call mezők), nem „vegyétek meg
 
 ## 2. HIS-vendor (10 perc)
 
-Ugyanaz a rendszer, beágyazva. REG-021. Enciklopédia ON lehet F1+-szal. CDS Hooks endpoint a demóban **403/lakat**.
+Ugyanaz a rendszer, beágyazva. REG-021. Enciklopédia ON lehet F1+-szal. Az F1+ processzuson a CDS **404**. A `pce_cds` a demóban **200 / üres cards** (lakat), nem 403.
 
 ---
 

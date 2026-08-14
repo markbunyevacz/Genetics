@@ -33,7 +33,7 @@ A HU csomag **EU + magyar kapuk**. Nem külön motor.
 
 ## Mit jelent a „kikapcsolt funkcionalitás”
 
-1. Az F2/F3 **képernyő és API** a telepítésben látszik **lakattal** (licenc + build flag). A vevő látja, hogy a rendszer teljes.
+1. Az F2/F3 **képernyő és API** a telepítésben látszik **lakattal** (licenc + build flag). A `pce_cds` válaszol; a HIS 200 üres `cards`-ot kap. A vevő látja, hogy a rendszer teljes.
 2. Az L4-live motor F1s-ben futhat (felíró **nem** látja), ha a shadow csomag ON.
 3. Admin **nem** billentheti `LIVE_CDS=true`-ra configgal. Csak signed release + REG-010/011 / FDA clearance (FR-470).
 4. Piaci csomagváltás (HU→US tenancy) **nem** egy checkbox a klinikának. Új tenancy, új intended purpose, új dosszié.
@@ -90,7 +90,7 @@ A licencmondat a megrendelőlapon: *„A Vevő a PCE platform prediktív és mun
 
 ## Lakat mint sales-driver (FR-470) — előbb retesz, aztán `[Ya]`
 
-A HU/EU v1 buildben a `LIVE_CDS` **compile-time false**. A demóban az F2/F3 képernyő **látszik, nem kattintható**.
+A HU/EU v1 buildben a `LIVE_CDS` **compile-time false**. A demóban az F2/F3 képernyő **látszik**; a HIS POST üres `cards`-ot kap. Nem kattintható éles suggestionre.
 
 | Szabad mondani | Tilos mondani |
 | --- | --- |

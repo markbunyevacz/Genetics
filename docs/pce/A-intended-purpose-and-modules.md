@@ -66,7 +66,7 @@ A szoftver **nem** végez egyedi betegre szabott klinikai értékelést az aktu�
 **Konfigurációs tilalom F1+ klinikai buildben:**
 
 - FR-300 matcher default **OFF**.
-- FR-410-LIVE, FR-520, FR-530 interruptive path **OFF**.
+- FR-410-LIVE, FR-520, FR-530 interruptive path **OFF**. A `pce_cds` cső a dobozban van; a kimenet compile-time lakat (`LIVE_CDS=false`). A `pce_clinical` processzuson a CDS 404 (`E-ISO-002`).
 - FR-430 PRS: nincs hívás.
 - Shadow kimenet soha nem íródik a Report entitásba (FR-470).
 
@@ -137,7 +137,7 @@ Ha a shadow kimenet bármely klinikai képernyőre kerül, az üzemmód **F2**, 
 | **L4-live** | Gyógyszerlista → functional phenotype, order-alert | **Ki** | **Be**, klinikai UI-ra **nem** | **Be**, klinikai UI-ra **igen** | IIa ha klinikai UI |
 | **L5** | PRS | Ki | Ki | F4 | IIa |
 | **L6-report** | PDF/FHIR aláírt lelet | Be | Nem ír shadowot a leletbe | Be | L4-static-cal |
-| **L6-cds** | CDS Hooks / SMART interruptive | Ki | Ki | Be | IIa |
+| **L6-cds** | CDS Hooks / SMART interruptive | Ki (`pce_clinical` 404; `pce_cds` lakat) | Ki | Be (signed `LIVE_CDS=true`) | IIa |
 | **L6-hitl** | Kutatási review UI | Ki | Be | PMS | Nem klinikai eszköz-UI |
 | **L7** | Audit, PMS | Be | Shadow log elkülönítve | Be | Nem önálló MDSW |
 
@@ -168,7 +168,8 @@ A D.1 nem írja a DPYD-ártalmat „halál”-nak. Az RA **páronként** válasz
 
 **OQ-06 kérdése:** melyik **osztály, páronként** — nem „melyik Notified Body”.
 
-**G gyártói javaslat (nem lezárt pecsét, [G](G-open-items.md) §2.4):** az első L4-live kiadáshoz **(a) IIa-safe párlista** — a fenti öt pár élő párosítása **ki**; statikus F1+ szöveg + „élő párosítás nem elérhető”. `[A]` Ha az RA 2026-10-31-ig nem dönt, a fejlesztés (a) szerint halad. `LIVE_CDS` ezen a napon false; a kill-switch kódját a live flag feloldásakor kell beépíteni, nem most.
+**G gyártói javaslat (nem lezárt pecsét, [G](G-open-items.md) §2.4):** az első L4-live kiadáshoz **(a) IIa-safe párlista** — a fenti öt pár élő párosítása **ki**; statikus F1+ szöveg + „élő párosítás nem elérhető”. `[A]` Ha az RA 2026-10-31-ig nem dönt, a fejlesztés (a) szerint halad. `LIVE_CDS` a repóban **false**. A kill-switch **megvan** (`src/pce_cds/policy.py`, `IIA_SAFE_BLOCK=true`). Bekapcsolás: signed `LIVE_CDS=true`, nem új motor.
+
 
 A D.1 nem írja a DPYD-ártalmat „halál”-nak. A III-oszlop a G-ben `[I]` javaslat, nem CPIC-halálállítás.
 
@@ -207,5 +208,7 @@ REG-011. Nem mentesít 2008/XXI. és GDPR alól. Intézményen kívül = F3.
 ## A.8 OQ-05 — szűkített kérdés
 
 > Védhető-e az A.1 F1+ pozíció, ha a kimenet a labor-diplotípushoz verziózott CPIC/DPWG/FDA **gén-szintű** szövegkivonatot rendel, **nincs** aktuális-gyógyszer párosítás, **nincs** fenokonverzió-alkalmazás, **nincs** CDS Hooks, és az aláíró a labor orvosa?
+
+**„nincs CDS Hooks”** = az F1+ *klinikai kimenet / processzus* (`pce_clinical` → 404 `E-ISO-002`). A G5 F2 cső (`pce_cds`) a rendszer része, lakattal; ez **nem** az F1+ lelet, és **nem** pecsételi az OQ-05-öt. Q3 CI-invariánsok (`LIVE_CDS is False`, nincs `MedicationEntry` / `pce_gateway.pipeline` a `pce_report`-ban) változatlanok.
 
 A v1.1 kérdés tágabb volt (gyógyszerajánlás-szöveg általában). A v1.2 szűkít. A G melléklet tovább szűkít Q1–Q3-ra (Rule 11 vs 11c; szelekció hiánya vs IIa alatt; CI-invariánsok vs MDCG modulhatár). A válasz továbbra is **külső counsel**. Csomag: A.1, A.1.1, **A.1.2**, A.4, FR-400-STATIC, FR-410-EDU, FR-470, REG-010, MDCG Rev.1, [G](G-open-items.md) §3, [OQ-05 brief](Outbound/OQ-05-counsel-brief.md).

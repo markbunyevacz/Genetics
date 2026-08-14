@@ -25,7 +25,7 @@ A gyártó a későbbi F2/F3 PGx-CDSS motort (**L4-live**: beteg–gyógyszer p�
 
 A kezelőorvos a napi ellátásban **ebből semmit nem lát**.
 
-Fizikai / build-szintű retesz (**FR-470**): az éles F1+ / F1s klinikai buildben a `LIVE_CDS` flag **compile-time false**. A szoftver **képtelen** felugró ablakot, CDS Hooks kártyát vagy éles riasztást adni a felírás pillanatában. A shadow hibája a HIS-t **nem** blokkolja (fail-open a felírásra, fail-closed a klinikai szivárgásra).
+Fizikai / build-szintű retesz (**FR-470**): az éles F1+ / F1s klinikai buildben a `LIVE_CDS` flag **compile-time false**. Az F1+ processzus (`pce_clinical`) a CDS-t 404-gyel utasítja (`E-ISO-002`). A külön `pce_cds` processzus a dobozban van; a repo default: POST 200 üres `cards` (fail-open, nincs suggestion a felírónak). Interruptive Card csak signed `LIVE_CDS=true` után. A shadow hibája a HIS-t **nem** blokkolja (fail-open a felírásra, fail-closed a klinikai szivárgásra).
 
 Ha a shadow kimenet bármely klinikai képernyőre kerül, az üzemmód **F2**, az F1+ rendeltetés hamis, és ez a kérelem érvénytelen.
 

@@ -6,7 +6,7 @@
 | **Szabály** | Piaci *struktúra*-analógia. Nem árlista, nem MDR-pecsét, nem PCE-RWE. |
 | **Dátum** | 2026-08-12 |
 
-A vevő **SKU-P** rendszert licencel. A labor **csatlakozó**. Az alábbi három US-termék ezt a *szétválasztást* vagy a *lakat/élő CDS* lépcsőt világítja meg — a túlállítások VC-14.
+A vevő **SKU-P** rendszert licencel. A labor **csatlakozó**. Az alábbi három US-termék ezt a *szétválasztást* vagy a *lakat/élő CDS* lépcsőt világítja meg — a túlállítások VC-14. A PCE F2 cső a dobozban van (`pce_cds`); a felírói Card a compile-time lakat mögött.
 
 ---
 

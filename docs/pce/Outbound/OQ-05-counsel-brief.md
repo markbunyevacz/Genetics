@@ -90,7 +90,7 @@ A végtermékként létrejövő leletet a partnerlaboratórium szakorvosa ellen�
 
 ### 5. Csatorna-izoláció (FR-470)
 
-Az F1+ buildben a `LIVE_CDS` flag **compile-time false**. Nincs CDS Hooks endpoint. A shadow-motor kimenete nem íródik a Report/PDF/FHIR entitásba.
+Az F1+ processzuson (`pce_clinical`) a `LIVE_CDS` flag **compile-time false**, és **nincs** CDS Hooks endpoint (404 `E-ISO-002`). A repo tartalmaz egy külön F2 processzust (`pce_cds`); a kimenet lakattal: POST 200 üres `cards`, nincs suggestion. Q3 CI-invariánsok változatlanok. A shadow-motor kimenete nem íródik a Report/PDF/FHIR entitásba.
 
 ### 6. Nyilatkozat a leleten (A.1.1) — **nem** felelősségkizárás
 

@@ -9,7 +9,7 @@
 
 A gyártó (A9: a `genetics` repo tulajdonos szervezete; **név nincs kitalálva**) az alábbi álláspontot kéri jóváhagyni. Az OQ **akkor zárul**, ha a címzett aláírja / elutasítja / feltételekkel visszaadja. Ez a fájl nem helyettesíti azt.
 
-**Küldhető iratok:** [Outbound/](Outbound/README.md) — OQ-k. [Sales/](Sales/README.md) — **rendszerlicenc** a klinikának (feltételezett OQ; F2 lakattal).
+**Küldhető iratok:** [Outbound/](Outbound/README.md) — OQ-k. [Sales/](Sales/README.md) — **rendszerlicenc** a klinikának (feltételezett OQ; F2 cső a dobozban, kimenet lakattal). D-44 **nem** pecsét.
 
 ```
 v1 / F1s blokkolók
@@ -28,7 +28,7 @@ v1 / F1s blokkolók
 | **ELŐTERJESZTVE** | A gyártó kérése rögzítve; külső aláírás hiányzik |
 | **BELSŐ IGEN** | Amit a gyártó magának eldönthet (erőforrás, tárgyalás indítása) |
 | **LEZÁRVA** | Csak külső vagy ténybeli zárás után (itt: egyik OQ sem, kivéve OQ-02) |
-| **SPEC FAGYASZTVA** | v1.2 iratírás lezárva (§10.2); OQ-k ettől még ELŐTERJESZTVE |
+| **SPEC FAGYASZTVA** | v1.2 iratírás lezárva (§10.2); D-44 a G5 csövet dokumentálja; OQ-k ettől még ELŐTERJESZTVE |
 
 A disclaimer (A.1.1 / FR-490) **nem** felelősségkizárás és **nem** MDSW-kimenekülés.
 

@@ -6,7 +6,7 @@
 | **Terv** | [DELIVERY-PLAN.md](DELIVERY-PLAN.md) |
 | **Mérés** | [SPEC-PLAN-TRACE.md](SPEC-PLAN-TRACE.md) |
 
-Két elkülönített út. Keverés a klinikai UI-n = NG-07/08. SYN-en mindkettő **ugyanazokkal** a B-szerződésekkel fut, élő HIS/TAJ nélkül.
+Két elkülönített út + egy lakattal zárt F2 cső. Keverés a klinikai UI-n = NG-07/08. SYN-en mindhárom **ugyanazokkal** a B-szerződésekkel fut, élő HIS/TAJ nélkül.
 
 ## 1. Klinikai path (F1+) — laborlelet
 
@@ -141,13 +141,13 @@ Minden képernyő a B API-t hívja. Nincs kitalált kórháznév; org = `SYN-ORG
 | --- | --- | --- | --- | --- |
 | **P4 Tanácsadó** | WP-U: tanácsadás + beleegyezés űrlap | dátum a mintavétel előtt; gén-scope pipák | későbbi dátum → `E-CONSENT-002` HU | 13, 14 |
 | **P1 Labor** | WP-U: eset, outside-call feltöltés, előnézet, aláírás | kapu zöld → PDF + JSON + FHIR | kapu piros → nincs PDF; INDETERMINATE gén nem NORMAL | 1–4, 20 |
-| **P2 Klinikus** | **nincs** vizit-UI F1+-on | megkapja az aláírt PDF-et / FHIR-t a laborból | nem lát HITL-t, nem kap CDS Card-ot | 6–10 LOCK; 9 forrás a PDF-en |
+| **P2 Klinikus** | **nincs** vizit-UI F1+-on; F2: `pce_cds` lakat-UI | megkapja az aláírt PDF-et / FHIR-t a laborból | nem lát HITL-t; F1+ CDS 404; `pce_cds` üres `cards` | 6–10 cső PARTIAL, élő Card LOCK |
 | **P3 Farmakológus** | HITL UI (nem napi vizit) | vak lépés, majd motor | `clinical_context=ABSENT` ha nincs lista | 11–12 |
 | **P5 DPO** | audit export, törlési tanúsítvány, A14 monitor | CSV/JSON 30 éves séma; gateway quarterly_report | PII a monitorban = regresszió | 15, 16 |
-| **P6 Vendor** | FHIR Bundle + írásos határ (OQ-03) | STU3 DiagnosticReport | CDS endpoint 404 | 17, 18 |
-| **HIS** | nem UI | 202, recept lezárul | gateway hiba is 202 a HIS felé | 21 |
+| **P6 Vendor** | FHIR Bundle + írásos határ (OQ-03); CDS a `pce_cds`-re | STU3 DiagnosticReport | F1+ CDS 404; `pce_cds` 200 üres `cards` | 17, 18 |
+| **HIS** | nem UI | 202, recept lezárul; CDS POST fail-open | gateway hiba is 202 a HIS felé; CDS timeout üres `cards` | 21 |
 
-**F2/F3 UX** (nem SYN-cél most): order-select Card, fail-open 2 s, „nincs PGx” info Card — WP-P1/F2, `LIVE_CDS` false.
+**F2/F3 UX (SYN, pecsétig):** `python -m pce_cds` (port 8092), `src/pce_ui/cds.html`. Discovery `enabled: false`. POST 200 üres `cards`. SMART stub üres capabilities. WP-F2. `LIVE_CDS` false. Az ON út csak teszt-paraméterrel (`live_cds=True`), nem a repo konstanssal.
 
 ---
 
@@ -157,9 +157,12 @@ Minden képernyő a B API-t hívja. Nincs kitalált kórháznév; org = `SYN-ORG
 | --- | --- |
 | Labor PDF-ben `live_findings` / `functional_phenotype` | nincs |
 | `Authorization: clinician` + `GET /v1/hitl/inferences` | 403/404 `E-ISO-001` |
-| `GET /cds-services/pgx-order-sign` F1+ build | 404 `E-ISO-002` |
+| `GET /cds-services/pgx-order-sign` a `pce_clinical`-en | 404 `E-ISO-002` |
+| `GET /cds-services` a `pce_cds`-en, `LIVE_CDS=false` | 200, `enabled: false` |
+| `POST /cds-services/pgx-order-sign` a `pce_cds`-en, `LIVE_CDS=false` | 200, `cards: []` |
 | Renderer kwargs `medications` | `RendererConfigError` |
 | Gateway export `SYN-TAJ` / `doseQuantity` / INN (`escitalopram`) | nincs (a **kód** `N06AB10` van) |
+| `pce_report` / `pce_clinical` forrásban `pce_cds` | nincs |
 
 ---
 
@@ -181,3 +184,27 @@ Minden képernyő a B API-t hívja. Nincs kitalált kórháznév; org = `SYN-ORG
 3. Továbbított esemény → ShadowInference a **hitl.sqlite**-ban.
 4. Reviewer 1. lépés vak; 2. lépés verdict + `forras_allapot` (van/hiányzik).
 5. Report store üres marad ettől az eseménytől.
+
+---
+
+## 6. F2 CDS path (lakat) — járható SYN-en, suggestion pecsétig LOCK
+
+```mermaid
+flowchart LR
+  HIS[HIS order-sign]
+  CLIN[pce_clinical :8090]
+  CDS[pce_cds :8092]
+  SH[pce_shadow.infer]
+  HIS -->|F1+ téves URL| CLIN
+  CLIN -->|404 E-ISO-002| HIS
+  HIS -->|F2 cső| CDS
+  CDS -->|LIVE_CDS=false: cards üres| HIS
+  CDS -.->|csak teszt live_cds=True| SH
+```
+
+1. `PYTHONPATH=src python3 -m pce_cds --port 8092` → `LOCKED`.
+2. `GET /cds-services` → `enabled: false`.
+3. `POST /cds-services/pgx-order-sign` → 200 `cards: []`. A felírás nem blokkolt.
+4. `GET /.well-known/smart-configuration` → üres capabilities, magyar lakat-üzenet.
+5. IIa-safe párok: ha a teszt `live_cds=True`, info Card, nincs suggestion (`IIA_SAFE_BLOCK`).
+

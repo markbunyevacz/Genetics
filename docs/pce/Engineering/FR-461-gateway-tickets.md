@@ -203,5 +203,5 @@ CI: report-renderer **nem** olvassa a shadow kimenetet (FR-470). Ez a sáv nem b
 - Éles HIS / valódi betegrekord (OQ-15 + OQ-16).
 - ClinLabomics vagy k ≥ 5 mint **bizonyított** anonimitás.
 - YouScript / PREPARE mint OQ-16 pecsét.
-- `LIVE_CDS=true`; CDS a felírónak; shadow a vizit-UI-n.
+- `LIVE_CDS=true`; CDS suggestion a felírónak; shadow a vizit-UI-n. A `pce_cds` cső **nem** tilos ebben a sávban — a gateway-sáv nem billenti a flaget.
 - Új FR / új küszöb kitalálása. Ha a DPO más k-t vagy ATC3-at ír elő, az F.6 + config-release, nem csendes default-csere.

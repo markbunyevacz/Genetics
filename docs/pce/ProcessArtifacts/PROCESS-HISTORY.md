@@ -54,6 +54,8 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P05aa | G melléklet: öt nyitott tétel | 2026-08-13 | 2026-08-13 | DONE | User PCE-G-v1.0 | `G-open-items.md`; S055 LEZÁRVA; DSR két artefaktum; OQ-05/06/16 javaslat pecsét nélkül | E-19 zárva (EUR-Lex 200) |
 | P05ab | S060 Health Canada PRCI + S062 DHCS DDG V2.2 pin | 2026-08-13 | 2026-08-13 | DONE | User: PRCI guidance URL + DHCS-DDG-V2-2.pdf | S060/S062 **LEZÁRVA** `[V]`; k=11 HC primer; A14 k≥5 **nem** pecsét; DHCS élő Incapsula → Wayback | E-21 |
 | P05ac | Magyar próza: szemantika/szintaxis | 2026-08-14 | 2026-08-14 | DONE | User: érthetetlen mondatok; független ágens | Névelő (a/az); ATC4 vs ATC5; két határidő; hiányzó igék; OQ-16 A1 ATC5; A14 változatlan | E-22 |
+| P05ad | F2 CDS Hooks cső lakattal (G5) | 2026-08-14 | 2026-08-14 | DONE | User: G5 feloldás; fejlesztés végén ki/be; freeze ignorálva | `src/pce_cds/`; `cds.html`; TRACE FR-520 PARTIAL; Sales/Outbound/A–G | E-23 |
+| P06ac | Plan-vs-content a F2 csőre | 2026-08-14 | 2026-08-14 | DONE | TRACE §16; 124 unittest | SPEC-PLAN-TRACE §16; WP-F2 | — |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -104,6 +106,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-41 | P05aa | G öt tétel pecsét vs javaslat | Pecsétek / csak javaslat + S055 pin | **S055 LEZÁRVA.** OQ-05/06/16 **nem** pecsét. (a) IIa-safe fallback 2026-10-31; Class I MDSW default; k≥11 javaslat A14 változatlan; 15 felíró alatt `[Yp]=0`. | User G v1.0 | user |
 | D-42 | P05ab | S060/S062 pin vs A14 átírás | k=11 pecsét / pin + javaslat | **Pin.** S060 `[V]` cél-cella 11; S062 `[V]` 11 / 20 000 (Wayback; élő Incapsula). **Nem** EU-jog. A14 k≥5 / 0,5% `[ASSUMPTION]` **marad**. DHCS v3.0 nincs pinelve. | User PRCI + DDG URL | user |
 | D-43 | P05ac | Próza javítás vs tényátírás | Újraírás / csak nyelv | **Csak nyelv.** Tények, pecsétek, A14 k≥5, Ft-sáv **nem** változtak. A.1 „az aktuális” a `statements.py`-ban is. | User: minden írás | user |
+| D-44 | P05ad | F2 cső a dobozban vs 404 stub | Várni a pecsétet / megírni a csövet lakattal | **Cső megvan, kimenet lakat.** Külön `pce_cds` processzus. Repo `LIVE_CDS=false`. ON = signed flag, nem újraírás. Spec freeze §10.2 (c) user-kérés. OQ-k **nem** pecsét. | G5; FR-520; NG-07 | user |
 
 ## 3. Error log
 
@@ -132,29 +135,30 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | E-20 | P05z | Authority fetch | YouScript HTML urllib 403; EKR001266472024 karbantartási oldal | WebFetch 365 USD; SMART+Semmelweis pin; EKR összeg `[R]` | D-40 |
 | E-21 | P05ab | Authority fetch | Élő `dhcs.ca.gov/.../DHCS-DDG-V2-2.pdf` Incapsula HTML (212 B), nem PDF. Wayback `/web/2023/` és `/web/2024/` 429. | Wayback `/web/2022/` a V2.2 PDF-et adta (1 709 986 B, 71 oldal, CreationDate 2023-02-17). v3.0 nincs pinelve. | D-42 |
 | E-22 | P05ac | Incomplete verification | Első független próza-ellenőrzés FAIL: maradék névelő (aláírt / IIa / esélyhányados / első) és *analogia*. | Retry: célzott javítás; 2. scan FAIL (ige/FDA/US); 3. scan FAIL (Cardet / „akkor”); 4. scan **CLEAN**. Unittest 113 OK. | P05ac |
+| E-23 | P05ad | Cross-reference / product mismatch | Sales G5: F2 bent van lakattal. TRACE FR-520 LOCK + „endpoint nincs”; OQ-15 „képtelen kártyát adni”; demó 403. | Switch: külön `pce_cds` processzus; F1+ 404 marad; lock = 200 üres `cards`. Outbound/Sales/TRACE javítva. Unittest 124 OK. | D-44 |
 
 ## 4. File timeline
 
 | Fájl | Létrehozva | Módosítva | Státusz |
 | --- | --- | --- | --- |
-| docs/pce/README.md | P00/P05 | P10c (G5 core-most; gyártói vs telephelyi OQ) | v1.2 FAGYASZTVA |
-| docs/pce/PCE-SPEC-v1.2.md | P05b (git mv) | P05x (A14/FR-461 D-38) | v1.2 FAGYASZTVA; ATC-klauzula §10.2 (c) |
-| docs/pce/A-intended-purpose-and-modules.md | P05 | P05i (A.3 SHAP≠FR-710) | DRAFT v1.2 |
-| docs/pce/B-architecture-and-interfaces.md | P05 | P05c | DRAFT v1.2 |
+| docs/pce/README.md | P00/P05 | P05ad (D-44 F2 cső) | v1.2; G5 cső lakattal |
+| docs/pce/PCE-SPEC-v1.2.md | P05b (git mv) | P05ad (D-44 FR-520/530) | v1.2; ATC-klauzula §10.2 (c); F2 cső |
+| docs/pce/A-intended-purpose-and-modules.md | P05 | P05ad | DRAFT v1.2; L6-cds lakat |
+| docs/pce/B-architecture-and-interfaces.md | P05 | P05ad (B.4.4 `pce_cds`) | DRAFT v1.2 |
 | docs/pce/C-eeszt-f0-checklist.md | P05 | P05f (C.4 Outbound linkek) | DRAFT v1.2 |
-| docs/pce/D-risk-and-traceability.md | P05 | P06j (VC-14) | DRAFT v1.2 |
-| docs/pce/E-shadow-hitl.md | P05b | P05i (E.7 SOTA-határ) | DRAFT v1.2 |
-| docs/pce/F-decision-package.md | P05e | P10b (F.6 + OQ-17) | DRAFT v1.2; OQ-k ELŐTERJESZTVE |
-| docs/pce/Outbound/* | P05f | P05m (OQ-16 küldési boríték) | TERVEZET; 16 első kimenő; A9 |
-| docs/pce/Sales/* | P05g | P05j (mátrix + competitor-analogs) | TERVEZET rendszerlicenc |
+| docs/pce/D-risk-and-traceability.md | P05 | P05ad (R-010 / FR-520) | DRAFT v1.2 |
+| docs/pce/E-shadow-hitl.md | P05b | P05ad (E.8 `pce_cds`) | DRAFT v1.2 |
+| docs/pce/F-decision-package.md | P05e | P05ad (D-44 nem pecsét) | DRAFT v1.2; OQ-k ELŐTERJESZTVE |
+| docs/pce/Outbound/* | P05f | P05ad (OQ-05/15 cső vs 404) | TERVEZET; 16 első kimenő; A9 |
+| docs/pce/Sales/* | P05g | P05ad (demó üres cards) | TERVEZET rendszerlicenc |
 | docs/pce/Sources/S028-* | P01c | P05i | L5 jegyzet + PDF |
-| docs/pce/ProcessArtifacts/* | P01–P06 | P05l (I-20, D-25) | DRAFT |
-| docs/pce/Engineering/* | P05l | P06w | SYN ticketek; P06 mátrix; kód `src/` |
+| docs/pce/ProcessArtifacts/* | P01–P06 | P05ad (D-44, E-23) | DRAFT |
+| docs/pce/Engineering/* | P05l | P06ac (WP-F2, TRACE §16) | SYN ticketek; P06 mátrix; kód `src/` |
 | src/pce_shadow/ | P05u | P05w | F1s élő párosítás; forráshiány magyarul |
 | src/pce_hitl/ | P05u | P05w | vak ellenőrző API + `hitl.sqlite` |
 | src/pce_ui/hitl.html | P05u | P05w | van/hiányzik lista a vak lépés után |
 | src/pce_clinical/coverage.py | P05w | P05x | FR-210; diplotípus-forrás magyarul |
-| docs/pce/G-open-items.md | P05aa | P05ac (magyar próza) | Javaslat, nem pecsét; S055/S060/S062 LEZÁRVA |
+| docs/pce/G-open-items.md | P05aa | P05ad (124 teszt; kill-switch kód) | Javaslat, nem pecsét; S055/S060/S062 LEZÁRVA |
 | docs/pce/Sources/official/ | P05x | P05ab | + GDPR HTML/PDF; EMA 0,09; MDCG 2021-24; HC PRCI; DHCS DDG V2.2 (19 `ok`) |
 | tests/fixtures/pheno-gold-v0/ | P05y | P05y | N=32; G3 nevező |
 | src/pce_report/schema.py | P05r | P05y | B.4.1 allow-list |
@@ -162,3 +166,6 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | tests/fixtures/vcf-gold-v0/ | P05w | P05w | 3 SYN missing-to-ref |
 | docs/pce/Sales/pricing.md | P05z | P05aa | `[Yp]=0` 15 felíró alatt; `[Y*]` ESTIMATE |
 | docs/pce/Sources/market/ | P05z | P05z | SMART + Semmelweis/KÉ pin |
+| src/pce_cds/ | P05ad | P05ad | F2 CDS Hooks cső; repo `LIVE_CDS=false` |
+| src/pce_ui/cds.html | P05ad | P05ad | F2 lakat-UI |
+| tests/test_cds.py | P05ad | P05ad | lock / ON paraméter / timeout / IIa-safe / izoláció |

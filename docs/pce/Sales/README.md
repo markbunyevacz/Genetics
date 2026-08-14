@@ -8,7 +8,7 @@
 | **Gyártó** | `[Gyártó neve]` (A9; név nincs kitalálva) |
 | **Termék** | **PCE rendszer** (egy szoftver: F1+ · F1s · F2 · F3). Nem laborlelet-kereskedelem. |
 
-A vevő **rendszert** vesz: farmakogenetikai motor + lelet + shadow + (később) élő CDSS **egy** platformon. A HU / EU / US csomag ugyanazt a kódot viszi; a különbség a **licencelt / bekapcsolt** modul, nem egy másik termék.
+A vevő **rendszert** vesz: farmakogenetikai motor + lelet + shadow + CDS Hooks cső **egy** platformon. Az élő Card a felírónak a `LIVE_CDS` lakat mögött van. A HU / EU / US csomag ugyanazt a kódot viszi; a különbség a **licencelt / bekapcsolt** modul, nem egy másik termék.
 
 A labor **csatlakozó** (outside-call / VCF / LIS). A gyártó nem ad el PGx-vizsgálatot és nem B2C leletbolt (NG-03).
 

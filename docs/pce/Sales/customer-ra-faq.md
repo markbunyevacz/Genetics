@@ -15,7 +15,7 @@
 
 ## 2. Ha F2 bent van a kódban, az már MDSW-forgalmazás?
 
-A gyártó álláspontja: **nem**, ha a klinikai UI-ra **nem** megy kimenet (`LIVE_CDS=false`, FR-470), és a rendeltetés a bekapcsolt modulé. A hatóság a *tényleges használatot* nézi. Ha a felíró riasztást kap, az F2, CE/in-house/FDA nélkül = tilos (NG-07). A lakat nem színház: admin nem billenti.
+A gyártó álláspontja: **nem**, ha a klinikai UI-ra **nem** megy kimenet (`LIVE_CDS=false`, FR-470), és a rendeltetés a bekapcsolt modulé. Az F1+ processzuson a CDS 404. A `pce_cds` a dobozban van, de üres `cards`-ot ad (fail-open). A hatóság a *tényleges használatot* nézi. Ha a felíró riasztást kap, az F2, CE/in-house/FDA nélkül = tilos (NG-07). A lakat nem színház: admin nem billenti.
 
 OQ-05 a **F1+** rétegre. F2/F3 külön intended purpose (A.3).
 

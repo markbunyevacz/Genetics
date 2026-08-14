@@ -25,7 +25,7 @@ Súlyosság / előfordulás / detektálhatóság: 1–5. RPN = S×O×D. Küszöb
 | **R-007** | DPYD–fluoropirimidin: a statikus guideline-szöveget terápiás utasításnak olvassák | F1+ intended purpose vs felhasználói percepció | Súlyos toxicitás, ha a labor/klinikus a PDF-et „dózisnak” veszi | 5 | 2 | 3 | 30 | A.1 a PDF-en (**FR-490**); nincs `dose_mg`; nincs élő fenokonverzió a leleten; REG-020 aláíró; **OQ-05** | F3-on IIa + klinikai eval |
 | **R-008** | Fenokonverzió hallgatólagos kihagyása a **shadow/F2** pathen | Nincs gyógyszerlista, a motor NM-et ad „késznek” | Funkcionális PM NM-ként kezelve a HITL/F2 kártyán | 4 | 3 | 2 | 24 | **FR-220** `clinical_context = ABSENT` a HITL/F2 kártyán; FR-410-LIVE nem értékelhető. F1+ leleten élő alkalmazás **tilos** (FR-410-EDU only) | — |
 | **R-009** | Guideline-váltás (F5-eset) után régi riport él | Hardcoded génlista | Elavult, visszavont ajánlás | 4 | 3 | 2 | 24 | **FR-310**, **FR-510**; PharmCAT 2.11.0 mint bizonyíték | P1 a tömeges újragenerálás |
-| **R-010** | CDS timeout blokkolja a felírást | Fail-closed | Gyógyszer elmarad, kár a késedelemből | 4 | 2 | 2 | 16 | **FR-520** fail-open 2 s; NFR-011; F1+ buildben CDS nincs kitéve | F2 |
+| **R-010** | CDS timeout blokkolja a felírást | Fail-closed | Gyógyszer elmarad, kár a késedelemből | 4 | 2 | 2 | 16 | **FR-520** fail-open 2 s; NFR-011; `pce_clinical` 404; `pce_cds` lock: üres `cards`; ON: timeout → üres `cards` | F2 cső megvan; élő Card pecsétig LOCK |
 | **R-011** | PII a motor-logban | Debug dump | GDPR Art. 9 + 2008/XXI. | 3 | 3 | 2 | 18 | **FR-130** CI PII-scanner | — |
 | **R-012** | Multi-sample VCF rossz beteghez | Automatikus hozzárendelés | Rossz beteg riportja | 5 | 2 | 2 | 20 | **FR-200** nincs tippelés; E-VCF-002 | — |
 | **R-013** | Gépi fordítás / LLM-fordítás klinikai szövegen | FR-610 megsértése | Hamis klinikai jelentés | 4 | 2 | 2 | 16 | **FR-610** + **FR-700**: nincs HU → EN eredeti jelöléssel | OQ-14 lektor |
@@ -85,8 +85,8 @@ Minden funkcionális, NFR és REG sor. TC-azonosítók a gold set / CI nevei; a 
 | FR-490 | Comp P0 | A.1.1; R-007 | TC-RPT-DISC-001..003 | GSPR 23; **nem** MDSW-kimenekülés | F1+ |
 | FR-500 | Prod P0 | Genomics Reporting STU3 | TC-RPT-001..010 | GSPR 23 | F1+ |
 | FR-510 | P1 | FR-310; R-009 | TC-RPT-020..023 | 62304 §6 | F1.1 |
-| FR-520 | P0 F2; **tilos F1+** | Dolin 2018; R-010 | TC-CDS-001..006 | GSPR 14 (fail-open) | F2 |
-| FR-530 | P1 F2; F1+ csak FR-480 | SMART on FHIR | TC-SMART-001..003 | — | F2 |
+| FR-520 | P0 F2; **tilos az F1+ processzuson** | Dolin 2018; R-010 | `tests/test_cds.py` (lock + ON paraméter + timeout + IIa-safe) | GSPR 14 (fail-open) | F2 cső PARTIAL; élő HIS pecsét |
+| FR-530 | P1 F2 stub megvan; F1+ csak FR-480 | SMART on FHIR | `tests/test_cds.py` SMART stub | — | F2 stub PARTIAL; éles EHR pecsét |
 | FR-540 | P1 | 6. § (4); OQ-13 | TC-PT-001..003 | GSPR 23 | F2 |
 | FR-600 | P1 | PMS/PMCF | TC-PMS-001..004 | MDR PMS; AI Act 72 | F2 |
 | FR-610 | Comp P0 / P1 UI | A7 | TC-I18N-001..004 | GSPR 23; R-013 | F1+ |
@@ -98,7 +98,7 @@ Minden funkcionális, NFR és REG sor. TC-azonosítók a gold set / CI nevei; a 
 | Req | Pri | Forrás | Ellenőrzés | GSPR / egyéb |
 | --- | --- | --- | --- | --- |
 | NFR-010 | P0 | G1 | Load teszt | GSPR 17 |
-| NFR-011 | P1 (F2: P0) | FR-520 | Szintetikus monitor | R-010 |
+| NFR-011 | P1 (F2: P0) | FR-520 | 2 s hard timeout tesztelt (`test_cds`); p95 800 ms mérés hátravan | R-010 |
 | NFR-020 | P0 | Üzem | SLO | — |
 | NFR-030 | P0 | GDPR; EHDS irány | DPA | GDPR 44+ |
 | NFR-031 | P0 | GDPR 32 | Pentest | GSPR 17.2 |

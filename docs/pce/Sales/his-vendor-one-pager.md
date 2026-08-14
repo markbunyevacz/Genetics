@@ -15,8 +15,8 @@ A klinikai vevőitek **rendszert** akarnak, nem egy külön PGx-portált. A PCE 
 
 ## Mit kaptok
 
-- Teljes PCE tenancy a ti UX-etekben: lelet, enciklopédia, később (lakat után) CDS Hooks.
-- FHIR / dokumentum + (F2 feloldáskor) CDS Hooks / SMART — ugyanaz a cső.
+- Teljes PCE tenancy a ti UX-etekben: lelet, enciklopédia, CDS Hooks cső **lakattal** (üres cards, amíg signed release).
+- FHIR / dokumentum + CDS Hooks / SMART — ugyanaz a cső. A kimenet a `LIVE_CDS` flag.
 - REG-021: **PGx-motor gyártója = `[Gyártó neve]`**. Ti a medikai rendszer gyártói maradtok.
 - Market pack a *telepítő* intézmény országa szerint (HU/EU/US), nem a vendor székhelye szerint egyedül.
 

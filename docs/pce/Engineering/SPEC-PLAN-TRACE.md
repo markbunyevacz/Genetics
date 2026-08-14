@@ -16,12 +16,12 @@ A rendszer a fagyasztott spec NOW-sávját építi (klinikai lánc + kutatási p
 
 | | |
 | --- | --- |
-| **Dátum** | 2026-08-13 (P06y: J-1…J-6 — B.4.1 allow-list, pheno-gold, Art. 12(3), §0 Owner/Due) |
-| **Spec** | `docs/pce/PCE-SPEC-v1.2.md` **FAGYASZTVA** (§10.2) + A, B, D, E |
+| **Dátum** | 2026-08-14 (P06ac: F2 CDS cső lakattal — D-44) |
+| **Spec** | `docs/pce/PCE-SPEC-v1.2.md` **FAGYASZTVA** (§10.2) + A, B, D, E; D-44 a G5 csövet dokumentálja |
 | **Terv** | [DELIVERY-PLAN.md](DELIVERY-PLAN.md) |
 | **Adatfolyam / UX** | [DATAFLOW-AND-UX.md](DATAFLOW-AND-UX.md) |
 | **Oracle** | `PYTHONPATH=src python3 -m unittest discover -s tests -v` |
-| **Nem** | Új FR, OQ-lezárás, kitalált gyártónév, dummy guideline-szöveg |
+| **Nem** | Új FR, OQ-lezárás, kitalált gyártónév, dummy guideline-szöveg, `LIVE_CDS=true` a repo konstansban |
 
 Mérés: minden spec-tétel **FULL** / **PARTIAL** / **PLANNED** / **DEFERRED** / **NG**. A kód a 2026-08-13 `cursor/pce-clinical-gates-3690` szerint. A terv **minden NOW-tételt** nevesít Given/When/Then + B-szerződéssel.
 
@@ -31,9 +31,9 @@ Mérés: minden spec-tétel **FULL** / **PARTIAL** / **PLANNED** / **DEFERRED** 
 | --- | --- | --- | --- | --- | --- |
 | FR katalógus (36) | 36 | **36 (100%)** | 0 | **26** | 0 NOW + P1/NG |
 | §10.2 NOW kódolható sáv | 27 | **27 (100%)** | 0 | **26** + 1 LOCK (FR-300) | **0** |
-| User story §5.2 | 21 | **21 (100%)** | 1 | **12** | F2 LOCK + P1 |
+| User story §5.2 | 21 | **21 (100%)** | 1 | **17** | élő F2 Card LOCK + P1 |
 | B.2 entitás | 22 | **22 (100%)** | 1 flag | **18** | 0 NOW (P1 maradék) |
-| B.3 / B.4 API | 12 | **12 (100%)** | **4** | **5** | 2 P1 + CDS LOCK |
+| B.3 / B.4 API | 12 | **12 (100%)** | **4** | **6** | 2 P1 (enciklopédia, HL7) |
 | B.5 hibakód | 22 | **22 (100%)** | **12** | 4 | F2/VCF maradék |
 | NFR §7 | 13 | **13 (100%)** | 0 | 5 | P1/P2 |
 | REG §8 | 16 | **16 (100%)** | 0 | 4 | pecsét |
@@ -42,11 +42,11 @@ Mérés: minden spec-tétel **FULL** / **PARTIAL** / **PLANNED** / **DEFERRED** 
 
 **Kód FULL (FR) = 0** szándékos: egy FR akkor FULL, ha **minden** AC + B-szerződés + D.2 TC zöld. GatewayEvent `id` / `org_id` / `payload_hash` / `received_at` megvan (G12); FR-461 maradék: intézményi monitor org-név, Practitioner a Gold HIS-ben nem volt, a strip teszt szintetikus.
 
-**Terv-teljesség NOW: 27/27 = 100%.** Kód-teljesség NOW: 0 FULL + **26 PARTIAL** + 1 LOCK + **0 MISSING**. A Rés oszlop a még nyitott spec-pipa (DPWG fájl, többi gén pozíciókatalógusa, pecsét előtti LOCK). A termék jelzi a hiányt ott, ahol a guideline-tábla üres.
+**Terv-teljesség NOW: 27/27 = 100%.** Kód-teljesség NOW: 0 FULL + **26 PARTIAL** + 1 LOCK + **0 MISSING**. Plusz F2 cső (FR-520/530): **PARTIAL** lakattal, nem a 27 F1+/F1s NOW-sor. A Rés oszlop a még nyitott spec-pipa (DPWG fájl, többi gén pozíciókatalógusa, pecsét előtti élő Card). A termék jelzi a hiányt ott, ahol a guideline-tábla üres.
 
 **Dataflow F1+ (DATAFLOW §5, 8 lépés):** 8/8 SYN-en végigjárható HTTP-n (`test_ui_and_iso_and_walk`). **F1s HITL (5 lépés):** 5/5 (`test_his_gateway_ingest_hitl_report_untouched` + HTTP vak walk).
 
-**UX zsákutca:** W-CALL-010 → `POST .../resolve-call` (emberi választás). FR-100 piros → nincs PDF. clinician → HITL `E-ISO-001`. CDS → `E-ISO-002`. P2-nek nincs belépés.
+**UX zsákutca:** W-CALL-010 → `POST .../resolve-call` (emberi választás). FR-100 piros → nincs PDF. clinician → HITL `E-ISO-001`. CDS a `pce_clinical`-en → `E-ISO-002`. CDS a `pce_cds`-en lock → üres `cards`. P2-nek nincs élő Card.
 
 ---
 
@@ -56,9 +56,10 @@ Mérés: minden spec-tétel **FULL** / **PARTIAL** / **PLANNED** / **DEFERRED** 
 | --- | --- | --- |
 | **NOW-F1+** | §10.2 L0–L2, FR-240, 210, 310, 400-STATIC, 410-EDU, 490, 500 PDF/FHIR, 470, 700 | WP-C, K, N, T, F, R, U, X, L, Q |
 | **NOW-F1s** | §10.2 440/450/450-BLIND/460/461/410-LIVE SYN | WP-G (kész), H, M |
-| **LOCK** | `LIVE_CDS=true`, matcher ON F1+, MedicationEntry a rendererben, élő HIS | WP-I negatív CI |
-| **LATER-P1** | FR-230, 480, 510, 530, 540, 600, 610-EN-UI, 120 hash-chain, 220 FHIR | WP-P1 |
-| **LATER-F2** | FR-520 élő, SMART interruptive | pecsét + REG-011 |
+| **NOW-F2-PIPE** | FR-520 cső + FR-530 stub; `LIVE_CDS=false` | **WP-F2** |
+| **LOCK** | `LIVE_CDS=true` a repo konstansban, matcher ON F1+, MedicationEntry a rendererben, élő HIS, élő suggestion a felírónak | WP-I negatív CI |
+| **LATER-P1** | FR-230, 480, 510, 540, 600, 610-EN-UI, 120 hash-chain, 220 FHIR | WP-P1 |
+| **LATER-F2** | élő Card / SMART interruptive pecsét után | signed `LIVE_CDS=true` + REG-011 |
 | **P2 / parking** | FR-430, §13, NG-01–06, EESZT írás | nem kód |
 
 ---
@@ -91,13 +92,13 @@ Mérés: minden spec-tétel **FULL** / **PARTIAL** / **PLANNED** / **DEFERRED** 
 | FR-450-BLIND | P1; §10.2 SYN igen | PARTIAL | **WP-H** | `POST .../blind` majd `.../reviews`; immutábilis; default be | OQ-15 nem lezárt pecsét |
 | FR-460 | Comp P0 F1s | PARTIAL | WP-G | PII + G12 id/hash/org + G13 Practitioner | Gold HIS Practitioner nem volt; strip tesztelt |
 | FR-461 | Comp P0 F1s | PARTIAL | WP-G | default 7 karakteres kód; PII/dózis/nap továbbra is 400; k-cella a 7 karakteres kódon | monitor SYN org display |
-| FR-470 | Comp P0 | PARTIAL | **WP-I** | LIVE_CDS; grep; CDS 404; HITL 403; **allow-list** B.4.1; R9↔séma; `create_report` nem SELECT a gyógyszerlista-táblára | élő CDS pecsétig LOCK (FR-520) |
+| FR-470 | Comp P0 | PARTIAL | **WP-I** | LIVE_CDS; grep; CDS 404 a `pce_clinical`-en; HITL 403; **allow-list** B.4.1; R9↔séma; `create_report` nem SELECT a gyógyszerlista-táblára; `pce_cds` izoláció | élő CDS pecsétig LOCK |
 | FR-480 | P1 | — | **WP-P1** | — | DEFERRED |
 | FR-490 | Comp P0 | PARTIAL | WP-R | A.1/A.1.1 minden PDF oldal chrome | FHIR description = A.1.1 |
 | FR-500 | Prod P0 | PARTIAL | **WP-F / R** | B.4.1 + PDF + STU3 Bundle | teljes IG validátor; white-label logo fájl |
 | FR-510 | P1 | — | **WP-P1** | — | DEFERRED |
-| FR-520 | P0 F2; tilos F1+ | LOCK | **WP-I** | `E-ISO-002` 404 | endpoint nincs |
-| FR-530 | P1 F2 | — | **WP-P1** | v1 labor-UI = WP-U HTML | SMART később |
+| FR-520 | P0 F2; tilos F1+ processzuson | PARTIAL | **WP-F2** | lock HTTP üres `cards`; ON paraméteres teszt; timeout fail-open; IIa-safe | éles HIS + signed `LIVE_CDS=true` |
+| FR-530 | P1 F2 stub | PARTIAL | **WP-F2** | SMART `/.well-known/smart-configuration` lakat + SYN stub | éles EHR-launch pecsét után |
 | FR-540 | P1 | — | **WP-P1** | — | OQ-13 |
 | FR-600 | P1 | — | **WP-P1** | — | HITL DISAGREE napló előkészítés H-ban |
 | FR-610 | Comp P0 HU | PARTIAL | **WP-L** | HU A.1.1; `text_hu_status` jelölés | nem LLM; lektorált HU később |
@@ -115,17 +116,17 @@ Mérés: minden spec-tétel **FULL** / **PARTIAL** / **PLANNED** / **DEFERRED** 
 | 3 | P1 hiányzó gén | WP-R / V | PARTIAL | FR-210; 3 VCF gold + OC INDETERMINATE |
 | 4 | P1 white-label + aláíró | WP-F + U | PARTIAL | SYN-ORG slot + signer_slot; logo fájl később |
 | 5 | P1 újragenerálás | WP-P1 | DEFERRED | FR-510 |
-| 6–10 | P2 felírási riasztás | LOCK | DEFERRED F2 | FR-520; NG-07 |
+| 6–10 | P2 felírási riasztás | WP-F2 | PARTIAL (cső + lakat) | FR-520; NG-07; élő suggestion pecsétig LOCK |
 | 11–12 | P3 fenokonverzió HITL/F2 | WP-M + H | PARTIAL SYN | FR-410-LIVE; vak UI; nincs kitalált PM |
 | 13 | P4 tanácsadás kapu | WP-C + U | PARTIAL | FR-100 HTTP + űrlap |
 | 14 | P4 gén-hozzájárulás | WP-C | PARTIAL | scope + omit_from_patient |
 | 15 | P5 visszavonás tanúsítvány | WP-C | PARTIAL | DeletionCertificate; 410 |
 | 16 | P5 audit export | WP-Q | PARTIAL | CSV+JSON; hash-chain P1 |
-| 17 | P6 FHIR/CDS | WP-F; CDS LOCK | PARTIAL | STU3 Bundle; `E-ISO-002` |
+| 17 | P6 FHIR/CDS | WP-F; WP-F2 | PARTIAL | STU3 Bundle; F1+ `E-ISO-002`; `pce_cds` lakat |
 | 18 | P6 MDR határ | Outbound OQ-03 | PLANNED irat | REG-020/021 |
 | 19 | nincs PGx explicit | WP-U / I | PLANNED | story 19 |
 | 20 | csonka VCF | WP-V | PARTIAL | `E-VCF-001` prefix; gold később |
-| 21 | CDS ne blokkoljon | WP-G fail-open | PARTIAL | E.2; FR-520 |
+| 21 | CDS ne blokkoljon | WP-F2 fail-open | PARTIAL | E.2; FR-520; timeout → üres `cards` |
 
 ---
 
@@ -161,7 +162,7 @@ Mérés: minden spec-tétel **FULL** / **PARTIAL** / **PLANNED** / **DEFERRED** 
 | `GET /v1/cases/{id}/reports/{rid}` | B.4.1 | WP-F | FULL (kötelező mezők + tiltottak) |
 | PDF oldalmeta | B.4.2 | WP-F / R | PARTIAL |
 | FHIR STU3 Bundle | B.4.3 | WP-F | PARTIAL |
-| CDS Hooks | B.4.4 | WP-I 404 | LOCK |
+| CDS Hooks | B.4.4 | WP-F2 | PARTIAL (lakat; F1+ 404) |
 | `GET /v1/encyclopedia` | B.4.5 P1 | WP-P1 | DEFERRED |
 | `/v1/hitl/**` | B.4.6 | WP-H | PARTIAL (lista, vak, verdict, UI; klinikai processzus 403) |
 
@@ -181,7 +182,7 @@ Mérés: minden spec-tétel **FULL** / **PARTIAL** / **PLANNED** / **DEFERRED** 
 | E-SHADOW-001..003 | WP-G | PARTIAL | HIS fail-open |
 | E-ISO-001, E-ISO-002 | WP-I | FULL | 403 / 404 |
 | E-EDU-001 | WP-R | PARTIAL | 422 tiltott formula |
-| E-TIMEOUT-CDS | F2 | DEFERRED | felírás nem blokkol |
+| E-TIMEOUT-CDS | F2 | PARTIAL | felírás nem blokkol (`test_cds` timeout) |
 
 ---
 
@@ -190,7 +191,7 @@ Mérés: minden spec-tétel **FULL** / **PARTIAL** / **PLANNED** / **DEFERRED** 
 | ID | Terv | Megjegyzés |
 | --- | --- | --- |
 | NFR-010 | WP-V után mérés | F0 WES nélkül nem kapu |
-| NFR-011 | F2 | DEFERRED |
+| NFR-011 | WP-F2 | 2 s timeout tesztelt; p95 800 ms mérés hátravan |
 | NFR-020 | üzem | nem F0 feature |
 | NFR-030 | WP-K | EU tenancy; DPA = REG-050 |
 | NFR-031 | SYN HTTP eltérés dokumentált | éles TLS 1.3 |
@@ -245,7 +246,7 @@ A 2026-08-13 első terv WP-G + vékony R volt; a B.1 klinikai lánc hiányzott. 
 | (2b) DATAFLOW F1s HITL végigjárható | **PASS** `test_his_gateway_ingest_hitl_report_untouched` + HTTP vak walk |
 | (3) érintett B.5 HTTP | **PASS** 001–005, 006, CALL, GONE, ISO; HITL operatív kódok a B.4.6-on |
 | (4) `unsourced_claims == 0` | **PASS** F1+; árnyék: `functional_phenotype` üres, ha a tábla null |
-| (5) FR-470 grepek | **PASS** (CI + IsolationTests; `pce_report` nem importál `pce_shadow`) |
+| (5) FR-470 grepek | **PASS** (CI + IsolationTests; `pce_report` nem importál `pce_shadow` / `pce_cds`) |
 
 F1+ WP-C/K/F/X/Q/U **PARTIAL-VERIFIED**. WP-M/H **PARTIAL-VERIFIED** (CYP2D6 + SSRI szelet; forrásolt null PM). Spec-t nem írunk.
 
@@ -329,4 +330,27 @@ A user öt pontja: forrás-letöltés; szegény címke tiltás; „a lelet olvas
 | S062 | **LEZÁRVA `[V]`.** DHCS DDG V2.2 (2022-12-06, 71 oldal): numerátor <11 vagy nevező <20 000. Élő DHCS Incapsula; pin Wayback `/web/2022/`. v3.0 nincs pinelve. **Nem** EU-jog. |
 | OQ-16 / A14 | k≥11 **javaslat** a DPO-nak. A14 k≥5 / 0,5% `[ASSUMPTION]` **nem** DPO-pecsét. |
 | Pin | Official **19** `ok: true`. Unittest **113 OK**. |
+
+---
+
+## 16. P06ac — F2 CDS cső lakattal (2026-08-14, D-44)
+
+A G5 ellentmondás: a Sales „ki van kapcsolva, nem hiányzik”; a TRACE FR-520 LOCK volt, mert a `pce_clinical`-en 404. Feloldás: külön processzus, a cső megvan, a kimenet lakat.
+
+| Tétel | Eredmény |
+| --- | --- |
+| F1+ processzus | `GET/POST /cds-services/` → 404 `E-ISO-002` (**változatlan**) |
+| F2 processzus | `src/pce_cds/`, `python -m pce_cds` SYN :8092 |
+| Repo flag | `LIVE_CDS is False`; `MATCHER_ON is False`; `IIA_SAFE_BLOCK is True` |
+| Lock HTTP | discovery `enabled: false`; POST 200 `cards: []`; `X-PCE-LIVE-CDS: false` |
+| ON út | csak teszt-paraméter `live_cds=True`; **nem** a repo konstans |
+| Fail-open | timeout 2 s → üres `cards` |
+| IIa-safe | G §2.4 INN + WHO ATC5; info, nincs suggestion |
+| SMART | stub `/.well-known/smart-configuration` |
+| Izoláció | `pce_report` / `pce_clinical` nem importál `pce_cds`-t (CI + teszt) |
+| OQ | 05 / 06 / 15 / 16 **nem** pecsét. A14 k≥5 / 0,5% változatlan |
+| Unittest | **124 OK** (113 + 11 CDS) |
+| FR-520 / FR-530 | **PARTIAL** (cső); élő Card / éles EHR = pecsét |
+
+Bekapcsolás a fejlesztés végén: signed release `LIVE_CDS=true` (és szükség szerint `IIA_SAFE_BLOCK=false` OQ-06 után). Kikapcsolás: a konstans `false`. Nincs újraírás.
 
