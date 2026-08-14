@@ -1,0 +1,13 @@
+{
+  "id": "pce-f1plus-static-guideline-pins",
+  "version": "v0",
+  "dpwg_version": "DPWG-ClinPGx-guidelineAnnotation@2026-08-14",
+  "dpwg_api": "https://api.clinpgx.org/v1/data/guidelineAnnotation?source=DPWG",
+  "dpwg_accessed": "2026-08-14",
+  "dpwg_index": "tests/fixtures/f1plus-v0/dpwg-prepare12-index.v0.json",
+  "fda_table_version": "FDA-DDI-TABLE-2-2@2026-08-13",
+  "fda_url": "https://www.fda.gov/drugs/drug-interactions-labeling/drug-development-and-drug-interactions-table-substrates-inhibitors-and-inducers",
+  "fda_accessed": "2026-08-13",
+  "fda_extract": "tests/fixtures/f1plus-v0/fda-ddi-table-2-2-cyp2d6-strong.v0.json",
+  "note_en": "CPIC rows stay on findings. DPWG is a separate source with URLs. FDA Table 2-2 is a version stamp plus the CYP2D6 strong-index extract. No synthesized third recommendation."
+}

@@ -6,6 +6,7 @@ from typing import Any
 
 from pce_report.render import FORBIDDEN_RENDERER_TOKENS, RendererConfigError, render_f1plus
 from pce_report.statements import A11_DISCLAIMER, A1_INTENDED_PURPOSE
+from pce_report.static_pins import dpwg_version, fda_table_version
 
 # Concatenate so CI greps on this package stay empty (FR-470).
 _MED_ENTRY = "medication_" + "entry"
@@ -292,8 +293,8 @@ def assemble_b41(
         "pipeline_version": "pce-clinical-v0",
         "pharmcat_version": None,
         "cpic_version": engine.get("accessed"),
-        "dpwg_version": None,
-        "fda_table_version": None,
+        "dpwg_version": engine.get("dpwg_version") or dpwg_version(),
+        "fda_table_version": engine.get("fda_table_version") or fda_table_version(),
         "callability_summary": callability_summary,
         "genes": [g for g in genes if g["gene"] not in omit_from_patient],
         "findings": findings,

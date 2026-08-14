@@ -6,11 +6,11 @@
   "note_hu": "Ez lefedettség-ellenőrzés, nem allélhívás. Hiányzó definiáló pozíció ≠ referencia-allél, és nem NORMAL / normál metabolizáló.",
   "beszerzes": {
     "kinek": "gyártó (ez a repo). A labor nem küld fizikai mintát ehhez a szoftverteszthez.",
-    "kitol_pozicio": "Ensembl Variation REST (GRCh38 és GRCh37 archív) + NCBI dbSNP. A rs-azonosítók a CPIC/PharmVar *4 / *2 / *2A definiáló változatok.",
+    "kitol_pozicio": "Ensembl Variation REST POST /variation/homo_sapiens (GRCh38 és GRCh37 archív) + NCBI dbSNP eutils/refsnp. A rs-azonosítók a PharmVar/CPIC definiáló változatok (*6/*2/*3/*2A/Leiden/*5/*2/*3C/-1639).",
     "hol_a_harom_minta": "tests/fixtures/vcf-gold-v0/ — SYN VCF ebben a repóban, a gyártó készíti a FR-210 teszthez.",
     "cdc_get_rm": "https://www.cdc.gov/lab-quality/php/get-rm/reference-materials.html — fizikai referenciaanyag labor-QC-hez, nem ez a három fájl.",
     "pharmcat_teszt_vcf": "A PharmCAT GitHubon vannak teszt-VCF-ek; a --absent-to-ref és --unspecified-to-ref vakon nem hívható.",
-    "mikorra": "A három SYN fájl most a repóban van. További PREPARE-12 gének definiáló-pozíció katalógusa: amikor a gyártó pin-eli a PharmVar/CPIC allél-definíciót (addig NOT_TESTED + hiány jelzés)."
+    "mikorra": "A három SYN missing-to-ref fájl 2026-08-13-án a repóban volt. 2026-08-14: a maradék PREPARE-12 SNV definiáló pozíció Ensembl POST + NCBI dbSNP pin (CYP2B6, CYP2C9, CYP3A5, F5, SLCO1B1, TPMT, VKORC1). HLA-B nem egyszerű SNV (HLA-gépelés). UGT1A1*28 (rs8175347) NCBI snp_class=delins / TA-ismétlődés, nem SNV. Matcher ki."
   },
   "sources": [
     {
@@ -39,6 +39,21 @@
       "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=snp&id=3892097,4244285,3918290&retmode=json",
       "accessed": "2026-08-13",
       "claim": "Same GRCh38 chrpos: 22:42128945, 10:94781859, 1:97450058."
+    },
+    {
+      "id": "ENSEMBL-PREPARE12-SNV-2026-08-14",
+      "url": "https://rest.ensembl.org/variation/homo_sapiens",
+      "grch37_url": "https://grch37.rest.ensembl.org/variation/homo_sapiens",
+      "on_disk": "docs/pce/Sources/official/ensembl-prepare12-defining-snvs-2026-08-14.json",
+      "accessed": "2026-08-14",
+      "claim": "GRCh38/GRCh37 primary assembled mappings for rs3745274, rs1799853, rs1057910, rs776746, rs6025, rs4149056, rs1800462, rs1142345, rs9923231. rs8175347 not returned as a simple SNP by this POST."
+    },
+    {
+      "id": "NCBI-DBSNP-PREPARE12-2026-08-14",
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=snp&id=3745274,1799853,1057910,776746,6025,4149056,1800462,1142345,9923231,8175347&retmode=json",
+      "on_disk": "docs/pce/Sources/official/ncbi-dbsnp-prepare12-defining-snvs-2026-08-14.json",
+      "accessed": "2026-08-14",
+      "claim": "Same GRCh38 chrpos as Ensembl for the nine SNVs. rs8175347 snp_class=delins (TA repeat), not snv."
     }
   ],
   "genes": {
@@ -90,14 +105,161 @@
         }
       ]
     },
-    "CYP2B6": { "catalog": "gap", "positions": [] },
-    "CYP2C9": { "catalog": "gap", "positions": [] },
-    "CYP3A5": { "catalog": "gap", "positions": [] },
-    "F5": { "catalog": "gap", "positions": [] },
-    "HLA-B": { "catalog": "gap", "positions": [] },
-    "SLCO1B1": { "catalog": "gap", "positions": [] },
-    "TPMT": { "catalog": "gap", "positions": [] },
-    "UGT1A1": { "catalog": "gap", "positions": [] },
-    "VKORC1": { "catalog": "gap", "positions": [] }
+    "CYP2B6": {
+      "catalog": "pinned",
+      "positions": [
+        {
+          "id": "CYP2B6-star6",
+          "rsid": "rs3745274",
+          "allele_name": "CYP2B6*6",
+          "chrom": "19",
+          "grch38_pos": 41006936,
+          "grch37_pos": 41512841,
+          "ref": "G",
+          "ref_grch37": "G",
+          "naive_missing_to_ref_would_claim": "Normal Metabolizer",
+          "why_opposite_hu": "A naiv missing-to-ref a hiányzó helyet referenciának venné, tehát nem a definiáló változatnak. A CPIC guideline-ban a gén szerinti normál metabolizáló és a csökkent/no-function osztály sora eltér. A rendszer INDETERMINATE-et ír, nem NORMAL-t. Allélhívó ki."
+        }
+      ]
+    },
+    "CYP2C9": {
+      "catalog": "pinned",
+      "positions": [
+        {
+          "id": "CYP2C9-star2",
+          "rsid": "rs1799853",
+          "allele_name": "CYP2C9*2",
+          "chrom": "10",
+          "grch38_pos": 94942290,
+          "grch37_pos": 96702047,
+          "ref": "C",
+          "ref_grch37": "C",
+          "naive_missing_to_ref_would_claim": "Normal Metabolizer",
+          "why_opposite_hu": "A naiv missing-to-ref a hiányzó helyet referenciának venné, tehát nem a definiáló változatnak. A CPIC guideline-ban a gén szerinti normál metabolizáló és a csökkent/no-function osztály sora eltér. A rendszer INDETERMINATE-et ír, nem NORMAL-t. Allélhívó ki."
+        },
+        {
+          "id": "CYP2C9-star3",
+          "rsid": "rs1057910",
+          "allele_name": "CYP2C9*3",
+          "chrom": "10",
+          "grch38_pos": 94981296,
+          "grch37_pos": 96741053,
+          "ref": "A",
+          "ref_grch37": "A",
+          "naive_missing_to_ref_would_claim": "Normal Metabolizer",
+          "why_opposite_hu": "A naiv missing-to-ref a hiányzó helyet referenciának venné, tehát nem a definiáló változatnak. A CPIC guideline-ban a gén szerinti normál metabolizáló és a csökkent/no-function osztály sora eltér. A rendszer INDETERMINATE-et ír, nem NORMAL-t. Allélhívó ki."
+        }
+      ]
+    },
+    "CYP3A5": {
+      "catalog": "pinned",
+      "positions": [
+        {
+          "id": "CYP3A5-star3",
+          "rsid": "rs776746",
+          "allele_name": "CYP3A5*3",
+          "chrom": "7",
+          "grch38_pos": 99672916,
+          "grch37_pos": 99270539,
+          "ref": "T",
+          "ref_grch37": "C",
+          "naive_missing_to_ref_would_claim": "Normal Metabolizer",
+          "why_opposite_hu": "A naiv missing-to-ref a hiányzó helyet referenciának venné, tehát nem a definiáló változatnak. A CPIC guideline-ban a gén szerinti normál metabolizáló és a csökkent/no-function osztály sora eltér. A rendszer INDETERMINATE-et ír, nem NORMAL-t. Allélhívó ki."
+        }
+      ]
+    },
+    "F5": {
+      "catalog": "pinned",
+      "positions": [
+        {
+          "id": "F5-leiden",
+          "rsid": "rs6025",
+          "allele_name": "F5 Leiden",
+          "chrom": "1",
+          "grch38_pos": 169549811,
+          "grch37_pos": 169519049,
+          "ref": "C",
+          "ref_grch37": "T",
+          "naive_missing_to_ref_would_claim": "wild-type Factor V (not Leiden)",
+          "why_opposite_hu": "A naiv missing-to-ref vad típusú (nem Leiden) Factor V-t feltételezne. A PCE nem hív allélt a VCF-ből. INDETERMINATE, nem NORMAL."
+        }
+      ]
+    },
+    "HLA-B": {
+      "catalog": "not_snv",
+      "positions": [],
+      "note_hu": "HLA-B definiáló változata (pl. HLA-B*57:01) HLA-gépelés, nem egyetlen SNV. Nincs kitalált HLA-SNV koordináta. NOT_TESTED, nem NORMAL.",
+      "reason": "hla_typing_not_snv"
+    },
+    "SLCO1B1": {
+      "catalog": "pinned",
+      "positions": [
+        {
+          "id": "SLCO1B1-star5",
+          "rsid": "rs4149056",
+          "allele_name": "SLCO1B1*5",
+          "chrom": "12",
+          "grch38_pos": 21178615,
+          "grch37_pos": 21331549,
+          "ref": "T",
+          "ref_grch37": "T",
+          "naive_missing_to_ref_would_claim": "Normal Metabolizer",
+          "why_opposite_hu": "A naiv missing-to-ref a hiányzó helyet referenciának venné, tehát nem a definiáló változatnak. A CPIC guideline-ban a gén szerinti normál metabolizáló és a csökkent/no-function osztály sora eltér. A rendszer INDETERMINATE-et ír, nem NORMAL-t. Allélhívó ki."
+        }
+      ]
+    },
+    "TPMT": {
+      "catalog": "pinned",
+      "positions": [
+        {
+          "id": "TPMT-star2",
+          "rsid": "rs1800462",
+          "allele_name": "TPMT*2",
+          "chrom": "6",
+          "grch38_pos": 18143724,
+          "grch37_pos": 18143955,
+          "ref": "C",
+          "ref_grch37": "C",
+          "naive_missing_to_ref_would_claim": "Normal Metabolizer",
+          "why_opposite_hu": "A naiv missing-to-ref a hiányzó helyet referenciának venné, tehát nem a definiáló változatnak. A CPIC guideline-ban a gén szerinti normál metabolizáló és a csökkent/no-function osztály sora eltér. A rendszer INDETERMINATE-et ír, nem NORMAL-t. Allélhívó ki."
+        },
+        {
+          "id": "TPMT-star3c",
+          "rsid": "rs1142345",
+          "allele_name": "TPMT*3C",
+          "chrom": "6",
+          "grch38_pos": 18130687,
+          "grch37_pos": 18130918,
+          "ref": "T",
+          "ref_grch37": "T",
+          "naive_missing_to_ref_would_claim": "Normal Metabolizer",
+          "why_opposite_hu": "A naiv missing-to-ref a hiányzó helyet referenciának venné, tehát nem a definiáló változatnak. A CPIC guideline-ban a gén szerinti normál metabolizáló és a csökkent/no-function osztály sora eltér. A rendszer INDETERMINATE-et ír, nem NORMAL-t. Allélhívó ki."
+        }
+      ]
+    },
+    "UGT1A1": {
+      "catalog": "not_snv",
+      "positions": [],
+      "rsid_documented_not_used_as_snv": "rs8175347",
+      "note_hu": "UGT1A1*28 a TATA-box TA-ismétlődése (NCBI dbSNP rs8175347, snp_class=delins), nem egyszerű SNV. A pozíciót nem pin-eljük SNV-ként, és tag-SNP-t (pl. rs887829) sem használunk *28-helyettesítőnek. NOT_TESTED, nem NORMAL.",
+      "reason": "ta_repeat_not_snv"
+    },
+    "VKORC1": {
+      "catalog": "pinned",
+      "positions": [
+        {
+          "id": "VKORC1-1639",
+          "rsid": "rs9923231",
+          "allele_name": "VKORC1 -1639G>A",
+          "chrom": "16",
+          "grch38_pos": 31096368,
+          "grch37_pos": 31107689,
+          "ref": "C",
+          "ref_grch37": "C",
+          "naive_missing_to_ref_would_claim": "VKORC1 -1639 reference (GG)",
+          "why_opposite_hu": "A naiv missing-to-ref a -1639 referencia-allélt feltételezné. A CPIC VKORC1–warfarin pár létezik; a recommendation_view üres, kitalált adagolás nincs. INDETERMINATE, nem NORMAL. Allélhívó ki."
+        }
+      ]
+    }
   }
 }

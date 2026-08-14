@@ -1,4 +1,4 @@
-"""Versioned CYP2D6 knowledge extract. Missing mapping stays null — no dummy PM."""
+"""Versioned PREPARE-12 knowledge extract. Pairing is keyed by (gene, ATC5). Missing mapping stays null — no dummy PM."""
 from __future__ import annotations
 
 import json
@@ -20,9 +20,12 @@ class KnowledgeTable:
         self._inhibitors: dict[str, dict[str, Any]] = {}
         for row in self.doc.get("strong_cyp2d6_inhibitors") or []:
             self._inhibitors[str(row["atc5"]).upper()] = row
-        self._pairings: dict[str, dict[str, Any]] = {}
+        self._pairings: dict[tuple[str, str], dict[str, Any]] = {}
         for row in self.doc.get("pairings") or []:
-            self._pairings[str(row["atc5"]).upper()] = row
+            gene = str(row.get("gene") or "").strip()
+            atc5 = str(row.get("atc5") or "").strip().upper()
+            if gene and atc5:
+                self._pairings[(gene, atc5)] = row
         adj = self.doc.get("phenotype_adjustment") or {}
         self.nm_plus_strong: str | None = adj.get("nm_plus_strong_inhibitor")
         self.adjustment_status: str = str(adj.get("status") or "unknown")
@@ -47,8 +50,8 @@ class KnowledgeTable:
     def strong_inhibitor(self, atc: str) -> dict[str, Any] | None:
         return self._inhibitors.get(atc.strip().upper())
 
-    def pairing(self, atc5: str) -> dict[str, Any] | None:
-        return self._pairings.get(atc5.strip().upper())
+    def pairing(self, gene: str, atc5: str) -> dict[str, Any] | None:
+        return self._pairings.get((gene, atc5.strip().upper()))
 
     def pairings(self) -> list[dict[str, Any]]:
         return list(self._pairings.values())
@@ -56,8 +59,10 @@ class KnowledgeTable:
     def inhibitor_atc5_codes(self) -> list[str]:
         return list(self._inhibitors)
 
-    def pairing_atc5_codes(self) -> list[str]:
-        return list(self._pairings)
+    def pairing_atc5_codes(self, gene: str | None = None) -> list[str]:
+        if gene is None:
+            return [atc5 for (_gene, atc5) in self._pairings]
+        return [atc5 for (g, atc5) in self._pairings if g == gene]
 
 
 def default_table() -> KnowledgeTable:

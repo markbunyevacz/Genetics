@@ -183,6 +183,8 @@ class PipelineGoldTests(unittest.TestCase):
         self.assertNotIn("SYN-TAJ", blob)
         self.assertNotIn("*4/*4", blob)
         self.assertEqual(report["report_type"], "A14_quarterly_monitor")
+        self.assertEqual(report["org_id"], "SYN-ORG-001")
+        self.assertEqual(report["org_display"], "SYN-ORG-001")
         self.assertTrue(report["g3_recall_drop_does_not_disable_suppression"])
 
 

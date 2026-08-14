@@ -12,7 +12,7 @@
 
 Ez a melléklet döntési javaslat és levezetés: **nem** zárja az OQ-05 / OQ-06 / OQ-16 pecsétjét, **nem** tartalmaz listaárat, és **nem** Rule 11 határozat.
 
-A bemeneti vázlat 108 tesztet és S001–S055-öt említett. A G pecsét-napján (2026-08-13): unittest **113 OK**. 2026-08-14 (D-44, F2 cső): **124 OK**. A SOURCE-REGISTRY S062-ig tart (S060 és S062 **lezárva**). Az F1+ allow-list **45** top-level kulcs (`ALLOWED_B41_TOP_LEVEL`), deny-list **15** (`FORBIDDEN_B41_FIELDS`) — nem 43. A hivatalos forrás-pin **19** fájlnál `ok: true`.
+A bemeneti vázlat 108 tesztet és S001–S055-öt említett. A G pecsét-napján (2026-08-13): unittest **113 OK**. 2026-08-14 (D-44, F2 cső): **124 OK**. 2026-08-14 (D-45, ETAP 0): **134 OK**. A SOURCE-REGISTRY S066-ig tart (S060 és S062 **lezárva**; S063–S066 ETAP 0). Az F1+ allow-list **45** top-level kulcs (`ALLOWED_B41_TOP_LEVEL`), deny-list **15** (`FORBIDDEN_B41_FIELDS`) — nem 43. A hivatalos forrás-pin **19** fájlnál `ok: true` (2026-08-13); ETAP 0 után **26**.
 
 ---
 

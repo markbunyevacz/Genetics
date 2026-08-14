@@ -56,6 +56,8 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P05ac | Magyar próza: szemantika/szintaxis | 2026-08-14 | 2026-08-14 | DONE | User: érthetetlen mondatok; független ágens | Névelő (a/az); ATC4 vs ATC5; két határidő; hiányzó igék; OQ-16 A1 ATC5; A14 változatlan | E-22 |
 | P05ad | F2 CDS Hooks cső lakattal (G5) | 2026-08-14 | 2026-08-14 | DONE | User: G5 feloldás; fejlesztés végén ki/be; freeze ignorálva | `src/pce_cds/`; `cds.html`; TRACE FR-520 PARTIAL; Sales/Outbound/A–G | E-23 |
 | P06ac | Plan-vs-content a F2 csőre | 2026-08-14 | 2026-08-14 | DONE | TRACE §16; 124 unittest | SPEC-PLAN-TRACE §16; WP-F2 | — |
+| P05ae | ETAP 0 szállítás | 2026-08-14 | 2026-08-14 | DONE | User: ETAP 0 tedd meg (DPWG/FDA lelet, VCF katalógus, shadow több gén, monitor org-display) | ClinPGx DPWG pin; Ensembl POST + NCBI; CYP2C19–clopidogrel gén-kulcs; `org_display`; 134 unittest | E-24 |
+| P06ae | Plan-vs-content az ETAP 0-ra | 2026-08-14 | 2026-08-14 | DONE | TRACE FR-210/400-STATIC/400-LIVE/461; T5/V5 | SPEC-PLAN-TRACE §17 | — |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -107,6 +109,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-42 | P05ab | S060/S062 pin vs A14 átírás | k=11 pecsét / pin + javaslat | **Pin.** S060 `[V]` cél-cella 11; S062 `[V]` 11 / 20 000 (Wayback; élő Incapsula). **Nem** EU-jog. A14 k≥5 / 0,5% `[ASSUMPTION]` **marad**. DHCS v3.0 nincs pinelve. | User PRCI + DDG URL | user |
 | D-43 | P05ac | Próza javítás vs tényátírás | Újraírás / csak nyelv | **Csak nyelv.** Tények, pecsétek, A14 k≥5, Ft-sáv **nem** változtak. A.1 „az aktuális” a `statements.py`-ban is. | User: minden írás | user |
 | D-44 | P05ad | F2 cső a dobozban vs 404 stub | Várni a pecsétet / megírni a csövet lakattal | **Cső megvan, kimenet lakat.** Külön `pce_cds` processzus. Repo `LIVE_CDS=false`. ON = signed flag, nem újraírás. Spec freeze §10.2 (c) user-kérés. OQ-k **nem** pecsét. | G5; FR-520; NG-07 | user |
+| D-45 | P05ae | ETAP 0 most vs később | A „indulhat”-ot későbbi engedélynek olvasni / azonnal szállítani | **Azonnal szállítani.** DPWG/FDA a leleten hivatalos pinből; SNV-katalógus Ensembl+NCBI; shadow `(gén, ATC5)`; monitor `SYN-ORG-001`. Nincs kitalált DPWG/HLA-SNV/PM. Flagok false. | User 2026-08-14 „Tedd meg!!!” | user |
 
 ## 3. Error log
 
@@ -136,6 +139,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | E-21 | P05ab | Authority fetch | Élő `dhcs.ca.gov/.../DHCS-DDG-V2-2.pdf` Incapsula HTML (212 B), nem PDF. Wayback `/web/2023/` és `/web/2024/` 429. | Wayback `/web/2022/` a V2.2 PDF-et adta (1 709 986 B, 71 oldal, CreationDate 2023-02-17). v3.0 nincs pinelve. | D-42 |
 | E-22 | P05ac | Incomplete verification | Első független próza-ellenőrzés FAIL: maradék névelő (aláírt / IIa / esélyhányados / első) és *analogia*. | Retry: célzott javítás; 2. scan FAIL (ige/FDA/US); 3. scan FAIL (Cardet / „akkor”); 4. scan **CLEAN**. Unittest 113 OK. | P05ac |
 | E-23 | P05ad | Cross-reference / product mismatch | Sales G5: F2 bent van lakattal. TRACE FR-520 LOCK + „endpoint nincs”; OQ-15 „képtelen kártyát adni”; demó 403. | Switch: külön `pce_cds` processzus; F1+ 404 marad; lock = 200 üres `cards`. Outbound/Sales/TRACE javítva. Unittest 124 OK. | D-44 |
+| E-24 | P05ae | Scope / missed delivery | Az ETAP 0 „indulhat” mondatot későbbi engedélynek olvastuk, kód nem ment. Ensembl GET `{rsid}` HTTP 503. | Retry: user „Tedd meg!!!” → szállítás. Ensembl POST batch 200; NCBI független chrpos. Unittest 134 OK. | D-45 |
 
 ## 4. File timeline
 
@@ -153,18 +157,20 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | docs/pce/Sales/* | P05g | P05ad (demó üres cards) | TERVEZET rendszerlicenc |
 | docs/pce/Sources/S028-* | P01c | P05i | L5 jegyzet + PDF |
 | docs/pce/ProcessArtifacts/* | P01–P06 | P05ad (D-44, E-23) | DRAFT |
-| docs/pce/Engineering/* | P05l | P06ac (WP-F2, TRACE §16) | SYN ticketek; P06 mátrix; kód `src/` |
-| src/pce_shadow/ | P05u | P05w | F1s élő párosítás; forráshiány magyarul |
+| docs/pce/Engineering/* | P05l | P06ae (ETAP 0, TRACE §17) | SYN ticketek; P06 mátrix; kód `src/` |
 | src/pce_hitl/ | P05u | P05w | vak ellenőrző API + `hitl.sqlite` |
 | src/pce_ui/hitl.html | P05u | P05w | van/hiányzik lista a vak lépés után |
-| src/pce_clinical/coverage.py | P05w | P05x | FR-210; diplotípus-forrás magyarul |
-| docs/pce/G-open-items.md | P05aa | P05ad (124 teszt; kill-switch kód) | Javaslat, nem pecsét; S055/S060/S062 LEZÁRVA |
-| docs/pce/Sources/official/ | P05x | P05ab | + GDPR HTML/PDF; EMA 0,09; MDCG 2021-24; HC PRCI; DHCS DDG V2.2 (19 `ok`) |
+| src/pce_clinical/coverage.py | P05w | P05ae | FR-210; `not_snv` HLA-B / UGT1A1; 10 SNV gén |
+| docs/pce/Sources/official/ | P05x | P05ae | 19 `ok` (2026-08-13) + 7 ETAP 0 = **26**; MANIFEST `accessed` 2026-08-13 |
+| tests/fixtures/vcf-gold-v0/ | P05w | P05ae | 4 SYN missing-to-ref; HLA/UGT `not_snv` |
+| src/pce_report/static_pins.py | P05ae | P05ae | DPWG/FDA verzió a leleten |
+| src/pce_shadow/ | P05u | P05ae | `(gén, ATC5)` kulcs; CYP2C19–clopidogrel |
+| src/pce_gateway/kcell.py | P05o | P05ae | monitor `org_id` / `org_display` |
+| docs/pce/G-open-items.md | P05aa | P05ae (134 teszt; 26 pin) | Javaslat, nem pecsét; S055/S060/S062 LEZÁRVA; S063–S066 ETAP 0 |
 | tests/fixtures/pheno-gold-v0/ | P05y | P05y | N=32; G3 nevező |
 | src/pce_report/schema.py | P05r | P05y | B.4.1 allow-list |
-| tests/fixtures/f1plus-v0/prepare12/ | P05w | P05w | 12 gén CPIC pin |
-| tests/fixtures/vcf-gold-v0/ | P05w | P05w | 3 SYN missing-to-ref |
-| docs/pce/Sales/pricing.md | P05z | P05aa | `[Yp]=0` 15 felíró alatt; `[Y*]` ESTIMATE |
+| tests/fixtures/f1plus-v0/prepare12/ | P05w | P05ae | 12 gén CPIC pin; DPWG index + FDA extract |
+| docs/pce/Sales/pricing.md | P05z | P05ae | `[Yp]=0` 15 felíró alatt; 26 pin; 134 teszt |
 | docs/pce/Sources/market/ | P05z | P05z | SMART + Semmelweis/KÉ pin |
 | src/pce_cds/ | P05ad | P05ad | F2 CDS Hooks cső; repo `LIVE_CDS=false` |
 | src/pce_ui/cds.html | P05ad | P05ad | F2 lakat-UI |

@@ -129,14 +129,20 @@ def infer(
         inn: str | None,
         category: str,
         source_id: str | None,
+        pairing: dict[str, Any] | None = None,
         extra: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
+        hu = None
+        if pairing:
+            hu = (pairing.get("strategy_hu") or {}).get(category)
+        if not hu:
+            hu = knowledge.strategy_labels_hu.get(category)
         rec: dict[str, Any] = {
             "gene": gene,
             "drug_atc": code,
             "inn": inn,
             "strategy_category": category,
-            "strategy_category_hu": knowledge.strategy_labels_hu.get(category),
+            "strategy_category_hu": hu,
             "source_id": source_id,
         }
         if extra:
@@ -146,10 +152,12 @@ def infer(
     live_findings: list[dict[str, Any]] = []
     if clinical_context != "ABSENT":
         for gene_row in genotype:
-            gene = gene_row.get("gene") or "CYP2D6"
+            gene = gene_row.get("gene")
+            if not isinstance(gene, str) or not gene:
+                continue
             pheno = gene_row.get("genotype_phenotype")
             for code in codes:
-                pairing = knowledge.pairing(code)
+                pairing = knowledge.pairing(gene, code)
                 if pairing and pheno and pairing.get("by_phenotype"):
                     category = pairing["by_phenotype"].get(pheno)
                     if category:
@@ -160,6 +168,7 @@ def infer(
                                 inn=pairing.get("inn"),
                                 category=category,
                                 source_id=pairing.get("source_id"),
+                                pairing=pairing,
                             )
                         )
                         continue
@@ -171,13 +180,14 @@ def infer(
                             inn=pairing.get("inn"),
                             category=pairing["strategy"],
                             source_id=pairing.get("source_id"),
+                            pairing=pairing,
                         )
                     )
                     continue
                 prefix_hit = None
-                for atc5 in knowledge.pairing_atc5_codes():
+                for atc5 in knowledge.pairing_atc5_codes(gene):
                     if atc5.startswith(code) and len(code) < 7:
-                        prefix_hit = knowledge.pairing(atc5)
+                        prefix_hit = knowledge.pairing(gene, atc5)
                         break
                 if prefix_hit:
                     live_findings.append(
@@ -187,6 +197,7 @@ def infer(
                             inn=None,
                             category="INSUFFICIENT_RESOLUTION",
                             source_id=prefix_hit.get("source_id"),
+                            pairing=prefix_hit,
                             extra={
                                 "reason": "atc4_cannot_identify_strong_inhibitor_inn",
                                 "reason_hu": knowledge.strategy_labels_hu.get("INSUFFICIENT_RESOLUTION"),
@@ -265,6 +276,7 @@ def infer(
         "guideline_versions": {
             "cpic_ssri": "2023",
             "cpic_opioid": "2020",
+            "cpic_cyp2c19_clopidogrel": "PA166251443",
             "knowledge_id": knowledge.config_id,
         },
         "diplotypes": copy.deepcopy(dips),

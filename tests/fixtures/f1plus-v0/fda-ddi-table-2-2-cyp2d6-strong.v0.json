@@ -1,0 +1,24 @@
+{
+  "id": "fda-ddi-table-2-2-cyp2d6-strong@v0",
+  "accessed": "2026-08-13",
+  "extracted": "2026-08-14",
+  "url": "https://www.fda.gov/drugs/drug-interactions-labeling/drug-development-and-drug-interactions-table-substrates-inhibitors-and-inducers",
+  "on_disk_html": "docs/pce/Sources/official/fda-ddi-table-substrates-inhibitors-inducers-2026-08-13.html",
+  "table": "2-2",
+  "page_modified": "Mon, 06/05/2023 - 00:00",
+  "enzyme": "CYP2D6",
+  "column": "Strong index inhibitors",
+  "as_in_table": "fluoxetine(f), paroxetine",
+  "cyp2d6_strong_index_inhibitors": [
+    {
+      "inn": "fluoxetine",
+      "footnote": "f"
+    },
+    {
+      "inn": "paroxetine",
+      "footnote": null
+    }
+  ],
+  "claim_en": "Table 2-2 lists fluoxetine and paroxetine as strong index inhibitors of CYP2D6. The table does not map genotype Normal Metabolizer to a CPIC functional phenotype.",
+  "dosing_rows_extracted": false
+}

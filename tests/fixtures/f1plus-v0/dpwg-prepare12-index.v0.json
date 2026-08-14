@@ -1,0 +1,1492 @@
+{
+  "id": "pce-f1plus-dpwg-prepare12-index",
+  "version": "v0",
+  "accessed": "2026-08-14",
+  "source": {
+    "name": "ClinPGx guidelineAnnotation source=DPWG",
+    "api": "https://api.clinpgx.org/v1/data/guidelineAnnotation?source=DPWG",
+    "on_disk": "docs/pce/Sources/official/clinpgx-dpwg-guideline-annotations-2026-08-14.json",
+    "publisher_landing": "https://www.knmp.nl/dossiers/farmacogenetica",
+    "do_not_invent_recommendation_text": true,
+    "do_not_merge_with_cpic": true
+  },
+  "annotation_count_total": 113,
+  "annotation_count_prepare12": 101,
+  "genes": {
+    "CYP2B6": {
+      "count": 1,
+      "annotations": [
+        {
+          "id": "PA166182846",
+          "name": "Annotation of DPWG Guideline for efavirenz and CYP2B6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166182846",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "efavirenz"
+          ],
+          "genes": [
+            "CYP2B6"
+          ],
+          "summary_en": "Adjust the initial efavirenz dose for patients with the CYP2B6 PM phenotype along with the consideration of age, weight and BMI and titrate the dose to plasma concentration if needed. For patients with the CYP2B6 IM phenotype, determine the efavirenz plasma concentration if side effects occur and reduce the dose if needed."
+        }
+      ]
+    },
+    "CYP2C9": {
+      "count": 9,
+      "annotations": [
+        {
+          "id": "PA166104978",
+          "name": "Annotation of DPWG Guideline for glimepiride and CYP2C9",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104978",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "glimepiride"
+          ],
+          "genes": [
+            "CYP2C9"
+          ],
+          "summary_en": "There are currently no dosing recommendations for glimepiride based on CYP2C9 genotype."
+        },
+        {
+          "id": "PA166182842",
+          "name": "Annotation of DPWG Guideline for warfarin and CYP2C9",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166182842",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "warfarin"
+          ],
+          "genes": [
+            "CYP2C9"
+          ],
+          "summary_en": "Reduce warfarin dose in CYP2C9 poor and intermediate metabolizers (PM and IM) and patients with CYP2C9*1/*3, *2/*3, *2/*2 or *3/*3 genotype. The genotype-specific initial dose and maintenance dose can be calculated using an algorithm, as used in EU-PACT."
+        },
+        {
+          "id": "PA166104971",
+          "name": "Annotation of DPWG Guideline for gliclazide and CYP2C9",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104971",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "gliclazide"
+          ],
+          "genes": [
+            "CYP2C9"
+          ],
+          "summary_en": "There are currently no dosing recommendations for gliclazide based on CYP2C9 genotype."
+        },
+        {
+          "id": "PA166211021",
+          "name": "Annotation of DPWG Guideline for siponimod and CYP2C9",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166211021",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "siponimod"
+          ],
+          "genes": [
+            "CYP2C9"
+          ],
+          "summary_en": "The Dutch Pharmacogenetics Working Group Guideline for siponimod recommends decreasing the dose for CYP2C9 *1/*3, *2/*3 genotypes or CYP2C9 intermediate metabolizer (not including *2 and *3) and to avoid siponimod for the CYP2C9 *3/*3 genotype or CYP2C9 poor metabolizer (two alleles with no/decreased enzyme activity, of which at least one other than *2 or *3)."
+        },
+        {
+          "id": "PA166104953",
+          "name": "Annotation of DPWG Guideline for glyburide and CYP2C9",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104953",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "glyburide"
+          ],
+          "genes": [
+            "CYP2C9"
+          ],
+          "summary_en": "There are currently no dosing recommendations for glibenclamide based on CYP2C9 genotype."
+        },
+        {
+          "id": "PA166104986",
+          "name": "Annotation of DPWG Guideline for tolbutamide and CYP2C9",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104986",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "tolbutamide"
+          ],
+          "genes": [
+            "CYP2C9"
+          ],
+          "summary_en": "There are currently no dosing recommendations for tolbutamide based on CYP2C9 genotype."
+        },
+        {
+          "id": "PA166104979",
+          "name": "Annotation of DPWG Guideline for acenocoumarol and CYP2C9",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104979",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "acenocoumarol"
+          ],
+          "genes": [
+            "CYP2C9"
+          ],
+          "summary_en": "There are currently no recommendations for acenocoumarol dosing based on CYP2C9 genotypes."
+        },
+        {
+          "id": "PA166105004",
+          "name": "Annotation of DPWG Guideline for phenprocoumon and CYP2C9",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166105004",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "phenprocoumon"
+          ],
+          "genes": [
+            "CYP2C9"
+          ],
+          "summary_en": "There are currently no recommendations for phenprocoumon dosing based on CYP2C9 genotypes."
+        },
+        {
+          "id": "PA166104984",
+          "name": "Annotation of DPWG Guideline for phenytoin and CYP2C9",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104984",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "phenytoin"
+          ],
+          "genes": [
+            "CYP2C9"
+          ],
+          "summary_en": "Use the standard starting dose of phenytoin and reduce the maintenance dose based on CYP2C9 genotype; monitor response and serum concentrations and be aware of ADEs."
+        }
+      ]
+    },
+    "CYP2C19": {
+      "count": 20,
+      "annotations": [
+        {
+          "id": "PA166104987",
+          "name": "Annotation of DPWG Guideline for lansoprazole and CYP2C19",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104987",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "lansoprazole"
+          ],
+          "genes": [
+            "CYP2C19"
+          ],
+          "summary_en": "For CYP2C19 ultrarapid metabolizers who are undergoing H. pylori eradication therapy, use a 4-fold higher dose. For CYP2C19 ultrarapid metabolizers with other indications, be alert to reduced effectiveness and, if necessary, use a 4-fold higher dose."
+        },
+        {
+          "id": "PA166104980",
+          "name": "Annotation of DPWG Guideline for sertraline and CYP2C19",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104980",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "sertraline"
+          ],
+          "genes": [
+            "CYP2C19"
+          ],
+          "summary_en": "Do not give doses exceeding 75 mg/day in patients with CYP2C19 poor metabolizer genotypes, and guide the dose by response and side effects and/or sertraline plasma concentration."
+        },
+        {
+          "id": "PA166104958",
+          "name": "Annotation of DPWG Guideline for pantoprazole and CYP2C19",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104958",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "pantoprazole"
+          ],
+          "genes": [
+            "CYP2C19"
+          ],
+          "summary_en": "For CYP2C19 ultrarapid metabolizers who are undergoing H. pylori eradication therapy, use a 5-fold higher dose. For CYP2C19 ultrarapid metabolizers with other indications, be alert to reduced effectiveness and, if necessary, use a 5-fold higher dose."
+        },
+        {
+          "id": "PA166104990",
+          "name": "Annotation of DPWG Guideline for voriconazole and CYP2C19",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104990",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "voriconazole"
+          ],
+          "genes": [
+            "CYP2C19"
+          ],
+          "summary_en": "Patients who are CYP2C19 poor metabolizers should receive 50% of the standard dose, and CYP2C19 ultrarapid metabolizers should receive a 1.5 times higher initial dose. Monitor voriconazole plasma concentrations for CYP2C19 poor, intermediate and ultrarapid metabolizers."
+        },
+        {
+          "id": "PA166418081",
+          "name": "Annotation of DPWG Guideline for mavacamten and CYP2C19",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166418081",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "mavacamten"
+          ],
+          "genes": [
+            "CYP2C19"
+          ],
+          "summary_en": "The Dutch Pharmacogenetics Working Group Guideline for mavacamten recommends a lower dose for CYP2C19 poor metabolizers and to avoid mavacamten in CYP2C19 poor metabolizers with strong CYP3A4 inhibitor as co-medication."
+        },
+        {
+          "id": "PA166184526",
+          "name": "Annotation of DPWG Guideline for amitriptyline and CYP2C19",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166184526",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "amitriptyline"
+          ],
+          "genes": [
+            "CYP2C19"
+          ],
+          "summary_en": "There are currently no dosing recommendations for amitriptyline based on CYP2C19 genotype."
+        },
+        {
+          "id": "PA166184528",
+          "name": "Annotation of DPWG Guideline for clomipramine and CYP2C19",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166184528",
+          "recommendation": true,
+          "dosingInformation": false,
+          "drugs": [
+            "clomipramine"
+          ],
+          "genes": [
+            "CYP2C19"
+          ],
+          "summary_en": "The Royal Dutch Pharmacists Association - Pharmacogenetics Working Group (DPWG) recommends to avoid clomipramine in CYP2C19 ultrarapid metabolizer (UM) for Indication OBSESSIVE COMPULSIVE DISORDER or ANXIETY DISORDERS."
+        },
+        {
+          "id": "PA166184529",
+          "name": "Annotation of DPWG Guideline for doxepin and CYP2C19",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166184529",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "doxepin"
+          ],
+          "genes": [
+            "CYP2C19"
+          ],
+          "summary_en": "There are currently no dosing recommendations for doxepin based on CYP2C19 genotype."
+        },
+        {
+          "id": "PA166104931",
+          "name": "Annotation of DPWG Guideline for esomeprazole and CYP2C19",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104931",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "esomeprazole"
+          ],
+          "genes": [
+            "CYP2C19"
+          ],
+          "summary_en": "No action is needed for this gene-drug interaction."
+        },
+        {
+          "id": "PA166182820",
+          "name": "Annotation of DPWG Guideline for prasugrel and CYP2C19",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166182820",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "prasugrel"
+          ],
+          "genes": [
+            "CYP2C19"
+          ],
+          "summary_en": "There are currently no dosing recommendations for prasugrel based on CYP2C19 genotypes."
+        },
+        {
+          "id": "PA166182807",
+          "name": "Annotation of DPWG Guideline for ticagrelor and CYP2C19",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166182807",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "ticagrelor"
+          ],
+          "genes": [
+            "CYP2C19"
+          ],
+          "summary_en": "There are currently no dosing recommendations for ticagrelor based on CYP2C19 genotypes."
+        },
+        {
+          "id": "PA166182814",
+          "name": "Annotation of DPWG Guideline for fluvoxamine and CYP2C19",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166182814",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "fluvoxamine"
+          ],
+          "genes": [
+            "CYP2C19"
+          ],
+          "summary_en": "There are currently no dosing recommendations for fluvoxamine based on CYP2C19 genotypes."
+        },
+        {
+          "id": "PA166104985",
+          "name": "Annotation of DPWG Guideline for rabeprazole and CYP2C19",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104985",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "rabeprazole"
+          ],
+          "genes": [
+            "CYP2C19"
+          ],
+          "summary_en": "No action is needed for this gene-drug interaction."
+        },
+        {
+          "id": "PA166104941",
+          "name": "Annotation of DPWG Guideline for moclobemide and CYP2C19",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104941",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "moclobemide"
+          ],
+          "genes": [
+            "CYP2C19"
+          ],
+          "summary_en": "No action is needed for this gene-drug interaction."
+        },
+        {
+          "id": "PA166104975",
+          "name": "Annotation of DPWG Guideline for escitalopram and CYP2C19",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104975",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "escitalopram"
+          ],
+          "genes": [
+            "CYP2C19"
+          ],
+          "summary_en": "The Dutch Pharmacogenetics Working Group Guideline for escitalopram recommends for intermediate and poor metabolizers of CYP2C19 to not exceed the in the DPWG document specified doses and for CYP2C19 ultrarapid metabolizer to avoid escitalopram."
+        },
+        {
+          "id": "PA166182805",
+          "name": "Annotation of DPWG Guideline for mirtazapine and CYP2C19",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166182805",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "mirtazapine"
+          ],
+          "genes": [
+            "CYP2C19"
+          ],
+          "summary_en": "There are currently no dosing recommendations for mirtazapine based on CYP2C19 genotypes."
+        },
+        {
+          "id": "PA166104977",
+          "name": "Annotation of DPWG Guideline for citalopram and CYP2C19",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104977",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "citalopram"
+          ],
+          "genes": [
+            "CYP2C19"
+          ],
+          "summary_en": "The Dutch Pharmacogenetics Working Group Guideline for citalopram recommends for intermediate and poor metabolizers of CYP2C19 to not exceed the in the DPWG document specified daily doses."
+        },
+        {
+          "id": "PA166104957",
+          "name": "Annotation of DPWG Guideline for omeprazole and CYP2C19",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104957",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "omeprazole"
+          ],
+          "genes": [
+            "CYP2C19"
+          ],
+          "summary_en": "For CYP2C19 ultrarapid metabolizers who are undergoing H. pylori eradication therapy, use a 3-fold higher dose. For CYP2C19 ultrarapid metabolizers with other indications, be alert to reduced effectiveness and, if necessary, use a 3-fold higher dose."
+        },
+        {
+          "id": "PA166104956",
+          "name": "Annotation of DPWG Guideline for clopidogrel and CYP2C19",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104956",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "clopidogrel"
+          ],
+          "genes": [
+            "CYP2C19"
+          ],
+          "summary_en": "Avoid clopidogrel use in patients who are CYP2C19 poor metabolizers and are undergoing percutaneous coronary intervention, stroke or TIA. For CYP2C19 intermediate metabolizers who are undergoing percutaneous coronary intervention, stroke, or TIA, choose an alternative drug or double the dose to 150 mg/day (600 mg loading dose). No action is required for patients who are CYP2C19 ultra-rapid metabolizers."
+        },
+        {
+          "id": "PA166104954",
+          "name": "Annotation of DPWG Guideline for imipramine and CYP2C19",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104954",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "imipramine"
+          ],
+          "genes": [
+            "CYP2C19"
+          ],
+          "summary_en": "CYP2C19 poor metabolizers should receive 70% of the standard dose of imipramine, or imipramine should be avoided in these patients. Patients should be monitored for the effect and side effects or the plasma concentrations of imipramine and desipramine in order to set the maintenance dose."
+        }
+      ]
+    },
+    "CYP2D6": {
+      "count": 43,
+      "annotations": [
+        {
+          "id": "PA166182812",
+          "name": "Annotation of DPWG Guideline for fluphenazine and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166182812",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "fluphenazine"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "This guideline no longer appears in the DPWG guideline document. As a result, this annotation has been retired by ClinPGx."
+        },
+        {
+          "id": "PA166104962",
+          "name": "Annotation of DPWG Guideline for propafenone and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104962",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "propafenone"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "Reduce the dose of propafenone by 70% for CYP2D6 poor metabolizers, and monitor propafenone plasma concentrations or use an alternative drug for CYP2D6 intermediate and ultrarapid metabolizers."
+        },
+        {
+          "id": "PA166104989",
+          "name": "Annotation of DPWG Guideline for atomoxetine and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104989",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "atomoxetine"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "The Dutch Pharmacogenetics Working Group Guideline for atomoxetine states for CYP2D6 ultrarapid metabolizers, to be alert to reduced efficacy of atomoxetine or select an alternative drug as a precaution. Be alert to side effects in CYP2D6 poor metabolizers."
+        },
+        {
+          "id": "PA166104943",
+          "name": "Annotation of DPWG Guideline for risperidone and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104943",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "risperidone"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "The Dutch Pharmacogenetics Working Group Guideline for risperidone recommends decreasing the dose for CYP2D6 poor metabolizers and using an alternative drug or titrate the dose according to the maximum dose for the active metabolite for CYP2D6 ultrarapid metabolizers."
+        },
+        {
+          "id": "PA166104969",
+          "name": "Annotation of DPWG Guideline for flecainide and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104969",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "flecainide"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "Reduce flecainide dose by 50% for CYP2D6 poor metabolizer (PM) and record an ECG and monitor the plasma concentration. Reduce flecainide dose to 75% of the standard dose for CYP2D6 intermediate metabolizer (IM) patients with indications other than diagnosis of Brugada syndrome and record an ECG and monitor the plasma concentration."
+        },
+        {
+          "id": "PA166104966",
+          "name": "Annotation of DPWG Guideline for tamoxifen and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104966",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "tamoxifen"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "For CYP2D6 poor and intermediate metabolizers, consider an alternative medication or a dose increase. For intermediate metabolizers, avoid concomitant CYP2D6 inhibitor use."
+        },
+        {
+          "id": "PA166104988",
+          "name": "Annotation of DPWG Guideline for haloperidol and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104988",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "haloperidol"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "The recommendation for CYP2D6 poor metabolizers is to use 60% of the normal dose of haloperidol and for CYP2D6 ultrarapid metabolizers to use 1.5 times the normal dose or to choose an alternative to haloperidol."
+        },
+        {
+          "id": "PA166104968",
+          "name": "Annotation of DPWG Guideline for venlafaxine and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104968",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "venlafaxine"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "For CYP2D6 poor (PM) and intermediate metabolizers (IM), select an alternative to venlafaxine or reduce the dose and monitor patient's plasma metabolite level. For CYP2D6 ultrarapid metabolizers (UM), therapy adjustment is not required or beneficial for this phenotype-drug combination."
+        },
+        {
+          "id": "PA166104973",
+          "name": "Annotation of DPWG Guideline for oxycodone and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104973",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "oxycodone"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "There are currently no dosing recommendations for oxycodone based on CYP2D6 genotypes."
+        },
+        {
+          "id": "PA166104995",
+          "name": "Annotation of DPWG Guideline for metoprolol and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104995",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "metoprolol"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "For CYP2D6 poor and intermediate metabolizer patients, if a GRADUAL REDUCTION in HEART RATE is desired, or in the event of SYMPTOMATIC BRADYCARDIA, use smaller steps in dose titration and/or prescribe no more than 25% or 50% of the standard dose, respectively. For CYP2D6 ultra metabolizers, use the maximum dose for the relevant indication as a target dose, and if the effectiveness is still insufficient: increase the dose based on effectiveness and side effects to 2.5 times the standard dose or select an alternative drug."
+        },
+        {
+          "id": "PA166184527",
+          "name": "Annotation of DPWG Guideline for brexpiprazole and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166184527",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "brexpiprazole"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "The Royal Dutch Pharmacists Association - Pharmacogenetics Working Group (DPWG) recommends to use half of the normal dose of brexpiprazole for poor metabolizers of CYP2D6."
+        },
+        {
+          "id": "PA166104970",
+          "name": "Annotation of DPWG Guideline for codeine and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104970",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "codeine"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "The Pharmacogenetics Working Group Guideline for codeine includes individual recommendations for cough or pain for CYP2D6 poor, intermediate, and ultrarapid metabolizer. In addition, for ultrarapid metabolizer, higher or lower doses and additional risk factors are taken into consideration."
+        },
+        {
+          "id": "PA166182855",
+          "name": "Annotation of DPWG Guideline for sotalol and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166182855",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "sotalol"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "There are currently no dosing recommendations for sotalol based on CYP2D6 genotype."
+        },
+        {
+          "id": "PA166182808",
+          "name": "Annotation of DPWG Guideline for methylphenidate and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166182808",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "methylphenidate"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "There are currently no dosing recommendations for methylphenidate based on CYP2D6 genotype."
+        },
+        {
+          "id": "PA166182852",
+          "name": "Annotation of DPWG Guideline for fluoxetine and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166182852",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "fluoxetine"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "There are currently no dosing recommendations for fluoxetine based on CYP2D6 genotype."
+        },
+        {
+          "id": "PA166182819",
+          "name": "Annotation of DPWG Guideline for pimozide and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166182819",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "pimozide"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "Patients who are CYP2D6 intermediate metabolizers should be given no more than 80% of the standard maximum dose of pimozide while patients who are CYP2D6 poor metabolizers should be given no more than 50% of the standard maximum dose."
+        },
+        {
+          "id": "PA166182823",
+          "name": "Annotation of DPWG Guideline for eliglustat and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166182823",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "eliglustat"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "The Dutch Pharmacogenetics Working Group Guideline for eliglustat recommends to use an alternative in CYP2D6 ultrarapid metabolizer. For CYP2D6 poor metabolizer in combination with CYP3A inhibitors and strong inducers, the guideline recommends to choose an alternative if possible. For intermediate metabolizers recommendations are provided for renal and hepatic impairment."
+        },
+        {
+          "id": "PA166104942",
+          "name": "Annotation of DPWG Guideline for duloxetine and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104942",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "duloxetine"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "There are currently no dosing recommendations for duloxetine based on CYP2D6 genotype."
+        },
+        {
+          "id": "PA166182803",
+          "name": "Annotation of DPWG Guideline for quinidine and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166182803",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "quinidine"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "There are currently no dosing recommendations for quinidine based on CYP2D6 genotypes."
+        },
+        {
+          "id": "PA166182821",
+          "name": "Annotation of DPWG Guideline for sertraline and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166182821",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "sertraline"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "There are currently no dosing recommendations for sertraline based on CYP2D6 genotypes."
+        },
+        {
+          "id": "PA166182811",
+          "name": "Annotation of DPWG Guideline for disopyramide and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166182811",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "disopyramide"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "There are currently no dosing recommendations for disopyramide based on CYP2D6 genotype."
+        },
+        {
+          "id": "PA166182809",
+          "name": "Annotation of DPWG Guideline for gefitinib and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166182809",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "gefitinib"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "The Dutch Pharmacogenetics Working Group Guideline for gefitinib recommends to determine the trough concentration of gefitinib for CYP2D6 ultrarapid metabolizers and increase the dose or choose an alternative if the trough concentration is below 200 µg/l."
+        },
+        {
+          "id": "PA166104935",
+          "name": "Annotation of DPWG Guideline for clozapine and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104935",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "clozapine"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "There are currently no dosing recommendations for clozapine based on CYP2D6 genotypes."
+        },
+        {
+          "id": "PA166104946",
+          "name": "Annotation of DPWG Guideline for olanzapine and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104946",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "olanzapine"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "There are currently no dosing recommendations for olanzapine based on CYP2D6 genotype."
+        },
+        {
+          "id": "PA166104959",
+          "name": "Annotation of DPWG Guideline for tramadol and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104959",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "tramadol"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "Be alert to a reduced efficacy of tramadol in CYP2D6 intermediate or poor metabolizers. If tramadol is not effective in these patients, try a dose increase or select an alternative to tramadol (not codeine) and be alert for symptoms of insufficient pain relief. For CYP2D6 ultrarapid metabolizers, use an alternative to tramadol (not codeine) or use 40% of the standard dose and be alert to side effects."
+        },
+        {
+          "id": "PA166104974",
+          "name": "Annotation of DPWG Guideline for carvedilol and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104974",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "carvedilol"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "There are currently no dosing recommendations for carvedilol based on CYP2D6 genotype."
+        },
+        {
+          "id": "PA166104981",
+          "name": "Annotation of DPWG Guideline for flupenthixol and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104981",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "flupenthixol"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "There are currently no dosing recommendations for flupenthixol based on CYP2D6 genotype."
+        },
+        {
+          "id": "PA166104967",
+          "name": "Annotation of DPWG Guideline for mirtazapine and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104967",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "mirtazapine"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "There are currently no dosing recommendations for mirtazapine based on CYP2D6 genotype."
+        },
+        {
+          "id": "PA166182816",
+          "name": "Annotation of DPWG Guideline for bisoprolol and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166182816",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "bisoprolol"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "There are currently no dosing recommendations for bisoprolol based on CYP2D6 genotype."
+        },
+        {
+          "id": "PA166182817",
+          "name": "Annotation of DPWG Guideline for citalopram, escitalopram and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166182817",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "citalopram",
+            "escitalopram"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "There are currently no dosing recommendations for citalopram/escitalopram based on CYP2D6 genotype."
+        },
+        {
+          "id": "PA166182818",
+          "name": "Annotation of DPWG Guideline for clonidine and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166182818",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "clonidine"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "There are currently no dosing recommendations for clonidine based on CYP2D6 genotype and DPWG suggest clonidine as possible alternative for atomoxetine in variant CYP2D6 metabolisers."
+        },
+        {
+          "id": "PA166182815",
+          "name": "Annotation of DPWG Guideline for amiodarone and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166182815",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "amiodarone"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "There are currently no dosing recommendations for amiodarone based on CYP2D6 genotype."
+        },
+        {
+          "id": "PA166182813",
+          "name": "Annotation of DPWG Guideline for fluvoxamine and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166182813",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "fluvoxamine"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "There are currently no dosing recommendations for fluvoxamine based on CYP2D6 genotype."
+        },
+        {
+          "id": "PA166182854",
+          "name": "Annotation of DPWG Guideline for quetiapine and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166182854",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "quetiapine"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "There are currently no dosing recommendations for quetiapine based on CYP2D6 genotype."
+        },
+        {
+          "id": "PA166182822",
+          "name": "Annotation of DPWG Guideline for atenolol and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166182822",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "atenolol"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "There are currently no dosing recommendations for atenolol based on CYP2D6 genotype."
+        },
+        {
+          "id": "PA166104976",
+          "name": "Annotation of DPWG Guideline for paroxetine and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104976",
+          "recommendation": true,
+          "dosingInformation": false,
+          "drugs": [
+            "paroxetine"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "Select an alternative drug rather than paroxetine for CYP2D6 ultrarapid metabolizer patients."
+        },
+        {
+          "id": "PA166104937",
+          "name": "Annotation of DPWG Guideline for aripiprazole and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104937",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "aripiprazole"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "The Royal Dutch Pharmacists Association - Pharmacogenetics Working Group (DPWG) recommends reducing maximum dose of aripiprazole for patients carrying poor metabolizer alleles of CYP2D6."
+        },
+        {
+          "id": "PA166104992",
+          "name": "Annotation of DPWG Guideline for zuclopenthixol and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104992",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "zuclopenthixol"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "For CYP2D6 poor and intermediate metabolizers, reduce zuclopenthixol dose. For ultrarapid metabolizers, if the effectiveness is insufficient a dose increase not exceeding 1.5x normal dose is suggested."
+        },
+        {
+          "id": "PA166104982",
+          "name": "Annotation of DPWG Guideline for amitriptyline and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104982",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "amitriptyline"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "The Dutch Pharmacogenetics Working Group Guideline for amitriptyline recommends decreasing the dose for CYP2D6 intermediate and CYP2D6 poor metabolizers and increasing the dose or using an alternative drug for CYP2D6 ultra-rapid metabolizers."
+        },
+        {
+          "id": "PA166104964",
+          "name": "Annotation of DPWG Guideline for clomipramine and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104964",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "clomipramine"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "The Dutch Pharmacogenetics Working Group Guideline for clomipramine recommends dose changes and to monitor the effect and side effects and the plasma concentrations to set the maintenance dose for CYP2D6 poor (PM), intermediate (IM) metabolizer, and ultrarapid (UM) metabolizer or to avoid clomipramine in PM and UM."
+        },
+        {
+          "id": "PA166104972",
+          "name": "Annotation of DPWG Guideline for imipramine and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104972",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "imipramine"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "CYP2D6 poor metabolizers should receive 30% of the standard dose of imipramine, CYP2D6 intermediate metabolizers should receive 70% of the standard dose, and CYP2D6 ultra-rapid metabolizers should receive 1.7 times the standard dose. Patients should be monitored for the effect and side effects or the plasma concentrations of imipramine and desipramine in order to set the maintenance dose."
+        },
+        {
+          "id": "PA166104994",
+          "name": "Annotation of DPWG Guideline for doxepin and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104994",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "doxepin"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "The Dutch Pharmacogenetics Working Group Guideline for doxepin recommends dose changes and to monitor the effect and side effects or the plasma concentrations to set the maintenance dose for CYP2D6 poor (PM), intermediate (IM), and ultrarapid (UM) metabolizer or to avoid doxepin in UM."
+        },
+        {
+          "id": "PA166104961",
+          "name": "Annotation of DPWG Guideline for nortriptyline and CYP2D6",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104961",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "nortriptyline"
+          ],
+          "genes": [
+            "CYP2D6"
+          ],
+          "summary_en": "The Dutch Pharmacogenetics Working Group Guideline for nortriptyline recommends a dose reduction for CYP2D6 poor or intermediate metabolizer patients. For CYP2D6 ultrarapid metabolizers, select an alternative drug or use 1.7 times the standard dose. Monitoring of nortriptyline and 10-hydroxynortriptyline plasma concentrations is recommended."
+        }
+      ]
+    },
+    "CYP3A5": {
+      "count": 1,
+      "annotations": [
+        {
+          "id": "PA166104983",
+          "name": "Annotation of DPWG Guideline for tacrolimus and CYP3A5",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104983",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "tacrolimus"
+          ],
+          "genes": [
+            "CYP3A5"
+          ],
+          "summary_en": "Increased doses of tacrolimus are recommended for CYP3A5 heterozygous and homozygous expressors and adjusted as needed. Instructions for liver transplantation patients include genotypes of both patient and donor."
+        }
+      ]
+    },
+    "DPYD": {
+      "count": 4,
+      "annotations": [
+        {
+          "id": "PA166104939",
+          "name": "Annotation of DPWG Guideline for fluorouracil and DPYD",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104939",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "fluorouracil"
+          ],
+          "genes": [
+            "DPYD"
+          ],
+          "summary_en": "An alternative drug to fluorouracil is recommended for patients with a DPYD activity score of 0; if an alternative drug is not possible, the DPD activity should be determined and the initial dose adjusted accordingly. For patients with a DPYD activity score of 1 or 1.5, start with 50% of the standard dose or choose an alternative drug; adjustment of subsequent doses should be guided by toxicity and effectiveness. Patients with two partially functional alleles or one non-functional and one partially functional allele or two gene variants leading to partially functional alleles or a gene variant leading to a non-functional allele and a gene variant leading to a partially functional allele should have their DPD activity determined or should avoid fluorouracil/capecitabine. Tegafur is not an alternative for fluorouracil, as it is also metabolized by DPD. The DPWG evaluated DPYD genotyping as \"essential\" and recommend DPYD testing prior to initiating fluoropyrimidines."
+        },
+        {
+          "id": "PA166104944",
+          "name": "Annotation of DPWG Guideline for tegafur and DPYD",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104944",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "tegafur"
+          ],
+          "genes": [
+            "DPYD"
+          ],
+          "summary_en": "Choose an alternative drug to tegafur for patients with DPYD Activity Score of 0. For patients with a DPYD Activity Score of 1 or 1.5, avoid tegafur or start with a low dose and adjust the initial dose based on toxicity and efficacy. Fluorouracil and capecitabine are not alternatives for tegafur, as these are also metabolized by DPD. The DPWG evaluated DPYD genotyping as \"essential\" and recommend DPYD testing prior to initiating fluoropyrimidines."
+        },
+        {
+          "id": "PA166104963",
+          "name": "Annotation of DPWG Guideline for capecitabine and DPYD",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104963",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "capecitabine"
+          ],
+          "genes": [
+            "DPYD"
+          ],
+          "summary_en": "An alternative drug to capecitabine is recommended for patients with a DPYD activity score of 0; if an alternative drug is not possible, the DPD activity should be determined and the initial dose adjusted accordingly. For patients with a DPYD activity score of 1 or 1.5, start with 50% of the standard dose or choose an alternative drug; adjustment of subsequent doses should be guided by toxicity and effectiveness. Patients with two partially functional alleles or one non-functional and one partially functional allele or two gene variants leading to partially functional alleles or a gene variant leading to a non-functional allele and a gene variant leading to a partially functional allele should have their DPD activity determined or should avoid fluorouracil/capecitabine. Tegafur is not an alternative for capecitabine, as it is also metabolized by DPD. The DPWG evaluated DPYD genotyping as \"essential\" and recommend DPYD testing prior to initiating fluoropyrimidines."
+        },
+        {
+          "id": "PA166222801",
+          "name": "Annotation of DPWG Guideline for flucytosine and DPYD",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166222801",
+          "recommendation": true,
+          "dosingInformation": false,
+          "drugs": [
+            "flucytosine"
+          ],
+          "genes": [
+            "DPYD"
+          ],
+          "summary_en": "The Dutch Pharmacogenetics Working Group Guideline for flucytosine states that patients with a DPYD activity score of 0 should avoid flucytosine. Patients with a DPYD activity score of 1 or 1.5 should be alert to the occurrence of severe side effects and flucytosine should be stopped if severe side effects occur."
+        }
+      ]
+    },
+    "F5": {
+      "count": 1,
+      "annotations": [
+        {
+          "id": "PA166104955",
+          "name": "Annotation of DPWG Guideline for hormonal contraceptives for systemic use and F5",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104955",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "hormonal contraceptives for systemic use"
+          ],
+          "genes": [
+            "F5"
+          ],
+          "summary_en": "This guideline no longer appears in the DPWG guideline document. As a result, this annotation has been retired by ClinPGx."
+        }
+      ]
+    },
+    "HLA-B": {
+      "count": 8,
+      "annotations": [
+        {
+          "id": "PA166104991",
+          "name": "Annotation of DPWG Guideline for abacavir and HLA-B",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104991",
+          "recommendation": true,
+          "dosingInformation": false,
+          "drugs": [
+            "abacavir"
+          ],
+          "genes": [
+            "HLA-B"
+          ],
+          "summary_en": "Avoid abacavir for patients who have the HLA-B*57:01 allele (patients who are \"HLA-B*57:01-positive\")."
+        },
+        {
+          "id": "PA166182810",
+          "name": "Annotation of DPWG Guideline for flucloxacillin and HLA-B",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166182810",
+          "recommendation": true,
+          "dosingInformation": false,
+          "drugs": [
+            "flucloxacillin"
+          ],
+          "genes": [
+            "HLA-B"
+          ],
+          "summary_en": "Monitor for liver function and select an alternative drug instead of flucloxacillin if liver enzymes or bilirubin is elevated, for patients that are HLA-B*57:01."
+        },
+        {
+          "id": "PA166265141",
+          "name": "Annotation of DPWG Guideline for allopurinol and HLA-B",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166265141",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "allopurinol"
+          ],
+          "genes": [
+            "HLA-B"
+          ],
+          "summary_en": "Individuals with the HLA-B*58:01 allele should be given an alternative drug or undergo induction of allopurinol tolerance."
+        },
+        {
+          "id": "PA166265341",
+          "name": "Annotation of DPWG Guideline for lamotrigine and HLA-B",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166265341",
+          "recommendation": true,
+          "dosingInformation": false,
+          "drugs": [
+            "lamotrigine"
+          ],
+          "genes": [
+            "HLA-B"
+          ],
+          "summary_en": "Avoid lamotrigine in patients with HLA-B*15:02 if an alternative is available. If avoidance is not possible, advise to report any rash immediately."
+        },
+        {
+          "id": "PA166265201",
+          "name": "Annotation of DPWG Guideline for oxcarbazepine and HLA-B",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166265201",
+          "recommendation": true,
+          "dosingInformation": false,
+          "drugs": [
+            "oxcarbazepine"
+          ],
+          "genes": [
+            "HLA-B"
+          ],
+          "summary_en": "Oxcarbazepine should be avoided if an alternative is available in patients with the HLA-B*15:02 allele."
+        },
+        {
+          "id": "PA166104947",
+          "name": "Annotation of DPWG Guideline for ribavirin and HLA-B",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104947",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "ribavirin"
+          ],
+          "genes": [
+            "HLA-B"
+          ],
+          "summary_en": "There are no dosing recommendations for ribavirin in HLA-B*44 positive patients at this time."
+        },
+        {
+          "id": "PA166264881",
+          "name": "Annotation of DPWG Guideline for phenytoin and HLA-B",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166264881",
+          "recommendation": true,
+          "dosingInformation": false,
+          "drugs": [
+            "phenytoin"
+          ],
+          "genes": [
+            "HLA-B"
+          ],
+          "summary_en": "Phenytoin should be avoided if possible in patients with the HLA-B*15:02 allele."
+        },
+        {
+          "id": "PA166265162",
+          "name": "Annotation of DPWG Guideline for carbamazepine and HLA-B",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166265162",
+          "recommendation": true,
+          "dosingInformation": false,
+          "drugs": [
+            "carbamazepine"
+          ],
+          "genes": [
+            "HLA-B"
+          ],
+          "summary_en": "Consider an alternative drug to carbamazepine in patients with the HLA-B*15:02 or HLA-B*15:11 alleles."
+        }
+      ]
+    },
+    "SLCO1B1": {
+      "count": 5,
+      "annotations": [
+        {
+          "id": "PA166363221",
+          "name": "Annotation of DPWG Guideline for rosuvastatin and SLCO1B1",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166363221",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "rosuvastatin"
+          ],
+          "genes": [
+            "SLCO1B1"
+          ],
+          "summary_en": "Keep the rosuvastatin dose as low as possible (e.g. by adding ezetimibe) for patients with the SLCO1B1 521 CC or TC (rs4149056) genotype and with ADDITIONAL SIGNIFICANT RISK FACTORS for statin-induced myopathy. For patients without additional significant risk factors for statin-induced myopathy, advise the patients to contact their doctor in the event of muscle symptoms."
+        },
+        {
+          "id": "PA166363201",
+          "name": "Annotation of DPWG Guideline for pravastatin and SLCO1B1",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166363201",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "pravastatin"
+          ],
+          "genes": [
+            "SLCO1B1"
+          ],
+          "summary_en": "There are currently no recommendations for pravastatin dosing based on SLCO1B1 genotypes."
+        },
+        {
+          "id": "PA166182845",
+          "name": "Annotation of DPWG Guideline for fluvastatin and SLCO1B1",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166182845",
+          "recommendation": false,
+          "dosingInformation": false,
+          "drugs": [
+            "fluvastatin"
+          ],
+          "genes": [
+            "SLCO1B1"
+          ],
+          "summary_en": "There are currently no recommendations for fluvastatin dosing based on SLCO1B1 genotypes."
+        },
+        {
+          "id": "PA166182844",
+          "name": "Annotation of DPWG Guideline for simvastatin and SLCO1B1",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166182844",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "simvastatin"
+          ],
+          "genes": [
+            "SLCO1B1"
+          ],
+          "summary_en": "Choose an alternative for patients with the SLCO1B1 521 CC or TC (rs4149056) genotype and consider any additional risk factors for statin-induced myopathy. If an alternative is not an option for patients with the 521 TC genotype, avoid simvastatin doses exceeding 40 mg/day and advise the patient to contact their doctor in the event of muscle symptoms."
+        },
+        {
+          "id": "PA166182843",
+          "name": "Annotation of DPWG Guideline for atorvastatin and SLCO1B1",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166182843",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "atorvastatin"
+          ],
+          "genes": [
+            "SLCO1B1"
+          ],
+          "summary_en": "Choose an alternative for patients with the SLCO1B1 521 CC or TC (rs4149056) genotype and with ADDITIONAL SIGNIFICANT RISK FACTORS for statin-induced myopathy. For patients without additional significant risk factors for statin-induced myopathy, advise the patients to contact their doctor in the event of muscle symptoms."
+        }
+      ]
+    },
+    "TPMT": {
+      "count": 3,
+      "annotations": [
+        {
+          "id": "PA166104952",
+          "name": "Annotation of DPWG Guideline for mercaptopurine and TPMT",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104952",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "mercaptopurine"
+          ],
+          "genes": [
+            "TPMT"
+          ],
+          "summary_en": "Select an alternative drug or reduce the initial dose of mercaptopurine for patients that are TPMT poor metabolizers and reduce initial dose for patients that are TPMT intermediate metabolizers."
+        },
+        {
+          "id": "PA166104960",
+          "name": "Annotation of DPWG Guideline for thioguanine and TPMT",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104960",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "thioguanine"
+          ],
+          "genes": [
+            "TPMT"
+          ],
+          "summary_en": "Select an alternative drug or reduce the initial dose of thioguanine for patients that are TPMT poor metabolizers and reduce initial dose for patients that are TPMT intermediate metabolizers."
+        },
+        {
+          "id": "PA166104934",
+          "name": "Annotation of DPWG Guideline for azathioprine and TPMT",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104934",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "azathioprine"
+          ],
+          "genes": [
+            "TPMT"
+          ],
+          "summary_en": "Select an alternative drug or reduce the initial dose of azathioprine for patients that are TPMT poor metabolizers and reduce initial dose for patients that are TPMT intermediate metabolizers."
+        }
+      ]
+    },
+    "UGT1A1": {
+      "count": 3,
+      "annotations": [
+        {
+          "id": "PA166411701",
+          "name": "Annotation of DPWG Guideline for atazanavir and UGT1A1",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166411701",
+          "recommendation": true,
+          "dosingInformation": false,
+          "drugs": [
+            "atazanavir"
+          ],
+          "genes": [
+            "UGT1A1"
+          ],
+          "summary_en": "For patients who are UGT1A1 *28/*28, avoidance of atazanavir is recommended if there is a suitable alternative."
+        },
+        {
+          "id": "PA166436801",
+          "name": "Annotation of DPWG Guideline for sacituzumab govitecan and UGT1A1",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166436801",
+          "recommendation": true,
+          "dosingInformation": false,
+          "drugs": [
+            "sacituzumab govitecan"
+          ],
+          "genes": [
+            "UGT1A1"
+          ],
+          "summary_en": "The Dutch Pharmacogenetics Working Group Guideline for sacutuzumab govitecan recommends to be particularly vigilant for the occurrence of side effects in patients with the UGT1A1 *28/*28 genotype or UGT1A1 poor metabolizer phenotype."
+        },
+        {
+          "id": "PA166104951",
+          "name": "Annotation of DPWG Guideline for irinotecan and UGT1A1",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104951",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "irinotecan"
+          ],
+          "genes": [
+            "UGT1A1"
+          ],
+          "summary_en": "Dose reductions are recommended for irinotecan for patients who are UGT1A1 *28/*28 or UGT1A1 PM, starting with 70% of starting dose and increasing as tolerated, guided by neutrophil count."
+        }
+      ]
+    },
+    "VKORC1": {
+      "count": 3,
+      "annotations": [
+        {
+          "id": "PA166104938",
+          "name": "Annotation of DPWG Guideline for acenocoumarol and VKORC1",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104938",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "acenocoumarol"
+          ],
+          "genes": [
+            "VKORC1"
+          ],
+          "summary_en": "Patients with the VKORC1 rs9923231 TT genotype (-1639 AA genotype) should be given 50% of the standard initial dose of acenocoumarol and undergo more frequent INR monitoring. There are no recommendation for patients with the VKORC1 rs9923231 CT genotype (-1639 AG genotype)."
+        },
+        {
+          "id": "PA166104940",
+          "name": "Annotation of DPWG Guideline for phenprocoumon and VKORC1",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166104940",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "phenprocoumon"
+          ],
+          "genes": [
+            "VKORC1"
+          ],
+          "summary_en": "Patients with the VKORC1 rs9923231 TT genotype (-1639 AA genotype) is recommended to be given 50% of the standard initial dose of phenprocoumon and more frequent monitoring of INR. The genotype-specific initial dose and maintenance dose can be calculated using an algorithm. There is no recommendation for patients with the VKORC1 rs9923231 CT genotype (-1639 AG genotype)."
+        },
+        {
+          "id": "PA166182841",
+          "name": "Annotation of DPWG Guideline for warfarin and VKORC1",
+          "url": "https://www.clinpgx.org/guidelineAnnotation/PA166182841",
+          "recommendation": true,
+          "dosingInformation": true,
+          "drugs": [
+            "warfarin"
+          ],
+          "genes": [
+            "VKORC1"
+          ],
+          "summary_en": "Patients with the VKORC1 rs9923231 TT genotype (-1639 AA genotype) should be given 60% of the standard initial dose of warfarin. The genotype-specific initial dose and maintenance dose can be calculated using an algorithm. There are no recommendation for patients with the VKORC1 rs9923231 CT genotype (-1639 AG genotype)."
+        }
+      ]
+    }
+  }
+}

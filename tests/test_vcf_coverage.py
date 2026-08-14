@@ -29,6 +29,7 @@ class CoverageGoldTests(unittest.TestCase):
             ("missing-cyp2d6-star4.vcf", "CYP2D6", "rs3892097"),
             ("missing-cyp2c19-star2.vcf", "CYP2C19", "rs4244285"),
             ("missing-dpyd-star2a.vcf", "DPYD", "rs3918290"),
+            ("missing-cyp2c9-star3.vcf", "CYP2C9", "rs1057910"),
         )
         for name, gene, rsid in cases:
             with self.subTest(name=name):
@@ -44,11 +45,14 @@ class CoverageGoldTests(unittest.TestCase):
                 self.assertIn("INDETERMINATE", row["note_hu"])
                 self.assertNotEqual(row["callability"], "NORMAL")
 
-    def test_catalog_gap_is_not_tested_not_normal(self) -> None:
+    def test_hla_and_ugt_are_not_snv_not_tested(self) -> None:
         text = (GOLD / "missing-cyp2d6-star4.vcf").read_text(encoding="utf-8")
         rows = {r["gene"]: r for r in assess_coverage(text, reference="GRCh38")}
         self.assertEqual(rows["HLA-B"]["callability"], "NOT_TESTED")
         self.assertIsNone(rows["HLA-B"]["naive_missing_to_ref_would_claim"])
+        self.assertEqual(rows["HLA-B"].get("catalog"), "not_snv")
+        self.assertEqual(rows["UGT1A1"]["callability"], "NOT_TESTED")
+        self.assertIn("TA-ismétlődés", rows["UGT1A1"]["note_hu"])
 
 
 if __name__ == "__main__":

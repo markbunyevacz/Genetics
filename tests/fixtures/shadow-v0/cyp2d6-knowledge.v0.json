@@ -36,7 +36,11 @@
       },
       {
         "id": "WHO-ATC",
-        "hu": "VAN: a WHO ATC 5. szint (7 karakter) a hatóanyag: N06AB05 = paroxetin, N06AB03 = fluoxetin. Az N06AB (5 karakter) a teljes SSRI-csoport, benne pl. az eszcitaloprám is, ami nem erős CYP2D6-gátló."
+        "hu": "VAN: a WHO ATC 5. szint (7 karakter) a hatóanyag: N06AB05 = paroxetin, N06AB03 = fluoxetin, B01AC04 = clopidogrel. Az N06AB (5 karakter) a teljes SSRI-csoport, benne pl. az eszcitaloprám is, ami nem erős CYP2D6-gátló."
+      },
+      {
+        "id": "CPIC-CYP2C19-CLOPIDOGREL",
+        "hu": "VAN: a CPIC CYP2C19–clopidogrel guideline (ClinPGx PA166251443) stratégia-kategóriája a gén szerinti osztályhoz kötött. A live finding nem tartalmaz milligrammot, és nem keveri a CPIC sort DPWG/FDA szöveggel."
       }
     ],
     "hianyzik": [
@@ -51,7 +55,7 @@
     ],
     "beszerzes": {
       "kinek": "A gyártó (ez a repo / engineering) tölti le és pin-eli. Nem a labor és nem a kórház.",
-      "kitol": "CPIC (files.cpicpgx.org PDF + api.cpicpgx.org), FDA DDI Table 2-2, WHOCC ATC index.",
+      "kitol": "CPIC (files.cpicpgx.org PDF + api.cpicpgx.org), FDA DDI Table 2-2, WHOCC ATC index, ClinPGx DPWG guidelineAnnotation.",
       "hogyan": "Nyilvános URL, accessed dátum, és a letöltött fájl a docs/pce/Sources/official/ mappában. Script: docs/pce/Sources/official/fetch_official_sources.py és tests/fixtures/f1plus-v0/extract_cpic_prepare12_tables.py. A motor a pin-elt JSON extractet olvassa, nem a PDF-et futáskor.",
       "mikorra": "A 2020-as opioid és a 2023-as SSRI guideline, plusz az FDA lista, 2026-08-13-án megvan. SSRI NM→szegény sor: akkor, amikor a CPIC vagy az FDA ilyet kiad — addig szegény metabolizálót funkcionális címkeként írni tilos, a hiányt jelezni kell."
     }
@@ -115,6 +119,30 @@
       "claim": "N06AB03 = fluoxetine. Index last updated 2026-01-20."
     },
     {
+      "id": "CPIC-DIPLOTYPE-CYP2C19-API",
+      "authority": "L2",
+      "accessed": "2026-08-14",
+      "url": "https://api.cpicpgx.org/v1/diplotype?genesymbol=eq.CYP2C19&diplotype=in.(*1/*1,*1/*2,*2/*2)",
+      "on_disk": "docs/pce/Sources/official/cpic-api-diplotype-cyp2c19-nm-im-pm.json",
+      "claim": "CYP2C19 *1/*1 Normal Metabolizer; *1/*2 Intermediate Metabolizer; *2/*2 Poor Metabolizer."
+    },
+    {
+      "id": "CPIC-CYP2C19-CLOPIDOGREL",
+      "authority": "L2",
+      "accessed": "2026-08-13",
+      "url": "https://www.clinpgx.org/guideline/PA166251443",
+      "on_disk": "tests/fixtures/f1plus-v0/prepare12/cyp2c19-cpic-recommendation-view.v0.json",
+      "claim": "Clopidogrel: Ultrarapid/Rapid/Normal Metabolizer → use at standard dose; Intermediate/Poor Metabolizer → avoid standard-dose clopidogrel / avoid clopidogrel if possible. Live pairing stores strategy category only, not milligrams."
+    },
+    {
+      "id": "WHO-ATC-B01AC04",
+      "authority": "L1",
+      "accessed": "2026-08-14",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=B01AC04",
+      "on_disk": "docs/pce/Sources/official/whocc-atc-b01ac04.html",
+      "claim": "B01AC04 = clopidogrel."
+    },
+    {
       "id": "PCE-SPEC-B62",
       "authority": "L1-product",
       "accessed": "2026-08-13",
@@ -146,6 +174,30 @@
       "cpic_generesult": "Poor Metabolizer",
       "activity_score": "0.0",
       "source_id": "CPIC-DIPLOTYPE-API"
+    },
+    {
+      "gene": "CYP2C19",
+      "diplotype": "*1/*1",
+      "genotype_phenotype": "NM",
+      "cpic_generesult": "Normal Metabolizer",
+      "activity_score": null,
+      "source_id": "CPIC-DIPLOTYPE-CYP2C19-API"
+    },
+    {
+      "gene": "CYP2C19",
+      "diplotype": "*1/*2",
+      "genotype_phenotype": "IM",
+      "cpic_generesult": "Intermediate Metabolizer",
+      "activity_score": null,
+      "source_id": "CPIC-DIPLOTYPE-CYP2C19-API"
+    },
+    {
+      "gene": "CYP2C19",
+      "diplotype": "*2/*2",
+      "genotype_phenotype": "PM",
+      "cpic_generesult": "Poor Metabolizer",
+      "activity_score": null,
+      "source_id": "CPIC-DIPLOTYPE-CYP2C19-API"
     }
   ],
   "strong_cyp2d6_inhibitors": [
@@ -196,6 +248,25 @@
       "cpic_level": "C",
       "by_phenotype": null,
       "strategy": "NO_GENE_BASED_DOSING"
+    },
+    {
+      "gene": "CYP2C19",
+      "atc5": "B01AC04",
+      "inn": "clopidogrel",
+      "inn_hu": "clopidogrel",
+      "source_id": "CPIC-CYP2C19-CLOPIDOGREL",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251443",
+      "by_phenotype": {
+        "UM": "CONTINUE",
+        "RM": "CONTINUE",
+        "NM": "CONTINUE",
+        "IM": "CONSIDER_ALTERNATIVE",
+        "PM": "CONSIDER_ALTERNATIVE"
+      },
+      "strategy_hu": {
+        "CONTINUE": "A pinelt CPIC CYP2C19–clopidogrel guideline (ClinPGx PA166251443) szerint ebben a gén szerinti osztályban a clopidogrel folytatható standard adaggal (nem betegre számolt milligramm).",
+        "CONSIDER_ALTERNATIVE": "A pinelt CPIC CYP2C19–clopidogrel guideline (ClinPGx PA166251443) szerint ebben a gén szerinti osztályban más szer megfontolandó (nem számolt mg)."
+      }
     }
   ],
   "egfr_threshold": 30,

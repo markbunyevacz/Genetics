@@ -113,7 +113,7 @@ OGYÉI gépi licence OQ-11 `[NEEDS VERIFICATION]` — SYN-en ATC WHO; nem kital�
 | T2 | HLA-A / NUDT15 külön config fájl | PGx-Passport opció |
 | T3 | Change-control rekord konfigurációváltáskor | FR-310; FR-510 listázás P1 |
 | T4 | CPIC `pair_view` + `recommendation_view` a **12 génre** (extract script) | S049; F5/VKORC1 üres rec **jelezve**, nincs kitalált szöveg |
-| T5 | DPWG + FDA: hivatalos fájl/API vagy a leletben **nincs** kitalált DPWG sor; ha van forrás, mindkettő URL-lel, nincs szintetizált harmadik | FR-400-STATIC |
+| T5 | DPWG + FDA: hivatalos fájl/API vagy a leletben **nincs** kitalált DPWG sor; ha van forrás, mindkettő URL-lel, nincs szintetizált harmadik | **SYN kész:** ClinPGx DPWG pin + FDA Table 2-2 kivonat; `dpwg_version` / `fda_table_version` a B.4.1 JSON-on |
 | T6 | EDU: hivatalos osztály-szöveg + URL, **vagy** `phenoconversion_edu: null` + TC hogy null megengedett forrás hiányában | FR-410-EDU; S043 notesonusage üres volt |
 | T7 | ≥5 tiltott ha–akkor fixture → `E-EDU-001` | TC-EDU |
 
@@ -212,6 +212,8 @@ Külön csomag: `src/pce_shadow/`. `pce_report` nem importálja.
 
 Inhibitor tábla: FDA Table 2-2 erős index (paroxetin, fluoxetin) + WHO ATC 5. szint (7 karakter) + CPIC SSRI 2023 Table 2a stratégia-kategória. CPIC SSRI 2023: nincs NM→szegény metabolizáló sor. CPIC opioid 2020: van ilyen szabály opioidra — a paroxetin-SSRI példára **nem** keverjük. A HITL kártya kiírja: mi van, mi hiányzik, kitől, kinek kell beszerezni.
 
+**ETAP 0:** a párosítás `(gén, ATC5)` kulcsú. CYP2C19–clopidogrel (`B01AC04`, WHO) a pinelt CPIC recommendation_view stratégia-kategóriájából. CYP2D6 + clopidogrel nem ad findinget. Funkcionális szegény metabolizáló továbbra is üres.
+
 **SYN kód:** `src/pce_shadow/`, `src/pce_hitl/` + `var/hitl.sqlite`, `src/pce_ui/hitl.html`. `python -m pce_hitl`. A klinikai folyamat a `/v1/hitl/**` hívásokra továbbra is 403/404-et ad (FR-470).
 
 ---
@@ -252,7 +254,7 @@ F1 default marad FR-240. VCF kell a missing-to-ref P0 teszthez.
 | V2 | Csonka fájl → `E-VCF-001`, **nincs** részleges riport | story 20 |
 | V3 | Multi-sample hozzárendelés nélkül → `E-VCF-002` | |
 | V4 | > 5 GB → `E-VCF-004` | |
-| V5 | ≥3 gold: hiányzó definiáló pozíció → INDETERMINATE, nem NORMAL. Minták: `tests/fixtures/vcf-gold-v0/` (gyártó SYN, Ensembl/dbSNP pin). CDC GeT-RM fizikai minta labor-QC, nem ez a három fájl. | FR-210; PharmCAT `--absent-to-ref` **nincs** hívva |
+| V5 | ≥3 gold: hiányzó definiáló pozíció → INDETERMINATE, nem NORMAL. Minták: `tests/fixtures/vcf-gold-v0/` (gyártó SYN, Ensembl/dbSNP pin). 4. fájl: CYP2C9\*3. HLA-B / UGT1A1\*28 `not_snv`. CDC GeT-RM fizikai minta labor-QC, nem ezek a fájlok. | FR-210; PharmCAT `--absent-to-ref` **nincs** hívva |
 | V6 | NamedAlleleMatcher **ki** | FR-300 / OQ-05 |
 
 ---
@@ -319,4 +321,9 @@ HIS fixture → intézményi gateway → `POST /v1/shadow/events` 202 → sor a 
 ## Kész definíció — F2 SYN lakat
 
 `python -m pce_cds` → LOCKED. `GET /cds-services` `enabled: false`. POST üres `cards`. `pce_clinical` CDS 404. A teszt `live_cds=True` paraméterrel Card-ot ad `dose_mg` nélkül. Repo konstans false.
+
+## Kész definíció — ETAP 0 SYN
+
+F1+ lelet JSON-on `dpwg_version` és `fda_table_version` nem null; DPWG és FDA külön URL; nincs kitalált DPWG adagolási sor és nincs CPIC+DPWG+FDA egy mondatba keverve. PREPARE-12 SNV-katalógus 10 génre pinelve; HLA-B / UGT1A1\*28 `NOT_TESTED` (nem SNV). Hiányzó CYP2C9\*3 VCF → `INDETERMINATE`. Shadow: CYP2C19–clopidogrel élő párosítás gén-kulcson; CYP2D6+clopidogrel nem párosít; `functional_phenotype` üres. A14 monitor `org_display=SYN-ORG-001`. `LIVE_CDS` / `MATCHER_ON` false.
+
 

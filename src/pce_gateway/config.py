@@ -21,6 +21,7 @@ class GatewayConfig:
     rare_diplotype_threshold: float = 0.005
     frequency_table_path: Path | None = None
     org_id: str = "SYN-ORG-001"
+    org_display: str = "SYN-ORG-001"
     research_consent: bool = False
 
     def with_k(self, new_k: int) -> GatewayConfig:

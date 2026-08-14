@@ -316,6 +316,7 @@ class OutsideCallTests(unittest.TestCase):
             ("missing-cyp2d6-star4.vcf", "CYP2D6"),
             ("missing-cyp2c19-star2.vcf", "CYP2C19"),
             ("missing-dpyd-star2a.vcf", "DPYD"),
+            ("missing-cyp2c9-star3.vcf", "CYP2C9"),
         )
         for name, gene in cases:
             with self.subTest(name=name):

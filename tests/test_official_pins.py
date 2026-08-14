@@ -85,6 +85,41 @@ class OfficialPinTests(unittest.TestCase):
             self.assertEqual(hashlib.sha256(blob).hexdigest(), row["sha256"])
             self.assertEqual(len(blob), row["bytes"])
 
+    def test_etap0_dpwg_ensembl_and_clopidogrel_pins(self) -> None:
+        manifest = json.loads((OFFICIAL / "MANIFEST.json").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["accessed"], "2026-08-13")
+        by_id = {row["id"]: row for row in manifest["files"]}
+        self.assertGreaterEqual(sum(1 for row in manifest["files"] if row.get("ok")), 26)
+        dpwg = ROOT / by_id["CLINPGX-DPWG-GUIDELINE-ANNOTATIONS"]["path"]
+        blob = json.loads(dpwg.read_text(encoding="utf-8"))
+        self.assertEqual(blob["status"], "success")
+        self.assertGreaterEqual(len(blob["data"]), 100)
+        self.assertTrue(any(row.get("source") == "DPWG" for row in blob["data"]))
+        ens = json.loads((OFFICIAL / "ensembl-prepare12-defining-snvs-2026-08-14.json").read_text())
+        mappings = ens["grch38"]["rs1057910"]["mappings"]
+        hit = next(m for m in mappings if str(m.get("seq_region_name")) == "10")
+        self.assertEqual(hit["start"], 94981296)
+        who = (OFFICIAL / "whocc-atc-b01ac04.html").read_text(encoding="utf-8", errors="replace")
+        self.assertIn("B01AC04", who)
+        self.assertIn("clopidogrel", who.lower())
+        c19 = json.loads((OFFICIAL / "cpic-api-diplotype-cyp2c19-nm-im-pm.json").read_text())
+        by_dip = {row["diplotype"]: row["generesult"] for row in c19}
+        self.assertEqual(by_dip["*1/*1"], "Normal Metabolizer")
+        self.assertEqual(by_dip["*1/*2"], "Intermediate Metabolizer")
+        self.assertEqual(by_dip["*2/*2"], "Poor Metabolizer")
+        dbsnp = json.loads((OFFICIAL / "ncbi-dbsnp-prepare12-defining-snvs-2026-08-14.json").read_text())
+        self.assertEqual(dbsnp["result"]["8175347"]["snp_class"], "delins")
+        for pin_id in (
+            "CLINPGX-DPWG-GUIDELINE-ANNOTATIONS",
+            "ENSEMBL-PREPARE12-DEFINING-SNVS",
+            "WHO-ATC-B01AC04",
+            "CPIC-DIPLOTYPE-CYP2C19-API",
+        ):
+            row = by_id[pin_id]
+            raw = (ROOT / row["path"]).read_bytes()
+            self.assertEqual(hashlib.sha256(raw).hexdigest(), row["sha256"])
+            self.assertEqual(len(raw), row["bytes"])
+
     def test_knowledge_json_points_at_on_disk_files(self) -> None:
         doc = json.loads(KNOWLEDGE.read_text(encoding="utf-8"))
         missing = []

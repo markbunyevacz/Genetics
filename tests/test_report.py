@@ -146,6 +146,8 @@ class Prepare12TableTests(unittest.TestCase):
         self.assertEqual(report["unsourced_claims"], 0)
         self.assertIn("clopidogrel", {p["drugname"] for p in report["pairs"]})
         self.assertFalse(report["hianyzik"])
+        self.assertEqual(report["dpwg_version"], "DPWG-ClinPGx-guidelineAnnotation@2026-08-14")
+        self.assertEqual(report["fda_table_version"], "FDA-DDI-TABLE-2-2@2026-08-13")
 
     def test_f5_signals_missing_recommendation_without_inventing(self) -> None:
         call = {

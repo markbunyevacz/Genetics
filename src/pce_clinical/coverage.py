@@ -94,6 +94,25 @@ def assess_coverage(
     for gene in PREPARE_12:
         meta = genes.get(gene) or {"catalog": "gap", "positions": []}
         positions = list(meta.get("positions") or [])
+        if meta.get("catalog") == "not_snv":
+            note = str(meta.get("note_hu") or "").strip()
+            out.append(
+                {
+                    "gene": gene,
+                    "callability": "NOT_TESTED",
+                    "missing": [],
+                    "naive_missing_to_ref_would_claim": None,
+                    "note_hu": (
+                        note
+                        + (" " if note else "")
+                        + f"{gene}: nem egyszerű SNV. Nem NORMAL. "
+                        + DIPLOTIPUS_FORRAS_HU
+                    ).strip(),
+                    "pharmcat_absent_to_ref": False,
+                    "catalog": "not_snv",
+                }
+            )
+            continue
         if meta.get("catalog") != "pinned" or not positions:
             out.append(
                 {

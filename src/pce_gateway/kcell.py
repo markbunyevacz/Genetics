@@ -80,7 +80,13 @@ class KCellStore:
         )
         self._conn.commit()
 
-    def quarterly_report(self, quarter: str) -> dict[str, Any]:
+    def quarterly_report(
+        self,
+        quarter: str,
+        *,
+        org_id: str = "SYN-ORG-001",
+        org_display: str = "SYN-ORG-001",
+    ) -> dict[str, Any]:
         cells = list(
             self._conn.execute(
                 "SELECT n FROM cells WHERE quarter = ?",
@@ -104,6 +110,8 @@ class KCellStore:
         return {
             "report_type": "A14_quarterly_monitor",
             "quarter": quarter,
+            "org_id": org_id,
+            "org_display": org_display,
             "mode": "ANON",
             "k": 5,
             "events_seen_local": seen,

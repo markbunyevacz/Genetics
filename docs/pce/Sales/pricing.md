@@ -67,15 +67,15 @@ Ha a DrugMap teszt **499 000 Ft** (VC-10, egy forrás) áll, a klinikus-sáv **a
 | Csomag | A kódban | Ami *nincs* túlállítva |
 | --- | --- | --- |
 | `pce_clinical` | Hozzájárulás-kapu (FR-100), append-only audit (`prev_hash`, UPDATE/DELETE tiltva), FR-710 magyarázat | A **30 éves** megőrzés spec FR-120; a SYN SQLite nem időzít 30 évet |
-| `pce_report` | Verziózott **CPIC** pair/recommendation (PREPARE-12 pin), callability, PDF, FHIR STU3 Bundle; F1+ matcher **ki** | A disclaimer **DPWG**-t említ; `dpwg_version` a JSON-ban **null** — hivatalos DPWG-tábla a leleten TRACE szerint hátravan |
+| `pce_report` | Verziózott **CPIC** pair/recommendation (PREPARE-12 pin), callability, PDF, FHIR STU3 Bundle; F1+ matcher **ki**; `dpwg_version` + `fda_table_version` a B.4.1 JSON-on (ClinPGx DPWG pin + FDA Table 2-2 kivonat, külön URL, nincs szintetizált harmadik) | DPWG teljes HTML tábla nem a findings-ben (index + pin); lektorált HU DPWG-szöveg |
 | `pce_gateway` | Intézményi anonimizálás, k-cella, 7 karakteres hatóanyag-kód default | Éles HIS pecsétig tilos |
 | `pce_shadow` + `pce_hitl` | Élő párosítás árnyékban; vak HITL (human-in-the-loop) UI; nincs kitalált szegény metabolizáló | A felíró **nem** látja (NG-07) |
 | `pce_cds` | F2 CDS Hooks cső (order-sign / order-select + SMART stub); repo `LIVE_CDS=false` → üres `cards` | Signed `LIVE_CDS=true` pecsét nélkül tilos |
 | `pce_ui` | Labor / klinikai / HITL HTML + F2 lakat-UI (`cds.html`) a fenti API-kra | Nem EESZT-kliens |
 
-Hivatalos klinikai pin: `docs/pce/Sources/official/MANIFEST.json` — **19** fájl `ok: true`, SHA-256-tal (2026-08-13), beleértve GDPR Art. 12 HTML/PDF, EMA 0,09 űrlap-utasítás, MDCG 2021-24, Health Canada PRCI (cél-cella 11), DHCS DDG V2.2 (Wayback). A motor a pin-elt JSON extractet olvassa, nem a PDF-et futáskor.
+Hivatalos klinikai pin: `docs/pce/Sources/official/MANIFEST.json` — **19** fájl `ok: true` a 2026-08-13 körben, SHA-256-tal, beleértve GDPR Art. 12 HTML/PDF, EMA 0,09 űrlap-utasítás, MDCG 2021-24, Health Canada PRCI (cél-cella 11), DHCS DDG V2.2 (Wayback). 2026-08-14 ETAP 0: **26** `ok: true` (+ DPWG ClinPGx, Ensembl POST, NCBI dbSNP, CYP2C19 diplotípus, WHO B01AC04, KNMP landing). A motor a pin-elt JSON extractet olvassa, nem a PDF-et futáskor.
 
-Teszt: `PYTHONPATH=src python3 -m unittest discover -s tests -v` → **113 OK** (2026-08-13, G DSR + pin tesztekkel). A J-1…J-6 merge 108 volt; az árazási csomag 111; ez a G két DSR-tesztet ad. Nem 94. 2026-08-14 (D-44, `pce_cds`): **124 OK**.
+Teszt: `PYTHONPATH=src python3 -m unittest discover -s tests -v` → **113 OK** (2026-08-13, G DSR + pin tesztekkel). A J-1…J-6 merge 108 volt; az árazási csomag 111; ez a G két DSR-tesztet ad. Nem 94. 2026-08-14 (D-44, `pce_cds`): **124 OK**. 2026-08-14 (D-45, ETAP 0): **134 OK**.
 
 `LIVE_CDS = false`. `MATCHER_ON = false`. Bent van ≠ be van kapcsolva.
 

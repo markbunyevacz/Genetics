@@ -22,9 +22,16 @@ A gyártó (ez a repo) tölti le. Nem a labor és nem a kórház feladata.
 | `health-canada-prci-guidance.html` | Health Canada PRCI profiloldal (S060) | 2026-08-13 |
 | `health-canada-prci-guidance-document.html` | Health Canada PRCI teljes útmutató: risk=0.09 **és** cél-cella 11 (S060) | 2026-08-13 |
 | `dhcs-ddg-v2-2.pdf` | DHCS DDG V2.2 (2022-12-06): numerátor <11 vagy nevező <20 000 (S062). Wayback-pin; élő DHCS Incapsula. v3.0 nincs pinelve. | 2026-08-13 |
+| `clinpgx-dpwg-guideline-annotations-2026-08-14.json` | ClinPGx DPWG guidelineAnnotation lista (113 rekord) | 2026-08-14 |
+| `knmp-farmacogenetica-2026-08-14.html` | KNMP farmakogenetika landing (DPWG kiadó); gén-tábla nem ebből | 2026-08-14 |
+| `cpic-api-diplotype-cyp2c19-nm-im-pm.json` | CPIC CYP2C19 `*1/*1` NM, `*1/*2` IM, `*2/*2` PM | 2026-08-14 |
+| `whocc-atc-b01ac04.html` | WHO: B01AC04 = clopidogrel | 2026-08-14 |
+| `ensembl-prepare12-defining-snvs-2026-08-14.json` | Ensembl POST GRCh38+GRCh37 definiáló SNV-k | 2026-08-14 |
+| `ncbi-dbsnp-prepare12-defining-snvs-2026-08-14.json` | NCBI eutils dbSNP (rs8175347 = delins) | 2026-08-14 |
+| `ncbi-refsnp-prepare12-defining-snvs-2026-08-14.json` | NCBI refsnp slim GRCh38.p14 HGVS | 2026-08-14 |
 
 A PREPARE-12 gén `pair_view` / `recommendation_view` JSON: `tests/fixtures/f1plus-v0/prepare12/` (CPIC API, 2026-08-13).
 
 A motor futáskor **nem** parse-olja a PDF-et. A pinelt JSON-kivonatot olvassa. A PDF/HTML itt van, hogy a forrás ne csak URL legyen.
 
-Újraletöltés: `python3 docs/pce/Sources/official/fetch_official_sources.py`
+Újraletöltés: `python3 docs/pce/Sources/official/fetch_official_sources.py` (2026-08-13 kör). ETAP 0 pin: `python3 docs/pce/Sources/official/fetch_etap0_pins.py` — a MANIFEST `accessed` mezőjét a régi sorokon **nem** írja felül.

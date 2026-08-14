@@ -195,6 +195,81 @@
       "sha256": "13ac1311499ff61fb935807d2a81e42c296900c10d8e6fc21a1d1d2109b9e21d",
       "content_type": "application/pdf",
       "note": "Live dhcs.ca.gov returned Incapsula HTML (212 bytes) on 2026-08-13. Pin is Wayback capture of the same path. PDF title DHCS-DDG-V2.2.pdf; Version 2.2; December 6, 2022; 71 pages. DHCS public-reporting page now points to DDG v3.0 as replacement — v3.0 not pinned."
+    },
+    {
+      "id": "CLINPGX-DPWG-GUIDELINE-ANNOTATIONS",
+      "url": "https://api.clinpgx.org/v1/data/guidelineAnnotation?source=DPWG",
+      "path": "docs/pce/Sources/official/clinpgx-dpwg-guideline-annotations-2026-08-14.json",
+      "accessed": "2026-08-14",
+      "ok": true,
+      "bytes": 1154004,
+      "sha256": "2054033859b7b9a3976166409c6ac9a7437edaa0ecc1999a901f0e917903821c",
+      "content_type": "application/json",
+      "note": "113 DPWG guideline annotations from ClinPGx. Engine reads PREPARE-12 index extract; no invented dosing text; not merged with CPIC."
+    },
+    {
+      "id": "CPIC-DIPLOTYPE-CYP2C19-API",
+      "url": "https://api.cpicpgx.org/v1/diplotype?genesymbol=eq.CYP2C19&diplotype=in.(*1/*1,*1/*2,*2/*2)",
+      "path": "docs/pce/Sources/official/cpic-api-diplotype-cyp2c19-nm-im-pm.json",
+      "accessed": "2026-08-14",
+      "ok": true,
+      "bytes": 2995,
+      "sha256": "efdf12c64a9535c2a0c57d9c3372cdb609d5fbbba6f4db7cb2848367e5fa2d11",
+      "content_type": "application/json",
+      "note": "CYP2C19 *1/*1 Normal Metabolizer; *1/*2 Intermediate Metabolizer; *2/*2 Poor Metabolizer."
+    },
+    {
+      "id": "WHO-ATC-B01AC04",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=B01AC04",
+      "path": "docs/pce/Sources/official/whocc-atc-b01ac04.html",
+      "accessed": "2026-08-14",
+      "ok": true,
+      "bytes": 12287,
+      "sha256": "b97700f49989bc7fac59e9eecca7c65dd91b4687cfeb8da4d794e33d3f92a14e",
+      "content_type": "text/html"
+    },
+    {
+      "id": "KNMP-FARMACOGENETICA-LANDING",
+      "url": "https://www.knmp.nl/dossiers/farmacogenetica",
+      "path": "docs/pce/Sources/official/knmp-farmacogenetica-2026-08-14.html",
+      "accessed": "2026-08-14",
+      "ok": true,
+      "bytes": 82779,
+      "sha256": "b9945a3738ec4f145997b7ed42c9eaa45f81141031923c9bedf550c7c3698819",
+      "content_type": "text/html",
+      "note": "DPWG publisher landing. Gene-level rows are the ClinPGx guidelineAnnotation pin, not this HTML."
+    },
+    {
+      "id": "ENSEMBL-PREPARE12-DEFINING-SNVS",
+      "url": "https://rest.ensembl.org/variation/homo_sapiens",
+      "path": "docs/pce/Sources/official/ensembl-prepare12-defining-snvs-2026-08-14.json",
+      "accessed": "2026-08-14",
+      "ok": true,
+      "bytes": 25276,
+      "sha256": "d63d260f233c08c0ece5d75946432e311de7cb2120dc297e02bd3ac6008ccd63",
+      "content_type": "application/json",
+      "note": "POST batch GRCh38 + GRCh37 archive. Individual GET /variation/human/{rsid} returned HTTP 503 on 2026-08-14; POST succeeded. rs8175347 not in this SNP batch."
+    },
+    {
+      "id": "NCBI-DBSNP-PREPARE12-DEFINING-SNVS",
+      "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=snp&id=3745274,1799853,1057910,776746,6025,4149056,1800462,1142345,9923231,8175347&retmode=json",
+      "path": "docs/pce/Sources/official/ncbi-dbsnp-prepare12-defining-snvs-2026-08-14.json",
+      "accessed": "2026-08-14",
+      "ok": true,
+      "bytes": 43322,
+      "sha256": "579c147965caf7e120dd91d018b3fd4a72ea6831ffd6b72201368c61460cef43",
+      "content_type": "application/json"
+    },
+    {
+      "id": "NCBI-REFSNP-PREPARE12-DEFINING-SNVS",
+      "url": "https://api.ncbi.nlm.nih.gov/variation/v0/refsnp/{id}",
+      "path": "docs/pce/Sources/official/ncbi-refsnp-prepare12-defining-snvs-2026-08-14.json",
+      "accessed": "2026-08-14",
+      "ok": true,
+      "bytes": 5907,
+      "sha256": "9fd8aabcddacb7b998f1098b692ad2b64d7b5cfcd98d03e69991754a03a80051",
+      "content_type": "application/json",
+      "note": "Slim GRCh38.p14 HGVS placements. Independent check of Ensembl GRCh38 chrpos."
     }
   ]
 }

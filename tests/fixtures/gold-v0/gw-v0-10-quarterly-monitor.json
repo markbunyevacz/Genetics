@@ -6,6 +6,7 @@
     "report_type": "A14_quarterly_monitor",
     "quarter": "2026-Q3",
     "org_id": "SYN-ORG-001",
+    "org_display": "SYN-ORG-001",
     "mode": "ANON",
     "k": 5,
     "rare_diplotype_threshold": 0.005,

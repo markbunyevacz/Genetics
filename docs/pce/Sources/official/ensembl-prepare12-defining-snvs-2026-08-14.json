@@ -1,0 +1,1034 @@
+{
+  "accessed": "2026-08-14",
+  "note": "Ensembl REST POST /variation/homo_sapiens (GRCh38 live + GRCh37 archive). Patch haplotypes omitted at catalog time.",
+  "grch38_url": "https://rest.ensembl.org/variation/homo_sapiens",
+  "grch37_url": "https://grch37.rest.ensembl.org/variation/homo_sapiens",
+  "ids": [
+    "rs3745274",
+    "rs1799853",
+    "rs1057910",
+    "rs776746",
+    "rs6025",
+    "rs4149056",
+    "rs1800462",
+    "rs1142345",
+    "rs9923231",
+    "rs8175347"
+  ],
+  "grch38": {
+    "rs1800462": {
+      "evidence": [
+        "Frequency",
+        "1000Genomes",
+        "Cited",
+        "ESP",
+        "Phenotype_or_Disease",
+        "ExAC",
+        "TOPMed",
+        "gnomAD"
+      ],
+      "synonyms": [
+        "187680.0001",
+        "RCV000013558",
+        "VCV000012721",
+        "PA166156993",
+        "VAR_005637"
+      ],
+      "minor_allele": null,
+      "clinical_significance": [
+        "drug response"
+      ],
+      "var_class": "SNP",
+      "source": "Variants (including SNPs and indels) imported from dbSNP",
+      "ambiguity": "S",
+      "MAF": null,
+      "mappings": [
+        {
+          "seq_region_name": "6",
+          "assembly_name": "GRCh38",
+          "start": 18143724,
+          "strand": 1,
+          "coord_system": "chromosome",
+          "location": "6:18143724-18143724",
+          "end": 18143724,
+          "ancestral_allele": "C",
+          "allele_string": "C/G"
+        }
+      ],
+      "name": "rs1800462",
+      "most_severe_consequence": "missense_variant"
+    },
+    "rs4149056": {
+      "name": "rs4149056",
+      "most_severe_consequence": "missense_variant",
+      "mappings": [
+        {
+          "end": 21178615,
+          "ancestral_allele": "T",
+          "location": "12:21178615-21178615",
+          "coord_system": "chromosome",
+          "strand": 1,
+          "allele_string": "T/A/C",
+          "start": 21178615,
+          "assembly_name": "GRCh38",
+          "seq_region_name": "12"
+        }
+      ],
+      "MAF": null,
+      "clinical_significance": [
+        "benign",
+        "likely benign",
+        "pathogenic",
+        "drug response",
+        "other"
+      ],
+      "var_class": "SNP",
+      "source": "Variants (including SNPs and indels) imported from dbSNP",
+      "ambiguity": "H",
+      "synonyms": [
+        "PA166154579",
+        "RCV003227616",
+        "RCV000311457",
+        "VCV000037346",
+        "RCV001787324",
+        "RCV001787819",
+        "RCV003227613",
+        "RCV001705611",
+        "RCV003227614",
+        "RCV003982852",
+        "RCV001787820",
+        "RCV000999565",
+        "RCV000325818",
+        "RCV001787325",
+        "RCV001787333",
+        "RCV003227621",
+        "RCV003227620",
+        "RCV003227615",
+        "RCV000660832",
+        "RCV003227617",
+        "RCV003227619",
+        "RCV003227618",
+        "rs52816141",
+        "rs60037639",
+        "VAR_015076"
+      ],
+      "minor_allele": null,
+      "evidence": [
+        "Frequency",
+        "1000Genomes",
+        "Cited",
+        "ESP",
+        "Phenotype_or_Disease",
+        "ExAC",
+        "TOPMed",
+        "gnomAD"
+      ]
+    },
+    "rs1799853": {
+      "evidence": [
+        "Frequency",
+        "1000Genomes",
+        "Cited",
+        "ESP",
+        "Phenotype_or_Disease",
+        "ExAC",
+        "TOPMed",
+        "gnomAD"
+      ],
+      "ambiguity": "H",
+      "source": "Variants (including SNPs and indels) imported from dbSNP",
+      "clinical_significance": [
+        "likely benign",
+        "drug response",
+        "other"
+      ],
+      "var_class": "SNP",
+      "minor_allele": null,
+      "synonyms": [
+        "601130.0002",
+        "rs60690363",
+        "rs33968134",
+        "rs17110268",
+        "rs28371674",
+        "PA166153972",
+        "RCV000154312",
+        "RCV001263463",
+        "VCV000008409",
+        "RCV000723560",
+        "RCV000008920",
+        "RCV000787929",
+        "RCV000788099",
+        "RCV000309101",
+        "VCV000177709",
+        "VCV000163021",
+        "RCV000150378",
+        "VCV000163020",
+        "RCV000788093",
+        "RCV000150377",
+        "VAR_008343"
+      ],
+      "MAF": null,
+      "mappings": [
+        {
+          "start": 94942290,
+          "assembly_name": "GRCh38",
+          "seq_region_name": "10",
+          "end": 94942290,
+          "ancestral_allele": "C",
+          "location": "10:94942290-94942290",
+          "coord_system": "chromosome",
+          "strand": 1,
+          "allele_string": "C/A/T"
+        }
+      ],
+      "most_severe_consequence": "missense_variant",
+      "name": "rs1799853"
+    },
+    "rs9923231": {
+      "evidence": [
+        "Frequency",
+        "1000Genomes",
+        "Cited",
+        "Phenotype_or_Disease",
+        "TOPMed",
+        "gnomAD"
+      ],
+      "minor_allele": null,
+      "synonyms": [
+        "608547.0006",
+        "rs117572127",
+        "rs17878363",
+        "rs60511154",
+        "PA166155091",
+        "RCV000603173",
+        "RCV000211327",
+        "RCV000002295",
+        "RCV003993732",
+        "VCV000166563",
+        "RCV003227593",
+        "RCV003227594",
+        "VCV000002211",
+        "RCV001787364",
+        "RCV003952337",
+        "RCV001787365",
+        "RCV000377657",
+        "RCV003227595",
+        "RCV003150805",
+        "RCV001787366",
+        "RCV000152659",
+        "RCV003996074",
+        "VCV000226030"
+      ],
+      "ambiguity": "N",
+      "source": "Variants (including SNPs and indels) imported from dbSNP",
+      "clinical_significance": [
+        "uncertain significance",
+        "benign",
+        "likely benign",
+        "pathogenic",
+        "drug response",
+        "other",
+        "protective"
+      ],
+      "var_class": "SNP",
+      "MAF": null,
+      "mappings": [
+        {
+          "strand": 1,
+          "coord_system": "chromosome",
+          "location": "16:31096368-31096368",
+          "ancestral_allele": "C",
+          "end": 31096368,
+          "allele_string": "C/A/G/T",
+          "seq_region_name": "16",
+          "assembly_name": "GRCh38",
+          "start": 31096368
+        }
+      ],
+      "most_severe_consequence": "intergenic_variant",
+      "name": "rs9923231"
+    },
+    "rs3745274": {
+      "mappings": [
+        {
+          "assembly_name": "GRCh38",
+          "seq_region_name": "19",
+          "start": 41006936,
+          "allele_string": "G/A/C/T",
+          "coord_system": "chromosome",
+          "strand": 1,
+          "ancestral_allele": "G",
+          "end": 41006936,
+          "location": "19:41006936-41006936"
+        }
+      ],
+      "MAF": null,
+      "most_severe_consequence": "missense_variant",
+      "name": "rs3745274",
+      "evidence": [
+        "Frequency",
+        "1000Genomes",
+        "Cited",
+        "ESP",
+        "Phenotype_or_Disease",
+        "ExAC",
+        "TOPMed",
+        "gnomAD"
+      ],
+      "source": "Variants (including SNPs and indels) imported from dbSNP",
+      "ambiguity": "N",
+      "var_class": "SNP",
+      "clinical_significance": [
+        "likely benign",
+        "drug response"
+      ],
+      "minor_allele": null,
+      "synonyms": [
+        "rs57685583",
+        "rs56308434",
+        "123930.0001",
+        "RCV003974851",
+        "RCV001787331",
+        "RCV001787330",
+        "RCV001787332",
+        "RCV000022520",
+        "VCV000029671",
+        "PA166155409",
+        "VAR_016925"
+      ]
+    },
+    "rs1142345": {
+      "evidence": [
+        "Frequency",
+        "1000Genomes",
+        "Cited",
+        "ESP",
+        "Phenotype_or_Disease",
+        "ExAC",
+        "TOPMed",
+        "gnomAD"
+      ],
+      "ambiguity": "N",
+      "source": "Variants (including SNPs and indels) imported from dbSNP",
+      "clinical_significance": [
+        "likely benign",
+        "drug response",
+        "other"
+      ],
+      "var_class": "SNP",
+      "minor_allele": null,
+      "synonyms": [
+        "VAR_005641",
+        "RCV000013559",
+        "VCV000012722",
+        "VCV000012725",
+        "RCV000013562",
+        "RCV000396233",
+        "PA166156978",
+        "187680.0005",
+        "rs52798150",
+        "rs61510596",
+        "rs29001646",
+        "rs1801205",
+        "rs16880254"
+      ],
+      "MAF": null,
+      "mappings": [
+        {
+          "start": 18130687,
+          "assembly_name": "GRCh38",
+          "seq_region_name": "6",
+          "allele_string": "T/A/C/G",
+          "ancestral_allele": "T",
+          "end": 18130687,
+          "location": "6:18130687-18130687",
+          "coord_system": "chromosome",
+          "strand": 1
+        }
+      ],
+      "most_severe_consequence": "missense_variant",
+      "name": "rs1142345"
+    },
+    "rs6025": {
+      "name": "rs6025",
+      "most_severe_consequence": "missense_variant",
+      "mappings": [
+        {
+          "assembly_name": "GRCh38",
+          "seq_region_name": "1",
+          "start": 169549811,
+          "allele_string": "C/A/T",
+          "coord_system": "chromosome",
+          "strand": 1,
+          "end": 169549811,
+          "ancestral_allele": "C",
+          "location": "1:169549811-169549811"
+        }
+      ],
+      "MAF": null,
+      "synonyms": [
+        "rs1801711",
+        "rs60031897",
+        "612309.0001",
+        "PA166153554",
+        "RCV001095681",
+        "RCV000000676",
+        "RCV000023935",
+        "RCV000454249",
+        "RCV003764502",
+        "RCV005049305",
+        "RCV000000675",
+        "RCV002399305",
+        "RCV000616414",
+        "VCV000000642",
+        "RCV001806997",
+        "VCV000226007",
+        "RCV003761828",
+        "RCV000514863",
+        "RCV003493407",
+        "RCV000205002",
+        "RCV003227589",
+        "NM_000130.4:c.1601G>T",
+        "NP_000121.2:p.Arg534Leu",
+        "NM_000130.5:c.1601G>T",
+        "NP_000121.2:p.Arg534Gln",
+        "NM_000130.4:c.1601G>A",
+        "NM_000130.5:c.1601G>A",
+        "VAR_001213"
+      ],
+      "minor_allele": null,
+      "clinical_significance": [
+        "uncertain significance",
+        "benign",
+        "pathogenic",
+        "drug response",
+        "risk factor",
+        "pathogenic low penetrance"
+      ],
+      "var_class": "SNP",
+      "ambiguity": "H",
+      "source": "Variants (including SNPs and indels) imported from dbSNP",
+      "evidence": [
+        "Frequency",
+        "1000Genomes",
+        "Cited",
+        "ESP",
+        "Phenotype_or_Disease",
+        "ExAC",
+        "TOPMed",
+        "gnomAD"
+      ]
+    },
+    "rs1057910": {
+      "name": "rs1057910",
+      "most_severe_consequence": "missense_variant",
+      "MAF": null,
+      "mappings": [
+        {
+          "coord_system": "chromosome",
+          "strand": 1,
+          "ancestral_allele": "A",
+          "end": 94981296,
+          "location": "10:94981296-94981296",
+          "allele_string": "A/C/G",
+          "assembly_name": "GRCh38",
+          "seq_region_name": "10",
+          "start": 94981296
+        }
+      ],
+      "synonyms": [
+        "VAR_008345",
+        "rs17847042",
+        "rs61212474",
+        "rs3198471",
+        "601130.0001",
+        "PA166153959",
+        "VCV000008408",
+        "RCV000150377",
+        "RCV000008918",
+        "RCV000008917",
+        "RCV000788100",
+        "VCV000163020",
+        "RCV000008916",
+        "VCV000163021",
+        "RCV000150378",
+        "VCV000177709",
+        "RCV000788094",
+        "RCV000787930",
+        "RCV000008919",
+        "RCV000339502",
+        "RCV000154312"
+      ],
+      "minor_allele": null,
+      "clinical_significance": [
+        "drug response",
+        "other"
+      ],
+      "var_class": "SNP",
+      "ambiguity": "V",
+      "source": "Variants (including SNPs and indels) imported from dbSNP",
+      "evidence": [
+        "Frequency",
+        "1000Genomes",
+        "Cited",
+        "ESP",
+        "Phenotype_or_Disease",
+        "ExAC",
+        "TOPMed",
+        "gnomAD"
+      ]
+    },
+    "rs776746": {
+      "most_severe_consequence": "intron_variant",
+      "name": "rs776746",
+      "mappings": [
+        {
+          "coord_system": "chromosome",
+          "strand": 1,
+          "ancestral_allele": "T",
+          "end": 99672916,
+          "location": "7:99672916-99672916",
+          "allele_string": "T/C",
+          "assembly_name": "GRCh38",
+          "seq_region_name": "7",
+          "start": 99672916
+        }
+      ],
+      "MAF": null,
+      "ambiguity": "Y",
+      "source": "Variants (including SNPs and indels) imported from dbSNP",
+      "var_class": "SNP",
+      "clinical_significance": [
+        "benign",
+        "drug response",
+        "risk factor",
+        "association"
+      ],
+      "minor_allele": null,
+      "synonyms": [
+        "PA166157267",
+        "VCV000226021",
+        "VCV000005066",
+        "RCV002227926",
+        "RCV000830072",
+        "RCV002292440",
+        "RCV000005370",
+        "rs58244770",
+        "rs386613022",
+        "rs10361242",
+        "rs11266830",
+        "605325.0001"
+      ],
+      "evidence": [
+        "Frequency",
+        "1000Genomes",
+        "Cited",
+        "Phenotype_or_Disease",
+        "TOPMed",
+        "gnomAD"
+      ]
+    }
+  },
+  "grch37": {
+    "rs1142345": {
+      "name": "rs1142345",
+      "clinical_significance": [
+        "likely benign",
+        "drug response",
+        "other"
+      ],
+      "ambiguity": "N",
+      "source": "Variants (including SNPs and indels) imported from dbSNP",
+      "evidence": [
+        "Frequency",
+        "1000Genomes",
+        "Cited",
+        "ESP",
+        "Phenotype_or_Disease",
+        "ExAC",
+        "TOPMed",
+        "gnomAD"
+      ],
+      "var_class": "SNP",
+      "minor_allele": "C",
+      "MAF": 0.039137,
+      "synonyms": [
+        "PA166156978",
+        "VCV000012725",
+        "RCV000013562",
+        "VCV000012722",
+        "RCV000396233",
+        "RCV000013559",
+        "rs16880254",
+        "rs61510596",
+        "rs52798150",
+        "rs29001646",
+        "rs1801205",
+        "187680.0005",
+        "VAR_005641"
+      ],
+      "mappings": [
+        {
+          "strand": 1,
+          "seq_region_name": "6",
+          "end": 18130918,
+          "allele_string": "T/A/C/G",
+          "start": 18130918,
+          "location": "6:18130918-18130918",
+          "assembly_name": "GRCh37",
+          "ancestral_allele": "T",
+          "coord_system": "chromosome"
+        }
+      ],
+      "most_severe_consequence": "missense_variant"
+    },
+    "rs6025": {
+      "most_severe_consequence": "missense_variant",
+      "mappings": [
+        {
+          "seq_region_name": "1",
+          "end": 169519049,
+          "start": 169519049,
+          "allele_string": "T/C/A",
+          "strand": 1,
+          "assembly_name": "GRCh37",
+          "location": "1:169519049-169519049",
+          "ancestral_allele": "C",
+          "coord_system": "chromosome"
+        }
+      ],
+      "synonyms": [
+        "PA166153554",
+        "NM_000130.4:c.1601G>A",
+        "NP_000121.2:p.Arg534Gln",
+        "NM_000130.5:c.1601G>A",
+        "NM_000130.5:c.1601G>T",
+        "NM_000130.4:c.1601G>T",
+        "NP_000121.2:p.Arg534Leu",
+        "rs1801711",
+        "rs60031897",
+        "VCV000226007",
+        "RCV001095681",
+        "RCV000000675",
+        "RCV000616414",
+        "RCV001806997",
+        "RCV000205002",
+        "RCV001081351",
+        "RCV003227589",
+        "RCV000000676",
+        "RCV000023935",
+        "RCV000454249",
+        "VCV000000642",
+        "RCV000514863",
+        "RCV002399305",
+        "612309.0001",
+        "VAR_001213"
+      ],
+      "MAF": null,
+      "minor_allele": null,
+      "var_class": "SNP",
+      "evidence": [
+        "Frequency",
+        "1000Genomes",
+        "Cited",
+        "ESP",
+        "Phenotype_or_Disease",
+        "ExAC",
+        "TOPMed",
+        "gnomAD"
+      ],
+      "source": "Variants (including SNPs and indels) imported from dbSNP",
+      "clinical_significance": [
+        "uncertain significance",
+        "benign",
+        "pathogenic",
+        "drug response",
+        "risk factor",
+        "pathogenic low penetrance"
+      ],
+      "ambiguity": "H",
+      "name": "rs6025"
+    },
+    "rs776746": {
+      "var_class": "SNP",
+      "evidence": [
+        "Frequency",
+        "1000Genomes",
+        "Cited",
+        "Phenotype_or_Disease",
+        "TOPMed",
+        "gnomAD"
+      ],
+      "source": "Variants (including SNPs and indels) imported from dbSNP",
+      "minor_allele": null,
+      "name": "rs776746",
+      "ambiguity": "Y",
+      "clinical_significance": [
+        "benign",
+        "drug response",
+        "risk factor",
+        "association"
+      ],
+      "synonyms": [
+        "RCV002292440",
+        "RCV000830072",
+        "RCV002227926",
+        "RCV000005370",
+        "VCV000226021",
+        "VCV000005066",
+        "rs386613022",
+        "rs10361242",
+        "rs11266830",
+        "rs58244770",
+        "PA166157267",
+        "605325.0001"
+      ],
+      "MAF": null,
+      "most_severe_consequence": "splice_acceptor_variant",
+      "mappings": [
+        {
+          "end": 99270539,
+          "seq_region_name": "7",
+          "allele_string": "C/T",
+          "start": 99270539,
+          "strand": 1,
+          "assembly_name": "GRCh37",
+          "location": "7:99270539-99270539",
+          "ancestral_allele": "T",
+          "coord_system": "chromosome"
+        }
+      ]
+    },
+    "rs1799853": {
+      "minor_allele": "T",
+      "var_class": "SNP",
+      "evidence": [
+        "Frequency",
+        "1000Genomes",
+        "Cited",
+        "ESP",
+        "Phenotype_or_Disease",
+        "ExAC",
+        "TOPMed",
+        "gnomAD"
+      ],
+      "source": "Variants (including SNPs and indels) imported from dbSNP",
+      "ambiguity": "H",
+      "clinical_significance": [
+        "likely benign",
+        "drug response",
+        "other"
+      ],
+      "name": "rs1799853",
+      "most_severe_consequence": "missense_variant",
+      "mappings": [
+        {
+          "start": 96702047,
+          "allele_string": "C/A/T",
+          "end": 96702047,
+          "seq_region_name": "10",
+          "strand": 1,
+          "assembly_name": "GRCh37",
+          "location": "10:96702047-96702047",
+          "ancestral_allele": "C",
+          "coord_system": "chromosome"
+        }
+      ],
+      "synonyms": [
+        "PA166153972",
+        "rs33968134",
+        "rs17110268",
+        "rs60690363",
+        "rs28371674",
+        "RCV000154312",
+        "RCV000788093",
+        "RCV000788099",
+        "RCV000309101",
+        "RCV000008920",
+        "RCV000150377",
+        "VCV000177709",
+        "VCV000163020",
+        "RCV000787929",
+        "VCV000163021",
+        "RCV000150378",
+        "VCV000008409",
+        "RCV001263463",
+        "RCV000723560",
+        "601130.0002",
+        "VAR_008343"
+      ],
+      "MAF": 0.047923
+    },
+    "rs3745274": {
+      "MAF": 0.315695,
+      "synonyms": [
+        "123930.0001",
+        "VAR_016925",
+        "PA166155409",
+        "rs56308434",
+        "rs57685583",
+        "RCV001787332",
+        "RCV001787331",
+        "VCV000029671",
+        "RCV000022520",
+        "RCV001787330"
+      ],
+      "mappings": [
+        {
+          "ancestral_allele": "G",
+          "coord_system": "chromosome",
+          "strand": 1,
+          "end": 41512841,
+          "seq_region_name": "19",
+          "allele_string": "G/A/C/T",
+          "start": 41512841,
+          "location": "19:41512841-41512841",
+          "assembly_name": "GRCh37"
+        }
+      ],
+      "most_severe_consequence": "missense_variant",
+      "name": "rs3745274",
+      "ambiguity": "N",
+      "clinical_significance": [
+        "drug response"
+      ],
+      "source": "Variants (including SNPs and indels) imported from dbSNP",
+      "evidence": [
+        "Frequency",
+        "1000Genomes",
+        "Cited",
+        "ESP",
+        "Phenotype_or_Disease",
+        "ExAC",
+        "TOPMed",
+        "gnomAD"
+      ],
+      "var_class": "SNP",
+      "minor_allele": "T"
+    },
+    "rs9923231": {
+      "ambiguity": "N",
+      "clinical_significance": [
+        "likely benign",
+        "pathogenic",
+        "drug response",
+        "other",
+        "protective"
+      ],
+      "name": "rs9923231",
+      "minor_allele": "T",
+      "var_class": "SNP",
+      "source": "Variants (including SNPs and indels) imported from dbSNP",
+      "evidence": [
+        "Frequency",
+        "1000Genomes",
+        "Cited",
+        "Phenotype_or_Disease",
+        "TOPMed",
+        "gnomAD"
+      ],
+      "most_severe_consequence": "regulatory_region_variant",
+      "mappings": [
+        {
+          "ancestral_allele": "C",
+          "coord_system": "chromosome",
+          "strand": 1,
+          "start": 31107689,
+          "allele_string": "C/A/G/T",
+          "end": 31107689,
+          "seq_region_name": "16",
+          "location": "16:31107689-31107689",
+          "assembly_name": "GRCh37"
+        }
+      ],
+      "synonyms": [
+        "608547.0006",
+        "PA166155091",
+        "RCV000002295",
+        "VCV000226030",
+        "RCV000152659",
+        "VCV000002211",
+        "VCV000166563",
+        "RCV003227594",
+        "RCV001787364",
+        "RCV001787366",
+        "RCV000377657",
+        "RCV000603173",
+        "RCV000211327",
+        "RCV001787365",
+        "RCV003227595",
+        "RCV003150805",
+        "RCV003227593",
+        "rs17878363",
+        "rs117572127",
+        "rs60511154"
+      ],
+      "MAF": 0.355631
+    },
+    "rs4149056": {
+      "synonyms": [
+        "VAR_015076",
+        "PA166154579",
+        "RCV003227620",
+        "RCV003227618",
+        "RCV000325818",
+        "RCV003227616",
+        "RCV001705611",
+        "RCV001787324",
+        "RCV003227619",
+        "RCV001787819",
+        "RCV003227615",
+        "RCV001787333",
+        "RCV000311457",
+        "RCV003227613",
+        "RCV003227617",
+        "RCV003227621",
+        "RCV003227614",
+        "RCV000999565",
+        "RCV000660832",
+        "RCV001787325",
+        "VCV000037346",
+        "RCV001787820",
+        "rs52816141",
+        "rs60037639"
+      ],
+      "MAF": 0.08766,
+      "most_severe_consequence": "missense_variant",
+      "mappings": [
+        {
+          "assembly_name": "GRCh37",
+          "location": "12:21331549-21331549",
+          "start": 21331549,
+          "allele_string": "T/A/C",
+          "end": 21331549,
+          "seq_region_name": "12",
+          "strand": 1,
+          "coord_system": "chromosome",
+          "ancestral_allele": "T"
+        }
+      ],
+      "var_class": "SNP",
+      "evidence": [
+        "Frequency",
+        "1000Genomes",
+        "Cited",
+        "ESP",
+        "Phenotype_or_Disease",
+        "ExAC",
+        "TOPMed",
+        "gnomAD"
+      ],
+      "source": "Variants (including SNPs and indels) imported from dbSNP",
+      "minor_allele": "C",
+      "name": "rs4149056",
+      "clinical_significance": [
+        "benign",
+        "pathogenic",
+        "drug response",
+        "other"
+      ],
+      "ambiguity": "H"
+    },
+    "rs1800462": {
+      "synonyms": [
+        "PA166156993",
+        "VCV000012721",
+        "RCV000013558",
+        "187680.0001",
+        "VAR_005637"
+      ],
+      "MAF": 0.002196,
+      "most_severe_consequence": "missense_variant",
+      "mappings": [
+        {
+          "coord_system": "chromosome",
+          "ancestral_allele": "C",
+          "location": "6:18143955-18143955",
+          "assembly_name": "GRCh37",
+          "strand": 1,
+          "start": 18143955,
+          "allele_string": "C/G",
+          "seq_region_name": "6",
+          "end": 18143955
+        }
+      ],
+      "name": "rs1800462",
+      "ambiguity": "S",
+      "clinical_significance": [
+        "drug response"
+      ],
+      "var_class": "SNP",
+      "source": "Variants (including SNPs and indels) imported from dbSNP",
+      "evidence": [
+        "Frequency",
+        "1000Genomes",
+        "Cited",
+        "ESP",
+        "Phenotype_or_Disease",
+        "ExAC",
+        "TOPMed",
+        "gnomAD"
+      ],
+      "minor_allele": "G"
+    },
+    "rs1057910": {
+      "evidence": [
+        "Frequency",
+        "1000Genomes",
+        "Cited",
+        "ESP",
+        "Phenotype_or_Disease",
+        "ExAC",
+        "TOPMed",
+        "gnomAD"
+      ],
+      "source": "Variants (including SNPs and indels) imported from dbSNP",
+      "var_class": "SNP",
+      "minor_allele": "C",
+      "name": "rs1057910",
+      "ambiguity": "V",
+      "clinical_significance": [
+        "drug response",
+        "other"
+      ],
+      "MAF": 0.048522,
+      "synonyms": [
+        "PA166153959",
+        "RCV000008919",
+        "RCV000154312",
+        "RCV000150377",
+        "VCV000177709",
+        "RCV000008916",
+        "VCV000008408",
+        "RCV000787930",
+        "RCV000788100",
+        "RCV000008917",
+        "VCV000163021",
+        "VCV000163020",
+        "RCV000150378",
+        "RCV000339502",
+        "RCV000008918",
+        "RCV000788094",
+        "rs3198471",
+        "rs61212474",
+        "rs17847042",
+        "601130.0001",
+        "VAR_008345"
+      ],
+      "mappings": [
+        {
+          "end": 96741053,
+          "seq_region_name": "10",
+          "start": 96741053,
+          "allele_string": "A/C/G",
+          "strand": 1,
+          "assembly_name": "GRCh37",
+          "location": "10:96741053-96741053",
+          "ancestral_allele": "A",
+          "coord_system": "chromosome"
+        }
+      ],
+      "most_severe_consequence": "missense_variant"
+    }
+  }
+}

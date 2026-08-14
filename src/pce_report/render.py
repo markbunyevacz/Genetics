@@ -11,6 +11,7 @@ from pce_report.flags import (
 )
 from pce_report.guidelines import GuidelineTable
 from pce_report.panel import CONFIG_ID_PREFIX, PREPARE_12
+from pce_report.static_pins import dpwg_for_gene, dpwg_version, fda_source, fda_table_version
 from pce_report.statements import A11_DISCLAIMER, A1_INTENDED_PURPOSE, SOURCE as STATEMENT_SOURCE
 
 FORBIDDEN_RENDERER_TOKENS = (
@@ -127,7 +128,11 @@ def render_f1plus(
         "guideline_source": {
             **(table.recs_source or {}),
             "api": gene_status.get("rec_api") or (table.recs_source or {}).get("api"),
+            "dpwg": dpwg_for_gene(gene),
+            "fda_table_2_2": fda_source(),
         },
+        "dpwg_version": dpwg_version(),
+        "fda_table_version": fda_table_version(),
         "pair_source": {
             **(table.pairs_source or {}),
             "api": gene_status.get("pair_api") or (table.pairs_source or {}).get("api"),
