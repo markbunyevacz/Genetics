@@ -131,7 +131,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | E-19b | P05aa | API / authority fetch (E-19 zárás) | EUR-Lex 202 empty body **lejárt**: HTML 200, 809 035 byte | Pin HTML+PDF; Art. 12(3)/12(4)/17(1) a HTML-ből; S055 LEZÁRVA | D-41 |
 | E-20 | P05z | Authority fetch | YouScript HTML urllib 403; EKR001266472024 karbantartási oldal | WebFetch 365 USD; SMART+Semmelweis pin; EKR összeg `[R]` | D-40 |
 | E-21 | P05ab | Authority fetch | Élő `dhcs.ca.gov/.../DHCS-DDG-V2-2.pdf` Incapsula HTML (212 B), nem PDF. Wayback `/web/2023/` és `/web/2024/` 429. | Wayback `/web/2022/` a V2.2 PDF-et adta (1 709 986 B, 71 oldal, CreationDate 2023-02-17). v3.0 nincs pinelve. | D-42 |
-| E-22 | P05ac | Incomplete verification | Első független próza-ellenőrzés FAIL: maradék névelő (aláírt / IIa / esélyhányados / első) és *analogia*. | Retry: célzott javítás + második/harmadik független scan | P05ac |
+| E-22 | P05ac | Incomplete verification | Első független próza-ellenőrzés FAIL: maradék névelő (aláírt / IIa / esélyhányados / első) és *analogia*. | Retry: célzott javítás; 2. scan FAIL (ige/FDA/US); 3. scan FAIL (Cardet / „akkor”); 4. scan **CLEAN**. Unittest 113 OK. | P05ac |
 
 ## 4. File timeline
 
