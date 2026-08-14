@@ -86,7 +86,7 @@ Külön adatbázis, külön IAM. A klinikai `clinician` szerep **nem** olvassa.
 | --- | --- | --- |
 | **GatewayEvent** | `id`, `received_at`, `org_id`, `mode` (ANON \| PSEUDO), `payload_hash`, `atc_level`, `time_grain`, `diplotype_granularity`, `suppressed?` | FR-460/461; PII nélküli bundle |
 | **ResearchConsent** | `id`, `pseudo_id?`, `granted_at`, `withdrawn_at?` | FR-115; csak álnevesített út; anonim úton nincs |
-| **ShadowInference** | `id`, `gateway_event_id`, `config_id`, `diplotypes[]`, `medications[]` (ATC≤4), `functional_phenotype[]`, `live_findings[]`, `clinical_context` | FR-400-LIVE + FR-410-LIVE; **soha** nem FK a Report-ra |
+| **ShadowInference** | `id`, `gateway_event_id`, `config_id`, `diplotypes[]`, `medications[]` (default ATC 5. szint, 7 karakter; DPO durvításakor ≤ATC4), `functional_phenotype[]`, `live_findings[]`, `clinical_context` | FR-400-LIVE + FR-410-LIVE; **soha** nem FK a Report-ra |
 | **HitlReview** | `id`, `inference_id`, `reviewer_id`, `blind_decision?`, `verdict` (AGREE \| DISAGREE \| INSUFFICIENT_DATA), `reason_code`, `reviewed_at` | FR-450 / FR-450-BLIND |
 | **BuildFlag** | `LIVE_CDS` | Compile-time; F1+ = `false` |
 
@@ -176,7 +176,7 @@ Nincs interruptive „csökkentsd a dózist” box. FR-410-EDU ha van: külön, 
 
 Bundle: `DiagnosticReport` + `Observation` (genotípus, **genotípus-fenotípus**) a [hl7.org/fhir/uv/genomics-reporting](http://hl7.org/fhir/uv/genomics-reporting) STU3 szerint. Mapping-réteg elválasztva a STU4 `GenomicStudy` / operations felé (FR-500). Nem implementálunk STU4 operations-t v1-ben.
 
-F1+: **nincs** implied `functional_phenotype` Observation a aktuális gyógyszerlistából. `DocumentReference.description` = FR-490 sablon.
+F1+: **nincs** implied `functional_phenotype` Observation az aktuális gyógyszerlistából. `DocumentReference.description` = FR-490 sablon.
 
 ### B.4.4 CDS Hooks — **nincs F1+ buildben**; P0 F2
 
@@ -186,13 +186,13 @@ F1+ artifact: az endpoint **nincs** kitéve (404, FR-470). F2: timeout 2000 ms h
 
 ### B.4.5 Enciklopédia — `GET /v1/encyclopedia` (FR-480, P1)
 
-Query: gén és/vagy hatóanyag. Válasz: verziózott guideline-szövegek. **Nincs** `case_id` kötelező; ha a kliens küld `MedicationRequest` id-t, a szerver **nem** állít elő order-sign Cardet.
+Query: gén és/vagy hatóanyag. Válasz: verziózott guideline-szövegek. **Nincs** `case_id` kötelező; ha a kliens küld `MedicationRequest` id-t, a szerver **nem** állít elő order-sign Card-ot.
 
 ### B.4.6 HITL API — `/v1/hitl/**` (FR-450)
 
 Külön process (`pce_hitl`). Csak `hitl_reviewer` (és DPO/admin a törléshez). `clinician` → 403/404 (`E-ISO-001`).
 
-`GET /v1/hitl/inferences` — batch kártyák (opák ID, ATC≤4, nincs PII). `POST /v1/hitl/inferences/{id}/blind` — vak döntés. `POST /v1/hitl/inferences/{id}/reviews` — verdict a motor felfedése után.
+`GET /v1/hitl/inferences` — batch kártyák (opák ID, default 7 karakteres hatóanyag-kód, nincs PII). `POST /v1/hitl/inferences/{id}/blind` — vak döntés. `POST /v1/hitl/inferences/{id}/reviews` — verdict a motor felfedése után.
 
 ### B.4.7 Érintetti kérelem (FR-110) — DPO
 
@@ -226,7 +226,7 @@ Külön process (`pce_hitl`). Csak `hitl_reviewer` (és DPO/admin a törléshez)
 | `E-GONE-010` | 410 | Visszavont / törölt riport | FR-110 |
 | `E-DSR-OVERDUE` | 200 (riasztás) | 30 napnál régebbi érintetti kérelem válaszlevél nélkül | FR-110 Art. 12(3)/12(4) |
 | `E-AUDIT-001` | 409 | Audit UPDATE/DELETE | FR-120 append-only |
-| `E-SHADOW-001` | 400 | Gateway kimenet PII-t vagy ATC5-öt / nap-szintű időt tartalmaz | A shadow ingest elutasít; a HIS nem blokkol. |
+| `E-SHADOW-001` | 400 | Gateway kimenet PII-t, a DPO által tiltott finomságú ATC-kódot (ha `max_atc_level` < 5), vagy nap-szintű időt tartalmaz | A shadow ingest elutasít; a HIS nem blokkol. |
 | `E-SHADOW-002` | 403 | Shadow hívás nem a gateway service-accounttól | |
 | `E-SHADOW-003` | 202 | Rekord FR-461 miatt elnyomva (k / ritka diplotípus) | Nincs HITL sor; csak aggregált számláló. |
 | `E-ISO-001` | 403/404 | `clinician` a `/shadow/**` vagy `/hitl/**` úton | FR-470 |
@@ -239,7 +239,7 @@ Figyelmeztetés (`W-*`) nem csendes siker. A kliensnek meg kell jelenítenie.
 
 ## B.6 Fenokonverzió viselkedés
 
-Két üzemmód. Keverésük a aláírt leleten = NG-07.
+Két üzemmód. Keverésük az aláírt leleten = NG-07.
 
 ### B.6.1 FR-410-EDU (F1+ lelet)
 

@@ -25,17 +25,17 @@ A labor **csatlakozó** (outside-call / VCF / LIS). A gyártó nem ad el PGx-viz
 
 Piaci flag-tábla: [market-packs.md](market-packs.md). Vevőtérkép: [sku-and-buyers.md](sku-and-buyers.md).
 
-## Feltételezett OQ-k (eladási alap, nem pecsét)
+## Feltételezett OQ-k (eladási alap, nem lezárt pecsét)
 
 | OQ | Hipotézis | Ha ellenkező |
 | --- | --- | --- |
 | **OQ-05** | F1+ bekapcsolható HU/EU-ban nem-MDSW-ként *vagy* a rendszer IIa-ként megy, F1+ akkor is a bekapcsolt réteg | F1+ flag IIa/CE-ig zárva a *klinikai* kimenetre; a kód megmarad; fizetős sandbox |
-| **OQ-03** | Van labor-**csatlakozó** (REG-020) — integráció, nem a SKU | A rendszernek kell diplotípus-forrás; a klinika saját laborját kötjük. Nincs forrás → nincs mit futtatni. Nem azt jelenti, hogy a labort kell vevőnek eladni. |
+| **OQ-03** | Van labor-**csatlakozó** (REG-020) — integráció, nem a SKU | A rendszernek kell diplotípus-forrás; a klinika saját laborját kötjük. Nincs forrás → nincs mit futtatni. Nem azt jelenti, hogy a labor legyen a szoftver vevője. |
 | **OQ-16 / 15** | F1s bekapcsolható evaluationként | F1s flag zárva; F2 attól még a roadmap |
 | **OQ-01** | ISO 9001 folyamatban (HU) | HU közbeszerzés / EESZT-fejlesztői jogállás kockázat; EU/US csomag nem ettől él |
 | **OQ-17** (US) | US counsel + 510(k)/De Novo / CDS-minősítés **nyitott** | US csomagban F2 **zárva**, amíg ez nincs. Nem FDA-blog alapján kapcsoljuk. |
 
-Licencmondat: *„A PCE rendszerlicenc a `[HU|EU|US]` csomagot adja. A F2/F3 klinikai UI a csomagban zárt; feloldás: change-control + az adott piac minősítése. Addig a motor shadowban / sandboxban futhat, a felíró nem kap élő kártyát.”*
+Licencmondat: *„A PCE rendszerlicenc a `[HU|EU|US]` csomagot adja. Az F2/F3 klinikai UI a csomagban zárt; feloldás: change-control + az adott piac minősítése. Addig a motor shadowban / sandboxban futhat, a felíró nem kap élő kártyát.”*
 
 ## Irattár
 

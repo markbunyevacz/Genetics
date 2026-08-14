@@ -4,7 +4,7 @@
 | --- | --- |
 | **Iktató** | PCE-OUT-OQ-16-SEND / v1.2 |
 | **Kanonikus kérdőív** | [OQ-16-dpo-dpia-kerdoiv.md](OQ-16-dpo-dpia-kerdoiv.md) — **ne írd át** |
-| **Státusz** | Küldhető, ha a lenti **G1 + C2** ki van töltve. **Nem** DPIA, **nem** pecsét. |
+| **Státusz** | Küldhető, ha a lenti **G1 + C2** ki van töltve. **Nem** DPIA, **nem** DPO-pecsét. |
 | **Lánc** | Ez az **első** telephelyi / adatvédelmi irat. OQ-15 **nem** megy ki a válasz előtt. |
 
 A kérdőív törzse zárolt. Ez a fájl a **boríték**: kitöltendő változók, tárgysor, mellékletlista. Gyártó- vagy labornevet a repo **nem** helyettesít be (A9; D-03). Az I-01 „Agentize Kft.” **tiltott**.
@@ -65,7 +65,7 @@ Partnerlabor **nincs** ebben a fejlécben.
 
 ## 3. Levél (másolható)
 
-**Tárgy:** PCE F1s / OQ-16 — gateway anonimitás (ATC4, k ≥ 5, ritka drop) — döntési kérés
+**Tárgy:** PCE F1s / OQ-16 — gateway anonimitás (ATC5 / 7 karakter default, k ≥ 5, ritka drop) — döntési kérés
 
 ```
 Tisztelt [C1 / DPO / DPIA munkacsoport]!
@@ -77,8 +77,9 @@ nem DPIA, nem hatósági határozat.
 Kérjük A1–D4 minden sorának kitöltését (IGEN / NEM / FELTÉTELLEL).
 
 Gyártói kérés: a gateway utáni adatfolyam legyen jogilag anonim
-(ATC max 4. szint, idő = naptári negyedév, k ≥ 5, ritka diplotípus
-drop), A14 küszöb monitorozásával akkor is, ha ez rontja a G3-at.
+(default: WHO ATC 5. szint / 7 karakter; a DPO durvíthat ATC4/ATC3-ra;
+idő = naptári negyedév, k ≥ 5, ritka diplotípus drop), A14 küszöb
+monitorozásával akkor is, ha ez rontja a G3-at.
 
 Két hozzájárulás nem keverendő:
 - FR-100 (2008/XXI. 6. § (2) / 8. §) a mintavételnél mindig kell.
@@ -129,7 +130,7 @@ Sorrend a csatolmányban:
 
 | A1 | Következő |
 | --- | --- |
-| IGEN / FELTÉTELLEL (A14 monitor) | OQ-15 kiküldhető a **ugyanazon** intézménynek. HIS: 16 **és** 15 pecsét. |
-| NEM | Gateway megmarad; `PSEUDO` + FR-115. OQ-15-ön jelezni: FR-115 kötelező. FR-100 marad. |
+| IGEN / FELTÉTELLEL (A14 monitor) | OQ-15 kiküldhető az **ugyanazon** intézménynek. Az éles HIS-hez OQ-16 **és** OQ-15 pecsét kell. |
+| NEM | A gateway megmarad; `PSEUDO` út + FR-115 kötelező. OQ-15-ön jelezni: FR-115 kötelező. FR-100 marad. |
 
 16-A pecsét **nem** helyettesíti a 16-B-t: éles HIS-hez a *telepítő* intézmény DPO-ja kell.

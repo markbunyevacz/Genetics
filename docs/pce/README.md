@@ -23,7 +23,7 @@ A v1 / F1s **éles ON moduljához** a gyártói kérés kész ([F](F-decision-pa
 5. **[D-risk-and-traceability.md](D-risk-and-traceability.md)** — ISO 14971 kezdeti kockázat (R-015–R-019) + FR→forrás→teszt→GSPR mátrix.
 6. **[E-shadow-hitl.md](E-shadow-hitl.md)** — shadow pipeline, intézményi gateway, HITL UI, GDPR két út, REG-090 / OQ-15.
 7. **[F-decision-package.md](F-decision-package.md)** — gyártói előterjesztés a v1 blokkolókra. **Nem** külső aláírás.
-8. **[G-open-items.md](G-open-items.md)** — S055 / S060 / S062 lezárva; OQ-05/06/16 és F-14 **javaslat**, nem pecsét.
+8. **[G-open-items.md](G-open-items.md)** — S055 / S060 / S062 lezárva; OQ-05/06/16 és F-14 **javaslat**, nem lezárt pecsét.
 9. **[Outbound/](Outbound/README.md)** — címzett-kész irattervezetek (counsel, DPO, intézményi RA, L3 term sheet, ISO/EESZT owner). Küldhető; **nem** aláírt állásfoglalás.
 10. **[Sales/](Sales/README.md)** — **rendszerlicenc** (SKU-P). F1–F3 egy bináris; HU/EU/US flag. Klinika a vevő. Labor = csatlakozó. F2 bent van, lakattal. Nem leletbolt.
 11. **[Engineering/](Engineering/README.md)** — [delivery plan](Engineering/DELIVERY-PLAN.md), [lefedettség](Engineering/SPEC-PLAN-TRACE.md), [adatfolyam](Engineering/DATAFLOW-AND-UX.md). Nem spec-módosítás. Éles HIS pecsétig tilos.
@@ -72,13 +72,13 @@ tests/fixtures/f1plus-v0/
 
 ### Core most, telephely később (G5)
 
-Egy bináris: F1+ · F1s · F2 · F3 **benne van**. Tesztadat / SYN. A megrendelőkor a [market-packs](Sales/market-packs.md) ON/LOCK + `[Y*]` mondja meg, mit telepítünk / kapcsolunk / customizálunk. **Bent van ≠ be van kapcsolva** (NG-07). `LIVE_CDS` compile-time **false**, amíg CE/in-house/`[Ya]`. A F1+ matcher a klinikai rendererben **ki**; a motor SYN-en fejleszthető.
+Egy bináris: F1+ · F1s · F2 · F3 **benne van**. Tesztadat / SYN. A megrendelőkor a [market-packs](Sales/market-packs.md) ON/LOCK + `[Y*]` mondja meg, mit telepítünk / kapcsolunk / customizálunk. **Bent van ≠ be van kapcsolva** (NG-07). `LIVE_CDS` compile-time **false**, amíg CE/in-house/`[Ya]`. Az F1+ matcher a klinikai rendererben **ki van kapcsolva**; a motor SYN-en fejleszthető.
 
 ### Kiküldés: gyártói most, telephely a megrendelőkor
 
 | Sáv | OQ | Mikor |
 | --- | --- | --- |
-| Gyártói | OQ-05, OQ-01 | **Most** (counsel, ISO 2026-09-30). Nincs kórházi név kell. |
+| Gyártói | OQ-05, OQ-01 | **Most** (counsel, ISO 2026-09-30). Kórházi név **nem** kell. |
 | Telephelyi | OQ-16 → OQ-15 → OQ-03 | Nevesített intézmény / labor. A 15 csak lezárt 16 után. |
 
 Részlet: [Outbound/README](Outbound/README.md).

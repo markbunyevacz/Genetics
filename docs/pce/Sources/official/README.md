@@ -25,6 +25,6 @@ A gyártó (ez a repo) tölti le. Nem a labor és nem a kórház feladata.
 
 A PREPARE-12 gén `pair_view` / `recommendation_view` JSON: `tests/fixtures/f1plus-v0/prepare12/` (CPIC API, 2026-08-13).
 
-A motor futáskor **nem** parse-olja a PDF-et. A pin-elt JSON extractet olvassa. A PDF/HTML itt van, hogy a forrás ne csak URL legyen.
+A motor futáskor **nem** parse-olja a PDF-et. A pinelt JSON-kivonatot olvassa. A PDF/HTML itt van, hogy a forrás ne csak URL legyen.
 
 Újraletöltés: `python3 docs/pce/Sources/official/fetch_official_sources.py`

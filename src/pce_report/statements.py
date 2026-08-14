@@ -15,7 +15,7 @@ A1_INTENDED_PURPOSE = (
     "strukturált megjelenítése, valamint a nyilvánosan elérhető, verziózott nemzetközi "
     "farmakogenetikai irányelvek (CPIC, DPWG, FDA-címke) szöveges kivonatainak "
     "automatizált hozzárendelése a laboratóriumi jelentéshez.\n\n"
-    "A szoftver nem végez egyedi betegre szabott klinikai értékelést a aktuális "
+    "A szoftver nem végez egyedi betegre szabott klinikai értékelést az aktuális "
     "gyógyszerlista vagy szervfunkció alapján, nem javasol terápiát, nem számít dózist, "
     "nem jelenik meg a felírási workflow interruptive riasztásaként, és nem helyettesíti "
     "a képzett egészségügyi szakember független orvosi döntését. Az aláíró a labor orvosa."

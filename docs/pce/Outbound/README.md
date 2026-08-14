@@ -9,7 +9,7 @@
 
 Ez a mappa az F melléklet kéréseit **címzett-kész** iratokká alakítja. Kitöltés: a szögletes zárójelek (`[Gyártó neve]`, `[Partnerlabor]`, `[X]`, `[Y]`) a küldő tölti ki. Aláírás a címzetté.
 
-**Nem** zárja le az OQ-05 / OQ-15 / OQ-16 / OQ-01 / OQ-03 kérdéseket. A F.6 tábla akkor töltődik, ha a címzett az itteni iraton dönt. A [G melléklet](../G-open-items.md) **javaslat** a pecsételőnek, nem pecsét.
+**Nem** zárja le az OQ-05 / OQ-15 / OQ-16 / OQ-01 / OQ-03 kérdéseket. A F.6 tábla akkor töltődik, ha a címzett az itteni iraton dönt. A [G melléklet](../G-open-items.md) **javaslat** a pecsételőnek, nem lezárt pecsét.
 
 A v1.2 spec **fagyasztva** ([§10.2](../PCE-SPEC-v1.2.md)). A spec-írás nem folytatódik a válaszokig. Pecsétekig **nincs** új architektúra-fejezet ([B](../B-architecture-and-interfaces.md) a két path). F1s HIS **nem** indul OQ-16+15 pecsét nélkül.
 
@@ -17,7 +17,7 @@ A v1.2 spec **fagyasztva** ([§10.2](../PCE-SPEC-v1.2.md)). A spec-írás nem fo
 
 | Sáv | OQ | Mikor |
 | --- | --- | --- |
-| **Gyártói** (nincs vevő kell) | OQ-05 counsel; OQ-01 ISO/Redmine | **Most.** A nem-MDSW kérés és a 2026-09-30 QMS-kapu nem telephelyfüggő. |
+| **Gyártói** (intézményi vevőnév nem kell) | OQ-05 counsel; OQ-01 ISO/Redmine | **Most.** A nem-MDSW kérés és a 2026-09-30 QMS-kapu nem telephelyfüggő. |
 | **Telephelyi** (név kell) | OQ-16 DPO → OQ-15 RA → OQ-03 labor | Amikor van **nevesített** intézmény / labor. Addig a core SYN-en fut; a flag-mátrix üres. |
 
 A telephelyi lánc **kötött**: `OQ-16 → OQ-15 → OQ-03`. Az OQ-05 **nem** vár a kórházra; a 16→15→05 sorrend csak akkor él, ha a counsel-levelet szándékosan a telephelyi DPO után küldik. Default: OQ-05 a gyártói sávban, a telephelytől függetlenül.
@@ -41,15 +41,15 @@ A telephelyi lánc **kötött**: `OQ-16 → OQ-15 → OQ-03`. Az OQ-05 **nem** v
 
 `OQ-16 → OQ-15 → OQ-03`
 
-1. **OQ-16** (DPO) — **első kimenő irat.** Boríték: [OQ-16-kuldesi-csomag.md](OQ-16-kuldesi-csomag.md). NEM → álnevesített út + FR-115 (kutatási/shadow). **Nem** kapcsolja ki a klinikai FR-100-at. Partnerlabor **nincs** ezen az iraton (az OQ-03). Gyártónév: A9, küldéskor, nem kitalálva.
+1. **OQ-16** (DPO) — **első kimenő irat.** Boríték: [OQ-16-kuldesi-csomag.md](OQ-16-kuldesi-csomag.md). Ha a DPO válasza NEM: álnevesített út + FR-115 (kutatási/shadow). **Nem** kapcsolja ki a klinikai FR-100-at. Partnerlabor **nincs** ezen az iraton (az OQ-03). A gyártónevet a küldő tölti (A9); küldéskor, nem kitalálva.
 2. **OQ-15** (intézményi RA) — **csak lezárt OQ-16 után**. Reviewer-vak HITL kérelem; HIS pecsét: OQ-15 **és** OQ-16.
 3. **OQ-03** (labor) — REG-020 / opcionális `[Yl]`; labornevet itt **nem** találunk ki.
 
-**OQ-05** (gyártói counsel) — F1+ nem-MDSW *kérés*. Gén-szintű CPIC szöveg lehet Rule 11a. Nincs kórházi név kell. A válasz a telephely **F1+ ON/LOCK** (vagy IIa) flagjét adja, nem a HIS-csatlakozást.
+**OQ-05** (gyártói counsel) — F1+ nem-MDSW *kérés*. A gén-szintű CPIC szöveg továbbra is eshet a Rule 11a alá. Kórházi név **nem** kell. A válasz a telephely **F1+ ON/LOCK** (vagy IIa) flagjét adja, nem a HIS-csatlakozást.
 
 **OQ-01** (belső) — 2026-09-30 ISO 9001 / 4. melléklet 2.1; C-000. **Nem** „ISO megújítás”. Redmine ≠ EESZT FHIR (NG-05).
 
-A *pecsét* F.6. Párhuzamos telephelyi kiküldés **nincs**: a 15-ös irat OQ-16 válasz nélkül nem megy. Gyártói OQ-05/01 **nem** vár telephelyre.
+A *pecsét* az F.6 táblában van. Párhuzamos telephelyi kiküldés **nincs**: a 15-ös irat OQ-16 válasz nélkül nem megy. Gyártói OQ-05/01 **nem** vár telephelyre.
 
 ## Mellékletek minden külső levélhez
 
@@ -79,7 +79,7 @@ A vázlatok **nem** lettek szó szerint átmásolva, ahol a v1.2 spec mást mond
 | OQ-01 | ISO 9001 „megújítás” | Lehet, hogy **nincs** tanúsítvány; 2.1 = ISO 9001 **vagy** egyéb auditált szoftver-QMS; **nem** 13485 |
 | OQ-15 | PREPARE p=0,0034; „súlyos” ADR; ápolási nap; PCE-RWE; shadow = Lancet ADR újramérés | **p=0,0075**; 21,0% vs 27,7%; OR 0,70; grade 2–5 + possible; HU nincs; F1s = HITL/G3, nem PREPARE-klon |
 | OQ-05 | Tandem/punktum/mdxcro = nem-MDSW pecsét | L4; primer MDCG; gén-szintű CPIC szöveg továbbra is lehet 11a |
-| OQ-16 | ClinLabomics = k≥5 bizonyíték | Nem; A14 assumption; Wen 2022 labor-bányászat |
+| OQ-16 | ClinLabomics = k≥5 bizonyíték | Nem az. Ez A14 feltevés; Wen 2022 labor-bányászat |
 
 ## Ami szándékosan üres
 

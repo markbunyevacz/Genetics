@@ -40,9 +40,9 @@ Súlyosság / előfordulás / detektálhatóság: 1–5. RPN = S×O×D. Küszöb
 
 R-001 RPN 30, de **S = 5** → v1 előtt kötelező kontroll (FR-210 P0). R-002 RPN 45 → P0 jelzés + INDETERMINATE. R-015/R-016/R-021 S = 5 → FR-470 + EDU CI a v1 klinikai release előtt.
 
-**F-04 / J-2:** R-007 S=5 + NFR-070 Class B + F3 IIa + Rule 11a (halál/irreverzibilis → III) **ellentmondás**. Páronkénti tábla: A.4.1. NFR-070a Class B a magra; NFR-070b Class C javaslat az L4-live DPYD (és a táblában felsorolt) párokra. Osztály: OQ-06, nem e sor.
+**F-04 / J-2:** Az R-007 S=5, a (régi) NFR-070 Class B, az F3 IIa cél és a Rule 11a III-ág (halál/irreverzibilis) együtt **ellentmondás**. Páronkénti tábla: A.4.1. NFR-070a Class B a magra; NFR-070b Class C javaslat az L4-live DPYD (és a táblában felsorolt) párokra. Osztály: OQ-06, nem e sor.
 
-R-008 v1.1-ben a aláírt lelet NM-jét védte. v1.2: élő fenokonverzió **nincs** a leleten; a kockázat a shadow/F2 kártyára és a F1+ EDU félreolvasására (R-007) marad.
+R-008 v1.1-ben az aláírt lelet NM-jét védte. v1.2: élő fenokonverzió **nincs** a leleten; a kockázat a shadow/F2 kártyára és az F1+ EDU félreolvasására (R-007) marad.
 
 ---
 
@@ -57,7 +57,7 @@ Minden funkcionális, NFR és REG sor. TC-azonosítók a gold set / CI nevei; a 
 | FR-100 | Comp P0 | 2008/XXI. 6. § (2), 8. §, 12. § (1), 15. § | TC-CONSENT-001..006 | GSPR 14.1; 23 | F1+ |
 | FR-110 | Comp P0 | 6. § (7), 26. § (1); A10; GDPR Art. 12(3)/12(4), 17(1); S054, **S055** | TC-CONSENT-010..014; DSR levél; `E-DSR-OVERDUE` | GDPR 12(3), 12(4), 17; GSPR 14 | F1+ |
 | FR-115 | Comp P0 ha ≠ anonim | GDPR 6(1)(a), 9(2)(a); E.6 | TC-CONSENT-020..023; E-CONSENT-006 | GDPR 9 | F1s |
-| FR-120 | Comp P0 | 26. § (1); **S054** (megtagadás analogia) | TC-AUDIT-001..006 | GSPR 17.2 | F1+ |
+| FR-120 | Comp P0 | 26. § (1); **S054** (megtagadás analógia) | TC-AUDIT-001..006 | GSPR 17.2 | F1+ |
 | FR-120 hash-chain | P1 | Tervezés, nem tv. | TC-AUDIT-007 | — | F2 |
 | FR-130 | Comp P0 | 24–25. § szelleme; GDPR | TC-PII-001..003 | GSPR 14; GDPR 32 | F1+ |
 | FR-200 | Prod P0 | I-02 L1; B.3.1 | TC-VCF-001..008 | GSPR 17.1 | F1+ |
@@ -147,7 +147,7 @@ Minden funkcionális, NFR és REG sor. TC-azonosítók a gold set / CI nevei; a 
 | VC-11 „az orvos dönt” kimenekülés | A.0; NG-07; FR-470; VALIDATED-CLAIMS REFUTED |
 | VC-12 A10 ≠ F1s 72 h puffer | §0.1; E.5.1; VALIDATED-CLAIMS |
 | FR-410-EDU ha–akkor / teljes gén-tábla | A.1.2; FR-400-STATIC; FR-410-EDU |
-| Gateway ATC4 / k-anonymity / negyedév | E.3.1; FR-461 |
+| Gateway ATC5 (7 karakter, DPO-durvítható) / k-anonymity / negyedév | E.3.1; FR-461 |
 | Vak HITL | E.4.1; FR-450-BLIND |
 | Product vs Compliance P0 szétválasztás | §0 szótár; minden FR címke |
 | F1+ / F1s / F2 intended purpose | A.1, A.2, A.3 |
@@ -158,12 +158,12 @@ Minden funkcionális, NFR és REG sor. TC-azonosítók a gold set / CI nevei; a 
 | EESZT 1.1–1.9 + 2.1 | C melléklet |
 | ISO 14971 kezdeti + teljes mátrix | ez a dokumentum |
 | Gyártói előterjesztés, nem aláírás | F melléklet; OQ státusz ELŐTERJESZTVE |
-| Címzett-kész irattervezetek | Outbound/ (OQ-05/16/15/03/01); nem pecsét |
+| Címzett-kész irattervezetek | Outbound/ (OQ-05/16/15/03/01); nem lezárt pecsét |
 | Spec-fagyasztás + F1+ mag DEV | §10.2; D-18; OQ-k nyitva |
 | Eladható ajánlat, feltételezett OQ | Sales/; **SKU-P rendszer**; HU/EU/US flag; F2 LOCK |
 | VC-13 S028 ≠ PGx-SOTA / G3 / PCE-RWE | §9.5; G3 ≥90% marad; FR-710 nem SHAP; [S028-note](Sources/S028-curemd-hybrid-cdss-note.md); [literature-boundary](Sales/literature-boundary.md) |
 | VC-14 PREPARE/YouScript/Tandem/ClinLabomics | OQ-15 §III (p=0,0075); market-packs mátrix; OQ-05 IV.a; OQ-16 I.4; [competitor-analogs](Sales/competitor-analogs.md) |
 | VC-16 Ft-sáv = következtetés | [Sales/pricing.md](Sales/pricing.md); YouScript 365 USD ≠ HU lista; HIS-plafon pin |
-| VC-17 k=11 Health Canada `[V]`; DHCS 11/20 000 Wayback; A14 nem pecsét | G §4; OQ-16 I.4; S060/S062 |
+| VC-17 k=11 Health Canada `[V]`; DHCS 11/20 000 Wayback; A14 nem DPO-pecsét | G §4; OQ-16 I.4; S060/S062 |
 
-**P06 eredmény (v1.2 + Sales SKU-P + S028 + I-19 + árazás):** a vevő **rendszert** licencel. PREPARE számok a Lancetből, nem user-p=0,0034. YouScript 365 USD lista ≠ HU ár. A 6–35 M Ft **következtetés**. Tandem/ClinLabomics nem pecsét. OQ-k + OQ-17 nyitva.
+**P06 eredmény (v1.2 + Sales SKU-P + S028 + I-19 + árazás):** a vevő **rendszert** licencel. PREPARE számok a Lancetből, nem user-p=0,0034. YouScript 365 USD lista ≠ HU ár. A 6–35 M Ft **következtetés**. Tandem/ClinLabomics nem lezárt pecsét. OQ-k + OQ-17 nyitva.

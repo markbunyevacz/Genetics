@@ -1,9 +1,9 @@
-# Sales — YouScript / ActX / TSI analogia (határolva)
+# Sales — YouScript / ActX / TSI analógia (határolva)
 
 | | |
 | --- | --- |
 | **Iktató** | PCE-SALES-CMP / v1.2 |
-| **Szabály** | Piaci *struktúra*-analogia. Nem árlista, nem MDR-pecsét, nem PCE-RWE. |
+| **Szabály** | Piaci *struktúra*-analógia. Nem árlista, nem MDR-pecsét, nem PCE-RWE. |
 | **Dátum** | 2026-08-12 |
 
 A vevő **SKU-P** rendszert licencel. A labor **csatlakozó**. Az alábbi három US-termék ezt a *szétválasztást* vagy a *lakat/élő CDS* lépcsőt világítja meg — a túlállítások VC-14.
@@ -12,7 +12,7 @@ A vevő **SKU-P** rendszert licencel. A labor **csatlakozó**. Az alábbi három
 
 ## YouScript (Precision Medicine / Genelex)
 
-**Ami áll:** élő, EHR-be ágyazott PGx/DDI döntéstámogatás (Epic, Cerner; SMART on FHIR). A SMART Health IT katalógus **Licensing & Pricing: Per User, Site-Based**. A gyártó webshopja **365 USD / 1 év** provider-megújítást listáz (2026-08-12). GenomeWeb (2014): Epic-integráció; a YouScript akkor is futtatható, ha a genotípus *más* laborból jön — ez az outside-call analogia `[R]`.
+**Ami áll:** élő, EHR-be ágyazott PGx/DDI döntéstámogatás (Epic, Cerner; SMART on FHIR). A SMART Health IT katalógus **Licensing & Pricing: Per User, Site-Based**. A gyártó webshopja **365 USD / 1 év** provider-megújítást listáz (2026-08-12). GenomeWeb (2014): Epic-integráció; a YouScript akkor is futtatható, ha a genotípus *más* laborból jön — ez az outside-call analógia `[R]`.
 
 **Ami nem áll:**
 
@@ -33,7 +33,7 @@ A vevő **SKU-P** rendszert licencel. A labor **csatlakozó**. Az alábbi három
 
 ## Translational Software (PGx knowledge / API)
 
-**Ami áll `[R]` (GenomeWeb):** lab-facing portal/API, diplotípus + guideline-szöveg, white-label riport. A 510(k) **nem** ment át; a cég a US PGx-szolgáltatást leállította. A FDA a betegre szabott, CPIC-alapú riportot nem fogadta el puszta könyvtárnak; a diplotípus-hívás is kérdés volt.
+**Ami áll `[R]` (GenomeWeb):** lab-facing portal/API, diplotípus + guideline-szöveg, white-label riport. A 510(k) **nem** ment át; a cég az US PGx-szolgáltatást leállította. Az FDA a betegre szabott, CPIC-alapú riportot nem fogadta el puszta könyvtárnak; a diplotípus-hívás is kérdés volt.
 
 **PCE-tanulság:** NG-01 (ne hívjunk allélt). OQ-05 maradék: gén-szintű CPIC/DPWG/FDA *terápiás* szöveg az F1+ leleten továbbra is lehet Rule 11a. TSI **nem** bizonyítja, hogy az F1+ „biztonságos, hatalmas B2B piac”.
 

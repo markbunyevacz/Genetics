@@ -23,7 +23,7 @@ OQ-05 a **F1+** rétegre. F2/F3 külön intended purpose (A.3).
 
 ## 3. Miért nincs CE / 510(k) a teljes dobozon?
 
-Mert a forgalomba hozott *funkció* a csomag ON modulja. A zárt CDSS-re nincs CE, amíg F3. US: OQ-17 nyitott; default F2/F3 LOCK.
+Mert a forgalomba hozott *funkció* a csomag ON modulja. A zárt CDSS-re nincs CE, amíg az F3 nincs ON. US: OQ-17 nyitott; default F2/F3 LOCK.
 
 ---
 
@@ -53,7 +53,7 @@ Adatkezelő: az intézmény. Gyártó: feldolgozó. F1s külön DPIA (OQ-16). US
 
 ## 8. EESZT?
 
-A rendszer **nem** ír eReceptet/eProfilt. HIS-modul.
+A rendszer **nem** ír eReceptet/eProfilt; HIS-modulként csatlakozik.
 
 ---
 

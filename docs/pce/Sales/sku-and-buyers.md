@@ -30,12 +30,12 @@ Labor / LIS / VCF = **bemenet**. REG-020 = csatlakozási szerződés, nem a SKU 
 | --- | --- |
 | **Vevő** | Klinika, magánellátó, kórház, ellátóhálózat |
 | **Mit kap** | PCE rendszer: adatmodell, consent-kapu, ingest, knowledge, lelet, shadow-cső, CDSS-cső, audit. HIS/LIS csatlakozás. Piaci csomag (HU/EU/US). |
-| **Ár modell** | Éves platform + telephely / klinikus sáv (**B2B SaaS**). F2/F3 *aktiválás* `[Ya]`, ha a flag feloldódik — nem új termék. Placeholder: `[Yp]` / `[Yc]` |
+| **Árazási modell** | Éves platform + telephely / klinikus sáv (**B2B SaaS**). F2/F3 *aktiválás* `[Ya]`, ha a flag feloldódik — nem új termék. Placeholder: `[Yp]` / `[Yc]` |
 | **Bemenet** | A vevő laborja (outside-call/VCF) vagy kijelölt partnerlabor. A gyártó **nem** számláz vizsgálatot. A labor **nem** viszonteladó. |
 | **Labor díj** | Csak ha a labor *saját* white-label tenancyt kér: `[Yl]` a gyártónak (OQ-03). REG-020 csatlakozó = 0 szoftverdíj a labor felé. |
-| **MDR / FDA** | A *bekapcsolt* modul intended purpose-e. Kikapcsolt F2 nem „titkos CDSS”. |
+| **MDR / FDA** | A minősítés a *bekapcsolt* modul intended purpose-én áll. Kikapcsolt F2 nem „titkos CDSS”. |
 
-Ez G5: a v2 (élő CDSS) **nem** újraírt szoftver. Kapcsoló + dosszié.
+Ez G5: a v2 (élő CDSS) **nem** újraírt szoftver. Ez kapcsoló és dosszié, nem újraírt termék.
 
 ---
 
@@ -85,7 +85,7 @@ NG-01: a PCE nem hív allélt FASTQ-ból. Ez nem teszi a labort a szoftver vevő
 
 A 499 000 Ft-os kiskereskedelmi PGx-vizsgálat **nem** PCE-ár. Az a labor üzlete.
 
-Sávos placeholder + javasolt Ft-következtetés (YouScript 365 USD/év lista **nem** HU ár): [pricing.md](pricing.md), [market-packs.md](market-packs.md). Analogia-határ: [competitor-analogs.md](competitor-analogs.md).
+Sávos placeholder + javasolt Ft-következtetés (YouScript 365 USD/év lista **nem** HU ár): [pricing.md](pricing.md), [market-packs.md](market-packs.md). Analógia-határ: [competitor-analogs.md](competitor-analogs.md).
 
 ---
 

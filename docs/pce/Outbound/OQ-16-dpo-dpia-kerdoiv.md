@@ -58,7 +58,7 @@ A felírási / vizsgálati időpontok (`MedicationRequest.authoredOn` és hasonl
 
 Anonim úton a default a WHO ATC **5. szint** (7 karakter, hatóanyag, pl. N06AB05 paroxetin, N06AB10 eszcitaloprám). Forrás: WHO ATC struktúra (S032); a 5. szint a chemical substance. A 4. szint (5 karakter, pl. N06AB) **csoportkód**: az SSRI-csoportban az eszcitaloprám nem erős CYP2D6-gátló, ezért a párosítás csoportkódon **szünetel**.
 
-A DPO durvíthat ATC4-re vagy ATC3-ra. Ár: a shadow motor nem különbözteti a paroxetint más SSRI-től (R-020). INN/márkanév nem megy ki, csak a kód. A 7 karakteres kód **nem** betegazonosító.
+A DPO durvíthat ATC4-re vagy ATC3-ra. Kompromisszum: a shadow motor nem különbözteti meg a paroxetint más SSRI-től (R-020). INN/márkanév nem megy ki, csak a kód. A 7 karakteres kód **nem** betegazonosító.
 
 (A 2026-08-12 tervezet ATC4-maximumot kért; D-38 ezt felülírta.)
 
@@ -72,7 +72,7 @@ Intézményi cella: (fenotípus-osztály × ATC-szint × negyedév) a gateway **
 - A legritkább diplotípus-osztály default **drop**, akkor is, ha a G3 recall csökken. Nincs manuális k-küszöb override az F1s anonim úton.
 - A gateway `E-SHADOW-003` drop-arányt, a k-cella eloszlást és a **nem mérhető cella** arányt aggregáltan (nem PII) jelenti a DPO-nak legalább **negyedévente**.
 
-**G javaslat a DPO-nak (nem pecsét, [G](../G-open-items.md) §4):** ne fix számot pecsételjen, **politikát**. `k ≥ 11` a `diplotípus × ATC5` cellára; `k ≥ 5` abszolút padló más cellára; `f_min = k / N_intézmény` negyedévente. Ha `N · f < k`: **drop**, nem durvítás (R-020). A 0,5% akkor helyes, ha k=11 és N≈2 200. Kis N-nél a G3 ≥90% **rétegzendő** a mérhető cellákra.
+**G javaslat a DPO-nak (nem lezárt pecsét, [G](../G-open-items.md) §4):** ne fix számot pecsételjen, **hanem politikát**. `k ≥ 11` a `diplotípus × ATC5` cellára; `k ≥ 5` abszolút padló más cellára; `f_min = k / N_intézmény` negyedévente. Ha `N · f < k`: **drop**, nem durvítás (R-020). A 0,5% akkor helyes, ha k=11 és N≈2 200. Kis N-nél a G3 ≥90% **rétegzendő** a mérhető cellákra.
 
 Forrás a k≥11-hez: S059 EMA `[V]` **risk = 0,09** (**nem** k≥11); **S060** Health Canada PRCI `[V]` „target cell size of 11 patients” + risk=0.09; **S062** DHCS DDG V2.2 `[V]` numerátor <11 vagy nevező <20 000 (USA/CA aggregátum, **nem** EU-jog). WP29 S053 **nem** ír elő k-t.
 
@@ -108,11 +108,11 @@ A havi HITL review miatt az adatok az **A15** protokoll szerint hónapokig–év
 
 ## III. DPO döntési pontok
 
-Minden sor kötelező. NEM esetén a „akkor” oszlop életbe lép.
+Minden sor kötelező. NEM esetén az „akkor” oszlop életbe lép.
 
 ### A. Anonimitás és hozzájárulás
 
-**A1.** Elegendő-e az ATC4 csonkolás, a negyedéves idő, a k ≥ 5 elnyomás és a ritka-diplotípus drop ahhoz, hogy a gateway **utáni** adatfolyamot jogilag **anonim** útnak tekintsük (GDPR személyes adat **nem**)?
+**A1.** Elegendő-e a default **7 karakteres hatóanyag-kód** (WHO ATC 5. szint), a negyedéves időbélyeg, a **k ≥ 5** elnyomás és a ritka-diplotípus drop ahhoz, hogy a gateway **utáni** adatfolyamot jogilag **anonim** útnak tekintsük (GDPR szerinti személyes adat **nem**)?
 
 - [ ] IGEN
 - [ ] NEM — ekkor álnevesített út + **FR-115** kötelező; A12 hamis

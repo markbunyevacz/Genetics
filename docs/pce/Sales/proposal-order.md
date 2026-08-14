@@ -49,7 +49,7 @@ Market pack szabály: [market-packs.md](market-packs.md).
 3. DPA: adatkezelő = Vevő (és/vagy labor); gyártó = feldolgozó.
 4. HU csomag: FR-100 kapu; OQ-01 státusz közölve.
 
-**Pilot:** szintetikus vagy labor-validációs eset, TAJ nélkül, `[Yp_pilot]`, `[T]` hét. A F2 UI lakattal **mutatható**, nem üzemeltethető.
+**Pilot:** szintetikus vagy labor-validációs eset, TAJ nélkül, `[Yp_pilot]`, `[T]` hét. Az F2 UI lakattal **mutatható**, nem üzemeltethető.
 
 ---
 

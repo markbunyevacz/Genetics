@@ -33,8 +33,8 @@ A HU csomag **EU + magyar kapuk**. Nem külön motor.
 
 ## Mit jelent a „kikapcsolt funkcionalitás”
 
-1. A F2/F3 **képernyő és API** a telepítésben látszik **lakattal** (licenc + build flag). A vevő látja, hogy a rendszer teljes.
-2. A L4-live motor F1s-ben futhat (felíró **nem** látja), ha a shadow csomag ON.
+1. Az F2/F3 **képernyő és API** a telepítésben látszik **lakattal** (licenc + build flag). A vevő látja, hogy a rendszer teljes.
+2. Az L4-live motor F1s-ben futhat (felíró **nem** látja), ha a shadow csomag ON.
 3. Admin **nem** billentheti `LIVE_CDS=true`-ra configgal. Csak signed release + REG-010/011 / FDA clearance (FR-470).
 4. Piaci csomagváltás (HU→US tenancy) **nem** egy checkbox a klinikának. Új tenancy, új intended purpose, új dosszié.
 
@@ -56,13 +56,13 @@ Amíg 4 nincs: a sales **nem** mondja, hogy „jövő héten bekapcsoljuk a rias
 
 ## OQ-17 — US (nyitott, nem blokkolja a HU/EU licencet)
 
-Kérdés a **US counselnek**, nem az EU OQ-05-nek:
+Kérdés az **US counselnek**, nem az EU OQ-05-nek:
 
 > A PCE **ugyanazon** bináris F2/F3 kimenete (beteg–gyógyszer, felírás-pillanat) eszköz-e az FD&C Act / 2022 CDS guidance szerint, és milyen premarket út kell? A genotípus-hívás **kint** marad (NG-01).
 
 **Tilos:** EU-s nem-MDSW (OQ-05) átvitele US-re, vagy US CDS „az orvos le tudja vezetni” átvitele MDR-re.
 
-Státusz: **NYITOTT**. A US market pack F2/F3 default **LOCK**.
+Státusz: **NYITOTT**. Az US market pack F2/F3 default **LOCK**.
 
 ---
 
@@ -74,7 +74,7 @@ Státusz: **NYITOTT**. A US market pack F2/F3 default **LOCK**.
 
 ## Ki fizet (B2B SaaS, nem viszonteladás)
 
-YouScript/ActX *struktúra*-analogia: az intézmény a szoftvert fizeti; a labor genotípust ad. Publikus YouScript-tarifa: Per User / Site-Based + 365 USD/év lista. **Ágyszám-sávos enterprise árlista nincs nyilvánosan** — a PCE ezért nem másol kitalált ágyszám-táblát.
+YouScript/ActX *struktúra*-analógia: az intézmény a szoftvert fizeti; a labor genotípust ad. Publikus YouScript-tarifa: Per User / Site-Based + 365 USD/év lista. **Ágyszám-sávos enterprise árlista nincs nyilvánosan** — a PCE ezért nem másol kitalált ágyszám-táblát.
 
 | Pénzmozgás | Ki → kinek | Mit fedez | Nem |
 | --- | --- | --- | --- |
@@ -90,7 +90,7 @@ A licencmondat a megrendelőlapon: *„A Vevő a PCE platform prediktív és mun
 
 ## Lakat mint sales-driver (FR-470) — előbb retesz, aztán `[Ya]`
 
-A HU/EU v1 buildben a `LIVE_CDS` **compile-time false**. A demóban a F2/F3 képernyő **látszik, nem kattintható**.
+A HU/EU v1 buildben a `LIVE_CDS` **compile-time false**. A demóban az F2/F3 képernyő **látszik, nem kattintható**.
 
 | Szabad mondani | Tilos mondani |
 | --- | --- |
@@ -98,11 +98,11 @@ A HU/EU v1 buildben a `LIVE_CDS` **compile-time false**. A demóban a F2/F3 kép
 | Az ActX *klinikai* gatingje (villan, ha releváns szer) az **F2 viselkedés** analogiája, feloldás után | Hogy az ActX compile-time MDR-reteszt használ; hogy PDF→CDSS történetük primer |
 | A lakat **először** Rule 11a védvonal (NG-07) | Hogy a lakat *csak* up-sell, ezért CE előtt is mehet a kártya |
 
-„Bent van, addig is megy a riasztás” = forgalomba hozatal, ha MDSW. A `[Ya]` **nem** nyitja a lakatoz CE nélkül.
+„Bent van, addig is megy a riasztás” = forgalomba hozatal, ha MDSW. A `[Ya]` **nem** nyitja a lakatot CE nélkül.
 
 ---
 
-## Piaci analógia (SKU-P, nem pecsét)
+## Piaci analógia (SKU-P, nem lezárt pecsét)
 
 A kórház/hálózat **szoftverlicencet** vesz; a labor diplotípust szállít. Ez a PCE SKU-P + outside-call. A lenti termékek **US/vendor** analogiák, nem EU-MDR precedens és nem a mi árlistánk.
 
@@ -110,7 +110,7 @@ A kórház/hálózat **szoftverlicencet** vesz; a labor diplotípust szállít. 
 | --- | --- | --- |
 | **YouScript** | EHR-be ágyazott élő PGx-CDS (Epic/Cerner, SMART on FHIR). Katalógus: **Per User, Site-Based**. Nyilvános kiskereskedelmi megújítás: **365 USD / év / provider** (youscript.com, 2026-08-12). GenomeWeb (2014): más labor genotípusa is betölthető — outside-call analógia `[R]`. | Enterprise ágyszám-tarifa (nincs publikus tábla). Compile-time `LIVE_CDS` lakat. 39%/71% kórházi csökkenés (céges közlés, registryből kihagyva). A PMC 7195220 **nem** YouScript-cikk (polifarmácia-review). |
 | **ActX** | Ma: labor-PDF riport **és** order-entry riasztás, ha van genomprofil és releváns gyógyszer (actx.com). A „villan, ha releváns szer” = **klinikai** gating (F2 viselkedés). | Hogy PDF-leletként *indultak*, majd CDSS-sé alakultak `[NEEDS VERIFICATION]`. Hogy a PCE FR-470 lakat = az ő modelljük. Az ActX élő riasztás **F2**, HU/EU-ban CE/in-house nélkül tilos (NG-07). |
-| **Translational Software** | Lab-facing knowledge/API + white-label riport létezett. A 510(k) **elutasítás** után a US szolgáltatást leállították (GenomeWeb `[R]`): a FDA a betegre szabott, CPIC-alapú riportot nem fogadta el „könyvtárnak”. | Hogy az F1+ „önmagában hatalmas, biztonságos B2B piac”. Ellenkezőleg: **NG-01** (ne hívjunk diplotípust) és az OQ-05 maradék kockázat (gén-szintű terápiás szöveg lehet Rule 11a). |
+| **Translational Software** | Lab-facing knowledge/API + white-label riport létezett. A 510(k) **elutasítás** után az US szolgáltatást leállították (GenomeWeb `[R]`): az FDA a betegre szabott, CPIC-alapú riportot nem fogadta el „könyvtárnak”. | Hogy az F1+ „önmagában hatalmas, biztonságos B2B piac”. Ellenkezőleg: **NG-01** (ne hívjunk diplotípust) és az OQ-05 maradék kockázat (gén-szintű terápiás szöveg lehet Rule 11a). |
 
 A demó **lakatja** (FR-470) először **szabályozási** retesz, másodszor látható F2/F3 upgrade-út. Nem YouScript-feature-másolat. „Bent van, addig is megy a riasztás” = forgalomba hozatal, ha MDSW.
 

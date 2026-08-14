@@ -53,7 +53,7 @@ A későbbi F1s shadow / F2 CDSS **nem** része ennek a term sheetnek, hacsak k�
 | --- | --- | --- |
 | Diplotípus / fenotípus-hívás, módszer, callability | **Igen** — aláíró orvos | Nem |
 | Statikus, verziózott CPIC/DPWG/FDA szövegkivonat helyessége a config szerint | A lelet **tartalmáért** az aláíró orvos a lelet kibocsátásakor | A szoftver a configot hiba nélkül rendereli; guideline-frissítés change-control (FR-370 / FR-510) |
-| Klinikai / jogi felelősség a **aláírt lelet** tartalmáért | Az aláíró labororvos / a labor mint szolgáltató | Technológiai szállító; termékfelelősség a szoftverhibáért a hatályos jog szerint **nem** zárható ki disclaimerrel (A.1.1) |
+| Klinikai / jogi felelősség az **aláírt lelet** tartalmáért | Az aláíró labororvos / a labor mint szolgáltató | Technológiai szállító; termékfelelősség a szoftverhibáért a hatályos jog szerint **nem** zárható ki disclaimerrel (A.1.1) |
 | 2008/XXI. tanácsadás, beleegyezés, 12. § (1) engedély | A vizsgálatot végző szolgáltató | FR-100 kapu a szoftverben; nem helyettesíti a labor kötelezettségét |
 | MDSW minősítés (OQ-05) | A labor a saját szolgáltatására | A szoftver gyártói pozíciója counsel előtt; ha OQ-05 NEM → IIa, a szerződés újratárgyalandó |
 
@@ -76,7 +76,7 @@ A Partnerlaboratórium vállalja, hogy az aláírásra kész F1+ kimenet (PDF/FH
 
 A spec kötése: **fix havidíj + volumensáv**, nem per-patient CDSS-licenc. A tárgyalás ettől eltérhet; a placeholder-ek kötelezően kitöltendők aláírás előtt.
 
-**Gyártói default (nem pecsét):** a **kórház/klinika** fizeti a SKU-P-t a gyártónak. A labor **nem** viszonteladója a kórházi licencnek. Ha a labor *saját* white-label tenancyt kér (saját megrendelők, saját pecsét), a labor a gyártónak `[Y1]`/`[Y2]` (mátrix: `[Yl]`). Ha a labor csak a klinika tenancyjéhez csatlakozik (REG-020), szoftverdíj **nem** jár a labor felé — a vizsgálat díját a labor a klinikának számlázza.
+**Gyártói default (nem lezárt pecsét):** a **kórház/klinika** fizeti a SKU-P-t a gyártónak. A labor **nem** viszonteladója a kórházi licencnek. Ha a labor *saját* white-label tenancyt kér (saját megrendelők, saját pecsét), a labor a gyártónak `[Y1]`/`[Y2]` (mátrix: `[Yl]`). Ha a labor csak a klinika tenancyjéhez csatlakozik (REG-020), szoftverdíj **nem** jár a labor felé — a vizsgálat díját a labor a klinikának számlázza.
 
 | Tétel | Összeg | Megjegyzés |
 | --- | --- | --- |

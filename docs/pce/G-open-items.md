@@ -5,14 +5,14 @@
 | **Dokumentum-ID** | PCE-G-v1.0 |
 | **Dátum** | 2026-08-13 |
 | **Bemenet** | PCE-SPEC-v1.2, A–F melléklet, `src/`, `tests/`, SOURCE-REGISTRY S001–S062 |
-| **Célja** | Az OQ-05 / OQ-06 / OQ-16 / S055 / F-14 tételekhez **döntési javaslat + levezetés**. Nem pecsét. |
+| **Célja** | Az OQ-05 / OQ-06 / OQ-16 / S055 / F-14 tételekhez **döntési javaslat és levezetés**. Ez a melléklet **nem** pecsételi le ezeket a tételeket. |
 | **Státusz** | S055 / S060 / S062 **LEZÁRVA**. OQ-05 / OQ-06 / OQ-16 / F-14: javaslat a pecsételő felé. |
 
 **Jelölés:** `[V]` verifikált primer forrásból (pin vagy ezen a napon olvasott) · `[S]` másodlagos forrás · `[I]` következtetés · `[E]` becslés · `[A]` feltevés
 
-Ez a melléklet **nem** zárja OQ-05 / OQ-06 / OQ-16 pecsétjét, **nem** listaár, **nem** Rule 11 határozat.
+Ez a melléklet döntési javaslat és levezetés: **nem** zárja az OQ-05 / OQ-06 / OQ-16 pecsétjét, **nem** tartalmaz listaárat, és **nem** Rule 11 határozat.
 
-A bemeneti vázlat 108 tesztet és S001–S055-öt említett. A repo ezen a napon: unittest **113 OK**; registry **S062-ig** (S060, S062 **lezárva**). Az F1+ allow-list **45** top-level kulcs (`ALLOWED_B41_TOP_LEVEL`), deny-list **15** (`FORBIDDEN_B41_FIELDS`) — nem 43. Official pin: **19** `ok: true`.
+A bemeneti vázlat 108 tesztet és S001–S055-öt említett. A repo ezen a napon: unittest **113 OK**; a SOURCE-REGISTRY S062-ig tart (S060 és S062 **lezárva**). Az F1+ allow-list **45** top-level kulcs (`ALLOWED_B41_TOP_LEVEL`), deny-list **15** (`FORBIDDEN_B41_FIELDS`) — nem 43. A hivatalos forrás-pin **19** fájlnál `ok: true`.
 
 ---
 
@@ -32,7 +32,7 @@ Art. 12(4): ha az adatkezelő nem intézkedik, **legkésőbb egy hónapon belül
 
 Art. 17(1) (`Right to erasure`): az érintettnek joga van a rá vonatkozó személyes adatok törléséhez **without undue delay**, és az adatkezelő köteles törölni **without undue delay**, ha a (a)–(f) indokok egyike fennáll.
 
-## 1.2 Amit ez javít az FR-110-en — **két óra, nem egy**
+## 1.2 Amit ez javít az FR-110-en — **két külön határidő, nem egy**
 
 A spec korábbi megfogalmazása a magyar 26. § (1)-re igaz volt („határidő nélkül”), de a GDPR Art. 17(1) `without undue delay` fordulatát elhallgatta. Három rendelkezés fut párhuzamosan:
 
@@ -51,7 +51,7 @@ A spec korábbi megfogalmazása a magyar 26. § (1)-re igaz volt („határidő 
 - Hozzájárulás-visszavonás vagy Art. 17 törlési kérelem rögzítésekor a rendszer **két külön artefaktumot** állít elő: (a) törlési tanúsítvány a kaszkád lefutásáról (A10: 72 h), és (b) **érintetti válaszlevél** a megtett intézkedésről, kiállítási határidő: a kérelem beérkezésétől **egy hónap** (Art. 12(3)). A (b) akkor is kötelező, ha a törlés jogszerűen **megtagadásra** kerül (Art. 12(4)).
 - Negatív teszt: 30 napnál régebbi, válaszlevél nélküli kérelem a compliance dashboardon `E-DSR-OVERDUE` riasztást ad.
 
-**Miért nem elég a 72 órás SLA:** az A10 a *törlés* SLA-ja. Ha a törlést az FR-120 30 éves megőrzési kötelezettsége miatt **megtagadjuk**, a 72 óra nem fut le — de az Art. 12(4) válaszadási kötelezettség akkor is áll.
+**Miért nem elég a 72 órás SLA:** az A10 a *törlés* SLA-ja. Ha a törlést az FR-120 30 éves megőrzési kötelezettsége miatt **megtagadjuk**, a 72 órás törlési SLA **nem alkalmazandó** — de az Art. 12(4) szerinti válaszadási kötelezettség akkor is fennáll.
 
 SYN (2026-08-13): `withdraw_subject` kiállítja mindkét artefaktumot; `refuse_erasure` csak a 12(4) levelet (a genetikai tartalom marad); `GET /v1/compliance/dsr` az `E-DSR-OVERDUE` riasztás.
 
@@ -67,7 +67,7 @@ KEY TAKEAWAYS `[V]`: a törléshez való jog nem abszolút; a megőrzési kötel
 
 # 2. OQ-06 — Osztály páronként · **javaslat az RA felé**
 
-**Nem pecsét.** Az A.4.1 tábla nyitott marad.
+Ez a szakasz **nem** pecsételi az OQ-06-ot. Az A.4.1 tábla nyitott marad.
 
 ## 2.1 A jogszabályi teszt
 
@@ -117,7 +117,7 @@ Két út van:
 
 **Javaslat: (a).** Ez termékdöntés, amely a szabályozási döntést de-riszkeli. A kikapcsolt öt pár nem üres hely: ezek adják a szakmai hitelt, ha a lelet **megmondja, hogy tudja, hogy nem tudja.**
 
-`LIVE_CDS` ezen a napon **false**. Az (a) kill-switch kódja **nem** kell, amíg a live flag pecsétig zárva van. Az (a) a *első live kiadás* termékdöntése.
+`LIVE_CDS` ezen a napon **false**. Az (a) kill-switch kódját **nem** kell megírni, amíg a live flag pecsétig zárva van. Az (a) az *első live kiadás* termékdöntése.
 
 ## 2.5 Amit az RA-nak el kell döntenie (és amit ez a melléklet nem dönt el)
 
@@ -131,7 +131,7 @@ Két út van:
 
 # 3. OQ-05 — Az F1+ nem-MDSW pozíció · **javaslat a counsel felé**
 
-**Nem pecsét.** OQ-05 **ELŐTERJESZTVE** marad.
+Ez a szakasz **nem** pecsételi az OQ-05-öt. Az OQ-05 **ELŐTERJESZTVE** marad.
 
 ## 3.1 Amit a v1.2 jól kérdez, és amit rosszul
 
@@ -153,7 +153,7 @@ A helyes, szűk, eldönthető kérdés:
 
 1. `[S]` A Rule 11a küszöb tág: nehéz olyan klinikai szöveget elképzelni, amit *soha* nem használnak döntéshez. (Bristows-típusú kommentár **nincs** pinelve ebben a repóban — L4, nem S-szám.)
 2. `[V]` Az MDCG Rev.1 után a Class I MDSW sáv keskeny, de **nem üres**: Rule 11c létezik; Rev.1 Annex IV új Class I példát adott (VC-04, **nem** VC-03).
-3. `[I]` A „az orvos dönt” érv az FDA 2022-es CDS guidance logikája, nem az MDR-é. Erre nem szabad építeni (NG-07, VC-11).
+3. `[I]` Az „az orvos dönt” érv az FDA 2022-es CDS guidance logikája, nem az MDR-é. Erre nem szabad építeni (NG-07, VC-11).
 
 ## 3.3 Javasolt counsel-kérdés formátum
 
@@ -162,7 +162,7 @@ Három **igen/nem** kérdés, mindegyikhez a kód mint melléklet. A pecsét tov
 | # | Kérdés | Melléklet |
 | --- | --- | --- |
 | **Q1** | A §3.1 szerinti kimenet Rule 11 hatálya alatt áll, vagy Rule 11c Class I? | `tests/test_report.py`, `schema.py` allow-list, példa-lelet |
-| **Q2** | Ha Rule 11 alatt áll: a beteg-specifikus szelekció hiánya elegendő-e a **IIa alatti** besoroláshoz? | ugyanaz |
+| **Q2** | Ha Rule 11 alatt áll: a beteg-specifikus szelekció hiánya elegendő-e az **IIa alatti** besoroláshoz? | ugyanaz |
 | **Q3** | Ha a válasz Q1-re „Class I”: elegendő-e a jelenlegi CI-invariáns-készlet az MDCG Rev.1 „dokumentált határok és függőségek” követelményéhez? | `.github/workflows/ci.yml` |
 
 ## 3.4 A biztonságos alapértelmezés, amíg nincs pecsét
@@ -171,9 +171,9 @@ Három **igen/nem** kérdés, mindegyikhez a kód mint melléklet. A pecsét tov
 
 Indoklás:
 
-- Class I esetén **nincs Notified Body**, tehát az MDCG 2025-6 szerint **nem** magas kockázatú AI-rendszer. Az AI Act 2028-08-02 óra **nem** indul el ettől a pozíciótól (VC-09: a dátum `[NEEDS VERIFICATION]`).
+- Class I esetén **nincs Notified Body**, tehát az MDCG 2025-6 szerint **nem** magas kockázatú AI-rendszer. Az AI Act 2028-08-02-i tervezési határidő ettől a Class I pozíciótól **nem** indul el (VC-09: a dátum `[NEEDS VERIFICATION]`).
 - A Class I terhe: technical file, ISO 14971, PMS, gyártói nyilatkozat, regisztráció. `[E]` Ez **3–5 hónap** munka egy meglévő QMS mellett; D.1, A melléklet, teszt-lefedettség **már** a repóban van.
-- Ha a counsel utóbb IIa-t mond, a Class I dosszié **beszámít** a IIa dossziéba. Ha „nem eszköz”-ként haladtok és a counsel IIa-t mond, nulláról kezditek.
+- Ha a counsel utóbb IIa-t mond, a Class I dosszié **beszámít** az IIa dossziéba. Ha „nem eszköz”-ként haladtok és a counsel IIa-t mond, nulláról kezditek.
 
 Ez a legolcsóbb visszafordítható pozíció. **Nem** dönti el az OQ-05-öt, és **nem** írja felül az A.6 elemzést (élő PGx-terápia nem 11c).
 
@@ -181,7 +181,7 @@ Ez a legolcsóbb visszafordítható pozíció. **Nem** dönti el az OQ-05-öt, �
 
 # 4. OQ-16 — k és a ritka-diplotípus küszöb · **javaslat a DPO felé**
 
-**Nem pecsét.** Az A14 `k ≥ 5` és a 0,5% **marad `[ASSUMPTION]`**, amíg a DPO nem pecsétel.
+Ez a szakasz **nem** pecsételi az OQ-16-ot. Az A14 `k ≥ 5` és a 0,5% **marad `[ASSUMPTION]`**, amíg a DPO nem pecsétel.
 
 ## 4.1 Amit a kutatás hozott — és ami megdönti a k≥5 *indokolatlanságát*
 
@@ -268,7 +268,7 @@ A vázlat 115 000 Ft YouScript-átváltása **nincs** MNB-pinelve; a pricing.md 
 > **`[Yc]` = 120 000 – 480 000 Ft / felíró / év, közép 240 000 Ft.** `[E]`
 > Érvelés a vevő felé, *ha* a DrugMap 499 e Ft áll (VC-10): **240 e Ft/év ≈ egy DrugMap-vizsgálat fele.** Ez összehasonlítás, nem PCE-ár.
 
-**Platform-alapdíj `[Yp]`.** Tipikus B2B SaaS alap:ülőhely arány 1–2× kis telephelyen `[E]`.
+**Platform-alapdíj `[Yp]`.** Tipikus B2B SaaS alapdíj–ülőhely arány kis telephelyen 1–2× `[E]`.
 
 | Telephely | Ülőhely-bevétel (240 e Ft-tal) | Platform-alap `[Yp]` |
 | --- | --- | --- |
@@ -288,9 +288,9 @@ A vázlat 115 000 Ft YouScript-átváltása **nincs** MNB-pinelve; a pricing.md 
 
 | Placeholder | Érték | Alap |
 | --- | --- | --- |
-| `[Yc]` klinikus/év | **120–480 e Ft**, közép 240 e | YouScript analogia + teszt-ár arány `[E]` |
+| `[Yc]` klinikus/év | **120–480 e Ft**, közép 240 e | YouScript analógia + teszt-ár arány `[E]` |
 | `[Yp]` platform/év | **0 Ft < 15 felírónál**; 6–35 M Ft felette | HIS-plafon 40%-a `[I]` + megfizethetőség |
-| `[Ys]` további telephely/év | **2–8 M Ft** | site-based analogia `[E]` |
+| `[Ys]` további telephely/év | **2–8 M Ft** | site-based analógia `[E]` |
 | `[Y0]` / `[Yi]` integráció, egyszeri | **az első éves díj 20–50%-a** | egészségügyi IT norma `[S]` |
 | `[Yl]` labor white-label tenancy/év | **4–25 M Ft** + per-report komponens | OQ-03 függvénye `[E]` |
 | `[Ya]` F2/F3 aktiválási felár | **+15–40%** az alapon | meglévő vevő alsó, új logó felső `[E]` |
@@ -324,7 +324,7 @@ Támogatás/karbantartás: a licencdíj **15–22%**-a évente. Éves emelés **
 ## 6.1 A három legfontosabb következtetés
 
 1. **Az F3 „IIa” cél az öt magas kockázatú páron live-ban nem védhető** (§2.4). A megoldás termékdöntés, nem jogi: IIa-safe párlista.
-2. **A k≥5 az egészségügyi cellaméret-precedens alatt van.** A Health Canada PRCI `[V]` 11 fős cél-cellát mond a 0,09 mellé (S060). A DHCS DDG V2.2 `[V]` 11-es numerátort és 20 000-es nevezőt (S062). A 0,5% levezethető, nem feltevés (§4.2). A DPO pecsétje nélkül az A14 **nem** változik.
+2. **A k≥5 az egészségügyi cellaméret-precedens alatt van.** A Health Canada PRCI `[V]` 11 fős cél-cellát mond a 0,09 mellé (S060). A DHCS DDG V2.2 `[V]` 11-es numerátort és 20 000-es nevezőt (S062). A 0,5% matematikailag levezethető (§4.2), de eljárásilag továbbra is `[ASSUMPTION]`, amíg a DPO nem pecsétel; az A14 ezért **nem** változik.
 3. **A jelenlegi árszerkezet kizárja a Phase-1 célcsoportot** (§5.2). 15 felíró alatt platform-alapdíj nélkül kell menni.
 
 ## 6.2 Amit nem ellenőriztem / hátravan

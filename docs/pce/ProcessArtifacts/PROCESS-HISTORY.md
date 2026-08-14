@@ -26,7 +26,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P01c | Source ingestion (CureMD PDF) | 2026-08-12 | 2026-08-12 | DONE | I-18 PDF arXiv:2603.14876v1 | Inventory I-18; S028 L5 „elolvasva”; S028-note | E-13 |
 | P05i | S028 formális beillesztés + határ | 2026-08-12 | 2026-08-12 | DONE | I-18 + VC-13 | §9.5; FR-710 SHAP-tiltás v1-en; literature-boundary | E-13 |
 | P06i | Plan-vs-content (S028) | 2026-08-12 | 2026-08-12 | DONE | Három kért használat vs PDF | G3 marad ≥90%; nincs „állami referenciák” fejezet | — |
-| P05j | PREPARE + YouScript analogia iratokba | 2026-08-12 | 2026-08-12 | DONE | I-19 | OQ-15 §III; market-packs mátrix; OQ-05 IV.a; OQ-16 ClinLabomics-határ | E-14 |
+| P05j | PREPARE + YouScript analógia iratokba | 2026-08-12 | 2026-08-12 | DONE | I-19 | OQ-15 §III; market-packs mátrix; OQ-05 IV.a; OQ-16 ClinLabomics-határ | E-14 |
 | P06j | Plan-vs-content (I-19) | 2026-08-12 | 2026-08-12 | DONE | PREPARE/YouScript/Tandem/ClinLabomics | VC-14; OQ-k nyitva; nincs kitalált Ft | — |
 | P05k | SKU-P ki-fizet + lakat driver | 2026-08-12 | 2026-08-12 | DONE | I-19 „hogyan épül be” | market-packs ki-fizet; OQ-03 default; OQ-15 HITL≠ADR | — |
 | P10b | Pecsétekig megerősítés | 2026-08-12 | 2026-08-12 | DONE | User: van-e architektúra-feladat pecsétekig? | README pecsétekig tábla; F.6 + OQ-17; D-24 | — |
@@ -43,7 +43,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P06s | Plan-vs-content a klinikai láncra | 2026-08-13 | 2026-08-13 | DONE | TRACE NOW 21/27 PARTIAL; F1+ dataflow 8/8 | SPEC-PLAN-TRACE §1/§9 | — |
 | P06t | Tételes válasz-dokumentum a user négy pontjára | 2026-08-13 | 2026-08-13 | DONE | User: nem látszott a válasz | `Engineering/VALASZ-SPEC-TERV.md` | — |
 | P05u | Árnyék-motor + HITL store/UI (WP-M/H) | 2026-08-13 | 2026-08-13 | DONE | P06t: 5 F1s MISSING; tilos kitalált PM | `src/pce_shadow/`; `src/pce_hitl/`; `src/pce_ui/hitl.html`; S044–S047 | VC-15 |
-| P06u | Plan-vs-content a F1s láncra | 2026-08-13 | 2026-08-13 | DONE | TRACE NOW 26/27 PARTIAL; F1s dataflow 5/5 | TRACE + DATAFLOW rescore; 78 unittest | — |
+| P06u | Plan-vs-content az F1s láncra | 2026-08-13 | 2026-08-13 | DONE | TRACE NOW 26/27 PARTIAL; F1s dataflow 5/5 | TRACE + DATAFLOW rescore; 78 unittest | — |
 | P06v | Felesleges plusz doksi törlése | 2026-08-13 | 2026-08-13 | DONE | User: ne generálj új doksit mindenre | `VALASZ-SPEC-TERV.md` törölve; a TRACE/DELIVERY-PLAN/DATAFLOW marad | — |
 | P05w | PREPARE-12 CPIC + VCF gold + forráshiány a termékben | 2026-08-13 | 2026-08-13 | DONE | User: van/nincs tábla; PM=szegény metabolizáló; hatóanyag-kód; teljes rendszer | `prepare12/` extract; `vcf-gold-v0/`; `forras_allapot`; PSEUDO ATC5 | VC-15 |
 | P06w | Plan-vs-content a 6 user-pontra | 2026-08-13 | 2026-08-13 | DONE | TRACE/DELIVERY/DATAFLOW/registry; 89 unittest | SPEC-PLAN-TRACE §10 | — |
@@ -53,6 +53,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P05z | Árazás: megfigyelt vs következtetés | 2026-08-13 | 2026-08-13 | DONE | User: YouScript 365 USD; HIS-plafon; javasolt Ft-sáv | `Sales/pricing.md`; S056–S058; VC-16 | E-20 |
 | P05aa | G melléklet: öt nyitott tétel | 2026-08-13 | 2026-08-13 | DONE | User PCE-G-v1.0 | `G-open-items.md`; S055 LEZÁRVA; DSR két artefaktum; OQ-05/06/16 javaslat pecsét nélkül | E-19 zárva (EUR-Lex 200) |
 | P05ab | S060 Health Canada PRCI + S062 DHCS DDG V2.2 pin | 2026-08-13 | 2026-08-13 | DONE | User: PRCI guidance URL + DHCS-DDG-V2-2.pdf | S060/S062 **LEZÁRVA** `[V]`; k=11 HC primer; A14 k≥5 **nem** pecsét; DHCS élő Incapsula → Wayback | E-21 |
+| P05ac | Magyar próza: szemantika/szintaxis | 2026-08-14 | 2026-08-14 | DONE | User: érthetetlen mondatok; független ágens | Névelő (a/az); ATC4 vs ATC5; két határidő; hiányzó igék; OQ-16 A1 ATC5; A14 változatlan | E-22 |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -102,6 +103,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-40 | P05z | Ft-sáv a specben vs Sales | Listaár a specbe / csak Sales következtetés | **Sales/pricing.md.** A spec §11 kötés marad; a 6–35 M Ft **nem** megfigyelt listaár. DrugMap VC-10. EKR 88,3 M Ft nincs pinelve. | User 2026-08-13 árazás | user |
 | D-41 | P05aa | G öt tétel pecsét vs javaslat | Pecsétek / csak javaslat + S055 pin | **S055 LEZÁRVA.** OQ-05/06/16 **nem** pecsét. (a) IIa-safe fallback 2026-10-31; Class I MDSW default; k≥11 javaslat A14 változatlan; 15 felíró alatt `[Yp]=0`. | User G v1.0 | user |
 | D-42 | P05ab | S060/S062 pin vs A14 átírás | k=11 pecsét / pin + javaslat | **Pin.** S060 `[V]` cél-cella 11; S062 `[V]` 11 / 20 000 (Wayback; élő Incapsula). **Nem** EU-jog. A14 k≥5 / 0,5% `[ASSUMPTION]` **marad**. DHCS v3.0 nincs pinelve. | User PRCI + DDG URL | user |
+| D-43 | P05ac | Próza javítás vs tényátírás | Újraírás / csak nyelv | **Csak nyelv.** Tények, pecsétek, A14 k≥5, Ft-sáv **nem** változtak. A.1 „az aktuális” a `statements.py`-ban is. | User: minden írás | user |
 
 ## 3. Error log
 
@@ -129,6 +131,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | E-19b | P05aa | API / authority fetch (E-19 zárás) | EUR-Lex 202 empty body **lejárt**: HTML 200, 809 035 byte | Pin HTML+PDF; Art. 12(3)/12(4)/17(1) a HTML-ből; S055 LEZÁRVA | D-41 |
 | E-20 | P05z | Authority fetch | YouScript HTML urllib 403; EKR001266472024 karbantartási oldal | WebFetch 365 USD; SMART+Semmelweis pin; EKR összeg `[R]` | D-40 |
 | E-21 | P05ab | Authority fetch | Élő `dhcs.ca.gov/.../DHCS-DDG-V2-2.pdf` Incapsula HTML (212 B), nem PDF. Wayback `/web/2023/` és `/web/2024/` 429. | Wayback `/web/2022/` a V2.2 PDF-et adta (1 709 986 B, 71 oldal, CreationDate 2023-02-17). v3.0 nincs pinelve. | D-42 |
+| E-22 | P05ac | Incomplete verification | Első független próza-ellenőrzés FAIL: maradék névelő (aláírt / IIa / esélyhányados / első) és *analogia*. | Retry: célzott javítás + második/harmadik független scan | P05ac |
 
 ## 4. File timeline
 
@@ -151,7 +154,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | src/pce_hitl/ | P05u | P05w | vak ellenőrző API + `hitl.sqlite` |
 | src/pce_ui/hitl.html | P05u | P05w | van/hiányzik lista a vak lépés után |
 | src/pce_clinical/coverage.py | P05w | P05x | FR-210; diplotípus-forrás magyarul |
-| docs/pce/G-open-items.md | P05aa | P05ab (S060/S062 `[V]`) | Javaslat, nem pecsét; S055/S060/S062 LEZÁRVA |
+| docs/pce/G-open-items.md | P05aa | P05ac (magyar próza) | Javaslat, nem pecsét; S055/S060/S062 LEZÁRVA |
 | docs/pce/Sources/official/ | P05x | P05ab | + GDPR HTML/PDF; EMA 0,09; MDCG 2021-24; HC PRCI; DHCS DDG V2.2 (19 `ok`) |
 | tests/fixtures/pheno-gold-v0/ | P05y | P05y | N=32; G3 nevező |
 | src/pce_report/schema.py | P05r | P05y | B.4.1 allow-list |
