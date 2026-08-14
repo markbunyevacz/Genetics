@@ -38,7 +38,7 @@ Ez a csomag a C melléklet C.4 teendőit **végrehajtható** belső irattá alak
 | **2026-09-30** | 4. melléklet 2.1 ISO 9001 / szoftver-QMS | **~7 hét** — F0 kritikus út |
 | F1+ éles | OQ-05 + REG-020 + FR-100 | Külön kapu; ez a csomag nem helyettesíti |
 
-Ha 2026-09-30-ig nincs 2.1 tanúsítvány, a 9/C. § szerint az engedély **visszavonásra kerül** (ahol van engedély). Modulszállítónál is: későbbi saját belépés / Redmine-kockázat.
+Ha 2026-09-30-ig nincs 2.1 tanúsítvány, a 9/C. § szerint az engedély **visszavonásra kerül** (ahol van engedély). Modulszállítónál is fennáll a későbbi saját belépés és a Redmine-kockázat.
 
 ---
 
@@ -100,7 +100,7 @@ Van-e *most* ISO 9001 tanúsítvány?
 
 | | |
 | --- | --- |
-| Leírás | F1 döntés: **nem** saját BM-engedély. REG-040b P2 / F4. A 2.1 ISO ettől még F0. |
+| Leírás | F1 döntés: **nem** saját BM-engedély kell (REG-040b: P2 / F4). A 2.1 szerinti ISO ettől még F0 kapu. |
 | Felelős | Ügyvezetés |
 | Kimenet | Írásos döntés: modulszállító / később saját csatlakozó |
 | Státusz | |
@@ -114,7 +114,7 @@ A tényleges iratok: `docs/pce/Outbound/`. Az owner **nem** írja alá a counsel
 | 5 | OQ-05 | [OQ-05-counsel-brief.md](OQ-05-counsel-brief.md) | Counselnek kiküldeni; F.6 |
 | 6 | OQ-16 | [OQ-16-dpo-dpia-kerdoiv.md](OQ-16-dpo-dpia-kerdoiv.md) | DPO; F1s előfeltétel |
 | 7 | OQ-15 | [OQ-15-intezmenyi-ra-egyoldalas.md](OQ-15-intezmenyi-ra-egyoldalas.md) | Intézmény, OQ-16 után |
-| 8 | OQ-03 | [OQ-03-l3-term-sheet.md](OQ-03-l3-term-sheet.md) | Üzlet; labor név nélkül a specben |
+| 8 | OQ-03 | [OQ-03-l3-term-sheet.md](OQ-03-l3-term-sheet.md) | Üzleti tulajdonos; a labor neve a specben nincs megnevezve |
 
 ---
 

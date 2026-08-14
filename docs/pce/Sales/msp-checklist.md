@@ -16,7 +16,7 @@
 | A2 | [ ] | Market pack kitöltve: `HU` / `EU` / `US` |
 | A3 | [ ] | `[Yp]` platformár kitöltve |
 | A4 | [ ] | Ajánlat modulmátrixa: F2/F3 **LOCK**; feloldás §8 |
-| A5 | [ ] | Diplotípus-**forrás** megvan (vevő laborja vagy REG-020) — csatlakozó, nem az, hogy a labort kell megvenni |
+| A5 | [ ] | Diplotípus-**forrás** megvan (vevő laborja vagy REG-020) — csatlakozó, nem azt, hogy a labor a PCE-vevő |
 | A6 | [ ] | DPA-szerep: kezelő = intézmény |
 | A7 | [ ] | Demó a lakatot is mutatta |
 
@@ -35,7 +35,7 @@
 | B7 | [ ] | FR-700: nincs LLM a klinikai úton |
 | B8 | [ ] | Matcher default ki |
 
-A F2 **kód** az MSP része (G5). A F2 **élő kimenet** nem.
+Az F2 **kód** az MSP része (G5). Az F2 **élő kimenet** nem.
 
 ---
 

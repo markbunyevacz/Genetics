@@ -9,7 +9,7 @@
 
 Tisztelt Partner!
 
-A klinikai vevőitek **rendszert** akarnak, nem egy külön PGx-portált. A PCE ugyanaz a szoftver F1-től F3-ig. A ti HIS-etekbe beágyazzuk; a `LIVE_CDS` a **mi** signed release-ünk, nem a ti admin-configotok. Így nem váltok MDSW-gyártóvá egy felírási riasztástól.
+A klinikai vevőitek **rendszert** akarnak, nem egy külön PGx-portált. A PCE ugyanaz a szoftver F1-től F3-ig. A ti HIS-etekbe beágyazzuk; a `LIVE_CDS` a **mi** signed release-ünk, nem a ti admin-configotok. Így ti nem váltotok MDSW-gyártóvá pusztán azért, mert a platformon felírási riasztás jelenhet meg.
 
 ---
 
@@ -34,7 +34,7 @@ A klinikai vevőitek **rendszert** akarnak, nem egy külön PGx-portált. A PCE 
 | Integráció | `[Yi]` egyszeri |
 | Intézményi tenancy | a klinika SKU-P-je, nem a ti árrésetek helyett |
 
-F2 aktiválás: a **intézmény** §8 záradéka + a mi release-ünk.
+F2 aktiválás: az **intézmény** §8 záradéka + a mi release-ünk.
 
 ---
 

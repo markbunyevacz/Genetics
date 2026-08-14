@@ -141,7 +141,7 @@ Minden képernyő a B API-t hívja. Nincs kitalált kórháznév; org = `SYN-ORG
 | --- | --- | --- | --- | --- |
 | **P4 Tanácsadó** | WP-U: tanácsadás + beleegyezés űrlap | dátum a mintavétel előtt; gén-scope pipák | későbbi dátum → `E-CONSENT-002` HU | 13, 14 |
 | **P1 Labor** | WP-U: eset, outside-call feltöltés, előnézet, aláírás | kapu zöld → PDF + JSON + FHIR | kapu piros → nincs PDF; INDETERMINATE gén nem NORMAL | 1–4, 20 |
-| **P2 Klinikus** | **nincs** vizit-UI F1+-on | megkapja az aláírt PDF-et / FHIR-t a laborból | nem lát HITL-t, nem kap CDS Cardet | 6–10 LOCK; 9 forrás a PDF-en |
+| **P2 Klinikus** | **nincs** vizit-UI F1+-on | megkapja az aláírt PDF-et / FHIR-t a laborból | nem lát HITL-t, nem kap CDS Card-ot | 6–10 LOCK; 9 forrás a PDF-en |
 | **P3 Farmakológus** | HITL UI (nem napi vizit) | vak lépés, majd motor | `clinical_context=ABSENT` ha nincs lista | 11–12 |
 | **P5 DPO** | audit export, törlési tanúsítvány, A14 monitor | CSV/JSON 30 éves séma; gateway quarterly_report | PII a monitorban = regresszió | 15, 16 |
 | **P6 Vendor** | FHIR Bundle + írásos határ (OQ-03) | STU3 DiagnosticReport | CDS endpoint 404 | 17, 18 |
@@ -177,7 +177,7 @@ Minden képernyő a B API-t hívja. Nincs kitalált kórháznév; org = `SYN-ORG
 **F1s kutatási út (WP-G+M+H) — járható**
 
 1. Fixture HIS bundle → gateway → k-cella → `POST /v1/shadow/events`.
-2. ANON 7 karakteres kód → 202 (párosítás, ha a kód hatóanyag). TAJ → 400. HIS ettől függetlenül „lezárt”. 5 karakteres csoportkód → HITL sor, párosítás szünetel.
+2. ANON 7 karakteres kód → 202 (párosítás, ha a kód hatóanyag-kód). TAJ → 400. HIS ettől függetlenül „lezárt”. 5 karakteres csoportkód → HITL sor, párosítás szünetel.
 3. Továbbított esemény → ShadowInference a **hitl.sqlite**-ban.
 4. Reviewer 1. lépés vak; 2. lépés verdict + `forras_allapot` (van/hiányzik).
 5. Report store üres marad ettől az eseménytől.

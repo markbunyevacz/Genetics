@@ -17,7 +17,7 @@ Egyetlen **publikus** közvetlen versenytárs-ár létezik: YouScript provider-e
 
 A magyar **plafont** odaítélt közbeszerzés adja, nem PGx-modul-ár. Semmelweis / T-Systems MedSolution keret **816.636.406 Ft nettó** (KÉ 2020/58; Semmelweis GFI 2020-04-07 pin). Zala Vármegyei Szent Rafael / Asseco MedWorkS karbantartás: a kutatás **~88,3 M Ft / 12 hó, két kórház**, hivatkozás **EKR001266472024**. Az EKR-portál ebben a környezetben karbantartási oldalt adott — az összeg **nincs** SHA-256 pinelve.
 
-A javasolt PCE-sáv **mindegyik következtetés**. Egy PGx-modul a fenti HIS-ügyletek **töredéke**. **15 felíró alatt nincs platform-alapdíj** (G §5.2). A publikálandó szám **egy**: a klinikus-ülőhely közepe. A `[Yp]` ajánlatkérés-alapú.
+A javasolt PCE-sávok **mind következtetések**. Egy PGx-modul a fenti HIS-ügyletek **töredéke**. **15 felíró alatt nincs platform-alapdíj** (G §5.2). A publikálandó szám **egy**: a klinikus-ülőhely közepe. A `[Yp]` ajánlatkérés-alapú.
 
 ---
 
@@ -41,9 +41,9 @@ Kitöltés: a megrendelőlapon marad `[Yp]` / `[Yc]` / … — ez a tábla a **t
 
 | Sor | Sáv | Mire támaszkodik | Jelölés |
 | --- | --- | --- | --- |
-| Klinikus / év `[Yc]` | **120–480 e Ft**, közép **240 e Ft** | YouScript 365 USD; a kutatás ≈ **115 e Ft** átváltást használ (MNB közép **nincs** pinelve). Felső sáv: nagyobb funkció-terjedelem | alsó: analogia; Ft: `[ESTIMATE]` FX |
+| Klinikus / év `[Yc]` | **120–480 e Ft**, közép **240 e Ft** | YouScript 365 USD; a kutatás ≈ **115 e Ft** átváltást használ (MNB közép **nincs** pinelve). Felső sáv: nagyobb funkció-terjedelem | alsó: analógia; Ft: `[ESTIMATE]` FX |
 | Platform / tenancy / év `[Yp]` | **0 Ft 15 felíró alatt**; **6–35 M Ft** felette | HIS-plafon 40%-a `[I]`; megfizethetőség. A 0–35 M Ft listaárként hiteltelen — ajánlatkérés | `[ESTIMATE]` |
-| További telephely / év `[Ys]` | **2–8 M Ft** | site-based analogia (SMART, ár nélkül) | `[ESTIMATE]` |
+| További telephely / év `[Ys]` | **2–8 M Ft** | site-based analógia (SMART, ár nélkül) | `[ESTIMATE]` |
 | HIS-integráció, egyszeri `[Yi]` | a licenc **20–50%-a** | egészségügyi IT norma, nem megfigyelt PCE-tétel | `[ESTIMATE]` |
 | Labor white-label tenancy `[Yl]` | **4–25 M Ft/év** | per-report komponenssel; nem viszonteladás | `[ESTIMATE]` |
 | F2/F3 aktiválási felár `[Ya]` | **+15–40%** | csak CE / in-house után (FR-470) | `[ESTIMATE]` |
@@ -89,4 +89,4 @@ Teszt: `PYTHONPATH=src python3 -m unittest discover -s tests -v` → **113 OK** 
 | Javasolt sáv 6–35 M Ft/év tenancy, tárgyalásra | „Ez a listaárunk” |
 | A klinikus-sáv alja egy DrugMap-teszt negyede, *ha* az a 499 e Ft áll | „A DrugMap-ot mi verifikáltuk” |
 
-Megrendelőlap: [proposal-order.md](proposal-order.md). Flag: [market-packs.md](market-packs.md). Analogia-határ: [competitor-analogs.md](competitor-analogs.md).
+Megrendelőlap: [proposal-order.md](proposal-order.md). Flag: [market-packs.md](market-packs.md). Analógia-határ: [competitor-analogs.md](competitor-analogs.md).

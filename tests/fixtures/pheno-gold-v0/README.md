@@ -1,6 +1,6 @@
 # Fenokonverzió gold (pheno-gold-v0)
 
-**N = 32** SYN eset. Ground truth: pin-elt FDA DDI 1-2. és 2-2. tábla, CPIC SSRI 2023, WHO ATC. **Nem** GeT-RM, **nem** a szabálytábla önmagára mért köre egy kitalált szegény-címkére.
+**N = 32** SYN eset. Ground truth: pinelt FDA DDI 1-2. és 2-2. tábla, CPIC SSRI 2023, WHO ATC. **Nem** GeT-RM. **Nem** a szabálytábla önellenőrzése kitalált „szegény metabolizáló” címkével.
 
 | Mit mér | Elvárt |
 | --- | --- |

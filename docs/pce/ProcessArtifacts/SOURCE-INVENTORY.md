@@ -4,14 +4,14 @@
 | --- | --- |
 | **Fázis** | P01 (ingestion) + P01b (v1.2 hibrid-brief) + P01c (S028 PDF) |
 | **Dátum** | 2026-08-12 |
-| **Hatókör** | A v1.2 speccsomaghoz felhasznált források |
+| **Hatókör** | A v1.2 spec-csomaghoz felhasznált források |
 
 ## Bemeneti dokumentumok
 
 | ID | Fájl / forrás | Formátum | Nyelv | Szerep | Szavak (kb.) |
 | --- | --- | --- | --- | --- | --- |
 | I-01 | PCE-SPEC-v1.0 (feltöltött vázlat, 2026-08-09); kanonikus másolat: `docs/pce/Sources/PCE-SPEC-v1.0.md` (a gyökér duplikátum 2026-08-13 törölve) | md | HU | Előző PRD-váz; **nem** kanonikus | ~6 500 |
-| I-02 | Felhasználói brief: MDCG / 2008/XXI / EESZT / EHDS korrekciók + L0–L7 architektúra + versenytársak + árazás | md (chat) | HU | Termékstratégiai input; üzleti részek deszkópolva | n/a |
+| I-02 | Felhasználói brief: MDCG / 2008/XXI / EESZT / EHDS korrekciók + L0–L7 architektúra + versenytársak + árazás | md (chat) | HU | Termékstratégiai input; üzleti részek hatókörből kivéve | n/a |
 | I-03 | 2008. évi XXI. törvény (njt / net.jogtar) | HTML | HU | Humángenetikai jog | primer |
 | I-04 | 29/2022. (I. 31.) Korm. rendelet + 294/2025. (IX. 25.) Korm. rendelet 4. melléklet | HTML | HU | EESZT fejlesztői követelmények | primer |
 | I-05 | MDCG 2019-11 Rev.1 (2025-06-17), health.ec.europa.eu | PDF | EN | MDSW minősítés/osztályozás | primer |
@@ -28,21 +28,21 @@
 | I-16 | Eladás klinikáknak a külső OQ-k feltételezésével | md (chat) | HU | Sales v1: tévesen leletbolt-SKU | n/a |
 | I-17 | Korrekció: a vevő **rendszert** vesz (F1–F3, flag); HU/EU/US; labor csatlakozó | md (chat) | HU | SKU-P; market-packs; OQ-17; NG-07 marad | n/a |
 | I-18 | CureMD Hybrid CDSS PDF (arXiv 2603.14876v1); kérés: SOTA/G3/SHAP/RWE beépítés | PDF | EN | Primer olvasás; VC-13: nem PGx SOTA, 83,10% ≠ G3 | ~13 oldal |
-| I-19 | Piaci analogia + PREPARE/YouScript beillesztés; Tandem/ClinLabomics/TSI | md (chat) + URL | HU/EN | VC-14: p=0,0075; PMC7195220 ≠ YouScript; OQ-05 nyitva; k≠ClinLabomics | n/a |
+| I-19 | Piaci analógia + PREPARE/YouScript beillesztés; Tandem/ClinLabomics/TSI | md (chat) + URL | HU/EN | VC-14: p=0,0075; PMC7195220 ≠ YouScript; OQ-05 nyitva; k≠ClinLabomics | n/a |
 | I-20 | FR-461 gateway ticket-lista + PR merge kérés | md (chat) | HU | Engineering bontás; spec fagyasztva marad; OQ-16 nyitva | n/a |
 | I-21 | G melléklet: S055 / OQ-05 / OQ-06 / OQ-16 / F-14 kidolgozás | md (chat) | HU | S055 pin; négy javaslat pecsét nélkül; DSR két artefaktum | n/a |
-| I-22 | Health Canada PRCI URL + DHCS DDG V2.2 PDF URL | URL | EN | S060/S062 pin; k=11 HC `[V]`; DHCS 11/20 000 Wayback; A14 nem pecsét | n/a |
+| I-22 | Health Canada PRCI URL + DHCS DDG V2.2 PDF URL | URL | EN | S060/S062 pin; k=11 HC `[V]`; DHCS 11/20 000 Wayback; A14 nem DPO-pecsét | n/a |
 
 ## Átfedés
 
 - I-01 ⊂ I-02 strukturálva; I-01 joghelyei I-03/I-04/I-05 ellen ellenőrizve.
 - I-06 és I-07 génlistája **nem azonos** (12 vs 14) — ez a v1.1 OQ-02 lezárása.
-- I-02 üzleti/TAM/versenytárs anyaga **nem** került a SRS-be (deszkóp: üzleti dosszié ≠ követelmény).
+- I-02 üzleti/TAM/versenytárs anyaga **nem** került a SRS-be (hatókör-szűkítés: üzleti dosszié ≠ követelmény).
 - I-11 az OQ-05/15/16 **technikai** csomagja; az OQ-kat nem zárja. I-11 A10=shadow-TTL állítása **elvetve** (VC-12).
 - I-12 A10-et visszavonási kaszkádra szűkíti; vak ≠ kettős vak.
 - I-13 gyártói kérés a címzetteknek; F.6 üresen marad külső aláírásig.
 - I-14 az I-13 kéréseit címzett-kész irattá alakítja; a vázlat **nem** szó szerinti, ahol a spec mást mond (Outbound/README javítótábla).
-- I-15 a spec-írást fagyasztja; a F1+ mag kódot elválasztja a F.6 forgalmazási kaputól.
+- I-15 a spec-írást fagyasztja; az F1+ mag kódot elválasztja a F.6 forgalmazási kaputól.
 - I-16: első sales-váz leletboltként olvasta a klinikát — **I-17 javítja**.
 - I-17: SKU-P rendszerlicenc; F2 a dobozban lakattal; US ≠ EU kiskapu.
 - I-18 = S028 teljes PDF; a „tökéletes beépítés / állami SOTA / G3=83,1%” **elvetve** (VC-13).

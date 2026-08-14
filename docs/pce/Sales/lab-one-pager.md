@@ -28,7 +28,7 @@ A PCE szándékosan **nem** hív allélt FASTQ/IDAT-ból (NG-01). Ez a ti akkred
 
 ## Pénz
 
-A vizsgálat díját a klinikának **ti** számlázzátok (a ti árlistátok). A PCE-licencet a klinika a gyártónak. **Nem** viszonteladótok a kórházi SKU-P-nek.
+A vizsgálat díját a klinikának **ti** számlázzátok (a ti árlistátok). A PCE-licencet a klinika a gyártónak fizeti. **Nem** viszonteladótok a kórházi SKU-P-nek.
 
 Opcionális saját white-label tenancy: ti fizetitek a gyártónak a `[Y1]`/`[Y2]` (mátrix `[Yl]`) — term sheet. A klinika tenancyjéhez csatlakozni: 0 szoftverdíj felétek.
 

@@ -31,7 +31,7 @@ Ez a jegyzet a felhasználói kérésre adott **formális beillesztés**. Nem �
 
 **Table 1 adatminőség:** a PDF „Dyslipidemia **E55**” / „Vitamin D Deficiency **E78**” sorai az ICD-10 szokásos kódolásával **felcseréltek** (E55 = D-vitamin / rachitis; E78 = lipoproteinzavar). A számokat ettől a jegyzettől **nem** viszi a PCE gold set. `[V]` Table 1, p. 5.
 
-**Top-1 = 31,18%:** a Top-5 83,10% **nem** „a modell 83%-ban helyes diagnózist ad”, hanem: az igaz diagnózis-csoport a **öt** legvalószínűbb között van.
+**Top-1 = 31,18%:** a Top-5 83,10% **nem** „a modell 83%-ban helyes diagnózist ad”, hanem: az igaz diagnózis-csoport az **öt** legvalószínűbb között van.
 
 ---
 

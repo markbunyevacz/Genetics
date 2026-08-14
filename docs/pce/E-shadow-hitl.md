@@ -13,7 +13,7 @@ A shadow **nem** az F1+ klinikai termék. Külön adatút, külön IAM, külön 
 
 ## E.1 Üzleti kötés (nem TAM)
 
-Az F1+ white-label statikus lelet a labor manuális szövegezését váltja ki — ez a fizető termék. A kórházi IT-nek az F1+ „okos lelet, nem élő riasztás” könnyebb belépő, mint a interruptive CDSS. Az F1s a **ugyanazon** integrációs csövön (Subscription → gateway) építi a későbbi F2 kapcsolót; a kapcsoló CE / in-house nélkül **nem** billenhet klinikai UI-ra (FR-470).
+Az F1+ white-label statikus lelet a labor manuális szövegezését váltja ki — ez a fizető termék. A kórházi IT-nek az F1+ „okos lelet, nem élő riasztás” könnyebb belépő, mint az interruptive CDSS. Az F1s az **ugyanazon** integrációs csövön (Subscription → gateway) építi a későbbi F2 kapcsolót; a kapcsoló CE / in-house nélkül **nem** billenhet klinikai UI-ra (FR-470).
 
 ---
 
@@ -25,7 +25,7 @@ Az F1+ white-label statikus lelet a labor manuális szövegezését váltja ki �
         ▼  FHIR Subscription / webhook (HTTPS)
 [ Anonimizáló / álnevesítő Gateway ]
         │  kötelezően a kórház/labor hálózati zónájában (FR-460)
-        ├─► Direct identifiers törölve vagy kód a intézmény KMS-ében
+        ├─► Direct identifiers törölve vagy kód az intézmény KMS-ében
         └─► Observation (diplotípus) + MedicationRequest (ATC) + opcionális Observation (eGFR)
         │
         ▼  TLS 1.3, külön tenant
@@ -109,7 +109,7 @@ Szekvenciális, **reviewer-vak** eljárás. **Nem** kettős vak (double-blind): 
 
 A vak HITL **támogató bizonyíték** arra, hogy a reviewer nem a napi ellátásban, nem a gép élő tanácsára gyógyít. **Nem** Art. 62-mentesség.
 
-Az érv, amit a RA/intézmény OQ-15-höz vihet (és a counsel elvethet): a L4-live kimenet nem befolyásolja az index-kezelést, mert a kezelőorvos nem látja, és a HITL utólagos. Az MDR Art. 62 hatóköre ettől még nyitott — REG-090 az első csatlakozás **előtt**.
+Az érv, amit a RA/intézmény OQ-15-höz vihet (és a counsel elvethet): az L4-live kimenet nem befolyásolja az index-kezelést, mert a kezelőorvos nem látja, és a HITL utólagos. Az MDR Art. 62 hatóköre ettől még nyitott — REG-090 az első csatlakozás **előtt**.
 
 ---
 
@@ -117,12 +117,12 @@ Az érv, amit a RA/intézmény OQ-15-höz vihet (és a counsel elvethet): a L4-l
 
 | Út | Mikor | Jogalap (váz) | Beteg hozzájárulás a shadowhoz |
 | --- | --- | --- | --- |
-| **Anonim** (default) | Nincs longitudinális követés | Anonim adat ≠ GDPR személyes adat, *ha* a anonimizálás tényleges | Nem (a klinikai 2008/XXI. hozzájárulás ettől még kell a vizsgálathoz) |
+| **Anonim** (default) | Nincs longitudinális követés | Anonim adat ≠ GDPR személyes adat, *ha* az anonimizálás tényleges | Nem (a klinikai 2008/XXI. hozzájárulás ettől még kell a vizsgálathoz) |
 | **Álnevesített** | 6 hónapos kimenet összekötése kell | GDPR 6(1)(a) + 9(2)(a) *vagy* más 9(2) jogalap a counsel szerint | **FR-115** igen; kulcs az adatkezelőnél |
 
 Adatkezelő: labor/kórház. Gyártó: adatfeldolgozó a DPA szerint, hacsak a counsel mást nem mond a saját kutatási adatbázisra. DPIA: REG-050 kiterjesztése a shadowra **élesítés előtt**.
 
-„Tiszta anonimizálás után szabadon tanítjuk a modellt” — csak akkor, ha a anonimizálás **visszafordíthatatlan**. Genetikai + ritka gyógyszerkombináció re-identifikálhat; FR-461 + DPIA. `[ASSUMPTION]` A13/A14.
+„Tiszta anonimizálás után szabadon tanítjuk a modellt” — csak akkor, ha az anonimizálás **visszafordíthatatlan**. Genetikai + ritka gyógyszerkombináció re-identifikálhat; FR-461 + DPIA. `[ASSUMPTION]` A13/A14.
 
 **A10 ≠ shadow TTL.** Lásd spec §0.1.
 
@@ -157,16 +157,16 @@ Aláírás: páciens / törvényes képviselő; dátum; adatfelvevő.
 
 ## E.7 REG-090 / OQ-15 — klinikai vizsgálat vs „csak analitika”
 
-A shadow motor **ugyanaz** a L4-live, amely F3-on MDSW lesz. Valós ellátási eseményen futtatni a jövőbeli eszköz klinikai hasznának bizonyítására:
+A shadow motor **ugyanaz** az L4-live, amely F3-on MDSW lesz. Valós ellátási eseményen futtatni a jövőbeli eszköz klinikai hasznának bizonyítására:
 
 - lehet **klinikai értékelés** adatgyűjtése, vagy
 - lehet **klinikai vizsgálat** (MDR Art. 62+), etikai engedéllyel és hatósági bejelentéssel,
 
-attól függően, hogy a szoftver „használatba vétele” / beavatkozás-e. **OQ-15:** külső RA/counsel + a partner intézmény kutatási igazgatósága **a első shadow-csatlakozás előtt**. Ez a dokumentum nem dönt.
+attól függően, hogy a szoftver „használatba vétele” / beavatkozás-e. **OQ-15:** külső RA/counsel + a partner intézmény kutatási igazgatósága **az első shadow-csatlakozás előtt**. Ez a dokumentum nem dönt.
 
 In-house F2 (A.7) más jogi doboz, mint a gyártó felhőjében futó shadow.
 
-**SOTA a F1s / clinical evaluation dossziéhoz:** PREPARE (S008), PGx-Passport (S009), CPIC (S030), MDCG/MDR. A CureMD labor→ICD preprint (S028, L5, n=593 055, Top-5 acc. 83,10%) **nem** állami/hatósági SOTA és **nem** G3-küszöb. Szabad *irodalmi* mellékletként: [S028-note](Sources/S028-curemd-hybrid-cdss-note.md). VC-13.
+**SOTA az F1s / clinical evaluation dossziéhoz:** PREPARE (S008), PGx-Passport (S009), CPIC (S030), MDCG/MDR. A CureMD labor→ICD preprint (S028, L5, n=593 055, Top-5 acc. 83,10%) **nem** állami/hatósági SOTA és **nem** G3-küszöb. Szabad *irodalmi* mellékletként: [S028-note](Sources/S028-curemd-hybrid-cdss-note.md). VC-13.
 
 ---
 
@@ -174,7 +174,7 @@ In-house F2 (A.7) más jogi doboz, mint a gyártó felhőjében futó shadow.
 
 - [ ] Given shadow motor kimenet, When L6-report generálódik, Then a Report JSON/PDF/FHIR **nem** tartalmaz `functional_phenotype`, `shadow_recommendation`, `dose_mg`.
 - [ ] Given `clinician` szerep, When a klinikai API-t hívja, Then 404/403 a `/shadow/**` és `/hitl/**` útvonalakra.
-- [ ] CI: call-graph a report-renderer és a cds-hooks modul **nem** függ a shadow-writer kimeneti táblájától (csak fordítva tilos; a shadow olvashatja a diplotípust).
+- [ ] CI: call-graph a report-renderer és a cds-hooks modul **nem** függ a shadow-writer kimeneti táblájától (fordítva megengedett: a shadow olvashatja a klinikai diplotípust; a tiltott irány a report/CDS ← shadow-kimenet).
 - [ ] Feature flag `LIVE_CDS=true` csak signed release-ben, REG-010 F2/F3 intended purpose mellett; F1+ buildben a flag compile-time false.
 - [ ] Anonim ingest: nap-szintű `authoredOn` / TAJ / dózis → elutasítva. 7 karakteres hatóanyag-kód **elfogadott**, hacsak a DPO nem durvít.
 - [ ] F1+ renderer: `MedicationEntry` nincs a call-graphben; tiltott token → `E-EDU-001`.

@@ -42,7 +42,7 @@ A PCE F1+ a partnerlaboratórium — mint a 2008. évi XXI. tv. 12. § (1) szeri
 
 Célja a külső partnerlaboratórium által **már validált** diplotípus-eredmények strukturált megjelenítése, valamint a nyilvánosan elérhető, **verziózott** nemzetközi farmakogenetikai irányelvek (CPIC, DPWG, FDA-címke) **szöveges kivonatainak** automatizált hozzárendelése a laboratóriumi jelentéshez.
 
-A szoftver **nem** végez egyedi betegre szabott klinikai értékelést a aktuális gyógyszerlista vagy szervfunkció alapján, **nem** javasol terápiát, **nem** számít dózist, **nem** jelenik meg a felírási workflow interruptive riasztásaként, és **nem** helyettesíti a képzett egészségügyi szakember független orvosi döntését. Az aláíró a labor orvosa.
+A szoftver **nem** végez egyedi betegre szabott klinikai értékelést az aktuális gyógyszerlista vagy szervfunkció alapján, **nem** javasol terápiát, **nem** számít dózist, **nem** jelenik meg a felírási workflow interruptive riasztásaként, és **nem** helyettesíti a képzett egészségügyi szakember független orvosi döntését. Az aláíró a labor orvosa.
 
 **Szabad (F1+ klinikai kimenet):**
 
@@ -55,13 +55,13 @@ A szoftver **nem** végez egyedi betegre szabott klinikai értékelést a aktuá
 **Tilos (F1+ klinikai kimenet) — ez már F2/F3 vagy shadow:**
 
 - Order-select / order-sign: „Ennél a betegnél a most felírt X-et Y-ra cseréld / a dózist 50%-kal csökkentsd.”
-- `functional_phenotype` a **aktuális** gyógyszerlistából a aláírt leleten (FR-410-LIVE).
+- `functional_phenotype` az **aktuális** gyógyszerlistából az aláírt leleten (FR-410-LIVE).
 - `dose_mg`, „optimális dózis”, „mellékhatás megelőzése a szoftver által”.
 - A shadow-motor kimenetének megjelenítése a kezelőorvosnak.
 
 **❌ Tiltott intended purpose példa:** „A szoftver célja a farmakogenetikai adatok elemzése a betegre szabott optimális gyógyszerdózis meghatározása és a mellékhatások megelőzése érdekében.”
 
-**MDSW-indoklás (gyártói, nem tanácsadói):** L0–L2 adminisztráció. L3 = labor. L4 F1+-ban **könyvtári társítás** (gén → publikált szöveg), nem a felírás pillanatának döntéstámogatása. **OQ-05 továbbra is nyitott:** a génhez rendelt CPIC terápiás szöveg önmagában lehet Rule 11a. A hibrid **szűkíti** a v1.1 F1-et (kivette a élő fenokonverziót és a gyógyszerlista-alapú kiemelést a klinikai kimenetből); nem szünteti meg az OQ-05-öt.
+**MDSW-indoklás (gyártói, nem tanácsadói):** L0–L2 adminisztráció. L3 = labor. L4 F1+-ban **könyvtári társítás** (gén → publikált szöveg), nem a felírás pillanatának döntéstámogatása. **OQ-05 továbbra is nyitott:** a génhez rendelt CPIC terápiás szöveg önmagában lehet Rule 11a. A hibrid **szűkíti** a v1.1 F1-et (kivette az élő fenokonverziót és a gyógyszerlista-alapú kiemelést a klinikai kimenetből); nem szünteti meg az OQ-05-öt.
 
 **Konfigurációs tilalom F1+ klinikai buildben:**
 
@@ -99,7 +99,7 @@ Példa-szerkezet (nem végleges klinikai szöveg; lektor: OQ-14):
 
 > A CPIC nemzetközi irányelvei alapján a CYP2D6 ultragyors metabolizáló *kategóriában* a triciklikus antidepresszánsok alkalmazásakor fokozott metabolizáció és a hatás elmaradása *a guideline szerint* várható. Az irányelv ilyen *kategóriában* alternatív terápiát vagy dózismódosítást tárgyal. Részletes útmutató: CPIC Guideline [azonosító] v[n], [URL].
 
-A „Ön” / „ennél a betegnél” / „a most felírt” formulák a F1+ rendererben **tiltott tokenek** (CI).
+Az „Ön” / „ennél a betegnél” / „a most felírt” formulák az F1+ rendererben **tiltott tokenek** (CI).
 
 ---
 
@@ -168,7 +168,7 @@ A D.1 nem írja a DPYD-ártalmat „halál”-nak. Az RA **páronként** válasz
 
 **OQ-06 kérdése:** melyik **osztály, páronként** — nem „melyik Notified Body”.
 
-**G gyártói javaslat (nem pecsét, [G](G-open-items.md) §2.4):** az első L4-live kiadáshoz **(a) IIa-safe párlista** — a fenti öt pár élő párosítása **ki**; statikus F1+ szöveg + „élő párosítás nem elérhető”. `[A]` Ha az RA 2026-10-31-ig nem dönt, a fejlesztés (a) szerint halad. `LIVE_CDS` ezen a napon false; a kill-switch a live flag feloldásakor kell, nem most.
+**G gyártói javaslat (nem lezárt pecsét, [G](G-open-items.md) §2.4):** az első L4-live kiadáshoz **(a) IIa-safe párlista** — a fenti öt pár élő párosítása **ki**; statikus F1+ szöveg + „élő párosítás nem elérhető”. `[A]` Ha az RA 2026-10-31-ig nem dönt, a fejlesztés (a) szerint halad. `LIVE_CDS` ezen a napon false; a kill-switch kódját a live flag feloldásakor kell beépíteni, nem most.
 
 A D.1 nem írja a DPYD-ártalmat „halál”-nak. A III-oszlop a G-ben `[I]` javaslat, nem CPIC-halálállítás.
 
@@ -182,7 +182,7 @@ Klinikai path (F1+):
   (gyógyszerlista NEM bemenet az L4-static-hoz)
 
 Shadow path (F1s) — külön store, külön IAM:
-  [HIS esemény] ──► [Gateway a intézmény zónájában] ──► L4-live ──► HITL DB
+  [HIS esemény] ──► [Gateway az intézmény zónájában] ──► L4-live ──► HITL DB
   L6-report ──X── L4-live   (FR-470 tiltott él)
 
 F2/F3: L4-live ──► L6-cds  (kapcsoló csak CE / in-house után)
@@ -192,7 +192,7 @@ F2/F3: L4-live ──► L6-cds  (kapcsoló csak CE / in-house után)
 
 ## A.6 Class I
 
-`[CORRECTED]` VC-04. Class I létezik (11c). PGx élő terápiás információ **nem** 11c. F1+ menekülés = **nem-MDSW könyvtári társítás** (OQ-05), nem Class I.
+`[CORRECTED]` VC-04. Class I létezik (Rule 11c). A PGx élő terápiás információ **nem** 11c. Az F1+ jogi menekülési érve a **nem-MDSW könyvtári társítás** (OQ-05), nem a Class I.
 
 **G §3.4 fejlesztési default pecsétig `[A]`:** haladj **Class I MDSW** technical file-lal (14971, PMS, nyilatkozat), ne „nem eszköz”-ként. Ez **nem** OQ-05 pecsét és **nem** írja felül a fenti elemzést. Ha a counsel IIa-t mond, a dosszié beszámít.
 

@@ -5,12 +5,12 @@
 | **Repo** | `genetics` tree only |
 | **Branch** | `main` |
 | **Spec** | `docs/pce/PCE-SPEC-v1.2.md` **FAGYASZTVA** (§10.2) |
-| **Lefedettség** | [SPEC-PLAN-TRACE.md](SPEC-PLAN-TRACE.md) — NOW 27/27 terv; kód 26 tétel demón kész, 1 szándékos tiltás (matcher ki); laborút 8/8, kutatási út 5/5 |
+| **Lefedettség** | [SPEC-PLAN-TRACE.md](SPEC-PLAN-TRACE.md) — NOW 27/27 terv; a kódban 26 tétel a demóban kész, 1 szándékos tiltás (matcher ki); laborút 8/8, kutatási út 5/5 |
 | **Adatfolyam / UX** | [DATAFLOW-AND-UX.md](DATAFLOW-AND-UX.md) |
 | **Adat** | Gold V0 + hivatalos CPIC/DPWG/FDA táblák. Nincs élő HIS, kitalált gyártónév, dummy guideline-szöveg. |
 | **Flag** | `LIVE_CDS = False`; F1+ `MATCHER_ON = False`. CI assert. |
 
-Egy szelet **kész**, ha a TRACE-ben PARTIAL vagy FULL, a B-szerződés tesztelve, és a DATAFLOW útja SYN-en végigjárható. Nem kész: hardcoded JSON, `NotImplementedError`, második „sim” csomag.
+Egy szelet **kész**, ha a TRACE-ben PARTIAL vagy FULL, a B-szerződés tesztelve van, és a DATAFLOW útja SYN-en végigjárható. Nem kész: hardcoded JSON, `NotImplementedError`, második „sim” csomag.
 
 **WP** = work package (megvalósítási csomag ebben a tervben). Például **WP-M** az árnyék-motor (élő gén–gyógyszer párosítás a kutatási úton), **WP-H** az ehhez tartozó emberi ellenőrző tároló és API. A szereplők **P1–P6** a spec §5.1 personái (P3 = klinikai farmakológus). **HITL** = human-in-the-loop, külön ellenőrző UI, nem a laborlelet.
 
@@ -18,7 +18,7 @@ Egy szelet **kész**, ha a TRACE-ben PARTIAL vagy FULL, a B-szerződés tesztelv
 
 - F1+ renderer nem kap `medications` / HIS gyógyszerlistát (FR-470 / R-021).
 - Shadow store ≠ report store (külön process, külön SQLite: `var/clinical.sqlite`, `var/hitl.sqlite`, `var/kcell.sqlite`).
-- Ismeretlen diplotípus = A14 küszöb alatt (allowlist).
+- Ismeretlen diplotípus: A14 szerint ritkaként kezelendő (nincs az allowlisten).
 - k-cella count soha nem a PCE payloadon.
 - Teljes CPIC frequency sheet nem vendorolható; keep-set script: `tests/fixtures/gold-v0/extract_cpic_frequency_slice.py`.
 - FR-100 kapu a report-render előtt; CLI sem kerülheti meg.
@@ -45,7 +45,7 @@ Egy szelet **kész**, ha a TRACE-ben PARTIAL vagy FULL, a B-szerződés tesztelv
 
 ---
 
-## WP-G — Gateway (F1s) — **done / PARTIAL séma closed G12**
+## WP-G — Gateway (F1s) — **kész / PARTIAL; G12 séma zárva**
 
 Gold V0 + HTTP ingest a `main`-en. G12/G13 ezen az ágon:
 
@@ -53,13 +53,13 @@ Gold V0 + HTTP ingest a `main`-en. G12/G13 ezen az ágon:
 | --- | --- | --- | --- |
 | G12 | GatewayEvent `id`, `received_at`, `org_id`, `payload_hash` (B.2.2) | `pipeline.stamp_gateway_event` | `test_v0_01_raw_when_cell_meets_k` |
 | G13 | Practitioner / ward / meta.source törlés | `strip_pii_fr460` | `test_practitioner_and_meta_source_stripped` |
-| G14 | `POST /v1/shadow/events` 202 + persist **nem** ide; persist WP-H | server már 202 | test_pipeline HTTP |
+| G14 | `POST /v1/shadow/events` 202; a perzisztencia **nem** ide tartozik — az WP-H | server már 202 | test_pipeline HTTP |
 
 ---
 
 ## WP-C — L0 consent kapu (FR-100/110/115) — **PARTIAL on this branch**
 
-Without this the F1+ PDF is not a spec-conform product (FR-100).
+Enélkül az F1+ PDF nem spec-konform termék (FR-100).
 
 | ID | Given / When / Then | HTTP | Teszt |
 | --- | --- | --- | --- |
@@ -96,7 +96,7 @@ Store: `CounsellingRecord`, `ConsentRecord`, `Sample`, `DeletionCertificate` a c
 
 | ID | AC | Megjegyzés |
 | --- | --- | --- |
-| N1 | ATC + verziózott mapping a riport metaadatában | Gateway ATC már van; klinikai path ugyanaz a truncate, ha med listát *tárol* |
+| N1 | ATC + verziózott mapping a riport metaadatában | A gateway ATC-csonkolása már megvan; a klinikai út ugyanazt a csonkolást használja, ha gyógyszerlistát *tárol* |
 | N2 | Ismeretlen kód → `NEEDS_MAPPING` / `E-MAP-001`, nincs csendes hiányos lista | Shadow LIVE input |
 | N3 | HGVS/VRS left-align | csak WP-V VCF-path |
 
@@ -169,7 +169,7 @@ HTML POST a valós API-ra, nem screenshot-mock.
 | X3 | nincs LLM, nincs SHAP | CI |
 | X4 | 6. § (6) kérés napló AuditEvent | WP-Q |
 
-Szöveg sablon a spec/A.1 tényekből + a case mezői; nem szabadon írt klinikai tanács.
+Szövegsablon a spec/A.1 tényeiből és a case mezőiből; nem szabadon írt klinikai tanács.
 
 ---
 
@@ -203,7 +203,7 @@ Külön csomag: `src/pce_shadow/`. `pce_report` nem importálja.
 | --- | --- | --- |
 | M1 | Input: coarsened/raw diplotípus + meds (default 7 karakteres hatóanyag-kód) | GatewayEvent |
 | M2 | Output: `live_findings[]` stratégia-kategória, **nincs** `dose_mg` | B.2.2 |
-| M3 | CYP2D6 gén szerinti **normál metabolizáló** + **7 karakteres** paroxetin (`N06AB05`) vagy fluoxetin (`N06AB03`): a gén szerinti osztály megmarad; FDA `strong` gátló rögzítve; **funkcionális szegény metabolizáló üres**, mert a CPIC SSRI 2023-ban **nincs** NM→szegény sor (a hiány a HITL `forras_allapot` listán). Dummy szegény címke = **fail**. Csoportkód `N06AB`: hatóanyag nem ismert (az SSRI-csoportban az eszcitaloprám is benne van) → gátló-állítás szünetel. ANON ingest a 7 karakteres kódot **elfogadja** (D-38). **G3 nevező:** `tests/fixtures/pheno-gold-v0/` (N=32). | TC-PHENO-001; `tests/test_shadow.py`; `tests/test_pheno_gold.py`; `tests/test_hitl.py` |
+| M3 | CYP2D6 gén szerinti **normál metabolizáló** + **7 karakteres** paroxetin (`N06AB05`) vagy fluoxetin (`N06AB03`): a gén szerinti osztály megmarad; FDA `strong` gátló rögzítve; **funkcionális szegény metabolizáló üres**, mert a 2023-as CPIC SSRI guideline-ban **nincs** NM→szegény sor (a hiány a HITL `forras_allapot` listán). Dummy szegény címke = **fail**. Csoportkód `N06AB`: hatóanyag nem ismert (az SSRI-csoportban az eszcitaloprám is benne van) → gátló-állítás szünetel. ANON ingest a 7 karakteres kódot **elfogadja** (D-38). **G3 nevező:** `tests/fixtures/pheno-gold-v0/` (N=32). | TC-PHENO-001; `tests/test_shadow.py`; `tests/test_pheno_gold.py`; `tests/test_hitl.py` |
 | M4 | Nincs med lista → `clinical_context=ABSENT`, nem hallgatólagos NM | FR-220/410-LIVE |
 | M5 | eGFR < 30 → `reason: organ`, nem számított dózis | B.6.2 |
 | M6 | Determinisztikus | NFR-060 |
@@ -211,7 +211,7 @@ Külön csomag: `src/pce_shadow/`. `pce_report` nem importálja.
 
 Inhibitor tábla: FDA Table 2-2 erős index (paroxetin, fluoxetin) + WHO ATC 5. szint (7 karakter) + CPIC SSRI 2023 Table 2a stratégia-kategória. CPIC SSRI 2023: nincs NM→szegény metabolizáló sor. CPIC opioid 2020: van ilyen szabály opioidra — a paroxetin-SSRI példára **nem** keverjük. A HITL kártya kiírja: mi van, mi hiányzik, kitől, kinek kell beszerezni.
 
-**SYN kód:** `src/pce_shadow/`, `src/pce_hitl/` + `var/hitl.sqlite`, `src/pce_ui/hitl.html`. `python -m pce_hitl`. A klinikai processzus `/v1/hitl/**` továbbra is 403/404 (FR-470).
+**SYN kód:** `src/pce_shadow/`, `src/pce_hitl/` + `var/hitl.sqlite`, `src/pce_ui/hitl.html`. `python -m pce_hitl`. A klinikai folyamat a `/v1/hitl/**` hívásokra továbbra is 403/404-et ad (FR-470).
 
 ---
 
@@ -281,7 +281,7 @@ WP-V            →  R FR-210 gold; matcher OFF
 WP-P1 / F2      →  pecsét után
 ```
 
-Ne másold a gateway eseményt a F1+ reportra. Ne találj ki EDU/CPIC/DPWG mondatot.
+Ne másold a gateway eseményt az F1+ reportra. Ne találj ki EDU/CPIC/DPWG mondatot.
 
 ## Kész definíció — F1+ SYN demo
 

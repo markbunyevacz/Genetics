@@ -20,15 +20,15 @@ Kérjük, a csatolt v1.2 műszaki specifikáció és az alább **szó szerint** 
 
 > Védhető-e az A.1 F1+ pozíció, ha a kimenet a labor-diplotípushoz verziózott CPIC/DPWG/FDA **gén-szintű** szövegkivonatot rendel, **nincs** aktuális-gyógyszer párosítás, **nincs** fenokonverzió-alkalmazás, **nincs** CDS Hooks, és az aláíró a labor orvosa?
 
-A G melléklet szerint ez még tág. Kérjük **előbb** a három igen/nem kérdést (a pecsét marad Igen/Nem/Feltétellel a V. szakaszban):
+A G melléklet szerint a fenti egyetlen kérdés még túl tág. Kérjük **előbb** a három igen/nem kérdést (a pecsét marad Igen/Nem/Feltétellel a V. szakaszban):
 
 | # | Kérdés | Melléklet |
 | --- | --- | --- |
 | **Q1** | Az a kimenet, amely a vizsgált génekre a **teljes, szűretlen**, verziózott guideline-táblát nyomtatja a diplotípus mellé, anélkül hogy ismerné a beteg gyógyszerlistáját — Rule 11 hatálya, vagy Rule 11c Class I? | `tests/test_report.py`; `src/pce_report/schema.py` (`ALLOWED_B41_TOP_LEVEL` = 45, `FORBIDDEN_B41_FIELDS` = 15); példa-lelet |
-| **Q2** | Ha Rule 11 alatt áll: a beteg-specifikus szelekció hiánya elegendő-e a **IIa alatti** besoroláshoz? | ugyanaz |
+| **Q2** | Ha Rule 11 alatt áll: a beteg-specifikus szelekció hiánya elegendő-e az **IIa alatti** besoroláshoz? | ugyanaz |
 | **Q3** | Ha Q1 = Class I: elegendő-e a CI-invariáns-készlet (`LIVE_CDS is False`; `! grep MedicationEntry src/pce_report`; `! grep pce_gateway.pipeline src/pce_report`) az MDCG Rev.1 dokumentált modulhatárhoz? | `.github/workflows/ci.yml` |
 
-Ha a válasz **Q1 = Rule 11 és Q2 = nem**, az F1+ klinikai kimenet IIa pályára esik (REG-010 újra; Notified Body a forgalomba hozatalhoz).
+Ha a válasz **Q1 = Rule 11 és Q2 = nem**, az F1+ klinikai kimenet IIa pályára esik (REG-010 újra; a forgalomba hozatalhoz Notified Body szükséges).
 
 Amíg a pecsét hiányzik, a gyártó **Class I MDSW** technical file-lal halad (G §3.4), nem „nem eszköz”-ként. Ez nem előre pecsételi a nem-MDSW-t.
 
@@ -60,11 +60,11 @@ A counsel a minősítést **erre** a szövegre adja, ne parafrázisra. Forrás: 
 >
 > Célja a külső partnerlaboratórium által **már validált** diplotípus-eredmények strukturált megjelenítése, valamint a nyilvánosan elérhető, **verziózott** nemzetközi farmakogenetikai irányelvek (CPIC, DPWG, FDA-címke) **szöveges kivonatainak** automatizált hozzárendelése a laboratóriumi jelentéshez.
 >
-> A szoftver **nem** végez egyedi betegre szabott klinikai értékelést a aktuális gyógyszerlista vagy szervfunkció alapján, **nem** javasol terápiát, **nem** számít dózist, **nem** jelenik meg a felírási workflow interruptive riasztásaként, és **nem** helyettesíti a képzett egészségügyi szakember független orvosi döntését. Az aláíró a labor orvosa.
+> A szoftver **nem** végez egyedi betegre szabott klinikai értékelést az aktuális gyógyszerlista vagy szervfunkció alapján, **nem** javasol terápiát, **nem** számít dózist, **nem** jelenik meg a felírási workflow interruptive riasztásaként, és **nem** helyettesíti a képzett egészségügyi szakember független orvosi döntését. Az aláíró a labor orvosa.
 
 **Szabad (F1+ klinikai kimenet):** diplotípus + callability a laborhívásból (FR-240); statikus, verziózott guideline-szöveg a **meghívott génhez** (nem a felírt gyógyszerhez kötött pop-up); enciklopédia-nézet a beteg aktuális receptjéhez **nem** párosítva; fenokonverzió **oktató** bekezdés a gyógyszerlista olvasása nélkül (FR-410-EDU); a génhez tartozó **teljes** publikált gyógyszer/osztály-tábla (FR-400-STATIC).
 
-**Tilos (F1+ klinikai kimenet):** order-select / order-sign típusú, a most felírt szerre szabott csere/dózis-utasítás; `functional_phenotype` az aktuális gyógyszerlistából a aláírt leleten; `dose_mg`; a shadow-motor kimenetének megjelenítése a kezelőorvosnak.
+**Tilos (F1+ klinikai kimenet):** order-select / order-sign típusú, a most felírt szerre szabott csere/dózis-utasítás; `functional_phenotype` az aktuális gyógyszerlistából az aláírt leleten; `dose_mg`; a shadow-motor kimenetének megjelenítése a kezelőorvosnak.
 
 ---
 
@@ -78,7 +78,7 @@ A leletgeneráló renderer futásidőben **nem** kapja meg, nem olvassa és nem 
 
 ### 2. Nincs betegre szabott „ha–akkor” (A.1.2)
 
-A szoftver nem futtat egyedi döntési fát a beteg aktuális gyógyszerére. Ha a leleten egy adott gén (pl. CYP2D6) szerepel, a rendszer a hozzá tartozó **teljes**, változatlan, verziózott nemzetközi irányelv-táblázatot átemeli (mind az N sor), anélkül, hogy abból a betegre szabott, recepthez kötött következtetést vonna le. Tiltott tokenek a rendererben: „Ön” / „ennél a betegnél” / „a most felírt” (`E-EDU-001`).
+A szoftver nem futtat egyedi döntési fát a beteg aktuális gyógyszerére. Ha a leleten egy adott gén (pl. CYP2D6) szerepel, a rendszer a hozzá tartozó **teljes**, változatlan, verziózott nemzetközi irányelv-táblázatot átemeli (mind az N sort), anélkül, hogy abból a betegre szabott, recepthez kötött következtetést vonna le. Tiltott tokenek a rendererben: „Ön” / „ennél a betegnél” / „a most felírt” (`E-EDU-001`).
 
 ### 3. FR-410-EDU — oktató bekezdések
 
@@ -113,19 +113,19 @@ A.1.1 jelenlegi szöveg (counsel töltheti a felelősségi bekezdést):
 A gyártó **nem** kéri, hogy a counsel ezt a kockázatot hallgassa el:
 
 1. A génhez rendelt CPIC/DPWG/FDA **terápiás** szöveg (dózis-/csere-stratégia a *kategóriában*) önmagában lehet MDR Rule **11a** (információ, amelyet diagnosztikai vagy terápiás döntéshez használnak) → Class **IIa**, akkor is, ha nincs aktuális-gyógyszer szűrés.
-2. A labororvos aláírása és a „az orvos dönt” formula **nem** minősít ki (A.0).
+2. A labororvos aláírása és az „Az orvos dönt” formula **nem** minősít ki (A.0).
 3. Class I (Rule 11c) létezik, de a PGx terápiás információ **nem** 11c menekülés.
 
 A hibrid (F1+ statikus társítás) a v1.1-hez képest **szűkít** (kivette az élő fenokonverziót és a gyógyszerlista-alapú kiemelést). **Nem** szünteti meg az OQ-05-öt.
 
-### IV.a Szomszédos L4 blogok — nem pecsét
+### IV.a Szomszédos L4 blogok — nem lezárt pecsét
 
 A gyártó kapott vendor-blog hivatkozásokat (Tandem Health, 2026-06-24; punktum.net; mdxcro.com; IntuitionLabs a Tandem cikkben). **L4.** Nem Notified Body határozat.
 
 Amit ezek **összhangban** mondanak a spec A.0 / NG-07-tel (a primer továbbra is **MDCG 2019-11 Rev.1 + MDR Rule 11**, S004/S005/S020):
 
 - Az „AI asszisztens” / „csak tájékoztató” címke **nem** minősít ki, ha a kimenet klinikai döntést támogat.
-- A puszta tárolás/megjelenítés vs. a döntést *befolyásoló* kimenet a MDCG kérdése.
+- A puszta tárolás/megjelenítés vs. a döntést *befolyásoló* kimenet az MDCG kérdése.
 
 Amit **nem** szabad belőlük kiolvasni (VC-14):
 

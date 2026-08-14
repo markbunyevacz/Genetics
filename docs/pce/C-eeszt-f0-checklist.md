@@ -98,7 +98,7 @@ F1-ben **nem** töltendő. Itt van, hogy F4-en ne kelljen keresni.
 | 8 | OQ-03: [L3 term sheet](Outbound/OQ-03-l3-term-sheet.md), labor név nélkül itt (F.5) | Üzlet | REG-020 tervezet |
 | 9 | OQ-01 végrehajtás: [F0 owner-csomag](Outbound/OQ-01-iso-eeszt-owner-csomag.md) | `eeszt_iso_owner` | C-000 + C-201 |
 
-A 2026-09-30 **kb. 7 hét** 2026-08-12-től. ISO 9001 nulláról ebben az ablakban szűk — ha nincs tanúsítvány, ez az F0 egyetlen kritikus útja, nem a kód.
+A 2026-09-30 **kb. 7 hét** 2026-08-12-től. ISO 9001-et nulláról megszerezni ebben az ablakban szűkös — ha nincs tanúsítvány, ez az F0 egyetlen kritikus útja, nem a kód.
 
 ---
 

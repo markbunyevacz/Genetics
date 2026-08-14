@@ -46,7 +46,7 @@ A disclaimer (A.1.1 / FR-490) **nem** felelősségkizárás és **nem** MDSW-kim
 
 **A gyártó által kért kimenet:** feltételes igen, a fenti garanciák + FR-490 folyamatos megléte mellett.
 
-**Ami ezt nem zárja:** a counsel aláírása. Ha a válasz nem, az F1+ IIa pályára esik (REG-010 újra).
+**Ami a záráshoz még hiányzik:** a counsel aláírása. Ez a fájl azt nem helyettesíti. Ha a válasz nem, az F1+ IIa pályára esik (REG-010 újra).
 
 Csomag: A.1, A.1.1, A.1.2, FR-400-STATIC, FR-410-EDU, FR-470, REG-010, MDCG 2019-11 Rev.1.
 
@@ -64,7 +64,7 @@ Csomag: A.1, A.1.1, A.1.2, FR-400-STATIC, FR-410-EDU, FR-470, REG-010, MDCG 2019
 
 **Függés:** az intézményi RA a gyártó szerint akkor fogadja el, ha az **OQ-16** (DPO) tisztázott. F1s nem indul OQ-16 nélkül.
 
-**Ami ezt nem zárja:** etikai bizottság / hatósági bejelentés, ha a RA másképp dönt. REG-090 az első HIS-csatlakozás előtt.
+**Ami ettől még nyitva maradhat:** etikai bizottság / hatósági bejelentés, ha a RA másképp dönt. REG-090 az első HIS-csatlakozás előtt.
 
 Csomag: E.4.1, E.7, FR-450-BLIND, FR-470.
 
@@ -78,12 +78,12 @@ Csomag: E.4.1, E.7, FR-450-BLIND, FR-470.
 
 **Garanciák:**
 
-- Gateway intézményi zónában; default **7 karakteres hatóanyag-kód** (D-38); idő = negyedév; k &lt; 5 vagy ritka diplotípus → drop vagy osztály (FR-461). A DPO durvíthat ATC4/ATC3-ra.
-- A10: visszavonáskor 72 h törlés **vagy** irreverzibilis anonimizálás. A15 csak már anonim (vagy FR-115-ös) sorra.
+- Gateway intézményi zónában; default **7 karakteres hatóanyag-kód** (D-38); idő = negyedév; ha a cella elemszáma **&lt; k** (A14 default: k≥5) vagy a diplotípus ritka → drop vagy osztály (FR-461). A DPO durvíthat ATC4/ATC3-ra.
+- A10: visszavonáskor 72 h törlés **vagy** irreverzibilis anonimizálás. Az A15 csak már anonim (vagy FR-115-ös) sorra vonatkozik.
 
-**A gyártó által várt DPO-feltétel (előre beépítve):** A14 küszöb **monitorozása** és a legritkább diplotípusok automatikus dropja akkor is, ha ez rontja a G3-at (R-020). → FR-461 utolsó AC. G §4 javaslat (nem pecsét): k ≥ 11 diplotípus×ATC5 (S060 `[V]` cél-cella 11; S059 `[V]` risk=0,09; S062 `[V]` 11 / 20 000, **nem** EU-norma), `f_min = k/N`. Az A14 k≥5 / 0,5% **nem** átírva.
+**A gyártó által várt DPO-feltétel (előre beépítve):** A14 küszöb **monitorozása** és a legritkább diplotípusok automatikus dropja akkor is, ha ez rontja a G3-at (R-020). → FR-461 utolsó AC. G §4 javaslat (nem lezárt pecsét): k ≥ 11 diplotípus×ATC5 (S060 `[V]` cél-cella 11; S059 `[V]` risk=0,09; S062 `[V]` 11 / 20 000, **nem** EU-norma), `f_min = k/N`. Az A14 k≥5 / 0,5% **nem** átírva.
 
-**Ami ezt nem zárja:** aláírt DPIA. Ha a DPO szerint a profil így is személyes adat → A12 hamis, FR-115 kötelező.
+**Ami a záráshoz még hiányzik:** aláírt DPIA. Ha a DPO szerint a profil így is személyes adat → A12 hamis, FR-115 kötelező.
 
 **Küldendő irat:** [Outbound/OQ-16-dpo-dpia-kerdoiv.md](Outbound/OQ-16-dpo-dpia-kerdoiv.md) — anonim út **nem** kapcsolja ki FR-100-at.
 
@@ -124,6 +124,6 @@ C melléklet C.4.
 | OQ-03 | Partnerlabor (REG-020) | | | |
 | OQ-17 | US counsel | | | |
 
-A sor kitöltése a címzett **Outbound** iratán történik, nem ebben a mellékletben. OQ-17 a US F2/F3 feloldást blokkolja, a HU/EU F1+ mag kódot nem.
+A sor kitöltése a címzett **Outbound** iratán történik, nem ebben a mellékletben. OQ-17 az US F2/F3 feloldást blokkolja, a HU/EU F1+ mag kódot nem.
 
-A spec-írás **fagyasztva** (§10.2). A F1+ mag és a [Sales](Sales/README.md) **nem** várja ezt a táblát; az éles HIS és a nem-MDSW *licenc* igen. Pilot (szintetikus) a Sales ajánlat §2 szerint mehet.
+A spec-írás **fagyasztva** (§10.2). Az F1+ mag és a [Sales](Sales/README.md) **nem** várja ezt a táblát; az éles HIS és a nem-MDSW *licenc* igen. Pilot (szintetikus) a Sales ajánlat §2 szerint mehet.

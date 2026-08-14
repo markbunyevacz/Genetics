@@ -11,7 +11,7 @@ A gateway az **intézményi zónában** fut (FR-460). A PCE felhő defense-in-de
 
 **Cella (implementálandó, E.3.1 / OQ-16 I.4):** `(fenotípus-osztály × ATC-szint × naptári negyedév)` a gateway **helyi** számlálóján. A nyers count **nem** megy a PCE-hez. FR-461 „gördülő ablak” = ez a negyedéves helyi ablak; **ne** találj ki 90 napos csúszó ablakot.
 
-**Osztály-enum coarsenkor (FR-461):** `REDUCED` | `INCREASED` | `UNCERTAIN`. `diplotype_granularity = CLASS` (E.3.1).
+**Osztály-enum coarsen esetén (FR-461):** `REDUCED` | `INCREASED` | `UNCERTAIN`. `diplotype_granularity = CLASS` (E.3.1).
 
 WHO ATC `[V]` S032: ATC3 = 4 karakter (`N06A`); ATC4 = 5 (`N06AB`); ATC5 = 7 (`N06AB10`). **Default (D-38): ATC5, 7 karakteres hatóanyag-kód.** A DPO durvíthat; akkor a párosítás szünetel.
 
@@ -34,7 +34,7 @@ Csonkolás FR-461 nélkül nem szállítható: előbb le kell szedni a közvetle
 
 PSEUDO út + FR-115: **ne** kódold élesre, amíg OQ-16 = NEM. SYN-en a `mode` flag létezzen; `ResearchConsent` hiány → `E-CONSENT-006` (B.3.5).
 
-SYN kód: [`src/pce_gateway/`](../../../src/pce_gateway/) (`strip_pii_fr460`). A GatewayEvent **nem** visz `Patient` mezőt; nem/születési év csak helyi `local_counter`.
+SYN kód: [`src/pce_gateway/`](../../../src/pce_gateway/) (`strip_pii_fr460`). A GatewayEvent **nem** visz `Patient` mezőt; a név/születési év csak a helyi `local_counter`-ben marad.
 
 ---
 
@@ -144,7 +144,7 @@ A PCE **nem bízik** a gatewayben.
 | Bemenet | Kód | HITL |
 | --- | --- | --- |
 | `Patient.name` / TAJ / identifier | `E-SHADOW-001` (400) | nem |
-| ATC finomabb, mint a DPO `max_atc_level` (default 5 = 7 karakter **elfogadott**) | `E-SHADOW-001` csak ha a DPO durvít | nem, ha default |
+| ATC finomabb, mint a DPO `max_atc_level` (default 5 = 7 karakter **elfogadott**) | `E-SHADOW-001` csak ha a DPO durvít | nincs HITL-írás, ha a default ATC5 él |
 | Nap-szintű `authoredOn` | `E-SHADOW-001` | nem |
 | Nyers ritka diplotípus / k-alatti sejt | `E-SHADOW-003` (202) | nem; számláló |
 | Nem gateway service-account | `E-SHADOW-002` (403) | nem |
@@ -156,8 +156,8 @@ A PCE **nem bízik** a gatewayben.
 | **AC** | FR-461 A14 monitor; OQ-16 I.4 |
 | **TC** | TC-GW-020 |
 
-- Given ANON forgalom, When naptári negyedév zárul, Then aggregált (nem PII) ripor: `E-SHADOW-003` drop-arány + k-cella eloszlás.
-- Tilos a riporben: név, TAJ, nyers diplotípus, pontos idő, `Patient.id`.
+- Given ANON forgalom, When naptári negyedév zárul, Then aggregált (nem PII) riport: `E-SHADOW-003` drop-arány + k-cella eloszlás.
+- Tilos a riportban: név, TAJ, nyers diplotípus, pontos idő, `Patient.id`.
 - G3 vs drop: a monitor **nem** kapcsolja ki a dropot, ha a recall esik (R-020).
 
 ### PCE-GW-461-11 — SYN fixture csomag (gold v0, nem annotációs SOP)

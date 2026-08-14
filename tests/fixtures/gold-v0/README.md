@@ -35,7 +35,7 @@ A CPIC **Diplotype frequency** lap Hardy–Weinberg becslés az allélgyakorisá
 
 [frequency-config.v0.json](frequency-config.v0.json) — **nem** a hívási út konstansa. `rare_diplotype_threshold` config-kulcs.
 
-**Allowlist, nem denylist.** A gitbe a European HW diplotípusok mennek, ahol freq ≥ 0,005. Ami nincs a listán (ismeretlen hívás, ritka, 0.0), az A14 szerint coarsen/drop. A teljes CYP2D6 lap **4005** numerikus European sort tartalmaz; ebből **34** keep, **1001** pozitív &lt; 0,5%, **2970** nulla. A 3971 nem-keep sort **ne** vendold.
+**Allowlist, nem denylist.** A gitbe az European HW diplotípusok mennek, ahol freq ≥ 0,005. Ami nincs a listán (ismeretlen hívás, ritka, 0.0), az A14 szerint coarsen/drop. A teljes CYP2D6 lap **4005** numerikus European sort tartalmaz; ebből **34** keep, **1001** pozitív &lt; 0,5%, **2970** nulla. A 3971 nem-keep sort **ne** tedd a gitbe.
 
 | Gén | Keep (RAW engedélyezett) | Fixture ritka | Legritkább pozitív a teljes lapon (mindig drop) |
 | --- | --- | --- | --- |

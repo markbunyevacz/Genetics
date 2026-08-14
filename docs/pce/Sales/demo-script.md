@@ -11,11 +11,11 @@
 
 ## 0. Nyitó (45 mp)
 
-> „Ez egy farmakogenetikai rendszer: lelet, árnyék-validáció és élő döntéstámogatás **egy** szoftverben. A `[HU|EU|US]` csomagban ma az F1+[ / F1s] él. Az F2/F3 a felírónak zárva, amíg az adott piac minősítése megvan — nem azért, mert hiányzik, hanem mert a riasztás bekapcsolása forgalomba hozatal.”
+> „Ez egy farmakogenetikai rendszer: lelet, árnyék-validáció és élő döntéstámogatás **egy** szoftverben. A `[HU|EU|US]` csomagban ma az F1+[ / F1s] él. Az F2/F3 a felírónak zárva, amíg az adott piac minősítése megvan — nem azért, mert hiányzik, hanem mert a riasztás bekapcsolása forgalomba hozatalnak minősül.”
 
 Ha azt mondják, „nekünk a YouScript kell, most”:
 
-> „A motor megvan. A felírási kártya ugyanazon a csövön kapcsol. Ma lakattal mutatom. CE / in-house / FDA nélkül nem kapcsolom, mert az a ti RA-toknak és nekünk is Rule 11a / eszköz.”
+> „A motor megvan. A felírási kártya ugyanazon a csövön kapcsol. Ma lakattal mutatom. CE / in-house / FDA nélkül nem kapcsolom, mert az a ti RA-toknak és nekünk is Rule 11a szerinti eszköznek minősülne.”
 
 ---
 
