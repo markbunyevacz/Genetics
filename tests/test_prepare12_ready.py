@@ -172,7 +172,32 @@ class RemainingLivePairTests(unittest.TestCase):
         self.assertEqual(inf["genotype_phenotype"][0]["genotype_phenotype"], "PF")
         self.assertEqual(inf["live_findings"][0]["strategy_category"], "CONSIDER_ALTERNATIVE")
 
-    def test_tpmt_pm_azathioprine_alternative(self) -> None:
+    def test_cyp2d6_pm_codeine_alternative(self) -> None:
+        inf = _infer("CYP2D6", "*4/*4", "R05DA04")
+        self.assertEqual(inf["live_findings"][0]["strategy_category"], "CONSIDER_ALTERNATIVE")
+        self.assertEqual(inf["live_findings"][0]["inn"], "codeine")
+        self.assertNotIn("dose_mg", inf["live_findings"][0])
+
+    def test_dpyd_pm_capecitabine_alternative(self) -> None:
+        inf = _infer("DPYD", "*2A/*2A", "L01BC06")
+        self.assertEqual(inf["live_findings"][0]["strategy_category"], "CONSIDER_ALTERNATIVE")
+        self.assertEqual(inf["live_findings"][0]["inn"], "capecitabine")
+
+    def test_hla_b_5801_allopurinol_alternative(self) -> None:
+        inf = _infer("HLA-B", "*58:01 positive", "M04AA01")
+        self.assertEqual(inf["live_findings"][0]["strategy_category"], "CONSIDER_ALTERNATIVE")
+        self.assertEqual(inf["live_findings"][0]["inn"], "allopurinol")
+
+    def test_cyp2c19_pm_citalopram_dose_change(self) -> None:
+        inf = _infer("CYP2C19", "*2/*2", "N06AB04")
+        self.assertEqual(inf["live_findings"][0]["strategy_category"], "CONSIDER_DOSE_CHANGE")
+        self.assertEqual(inf["live_findings"][0]["inn"], "citalopram")
+
+    def test_rec_view_pairings_are_loaded(self) -> None:
+        table = KnowledgeTable()
+        self.assertEqual(table.pairing("CYP2D6", "R05DA04")["inn"], "codeine")
+        self.assertEqual(table.pairing("DPYD", "L01BC06")["inn"], "capecitabine")
+        self.assertGreaterEqual(len(table.pairings()), 50)
         inf = _infer("TPMT", "*3C/*3C", "L04AX01")
         self.assertEqual(inf["live_findings"][0]["strategy_category"], "CONSIDER_ALTERNATIVE")
 
@@ -184,7 +209,55 @@ class RemainingLivePairTests(unittest.TestCase):
         self.assertEqual(inf["live_findings"], [])
         missing = " ".join(row["hu"] for row in inf["forras_allapot"]["hianyzik"])
         self.assertIn("F5", missing)
-        self.assertIn("VKORC1", missing)
+
+    def test_warfarin_needs_both_genes_and_has_no_mg(self) -> None:
+        only_vkor = infer(
+            {
+                "diplotypes": [
+                    {"gene": "VKORC1", "diplotype": "-1639G/-1639G", "callability": "CALLED"}
+                ],
+                "medications": [{"system": "http://www.whocc.no/atc", "code": "B01AA03"}],
+            }
+        )
+        self.assertEqual(only_vkor["live_findings"], [])
+        both = infer(
+            {
+                "diplotypes": [
+                    {"gene": "CYP2C9", "diplotype": "*1/*1", "callability": "CALLED"},
+                    {"gene": "VKORC1", "diplotype": "-1639G/-1639G", "callability": "CALLED"},
+                ],
+                "medications": [{"system": "http://www.whocc.no/atc", "code": "B01AA03"}],
+            }
+        )
+        self.assertEqual(both["live_findings"][0]["inn"], "warfarin")
+        self.assertEqual(both["live_findings"][0]["strategy_category"], "CONSIDER_DOSE_CHANGE")
+        self.assertNotIn("dose_mg", both["live_findings"][0])
+        pm = infer(
+            {
+                "diplotypes": [
+                    {"gene": "CYP2C9", "diplotype": "*3/*3", "callability": "CALLED"},
+                    {"gene": "VKORC1", "diplotype": "-1639A/-1639A", "callability": "CALLED"},
+                ],
+                "medications": [{"system": "http://www.whocc.no/atc", "code": "B01AA03"}],
+            }
+        )
+        self.assertEqual(pm["live_findings"][0]["strategy_category"], "CONSIDER_ALTERNATIVE")
+        self.assertNotIn("dose_mg", json.dumps(pm))
+
+    def test_rec_view_pairings_have_no_milligrams(self) -> None:
+        blob = (ROOT / "tests" / "fixtures" / "shadow-v0" / "prepare12-rec-pairings.v0.json").read_text(
+            encoding="utf-8"
+        )
+        self.assertNotIn("dose_mg", blob)
+        table = KnowledgeTable()
+        self.assertIsNone(table.pairing("F5", "G03AA"))
+        inf = _infer("SLCO1B1", "*5/*5", "C10AA05")
+        self.assertEqual(inf["live_findings"][0]["inn"], "atorvastatin")
+        self.assertEqual(inf["live_findings"][0]["strategy_category"], "CONSIDER_DOSE_CHANGE")
+        self.assertNotIn("dose_mg", inf["live_findings"][0])
+        mp = _infer("TPMT", "*3C/*3C", "L01BB02")
+        self.assertEqual(mp["live_findings"][0]["inn"], "mercaptopurine")
+        self.assertEqual(mp["live_findings"][0]["strategy_category"], "CONSIDER_ALTERNATIVE")
 
 
 class StarAlleleOnPathTests(unittest.TestCase):
@@ -196,26 +269,31 @@ class StarAlleleOnPathTests(unittest.TestCase):
         self.assertEqual(rows["HLA-B"]["callability"], "NOT_TESTED")
         self.assertEqual(rows["UGT1A1"]["callability"], "NOT_TESTED")
 
-    def test_matcher_on_calls_cyp2d6_star4_hom_from_defining_snv(self) -> None:
+    def test_matcher_on_calls_cyp2d6_star4_hom_from_pharmcat(self) -> None:
         text = (GOLD / "called-cyp2d6-star4-hom.vcf").read_text(encoding="utf-8")
         rows = {r["gene"]: r for r in call_star_alleles(text, reference="GRCh38", matcher_on=True)}
         self.assertEqual(rows["CYP2D6"]["callability"], "CALLED")
         self.assertEqual(rows["CYP2D6"]["diplotype"], "*4/*4")
-        self.assertEqual(rows["CYP2C19"]["diplotype"], "*1/*1")
+        self.assertEqual(rows["CYP2C9"]["callability"], "CALLED")
+        self.assertEqual(rows["CYP2C9"]["diplotype"], "*4/*4")
         self.assertEqual(rows["HLA-B"]["callability"], "NOT_TESTED")
         self.assertIsNone(rows["HLA-B"]["diplotype"])
         self.assertEqual(rows["UGT1A1"]["callability"], "NOT_TESTED")
         self.assertIsNone(rows["UGT1A1"]["diplotype"])
-        self.assertIn("outside-call", rows["HLA-B"]["note_hu"])
-        self.assertIn("TATA-box", rows["UGT1A1"]["note_hu"])
+        self.assertEqual(rows["CYP2C19"]["callability"], "INDETERMINATE")
+        self.assertIsNone(rows["CYP2C19"]["diplotype"])
+        self.assertGreaterEqual(len(rows["CYP2C19"].get("ambiguous_diplotypes") or []), 2)
+        self.assertEqual(rows["CYP2D6"]["pharmcat_version"], "3.4.0")
+        self.assertTrue(rows["CYP2D6"].get("pharmvar_version"))
+        self.assertTrue(rows["CYP2D6"].get("cpic_data_version"))
+        self.assertIs(rows["CYP2D6"].get("sv_determined"), False)
 
     def test_matcher_on_missing_site_is_indeterminate_not_star1(self) -> None:
         text = (GOLD / "missing-cyp2d6-star4.vcf").read_text(encoding="utf-8")
         rows = {r["gene"]: r for r in call_star_alleles(text, reference="GRCh38", matcher_on=True)}
-        self.assertEqual(rows["CYP2D6"]["callability"], "INDETERMINATE")
-        self.assertIsNone(rows["CYP2D6"]["diplotype"])
         self.assertNotEqual(rows["CYP2D6"]["diplotype"], "*1/*1")
-        self.assertIn("rs3892097", {m.get("rsid") for m in rows["CYP2D6"]["missing"]})
+        self.assertNotEqual(rows["CYP2D6"]["callability"], "CALLED")
+        self.assertIsNone(rows["CYP2D6"]["diplotype"])
 
     def test_clinical_add_vcf_matcher_on_persists_diplotype(self) -> None:
         svc = _svc()
@@ -226,14 +304,25 @@ class StarAlleleOnPathTests(unittest.TestCase):
         cov = {row["gene"]: row for row in stored["coverage"]}
         self.assertEqual(cov["CYP2D6"]["callability"], "CALLED")
         self.assertEqual(cov["CYP2D6"]["diplotype"], "*4/*4")
+        self.assertEqual(cov["CYP2C9"]["callability"], "CALLED")
+        self.assertEqual(cov["CYP2C9"]["diplotype"], "*4/*4")
         self.assertEqual(cov["HLA-B"]["callability"], "NOT_TESTED")
         report = svc.create_report(case["id"], "lab_signer")
         cyp = next(g for g in report["genes"] if g["gene"] == "CYP2D6")
         self.assertEqual(cyp["diplotype"], "*4/*4")
         self.assertEqual(cyp["callability"], "CALLED")
+        cyp2c9 = next(g for g in report["genes"] if g["gene"] == "CYP2C9")
+        self.assertEqual(cyp2c9["diplotype"], "*4/*4")
+        self.assertEqual(cyp2c9["callability"], "CALLED")
         hla = next(g for g in report["genes"] if g["gene"] == "HLA-B")
         self.assertEqual(hla["callability"], "NOT_TESTED")
         self.assertIsNone(hla["diplotype"])
+        self.assertEqual(report["pharmcat_version"], "3.4.0")
+        self.assertTrue(report["pharmvar_version"])
+        self.assertTrue(report["cpic_data_version"])
+        self.assertEqual(report["pipeline_version"], "pce-clinical-v0")
+        self.assertTrue(report["matcher_on"])
+        self.assertIn("NamedAlleleMatcher", report["diplotipus_forras_hu"])
 
     def test_clinical_add_vcf_default_still_off(self) -> None:
         svc = _svc()

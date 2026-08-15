@@ -30,7 +30,7 @@ Mérés: minden spec-tétel **FULL** / **PARTIAL** / **PLANNED** / **DEFERRED** 
 | Halmaz | N | Tervben nevesítve | Kód FULL | Kód PARTIAL | Kód MISSING (NOW) |
 | --- | --- | --- | --- | --- | --- |
 | FR katalógus (36) | 36 | **36 (100%)** | 0 | **26** | 0 NOW + P1/NG |
-| §10.2 NOW kódolható sáv | 27 | **27 (100%)** | 0 | **26** + 1 LOCK (FR-300) | **0** |
+| §10.2 NOW kódolható sáv | 27 | **27 (100%)** | 0 | **27** PARTIAL | **0** |
 | User story §5.2 | 21 | **21 (100%)** | 1 | **17** | élő F2 Card LOCK + P1 |
 | B.2 entitás | 22 | **22 (100%)** | 1 flag | **18** | 0 NOW (P1 maradék) |
 | B.3 / B.4 API | 12 | **12 (100%)** | **4** | **6** | 2 P1 (enciklopédia, HL7) |
@@ -42,7 +42,7 @@ Mérés: minden spec-tétel **FULL** / **PARTIAL** / **PLANNED** / **DEFERRED** 
 
 **Kód FULL (FR) = 0** szándékos: egy FR akkor FULL, ha **minden** AC + B-szerződés + D.2 TC zöld. GatewayEvent `id` / `org_id` / `payload_hash` / `received_at` megvan (G12); FR-461 monitor `org_id` / `org_display` = `SYN-ORG-001` (opák, nem kitalált kórháznév). Practitioner a Gold HIS-ben nem volt, a strip teszt szintetikus.
 
-**Terv-teljesség NOW: 27/27 = 100%.** Kód-teljesség NOW: 0 FULL + **26 PARTIAL** + 1 LOCK + **0 MISSING**. Plusz F2 cső (FR-520/530): **PARTIAL** lakattal, nem a 27 F1+/F1s NOW-sor. A Rés oszlop a még nyitott spec-pipa (HLA-B / UGT1A1\*28 a VCF pontmutációs panelből továbbra sem számolható — a laboreredmény outside-callban jön; F5/VKORC1 recommendation_view üres; pecsét előtti élő Card). A termék jelzi a hiányt ott, ahol a guideline-tábla üres.
+**Terv-teljesség NOW: 27/27 = 100%.** Kód-teljesség NOW: 0 FULL + **27 PARTIAL** + 0 LOCK + **0 MISSING**. Plusz F2 cső (FR-520/530): **PARTIAL** lakattal, nem a 27 F1+/F1s NOW-sor. A Rés oszlop a még nyitott spec-pipa (HLA-B / UGT1A1\*28 a VCF pontmutációs panelből továbbra sem számolható — a laboreredmény outside-callban jön; F5 recommendation_view üres; pecsét előtti élő Card). A termék jelzi a hiányt ott, ahol a guideline-tábla üres.
 
 **Dataflow F1+ (DATAFLOW §5, 8 lépés):** 8/8 SYN-en végigjárható HTTP-n (`test_ui_and_iso_and_walk`). **F1s HITL (5 lépés):** 5/5 (`test_his_gateway_ingest_hitl_report_untouched` + HTTP vak walk).
 
@@ -79,10 +79,10 @@ Mérés: minden spec-tétel **FULL** / **PARTIAL** / **PLANNED** / **DEFERRED** 
 | FR-230 | P1 | — | **WP-P1** | — | DEFERRED |
 | FR-240 | Prod P0 | PARTIAL | **WP-K** | JSON+TSV HTTP; `E-CALL-001`; `W-CALL-010` + resolve | HL7 P1 |
 | FR-250 | Prod P0 | PARTIAL | **WP-N** | default 7 karakteres hatóanyag-kód; DPO durvíthat | HGVS/VRS VCF-path; OGYÉI `E-MAP-001` |
-| FR-300 | Prod P0 VCF; F1 OFF | LOCK | **WP-I / V** | Repo `MATCHER_ON=false`; magyarázat a leleten (`diplotipus_forras_hu`); BE-út: `call_star_alleles(..., matcher_on=True)` pin-elt definiáló pontmutációkból, tesztelve, hiányzó hely soha nem `*1` | F1+ ON tilos változáskezelés nélkül. Nem a teljes PharmCAT NamedAlleleMatcher (nincs kópiaszám, hibrid, HLA-B, UGT1A1\*28) |
+| FR-300 | Prod P0 VCF; F1 OFF | PARTIAL | **WP-I / V** | PharmCAT 3.4.0 NamedAlleleMatcher + Phenotyper **hívva** `call_star_alleles(..., matcher_on=True)` / `POST .../files?matcher_on=true`. Riport: `pipeline_version`, `pharmcat_version`, `pharmvar_version`, `cpic_data_version`. Több diplotípus → INDETERMINATE, nincs önkényes `*1`. HLA-B VCF-ből NOT_TESTED. Repo `MATCHER_ON=false`. Jar SOUP, MPL 2.0, nem fork. | F1+ default ON tilos változáskezelés nélkül. CYP2D6 kópiaszám/hibrid SNP-VCF-ből nem jön ki → jelzett, nem kitalált |
 | FR-310 | Prod P0 | PARTIAL | **WP-T** | PREPARE-12 + `config_id`; 12 gén CPIC `pair_view` pin (S049) | change-control rekord; HLA-A/NUDT15 külön config |
 | FR-400-STATIC | Prod P0 F1+ | PARTIAL | **WP-T / R** | 12 gén CPIC pair dump; F5/VKORC1 üres rec **jelezve**; `dpwg_version` + ClinPGx DPWG annotation index URL-lel; `fda_table_version` + Table 2-2 CYP2D6 strong extract; nincs szintetizált harmadik ajánlás | DPWG teljes HTML tábla nem a findings-ben (index + pin); lektorált HU DPWG-szöveg |
-| FR-400-LIVE | P0 F1s | PARTIAL | **WP-M** | párosítás `(gén, 7 karakteres kód)` kulcson; CYP2D6 SSRI Table 2a + CYP2C19–clopidogrel + CYP2B6–efavirenz + CYP2C9–celecoxib (aktivitási pont, nem blanket IM) + CYP3A5–tacrolimus + DPYD–fluorouracil + SLCO1B1–simvastatin + TPMT–azathioprine + HLA-B–abacavir + UGT1A1–atazanavir; **nincs** `dose_mg`; CYP2D6+clopidogrel nem párosít; F5/VKORC1 rec üres → nincs kitalált pár | F5/VKORC1 rec amíg a CPIC nem ad sort; nincs FK Report-ra |
+| FR-400-LIVE | P0 F1s | PARTIAL | **WP-M** | párosítás `(gén, 7 karakteres kód)` kulcson; index párok + a pinelt rec_view többi PREPARE-12 szere (≥50 pár, WHO ATC); warfarin: CYP2C9+VKORC1 a 2017-es 2. ábrából, **nincs** mg; **nincs** `dose_mg`; CYP2D6+clopidogrel nem párosít; F5: `CPIC_F5_SOURCE=off\|mock\|live` (prod/default **off**). Mock fixture a pipeline-t futtatja; **nem** hivatalos CPIC rec. LIVE üres fetch → nincs pár. F1+ lelet F5 rec_view továbbra is 0 sor. | F5 élő pár a signed leleten csak ha a CPIC rec_view sort ad; mock nem szivárog a leletre; nincs FK Report-ra |
 | FR-410-EDU | Prod P0 F1+ | PARTIAL | **WP-T / R** | token tiltás; EDU=null | forrásolt bekezdés vagy indokolt null; ≥5 ha–akkor gold |
 | FR-410-LIVE | P0 F1s | PARTIAL | **WP-M** | gén szerinti osztály immutábilis; FDA erős gátló ATC5-ön; **funkcionális szegény metabolizáló üres**; **pheno-gold-v0 N=32** | SSRI NM→szegény sor, ha a CPIC/FDA kiadja |
 | FR-420 | P0 F1+ struktúra | PARTIAL | **WP-R** | génenként findings; `severity_means_replace_prescribed=false` | CRITICAL F2 card később |
@@ -241,7 +241,7 @@ A 2026-08-13 első terv WP-G + vékony R volt; a B.1 klinikai lánc hiányzott. 
 
 | Szabály | Eredmény |
 | --- | --- |
-| (1) NOW-sorok PARTIAL vagy FULL | **26/27 PARTIAL** + 1 LOCK; **0 MISSING** |
+| (1) NOW-sorok PARTIAL vagy FULL | **27/27 PARTIAL**; **0 MISSING** |
 | (2) DATAFLOW F1+ SYN végigjárható | **PASS** `test_ui_and_iso_and_walk` |
 | (2b) DATAFLOW F1s HITL végigjárható | **PASS** `test_his_gateway_ingest_hitl_report_untouched` + HTTP vak walk |
 | (3) érintett B.5 HTTP | **PASS** 001–005, 006, CALL, GONE, ISO; HITL operatív kódok a B.4.6-on |
@@ -388,5 +388,67 @@ A user: a maradék PREPARE-12 párokat **nem** ő hagyta ki; az ETAP 0 D-45 vág
 | Unittest | **158 OK** |
 
 A fluorouracil / azathioprine / clopidogrel IIa-safe listán van: az árnyék-motor párosít, a CDS suggestion pecsétig blokkolt (`IIA_SAFE_BLOCK=true`).
+
+---
+
+## 19. P06ag — szoftver-KÉSZ: rec_view párok + warfarin-diagram + PharmCAT (2026-08-15)
+
+A user: a flag ki **nem** azt jelenti, hogy a szoftver nincs megírva. Demózható, tesztelt, szállított; prod éles pecsét nélkül. A „ki adja / honnan” a gyártó pin, nem a labor.
+
+| Tétel | Ki adja | Honnan | Szoftver |
+| --- | --- | --- | --- |
+| F5 élő pár | CPIC rec_view | `api.cpicpgx.org` F5=not.is.null → **0 sor** | Pipeline **megvan**: `CPIC_F5_SOURCE=off` (prod) / `mock` (lokális fixture) / `live` (API). Mock **nem** hivatalos CPIC ajánlás. Nincs kitalált élő pár a default táblán. |
+| Warfarin | CPIC 2017 PDF 2. ábra | pin `cpic-warfarin-2017-28198005.pdf`; WHO B01AA03 | CYP2C9 **és** VKORC1 együtt; PM → CONSIDER_ALTERNATIVE; különben CONSIDER_DOSE_CHANGE; **nincs mg**. |
+| Többi rec-táblás szer | CPIC recommendation_view + WHO ATC | `prepare12-rec-pairings.v0.json` + `whocc-atc-*.html` | `infer` stratégia-kategória, nincs mg. Index párok nem felülírva. |
+| Csillag-allél | PharmGKB PharmCAT 3.4.0 all-jar | GitHub release; sha256 pin; jar `var/` gitignored | NamedAlleleMatcher + Phenotyper hívva `matcher_on=True`. Repo flag false. |
+
+Official pin: **87** `ok: true`. MANIFEST top-level `accessed` **2026-08-13**. Unittest **165 OK**.
+
+---
+
+## 20. P06ah — F5 adat-agnosztikus ingest (2026-08-15)
+
+A user: „Amíg a CPIC nem ad rec-sort, nincs mit párosítani” **nem** azt jelenti, hogy a fejlesztés az API-ra vár. A cső most a mock fixture-ön fut. Amikor a CPIC publikál, `CPIC_F5_SOURCE=live` — kódmódosítás nélkül.
+
+| Tétel | Eredmény |
+| --- | --- |
+| Séma / DTO | `tests/fixtures/cpic_f5_recommendation.schema.json` + `validate_rec_view_row`. `lookupkey.F5` string vagy null. |
+| Mock fixture | `tests/fixtures/cpic_f5_mock.json`: HET avoid / WT continue / null F5 skip. `mocked: true`. ATC példa G03AA07. Nincs mg. |
+| DataProvider | `OffF5Provider` / `MockF5Provider` / `LiveF5Provider`. Env `CPIC_F5_SOURCE`. Prod default **off**. |
+| Index párok | Mock nem írja felül a paroxetin / clopidogrel / egyéb index párokat. |
+| F1+ lelet | F5 `guideline_row_count == 0`. Mock szöveg nem kerül a signed JSON-ra. |
+| Warfarin *2/*3 | CYP2C9+VKORC1 → CONSIDER_ALTERNATIVE. Egy gén → nincs finding. |
+| PharmCAT HTTP | `POST /v1/cases/{id}/files?matcher_on=true` gold VCF → CYP2D6 *4/*4 CALLED. Repo `MATCHER_ON=false`. |
+| Flag | `LIVE_CDS=false`; `MATCHER_ON=false`; `IIA_SAFE_BLOCK=true`. OQ-k **nem** pecsét. |
+| Unittest | **184 OK** |
+
+---
+
+## 21. P06ai — repo-konform hardening (2026-08-15, D-49)
+
+A user: a klinikai mag stabil; a hiányzó enterprise-garanciákat **a meglévő stdlib + unittest + pinelt JSON** keretben kell bezárni. Nincs Pydantic, BeautifulSoup, pytest, külső coverage.
+
+| Tétel | Eredmény |
+| --- | --- |
+| F5 | `F5Source` Enum; ismeretlen token `ValueError`; mock=live `validate_rec_view_row`; nem-dict sor `log.critical` + fail-fast; HOM fixture; CI `CPIC_F5_SOURCE != live`. |
+| Rec / warfarin | SKIP `frozenset`; index `(gene, atc5)` felülírás `ValueError`; ATC-5 regex `^[A-Z][0-9]{2}[A-Z]{2}[0-9]{2}$`; warfarin deklaratív CYP2C9-mátrix. Hiányzó gén → üres `live_findings`. |
+| PharmCAT | CI: Java 17 + `fetch_software_ready_pins.py --jar-only` a tesztek előtt; `PCE_PHARMCAT_OFFLINE=1` — `ensure_jar()` nem hív GitHubot. `assemble_b41` matcher_on=True: négy nem-üres verzió. Gold VCF: CYP2D6 \*4/\*4 **és** CYP2C9 \*4/\*4 (PharmCAT 3.4.0 translation, rs56165452). |
+| Flag | `LIVE_CDS=false`; `MATCHER_ON=false`; `IIA_SAFE_BLOCK=true`. OQ-k **nem** pecsét. MANIFEST top-level `accessed` **2026-08-13**. |
+| Unittest | **195 OK** |
+
+---
+
+## 22. P06aj — checklist-zárás stdlib keretben (2026-08-15, D-50)
+
+A user checklist Pydantic / BeautifulSoup / pytest / 100% coverage-csomag / `MissingGeneticDataException` crash nélkül, a meglévő stacken.
+
+| Tétel | Eredmény |
+| --- | --- |
+| F5 | `F5DataProvider` Protocol; fixture deepcopy (HET+HOM); kétszeres `apply_f5_source` nem duplikál; `config/production.env` = `off`; LIVE üres/hálózati hiba → nincs exception. |
+| Warfarin | Mindkét gén guard. Hiány → `MISSING_GENETIC_DATA` státusz, **üres** `live_findings`, nincs klinikai crash. Mátrix: `*2/*3`+AA, `*3/*3`+GA, `*1/*1`+AA, `*1/*2`+GG. |
+| HTML | stdlib `html.parser`. Csonka pin → `ValueError` / `exit 1`. Nincs BeautifulSoup. Index clopidogrel SKIP akkor is, ha valaki berakja az ATC szótárba. |
+| PharmCAT | `matcher_on=False` nem hív `subprocess.run`. `shell=False`. Nincs `.first()` / `.fallback()`. `add_outside_call`. CYP2D6 `sv_determined=False`. |
+| Flag | `LIVE_CDS=false`; `MATCHER_ON=false`. OQ **nem** pecsét. |
+| Unittest | **211 OK** |
 
 

@@ -3,6 +3,9 @@ __pycache__/
 .pytest_cache/
 .venv/
 var/
+var/pharmcat/
+*.jar
 dist/
 *.egg-info/
+pharmcat.log
 

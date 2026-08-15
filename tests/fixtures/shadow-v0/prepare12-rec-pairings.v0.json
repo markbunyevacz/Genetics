@@ -1,0 +1,1338 @@
+{
+  "id": "pgx-prepare-12-rec-pairings@v0",
+  "accessed": "2026-08-15",
+  "note": "Strategy categories from pinned CPIC recommendation_view. No milligrams. F5 and VKORC1 rec_view are empty: F5 has no live pair; warfarin is the 2017 diagram, not this file.",
+  "pairings": [
+    {
+      "gene": "CYP2B6",
+      "atc5": "N06AB06",
+      "inn": "sertraline",
+      "inn_hu": "szertralin",
+      "source_id": "CPIC-REC-CYP2B6-SERTRALINE",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251452",
+      "guidelinename": "CYP2D6, CYP2C19, CYP2B6, SLC6A4, HTR2A and Serotonin Reuptake Inhibitor Antidepressants",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "UM": "CONTINUE",
+        "RM": "CONTINUE",
+        "NM": "CONTINUE",
+        "IM": "CONTINUE",
+        "PM": "CONSIDER_DOSE_CHANGE"
+      },
+      "by_activity_score": null
+    },
+    {
+      "gene": "CYP2C19",
+      "atc5": "N06AA09",
+      "inn": "amitriptyline",
+      "inn_hu": "amitriptilin",
+      "source_id": "CPIC-REC-CYP2C19-AMITRIPTYLINE",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251445",
+      "guidelinename": "CYP2D6, CYP2C19 and Tricyclic Antidepressants",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "IM": "CONTINUE",
+        "NM": "CONTINUE",
+        "PM": "CONSIDER_ALTERNATIVE",
+        "RM": "CONSIDER_ALTERNATIVE",
+        "UM": "CONSIDER_ALTERNATIVE",
+        "LIM": "CONTINUE",
+        "LPM": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": null
+    },
+    {
+      "gene": "CYP2C19",
+      "atc5": "N06AB04",
+      "inn": "citalopram",
+      "inn_hu": "citalopram",
+      "source_id": "CPIC-REC-CYP2C19-CITALOPRAM",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251452",
+      "guidelinename": "CYP2D6, CYP2C19, CYP2B6, SLC6A4, HTR2A and Serotonin Reuptake Inhibitor Antidepressants",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "UM": "CONSIDER_ALTERNATIVE",
+        "RM": "CONTINUE",
+        "NM": "CONTINUE",
+        "LIM": "CONTINUE",
+        "IM": "CONTINUE",
+        "LPM": "CONSIDER_DOSE_CHANGE",
+        "PM": "CONSIDER_DOSE_CHANGE"
+      },
+      "by_activity_score": null
+    },
+    {
+      "gene": "CYP2C19",
+      "atc5": "N06AA04",
+      "inn": "clomipramine",
+      "inn_hu": "klomipramin",
+      "source_id": "CPIC-REC-CYP2C19-CLOMIPRAMINE",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251445",
+      "guidelinename": "CYP2D6, CYP2C19 and Tricyclic Antidepressants",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "IM": "CONTINUE",
+        "NM": "CONTINUE",
+        "PM": "CONSIDER_ALTERNATIVE",
+        "RM": "CONSIDER_ALTERNATIVE",
+        "UM": "CONSIDER_ALTERNATIVE",
+        "LIM": "CONTINUE",
+        "LPM": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": null
+    },
+    {
+      "gene": "CYP2C19",
+      "atc5": "A02BC06",
+      "inn": "dexlansoprazole",
+      "inn_hu": "dexlansoprazol",
+      "source_id": "CPIC-REC-CYP2C19-DEXLANSOPRAZOLE",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251441",
+      "guidelinename": "CYP2C19 and Proton Pump Inhibitors",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "UM": "CONSIDER_DOSE_CHANGE",
+        "RM": "CONTINUE",
+        "NM": "CONTINUE",
+        "LIM": "CONTINUE",
+        "IM": "CONTINUE",
+        "LPM": "CONTINUE",
+        "PM": "CONTINUE"
+      },
+      "by_activity_score": null
+    },
+    {
+      "gene": "CYP2C19",
+      "atc5": "N06AA12",
+      "inn": "doxepin",
+      "inn_hu": "doxepin",
+      "source_id": "CPIC-REC-CYP2C19-DOXEPIN",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251445",
+      "guidelinename": "CYP2D6, CYP2C19 and Tricyclic Antidepressants",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "IM": "CONTINUE",
+        "NM": "CONTINUE",
+        "PM": "CONSIDER_ALTERNATIVE",
+        "RM": "CONSIDER_ALTERNATIVE",
+        "LIM": "CONTINUE",
+        "UM": "CONSIDER_ALTERNATIVE",
+        "LPM": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": null
+    },
+    {
+      "gene": "CYP2C19",
+      "atc5": "N06AB10",
+      "inn": "escitalopram",
+      "inn_hu": "eszcitaloprám",
+      "source_id": "CPIC-REC-CYP2C19-ESCITALOPRAM",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251452",
+      "guidelinename": "CYP2D6, CYP2C19, CYP2B6, SLC6A4, HTR2A and Serotonin Reuptake Inhibitor Antidepressants",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "UM": "CONSIDER_ALTERNATIVE",
+        "RM": "CONTINUE",
+        "NM": "CONTINUE",
+        "LIM": "CONTINUE",
+        "IM": "CONTINUE",
+        "LPM": "CONSIDER_DOSE_CHANGE",
+        "PM": "CONSIDER_DOSE_CHANGE"
+      },
+      "by_activity_score": null
+    },
+    {
+      "gene": "CYP2C19",
+      "atc5": "N06AA02",
+      "inn": "imipramine",
+      "inn_hu": "imipramin",
+      "source_id": "CPIC-REC-CYP2C19-IMIPRAMINE",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251445",
+      "guidelinename": "CYP2D6, CYP2C19 and Tricyclic Antidepressants",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "IM": "CONTINUE",
+        "NM": "CONTINUE",
+        "PM": "CONSIDER_ALTERNATIVE",
+        "RM": "CONSIDER_ALTERNATIVE",
+        "UM": "CONSIDER_ALTERNATIVE",
+        "LIM": "CONTINUE",
+        "LPM": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": null
+    },
+    {
+      "gene": "CYP2C19",
+      "atc5": "A02BC03",
+      "inn": "lansoprazole",
+      "inn_hu": "lanzoprazol",
+      "source_id": "CPIC-REC-CYP2C19-LANSOPRAZOLE",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251441",
+      "guidelinename": "CYP2C19 and Proton Pump Inhibitors",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "UM": "CONSIDER_DOSE_CHANGE",
+        "RM": "CONTINUE",
+        "NM": "CONTINUE",
+        "LIM": "CONTINUE",
+        "IM": "CONTINUE",
+        "LPM": "CONTINUE",
+        "PM": "CONTINUE"
+      },
+      "by_activity_score": null
+    },
+    {
+      "gene": "CYP2C19",
+      "atc5": "A02BC01",
+      "inn": "omeprazole",
+      "inn_hu": "omeprazol",
+      "source_id": "CPIC-REC-CYP2C19-OMEPRAZOLE",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251441",
+      "guidelinename": "CYP2C19 and Proton Pump Inhibitors",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "UM": "CONSIDER_DOSE_CHANGE",
+        "RM": "CONTINUE",
+        "NM": "CONTINUE",
+        "LIM": "CONTINUE",
+        "IM": "CONTINUE",
+        "LPM": "CONTINUE",
+        "PM": "CONTINUE"
+      },
+      "by_activity_score": null
+    },
+    {
+      "gene": "CYP2C19",
+      "atc5": "A02BC02",
+      "inn": "pantoprazole",
+      "inn_hu": "pantoprazol",
+      "source_id": "CPIC-REC-CYP2C19-PANTOPRAZOLE",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251441",
+      "guidelinename": "CYP2C19 and Proton Pump Inhibitors",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "UM": "CONSIDER_DOSE_CHANGE",
+        "RM": "CONTINUE",
+        "NM": "CONTINUE",
+        "LIM": "CONTINUE",
+        "IM": "CONTINUE",
+        "LPM": "CONTINUE",
+        "PM": "CONTINUE"
+      },
+      "by_activity_score": null
+    },
+    {
+      "gene": "CYP2C19",
+      "atc5": "N06AB06",
+      "inn": "sertraline",
+      "inn_hu": "szertralin",
+      "source_id": "CPIC-REC-CYP2C19-SERTRALINE",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251452",
+      "guidelinename": "CYP2D6, CYP2C19, CYP2B6, SLC6A4, HTR2A and Serotonin Reuptake Inhibitor Antidepressants",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "LIM": "CONTINUE",
+        "UM": "CONTINUE",
+        "RM": "CONTINUE",
+        "NM": "CONTINUE",
+        "IM": "CONTINUE",
+        "LPM": "CONSIDER_DOSE_CHANGE",
+        "PM": "CONSIDER_DOSE_CHANGE"
+      },
+      "by_activity_score": null
+    },
+    {
+      "gene": "CYP2C19",
+      "atc5": "N06AA06",
+      "inn": "trimipramine",
+      "inn_hu": "trimipramin",
+      "source_id": "CPIC-REC-CYP2C19-TRIMIPRAMINE",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251445",
+      "guidelinename": "CYP2D6, CYP2C19 and Tricyclic Antidepressants",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "IM": "CONTINUE",
+        "NM": "CONTINUE",
+        "PM": "CONSIDER_ALTERNATIVE",
+        "RM": "CONSIDER_ALTERNATIVE",
+        "UM": "CONSIDER_ALTERNATIVE",
+        "LIM": "CONTINUE",
+        "LPM": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": null
+    },
+    {
+      "gene": "CYP2C19",
+      "atc5": "J02AC03",
+      "inn": "voriconazole",
+      "inn_hu": "vorikonazol",
+      "source_id": "CPIC-REC-CYP2C19-VORICONAZOLE",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251456",
+      "guidelinename": "CYP2C19 and Voriconazole",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "RM": "CONSIDER_ALTERNATIVE",
+        "UM": "CONSIDER_ALTERNATIVE",
+        "NM": "CONTINUE",
+        "LIM": "CONTINUE",
+        "IM": "CONTINUE",
+        "LPM": "CONSIDER_ALTERNATIVE",
+        "PM": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": null
+    },
+    {
+      "gene": "CYP2C9",
+      "atc5": "M01AE09",
+      "inn": "flurbiprofen",
+      "inn_hu": "flurbiprofen",
+      "source_id": "CPIC-REC-CYP2C9-FLURBIPROFEN",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251464",
+      "guidelinename": "CYP2C9 and NSAIDs",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "NM": "CONTINUE",
+        "PM": "CONSIDER_DOSE_CHANGE"
+      },
+      "by_activity_score": {
+        "2.0": "CONTINUE",
+        "1.5": "CONTINUE",
+        "1.0": "CONSIDER_DOSE_CHANGE",
+        "0.5": "CONSIDER_DOSE_CHANGE",
+        "0.0": "CONSIDER_DOSE_CHANGE"
+      }
+    },
+    {
+      "gene": "CYP2C9",
+      "atc5": "C10AA04",
+      "inn": "fluvastatin",
+      "inn_hu": "fluvasztatin",
+      "source_id": "CPIC-REC-CYP2C9-FLUVASTATIN",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166264281",
+      "guidelinename": "SLCO1B1, ABCG2, CYP2C9, and Statins",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "NM": "CONTINUE",
+        "PM": "CONSIDER_ALTERNATIVE",
+        "IM": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": {
+        "2.0": "CONTINUE",
+        "0.0": "CONSIDER_ALTERNATIVE",
+        "0.5": "CONSIDER_ALTERNATIVE",
+        "1.0": "CONSIDER_ALTERNATIVE",
+        "1.5": "CONSIDER_ALTERNATIVE"
+      }
+    },
+    {
+      "gene": "CYP2C9",
+      "atc5": "N03AB05",
+      "inn": "fosphenytoin",
+      "inn_hu": "foszfenitoin",
+      "source_id": "CPIC-REC-CYP2C9-FOSPHENYTOIN",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251461",
+      "guidelinename": "CYP2C9, HLA-B and Phenytoin",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "NM": "CONTINUE",
+        "PM": "CONSIDER_DOSE_CHANGE"
+      },
+      "by_activity_score": {
+        "2.0": "CONTINUE",
+        "1.5": "CONTINUE",
+        "1.0": "CONSIDER_DOSE_CHANGE",
+        "0.5": "CONSIDER_DOSE_CHANGE",
+        "0.0": "CONSIDER_DOSE_CHANGE"
+      }
+    },
+    {
+      "gene": "CYP2C9",
+      "atc5": "M01AE01",
+      "inn": "ibuprofen",
+      "inn_hu": "ibuprofen",
+      "source_id": "CPIC-REC-CYP2C9-IBUPROFEN",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251464",
+      "guidelinename": "CYP2C9 and NSAIDs",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "NM": "CONTINUE",
+        "PM": "CONSIDER_DOSE_CHANGE"
+      },
+      "by_activity_score": {
+        "2.0": "CONTINUE",
+        "1.5": "CONTINUE",
+        "1.0": "CONSIDER_DOSE_CHANGE",
+        "0.5": "CONSIDER_DOSE_CHANGE",
+        "0.0": "CONSIDER_DOSE_CHANGE"
+      }
+    },
+    {
+      "gene": "CYP2C9",
+      "atc5": "M01AC05",
+      "inn": "lornoxicam",
+      "inn_hu": "lornoxicam",
+      "source_id": "CPIC-REC-CYP2C9-LORNOXICAM",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251464",
+      "guidelinename": "CYP2C9 and NSAIDs",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "NM": "CONTINUE",
+        "PM": "CONSIDER_DOSE_CHANGE"
+      },
+      "by_activity_score": {
+        "2.0": "CONTINUE",
+        "1.5": "CONTINUE",
+        "1.0": "CONSIDER_DOSE_CHANGE",
+        "0.5": "CONSIDER_DOSE_CHANGE",
+        "0.0": "CONSIDER_DOSE_CHANGE"
+      }
+    },
+    {
+      "gene": "CYP2C9",
+      "atc5": "M01AC06",
+      "inn": "meloxicam",
+      "inn_hu": "meloxicam",
+      "source_id": "CPIC-REC-CYP2C9-MELOXICAM",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251464",
+      "guidelinename": "CYP2C9 and NSAIDs",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "NM": "CONTINUE",
+        "PM": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": {
+        "2.0": "CONTINUE",
+        "1.5": "CONTINUE",
+        "1.0": "CONSIDER_ALTERNATIVE",
+        "0.5": "CONSIDER_ALTERNATIVE",
+        "0.0": "CONSIDER_ALTERNATIVE"
+      }
+    },
+    {
+      "gene": "CYP2C9",
+      "atc5": "N03AB02",
+      "inn": "phenytoin",
+      "inn_hu": "fenitoin",
+      "source_id": "CPIC-REC-CYP2C9-PHENYTOIN",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251461",
+      "guidelinename": "CYP2C9, HLA-B and Phenytoin",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "NM": "CONTINUE",
+        "PM": "CONSIDER_DOSE_CHANGE"
+      },
+      "by_activity_score": {
+        "2.0": "CONTINUE",
+        "1.5": "CONTINUE",
+        "1.0": "CONSIDER_DOSE_CHANGE",
+        "0.5": "CONSIDER_DOSE_CHANGE",
+        "0.0": "CONSIDER_DOSE_CHANGE"
+      }
+    },
+    {
+      "gene": "CYP2C9",
+      "atc5": "M01AC01",
+      "inn": "piroxicam",
+      "inn_hu": "piroxicam",
+      "source_id": "CPIC-REC-CYP2C9-PIROXICAM",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251464",
+      "guidelinename": "CYP2C9 and NSAIDs",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "NM": "CONTINUE",
+        "PM": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": {
+        "2.0": "CONTINUE",
+        "1.5": "CONTINUE",
+        "1.0": "CONSIDER_ALTERNATIVE",
+        "0.5": "CONSIDER_ALTERNATIVE",
+        "0.0": "CONSIDER_ALTERNATIVE"
+      }
+    },
+    {
+      "gene": "CYP2C9",
+      "atc5": "M01AC02",
+      "inn": "tenoxicam",
+      "inn_hu": "tenoxicam",
+      "source_id": "CPIC-REC-CYP2C9-TENOXICAM",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251464",
+      "guidelinename": "CYP2C9 and NSAIDs",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "NM": "CONTINUE",
+        "PM": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": {
+        "2.0": "CONTINUE",
+        "1.5": "CONTINUE",
+        "1.0": "CONSIDER_ALTERNATIVE",
+        "0.5": "CONSIDER_ALTERNATIVE",
+        "0.0": "CONSIDER_ALTERNATIVE"
+      }
+    },
+    {
+      "gene": "CYP2D6",
+      "atc5": "N06AA09",
+      "inn": "amitriptyline",
+      "inn_hu": "amitriptilin",
+      "source_id": "CPIC-REC-CYP2D6-AMITRIPTYLINE",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251445",
+      "guidelinename": "CYP2D6, CYP2C19 and Tricyclic Antidepressants",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "UM": "CONSIDER_ALTERNATIVE",
+        "IM": "CONSIDER_DOSE_CHANGE",
+        "NM": "CONTINUE",
+        "PM": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": {
+        "≥5.0": "CONSIDER_ALTERNATIVE",
+        "0.25": "CONSIDER_DOSE_CHANGE",
+        "0.5": "CONSIDER_DOSE_CHANGE",
+        "0.75": "CONSIDER_DOSE_CHANGE",
+        "1.0": "CONSIDER_DOSE_CHANGE",
+        "1.25": "CONTINUE",
+        "1.5": "CONTINUE",
+        "2.0": "CONTINUE",
+        "2.25": "CONTINUE",
+        "1.75": "CONTINUE",
+        "≥6.0": "CONSIDER_ALTERNATIVE",
+        "0.0": "CONSIDER_ALTERNATIVE",
+        "2.5": "CONSIDER_ALTERNATIVE",
+        "3.0": "CONSIDER_ALTERNATIVE",
+        "2.75": "CONSIDER_ALTERNATIVE",
+        "4.0": "CONSIDER_ALTERNATIVE",
+        "≥3.0": "CONSIDER_ALTERNATIVE",
+        "≥3.25": "CONSIDER_ALTERNATIVE",
+        "≥3.5": "CONSIDER_ALTERNATIVE",
+        "≥4.0": "CONSIDER_ALTERNATIVE",
+        "≥3.75": "CONSIDER_ALTERNATIVE"
+      }
+    },
+    {
+      "gene": "CYP2D6",
+      "atc5": "N06BA09",
+      "inn": "atomoxetine",
+      "inn_hu": "atomoxetin",
+      "source_id": "CPIC-REC-CYP2D6-ATOMOXETINE",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251459",
+      "guidelinename": "CYP2D6 and Atomoxetine",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "UM": "CONTINUE",
+        "NM": "CONTINUE",
+        "IM": "CONTINUE",
+        "PM": "CONSIDER_DOSE_CHANGE"
+      },
+      "by_activity_score": {
+        "≥6.0": "CONTINUE",
+        "≥5.0": "CONTINUE",
+        "≥3.75": "CONTINUE",
+        "≥4.0": "CONTINUE",
+        "≥3.5": "CONTINUE",
+        "≥3.25": "CONTINUE",
+        "≥3.0": "CONTINUE",
+        "4.0": "CONTINUE",
+        "2.75": "CONTINUE",
+        "3.0": "CONTINUE",
+        "2.5": "CONTINUE",
+        "2.25": "CONTINUE",
+        "2.0": "CONTINUE",
+        "1.75": "CONTINUE",
+        "1.5": "CONTINUE",
+        "1.25": "CONTINUE",
+        "1.0": "CONTINUE",
+        "0.75": "CONTINUE",
+        "0.5": "CONTINUE",
+        "0.25": "CONTINUE",
+        "0.0": "CONSIDER_DOSE_CHANGE"
+      }
+    },
+    {
+      "gene": "CYP2D6",
+      "atc5": "N06AA04",
+      "inn": "clomipramine",
+      "inn_hu": "klomipramin",
+      "source_id": "CPIC-REC-CYP2D6-CLOMIPRAMINE",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251445",
+      "guidelinename": "CYP2D6, CYP2C19 and Tricyclic Antidepressants",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "NM": "CONTINUE",
+        "IM": "CONSIDER_DOSE_CHANGE",
+        "PM": "CONSIDER_ALTERNATIVE",
+        "UM": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": {
+        "2.25": "CONTINUE",
+        "0.75": "CONSIDER_DOSE_CHANGE",
+        "0.25": "CONSIDER_DOSE_CHANGE",
+        "0.5": "CONSIDER_DOSE_CHANGE",
+        "1.0": "CONSIDER_DOSE_CHANGE",
+        "1.25": "CONTINUE",
+        "1.5": "CONTINUE",
+        "1.75": "CONTINUE",
+        "2.0": "CONTINUE",
+        "0.0": "CONSIDER_ALTERNATIVE",
+        "2.5": "CONSIDER_ALTERNATIVE",
+        "3.0": "CONSIDER_ALTERNATIVE",
+        "2.75": "CONSIDER_ALTERNATIVE",
+        "4.0": "CONSIDER_ALTERNATIVE",
+        "≥3.0": "CONSIDER_ALTERNATIVE",
+        "≥3.25": "CONSIDER_ALTERNATIVE",
+        "≥3.5": "CONSIDER_ALTERNATIVE",
+        "≥4.0": "CONSIDER_ALTERNATIVE",
+        "≥3.75": "CONSIDER_ALTERNATIVE",
+        "≥5.0": "CONSIDER_ALTERNATIVE",
+        "≥6.0": "CONSIDER_ALTERNATIVE"
+      }
+    },
+    {
+      "gene": "CYP2D6",
+      "atc5": "R05DA04",
+      "inn": "codeine",
+      "inn_hu": "kodein",
+      "source_id": "CPIC-REC-CYP2D6-CODEINE",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251454",
+      "guidelinename": "CYP2D6, OPRM1, COMT, and Opioids",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "UM": "CONSIDER_ALTERNATIVE",
+        "IM": "CONTINUE",
+        "NM": "CONTINUE",
+        "PM": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": {
+        "≥3.75": "CONSIDER_ALTERNATIVE",
+        "≥5.0": "CONSIDER_ALTERNATIVE",
+        "≥6.0": "CONSIDER_ALTERNATIVE",
+        "0.25": "CONTINUE",
+        "0.5": "CONTINUE",
+        "0.75": "CONTINUE",
+        "1.0": "CONTINUE",
+        "1.25": "CONTINUE",
+        "1.5": "CONTINUE",
+        "1.75": "CONTINUE",
+        "2.0": "CONTINUE",
+        "2.25": "CONTINUE",
+        "0.0": "CONSIDER_ALTERNATIVE",
+        "2.5": "CONSIDER_ALTERNATIVE",
+        "3.0": "CONSIDER_ALTERNATIVE",
+        "2.75": "CONSIDER_ALTERNATIVE",
+        "4.0": "CONSIDER_ALTERNATIVE",
+        "≥3.0": "CONSIDER_ALTERNATIVE",
+        "≥3.25": "CONSIDER_ALTERNATIVE",
+        "≥3.5": "CONSIDER_ALTERNATIVE",
+        "≥4.0": "CONSIDER_ALTERNATIVE"
+      }
+    },
+    {
+      "gene": "CYP2D6",
+      "atc5": "N06AA01",
+      "inn": "desipramine",
+      "inn_hu": "dezipramin",
+      "source_id": "CPIC-REC-CYP2D6-DESIPRAMINE",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251445",
+      "guidelinename": "CYP2D6, CYP2C19 and Tricyclic Antidepressants",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "UM": "CONSIDER_ALTERNATIVE",
+        "NM": "CONTINUE",
+        "IM": "CONSIDER_DOSE_CHANGE",
+        "PM": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": {
+        "≥3.5": "CONSIDER_ALTERNATIVE",
+        "≥6.0": "CONSIDER_ALTERNATIVE",
+        "≥5.0": "CONSIDER_ALTERNATIVE",
+        "≥3.75": "CONSIDER_ALTERNATIVE",
+        "≥4.0": "CONSIDER_ALTERNATIVE",
+        "≥3.25": "CONSIDER_ALTERNATIVE",
+        "≥3.0": "CONSIDER_ALTERNATIVE",
+        "4.0": "CONSIDER_ALTERNATIVE",
+        "2.75": "CONSIDER_ALTERNATIVE",
+        "3.0": "CONSIDER_ALTERNATIVE",
+        "2.5": "CONSIDER_ALTERNATIVE",
+        "2.25": "CONTINUE",
+        "2.0": "CONTINUE",
+        "1.75": "CONTINUE",
+        "1.5": "CONTINUE",
+        "1.25": "CONTINUE",
+        "1.0": "CONSIDER_DOSE_CHANGE",
+        "0.75": "CONSIDER_DOSE_CHANGE",
+        "0.5": "CONSIDER_DOSE_CHANGE",
+        "0.25": "CONSIDER_DOSE_CHANGE",
+        "0.0": "CONSIDER_ALTERNATIVE"
+      }
+    },
+    {
+      "gene": "CYP2D6",
+      "atc5": "N06AA12",
+      "inn": "doxepin",
+      "inn_hu": "doxepin",
+      "source_id": "CPIC-REC-CYP2D6-DOXEPIN",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251445",
+      "guidelinename": "CYP2D6, CYP2C19 and Tricyclic Antidepressants",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "NM": "CONTINUE",
+        "IM": "CONSIDER_DOSE_CHANGE",
+        "PM": "CONSIDER_ALTERNATIVE",
+        "UM": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": {
+        "1.75": "CONTINUE",
+        "0.25": "CONSIDER_DOSE_CHANGE",
+        "0.5": "CONSIDER_DOSE_CHANGE",
+        "0.75": "CONSIDER_DOSE_CHANGE",
+        "1.0": "CONSIDER_DOSE_CHANGE",
+        "1.25": "CONTINUE",
+        "1.5": "CONTINUE",
+        "2.0": "CONTINUE",
+        "2.25": "CONTINUE",
+        "0.0": "CONSIDER_ALTERNATIVE",
+        "2.5": "CONSIDER_ALTERNATIVE",
+        "3.0": "CONSIDER_ALTERNATIVE",
+        "2.75": "CONSIDER_ALTERNATIVE",
+        "4.0": "CONSIDER_ALTERNATIVE",
+        "≥3.0": "CONSIDER_ALTERNATIVE",
+        "≥3.25": "CONSIDER_ALTERNATIVE",
+        "≥3.5": "CONSIDER_ALTERNATIVE",
+        "≥4.0": "CONSIDER_ALTERNATIVE",
+        "≥3.75": "CONSIDER_ALTERNATIVE",
+        "≥5.0": "CONSIDER_ALTERNATIVE",
+        "≥6.0": "CONSIDER_ALTERNATIVE"
+      }
+    },
+    {
+      "gene": "CYP2D6",
+      "atc5": "N06AB08",
+      "inn": "fluvoxamine",
+      "inn_hu": "fluvoxamin",
+      "source_id": "CPIC-REC-CYP2D6-FLUVOXAMINE",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251452",
+      "guidelinename": "CYP2D6, CYP2C19, CYP2B6, SLC6A4, HTR2A and Serotonin Reuptake Inhibitor Antidepressants",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "IM": "CONTINUE",
+        "NM": "CONTINUE",
+        "UM": "NO_RECOMMENDATION",
+        "PM": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": {
+        "0.5": "CONTINUE",
+        "0.25": "CONTINUE",
+        "1.5": "CONTINUE",
+        "1.25": "CONTINUE",
+        "1.0": "CONTINUE",
+        "0.75": "CONTINUE",
+        "≥6.0": "NO_RECOMMENDATION",
+        "≥5.0": "NO_RECOMMENDATION",
+        "≥3.75": "NO_RECOMMENDATION",
+        "≥4.0": "NO_RECOMMENDATION",
+        "≥3.5": "NO_RECOMMENDATION",
+        "≥3.25": "NO_RECOMMENDATION",
+        "≥3.0": "NO_RECOMMENDATION",
+        "4.0": "NO_RECOMMENDATION",
+        "2.75": "NO_RECOMMENDATION",
+        "3.0": "NO_RECOMMENDATION",
+        "2.5": "NO_RECOMMENDATION",
+        "2.25": "CONTINUE",
+        "2.0": "CONTINUE",
+        "1.75": "CONTINUE",
+        "0.0": "CONSIDER_ALTERNATIVE"
+      }
+    },
+    {
+      "gene": "CYP2D6",
+      "atc5": "R05DA03",
+      "inn": "hydrocodone",
+      "inn_hu": "hidrokodon",
+      "source_id": "CPIC-REC-CYP2D6-HYDROCODONE",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251454",
+      "guidelinename": "CYP2D6, OPRM1, COMT, and Opioids",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "UM": "NO_RECOMMENDATION",
+        "IM": "CONTINUE",
+        "NM": "CONTINUE",
+        "PM": "CONTINUE"
+      },
+      "by_activity_score": {
+        "≥3.0": "NO_RECOMMENDATION",
+        "≥3.25": "NO_RECOMMENDATION",
+        "≥3.5": "NO_RECOMMENDATION",
+        "≥4.0": "NO_RECOMMENDATION",
+        "≥3.75": "NO_RECOMMENDATION",
+        "≥5.0": "NO_RECOMMENDATION",
+        "≥6.0": "NO_RECOMMENDATION",
+        "0.25": "CONTINUE",
+        "0.5": "CONTINUE",
+        "0.75": "CONTINUE",
+        "1.0": "CONTINUE",
+        "1.25": "CONTINUE",
+        "1.5": "CONTINUE",
+        "1.75": "CONTINUE",
+        "2.0": "CONTINUE",
+        "2.25": "CONTINUE",
+        "0.0": "CONTINUE",
+        "2.5": "NO_RECOMMENDATION",
+        "3.0": "NO_RECOMMENDATION",
+        "2.75": "NO_RECOMMENDATION",
+        "4.0": "NO_RECOMMENDATION"
+      }
+    },
+    {
+      "gene": "CYP2D6",
+      "atc5": "N06AA02",
+      "inn": "imipramine",
+      "inn_hu": "imipramin",
+      "source_id": "CPIC-REC-CYP2D6-IMIPRAMINE",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251445",
+      "guidelinename": "CYP2D6, CYP2C19 and Tricyclic Antidepressants",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "PM": "CONSIDER_ALTERNATIVE",
+        "IM": "CONSIDER_DOSE_CHANGE",
+        "NM": "CONTINUE",
+        "UM": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": {
+        "0.0": "CONSIDER_ALTERNATIVE",
+        "0.25": "CONSIDER_DOSE_CHANGE",
+        "0.5": "CONSIDER_DOSE_CHANGE",
+        "0.75": "CONSIDER_DOSE_CHANGE",
+        "1.0": "CONSIDER_DOSE_CHANGE",
+        "1.25": "CONTINUE",
+        "1.5": "CONTINUE",
+        "1.75": "CONTINUE",
+        "2.0": "CONTINUE",
+        "2.25": "CONTINUE",
+        "2.5": "CONSIDER_ALTERNATIVE",
+        "3.0": "CONSIDER_ALTERNATIVE",
+        "2.75": "CONSIDER_ALTERNATIVE",
+        "4.0": "CONSIDER_ALTERNATIVE",
+        "≥3.0": "CONSIDER_ALTERNATIVE",
+        "≥3.25": "CONSIDER_ALTERNATIVE",
+        "≥3.5": "CONSIDER_ALTERNATIVE",
+        "≥4.0": "CONSIDER_ALTERNATIVE",
+        "≥3.75": "CONSIDER_ALTERNATIVE",
+        "≥5.0": "CONSIDER_ALTERNATIVE",
+        "≥6.0": "CONSIDER_ALTERNATIVE"
+      }
+    },
+    {
+      "gene": "CYP2D6",
+      "atc5": "C07AB02",
+      "inn": "metoprolol",
+      "inn_hu": "metoprolol",
+      "source_id": "CPIC-REC-CYP2D6-METOPROLOL",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166343383",
+      "guidelinename": "CYP2D6, ADRB1, ADRB2, ADRA2C, GRK4, and GRK5 and Beta-Blockers",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "UM": "NO_RECOMMENDATION",
+        "NM": "CONTINUE",
+        "IM": "CONTINUE",
+        "PM": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": {
+        "3.0": "NO_RECOMMENDATION",
+        "2.0": "CONTINUE",
+        "1.25": "CONTINUE",
+        "≥6.0": "NO_RECOMMENDATION",
+        "≥3.25": "NO_RECOMMENDATION",
+        "2.75": "NO_RECOMMENDATION",
+        "2.5": "NO_RECOMMENDATION",
+        "1.75": "CONTINUE",
+        "1.5": "CONTINUE",
+        "1.0": "CONTINUE",
+        "0.75": "CONTINUE",
+        "0.5": "CONTINUE",
+        "0.25": "CONTINUE",
+        "0.0": "CONSIDER_ALTERNATIVE",
+        "≥4.0": "NO_RECOMMENDATION",
+        "4.0": "NO_RECOMMENDATION",
+        "≥5.0": "NO_RECOMMENDATION",
+        "≥3.75": "NO_RECOMMENDATION",
+        "≥3.5": "NO_RECOMMENDATION",
+        "≥3.0": "NO_RECOMMENDATION",
+        "2.25": "CONTINUE"
+      }
+    },
+    {
+      "gene": "CYP2D6",
+      "atc5": "N06AA10",
+      "inn": "nortriptyline",
+      "inn_hu": "nortriptilin",
+      "source_id": "CPIC-REC-CYP2D6-NORTRIPTYLINE",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251445",
+      "guidelinename": "CYP2D6, CYP2C19 and Tricyclic Antidepressants",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "UM": "CONSIDER_ALTERNATIVE",
+        "NM": "CONTINUE",
+        "IM": "CONSIDER_DOSE_CHANGE",
+        "PM": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": {
+        "≥6.0": "CONSIDER_ALTERNATIVE",
+        "≥5.0": "CONSIDER_ALTERNATIVE",
+        "≥3.75": "CONSIDER_ALTERNATIVE",
+        "≥4.0": "CONSIDER_ALTERNATIVE",
+        "≥3.5": "CONSIDER_ALTERNATIVE",
+        "≥3.25": "CONSIDER_ALTERNATIVE",
+        "≥3.0": "CONSIDER_ALTERNATIVE",
+        "4.0": "CONSIDER_ALTERNATIVE",
+        "2.75": "CONSIDER_ALTERNATIVE",
+        "3.0": "CONSIDER_ALTERNATIVE",
+        "2.5": "CONSIDER_ALTERNATIVE",
+        "2.25": "CONTINUE",
+        "2.0": "CONTINUE",
+        "1.75": "CONTINUE",
+        "1.5": "CONTINUE",
+        "1.25": "CONTINUE",
+        "1.0": "CONSIDER_DOSE_CHANGE",
+        "0.75": "CONSIDER_DOSE_CHANGE",
+        "0.5": "CONSIDER_DOSE_CHANGE",
+        "0.25": "CONSIDER_DOSE_CHANGE",
+        "0.0": "CONSIDER_ALTERNATIVE"
+      }
+    },
+    {
+      "gene": "CYP2D6",
+      "atc5": "L02BA01",
+      "inn": "tamoxifen",
+      "inn_hu": "tamoxifen",
+      "source_id": "CPIC-REC-CYP2D6-TAMOXIFEN",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251458",
+      "guidelinename": "CYP2D6 and Tamoxifen",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "NM": "CONTINUE",
+        "UM": "CONTINUE",
+        "IM": "CONSIDER_ALTERNATIVE",
+        "PM": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": {
+        "2.25": "CONTINUE",
+        "2.0": "CONTINUE",
+        "1.75": "CONTINUE",
+        "1.5": "CONTINUE",
+        "1.25": "CONTINUE",
+        "2.75": "CONTINUE",
+        "3.0": "CONTINUE",
+        "2.5": "CONTINUE",
+        "≥6.0": "CONTINUE",
+        "≥5.0": "CONTINUE",
+        "≥3.75": "CONTINUE",
+        "≥4.0": "CONTINUE",
+        "≥3.5": "CONTINUE",
+        "≥3.25": "CONTINUE",
+        "≥3.0": "CONTINUE",
+        "4.0": "CONTINUE",
+        "1.0": "CONSIDER_ALTERNATIVE",
+        "0.75": "CONSIDER_ALTERNATIVE",
+        "0.5": "CONSIDER_ALTERNATIVE",
+        "0.25": "CONSIDER_ALTERNATIVE",
+        "0.0": "CONSIDER_ALTERNATIVE"
+      }
+    },
+    {
+      "gene": "CYP2D6",
+      "atc5": "N02AX02",
+      "inn": "tramadol",
+      "inn_hu": "tramadol",
+      "source_id": "CPIC-REC-CYP2D6-TRAMADOL",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251454",
+      "guidelinename": "CYP2D6, OPRM1, COMT, and Opioids",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "IM": "CONTINUE",
+        "NM": "CONTINUE",
+        "PM": "CONSIDER_ALTERNATIVE",
+        "UM": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": {
+        "0.75": "CONTINUE",
+        "1.0": "CONTINUE",
+        "1.25": "CONTINUE",
+        "1.5": "CONTINUE",
+        "1.75": "CONTINUE",
+        "2.0": "CONTINUE",
+        "2.25": "CONTINUE",
+        "0.0": "CONSIDER_ALTERNATIVE",
+        "2.5": "CONSIDER_ALTERNATIVE",
+        "3.0": "CONSIDER_ALTERNATIVE",
+        "2.75": "CONSIDER_ALTERNATIVE",
+        "4.0": "CONSIDER_ALTERNATIVE",
+        "≥3.0": "CONSIDER_ALTERNATIVE",
+        "0.25": "CONTINUE",
+        "0.5": "CONTINUE",
+        "≥3.25": "CONSIDER_ALTERNATIVE",
+        "≥3.5": "CONSIDER_ALTERNATIVE",
+        "≥4.0": "CONSIDER_ALTERNATIVE",
+        "≥3.75": "CONSIDER_ALTERNATIVE",
+        "≥5.0": "CONSIDER_ALTERNATIVE",
+        "≥6.0": "CONSIDER_ALTERNATIVE"
+      }
+    },
+    {
+      "gene": "CYP2D6",
+      "atc5": "N06AA06",
+      "inn": "trimipramine",
+      "inn_hu": "trimipramin",
+      "source_id": "CPIC-REC-CYP2D6-TRIMIPRAMINE",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251445",
+      "guidelinename": "CYP2D6, CYP2C19 and Tricyclic Antidepressants",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "IM": "CONSIDER_DOSE_CHANGE",
+        "NM": "CONTINUE",
+        "PM": "CONSIDER_ALTERNATIVE",
+        "UM": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": {
+        "0.25": "CONSIDER_DOSE_CHANGE",
+        "0.5": "CONSIDER_DOSE_CHANGE",
+        "0.75": "CONSIDER_DOSE_CHANGE",
+        "1.0": "CONSIDER_DOSE_CHANGE",
+        "1.25": "CONTINUE",
+        "1.5": "CONTINUE",
+        "1.75": "CONTINUE",
+        "2.0": "CONTINUE",
+        "2.25": "CONTINUE",
+        "0.0": "CONSIDER_ALTERNATIVE",
+        "2.5": "CONSIDER_ALTERNATIVE",
+        "3.0": "CONSIDER_ALTERNATIVE",
+        "2.75": "CONSIDER_ALTERNATIVE",
+        "4.0": "CONSIDER_ALTERNATIVE",
+        "≥3.0": "CONSIDER_ALTERNATIVE",
+        "≥3.25": "CONSIDER_ALTERNATIVE",
+        "≥3.5": "CONSIDER_ALTERNATIVE",
+        "≥4.0": "CONSIDER_ALTERNATIVE",
+        "≥3.75": "CONSIDER_ALTERNATIVE",
+        "≥5.0": "CONSIDER_ALTERNATIVE",
+        "≥6.0": "CONSIDER_ALTERNATIVE"
+      }
+    },
+    {
+      "gene": "CYP2D6",
+      "atc5": "N06AX16",
+      "inn": "venlafaxine",
+      "inn_hu": "venlafaxin",
+      "source_id": "CPIC-REC-CYP2D6-VENLAFAXINE",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251452",
+      "guidelinename": "CYP2D6, CYP2C19, CYP2B6, SLC6A4, HTR2A and Serotonin Reuptake Inhibitor Antidepressants",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "UM": "NO_RECOMMENDATION",
+        "NM": "CONTINUE",
+        "IM": "NO_RECOMMENDATION",
+        "PM": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": {
+        "≥3.0": "NO_RECOMMENDATION",
+        "4.0": "NO_RECOMMENDATION",
+        "≥6.0": "NO_RECOMMENDATION",
+        "≥5.0": "NO_RECOMMENDATION",
+        "≥3.75": "NO_RECOMMENDATION",
+        "≥4.0": "NO_RECOMMENDATION",
+        "≥3.5": "NO_RECOMMENDATION",
+        "≥3.25": "NO_RECOMMENDATION",
+        "2.75": "NO_RECOMMENDATION",
+        "3.0": "NO_RECOMMENDATION",
+        "2.5": "NO_RECOMMENDATION",
+        "2.25": "CONTINUE",
+        "2.0": "CONTINUE",
+        "1.75": "CONTINUE",
+        "1.5": "CONTINUE",
+        "1.25": "CONTINUE",
+        "1.0": "NO_RECOMMENDATION",
+        "0.75": "NO_RECOMMENDATION",
+        "0.5": "NO_RECOMMENDATION",
+        "0.25": "NO_RECOMMENDATION",
+        "0.0": "CONSIDER_ALTERNATIVE"
+      }
+    },
+    {
+      "gene": "CYP2D6",
+      "atc5": "N06AX26",
+      "inn": "vortioxetine",
+      "inn_hu": "vortioxetin",
+      "source_id": "CPIC-REC-CYP2D6-VORTIOXETINE",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251452",
+      "guidelinename": "CYP2D6, CYP2C19, CYP2B6, SLC6A4, HTR2A and Serotonin Reuptake Inhibitor Antidepressants",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "UM": "CONSIDER_ALTERNATIVE",
+        "NM": "CONTINUE",
+        "IM": "CONTINUE",
+        "PM": "CONSIDER_DOSE_CHANGE"
+      },
+      "by_activity_score": {
+        "≥6.0": "CONSIDER_ALTERNATIVE",
+        "≥5.0": "CONSIDER_ALTERNATIVE",
+        "≥3.75": "CONSIDER_ALTERNATIVE",
+        "≥4.0": "CONSIDER_ALTERNATIVE",
+        "≥3.5": "CONSIDER_ALTERNATIVE",
+        "≥3.25": "CONSIDER_ALTERNATIVE",
+        "≥3.0": "CONSIDER_ALTERNATIVE",
+        "4.0": "CONSIDER_ALTERNATIVE",
+        "2.75": "CONSIDER_ALTERNATIVE",
+        "3.0": "CONSIDER_ALTERNATIVE",
+        "2.5": "CONSIDER_ALTERNATIVE",
+        "2.25": "CONTINUE",
+        "2.0": "CONTINUE",
+        "1.75": "CONTINUE",
+        "1.5": "CONTINUE",
+        "1.25": "CONTINUE",
+        "1.0": "CONTINUE",
+        "0.75": "CONTINUE",
+        "0.5": "CONTINUE",
+        "0.25": "CONTINUE",
+        "0.0": "CONSIDER_DOSE_CHANGE"
+      }
+    },
+    {
+      "gene": "DPYD",
+      "atc5": "L01BC06",
+      "inn": "capecitabine",
+      "inn_hu": "kapecitabin",
+      "source_id": "CPIC-REC-DPYD-CAPECITABINE",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251462",
+      "guidelinename": "DPYD and Fluoropyrimidines",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "NM": "CONTINUE",
+        "IM": "CONSIDER_DOSE_CHANGE",
+        "PM": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": {
+        "2.0": "CONTINUE",
+        "1.5": "CONSIDER_DOSE_CHANGE",
+        "1.0": "CONSIDER_DOSE_CHANGE",
+        "0.5": "CONSIDER_ALTERNATIVE",
+        "0.0": "CONSIDER_ALTERNATIVE"
+      }
+    },
+    {
+      "gene": "HLA-B",
+      "atc5": "M04AA01",
+      "inn": "allopurinol",
+      "inn_hu": "allopurinol",
+      "source_id": "CPIC-REC-HLA-B-ALLOPURINOL",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251446",
+      "guidelinename": "HLA-B and Allopurinol",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "NEG_5801": "CONTINUE",
+        "POS_5801": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": null
+    },
+    {
+      "gene": "HLA-B",
+      "atc5": "N03AF01",
+      "inn": "carbamazepine",
+      "inn_hu": "karbamazepin",
+      "source_id": "CPIC-REC-HLA-B-CARBAMAZEPINE",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251448",
+      "guidelinename": "HLA-A, HLA-B and Carbamazepine and Oxcarbazepine",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "NEG_1502": "CONTINUE",
+        "POS_1502": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": null
+    },
+    {
+      "gene": "HLA-B",
+      "atc5": "N03AB05",
+      "inn": "fosphenytoin",
+      "inn_hu": "foszfenitoin",
+      "source_id": "CPIC-REC-HLA-B-FOSPHENYTOIN",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251461",
+      "guidelinename": "CYP2C9, HLA-B and Phenytoin",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "NEG_1502": "CONTINUE",
+        "POS_1502": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": null
+    },
+    {
+      "gene": "HLA-B",
+      "atc5": "N03AF02",
+      "inn": "oxcarbazepine",
+      "inn_hu": "oxkarbazepin",
+      "source_id": "CPIC-REC-HLA-B-OXCARBAZEPINE",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251448",
+      "guidelinename": "HLA-A, HLA-B and Carbamazepine and Oxcarbazepine",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "NEG_1502": "CONTINUE",
+        "POS_1502": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": null
+    },
+    {
+      "gene": "HLA-B",
+      "atc5": "N03AB02",
+      "inn": "phenytoin",
+      "inn_hu": "fenitoin",
+      "source_id": "CPIC-REC-HLA-B-PHENYTOIN",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251461",
+      "guidelinename": "CYP2C9, HLA-B and Phenytoin",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "NEG_1502": "CONTINUE",
+        "POS_1502": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": null
+    },
+    {
+      "gene": "SLCO1B1",
+      "atc5": "C10AA05",
+      "inn": "atorvastatin",
+      "inn_hu": "atorvasztatin",
+      "source_id": "CPIC-REC-SLCO1B1-ATORVASTATIN",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166264281",
+      "guidelinename": "SLCO1B1, ABCG2, CYP2C9, and Statins",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "IF": "CONTINUE",
+        "NF": "CONTINUE",
+        "PDF": "CONSIDER_DOSE_CHANGE",
+        "DF": "CONSIDER_DOSE_CHANGE",
+        "PF": "CONSIDER_DOSE_CHANGE"
+      },
+      "by_activity_score": null
+    },
+    {
+      "gene": "SLCO1B1",
+      "atc5": "C10AA04",
+      "inn": "fluvastatin",
+      "inn_hu": "fluvasztatin",
+      "source_id": "CPIC-REC-SLCO1B1-FLUVASTATIN",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166264281",
+      "guidelinename": "SLCO1B1, ABCG2, CYP2C9, and Statins",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "IF": "CONTINUE",
+        "PF": "CONSIDER_DOSE_CHANGE",
+        "NF": "CONTINUE",
+        "PDF": "CONTINUE",
+        "DF": "CONTINUE"
+      },
+      "by_activity_score": null
+    },
+    {
+      "gene": "SLCO1B1",
+      "atc5": "C10AA02",
+      "inn": "lovastatin",
+      "inn_hu": "lovasztatin",
+      "source_id": "CPIC-REC-SLCO1B1-LOVASTATIN",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166264281",
+      "guidelinename": "SLCO1B1, ABCG2, CYP2C9, and Statins",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "NF": "CONTINUE",
+        "IF": "CONTINUE",
+        "PDF": "CONSIDER_ALTERNATIVE",
+        "DF": "CONSIDER_ALTERNATIVE",
+        "PF": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": null
+    },
+    {
+      "gene": "SLCO1B1",
+      "atc5": "C10AA08",
+      "inn": "pitavastatin",
+      "inn_hu": "pitavasztatin",
+      "source_id": "CPIC-REC-SLCO1B1-PITAVASTATIN",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166264281",
+      "guidelinename": "SLCO1B1, ABCG2, CYP2C9, and Statins",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "IF": "CONTINUE",
+        "NF": "CONTINUE",
+        "PDF": "CONSIDER_ALTERNATIVE",
+        "DF": "CONSIDER_ALTERNATIVE",
+        "PF": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": null
+    },
+    {
+      "gene": "SLCO1B1",
+      "atc5": "C10AA03",
+      "inn": "pravastatin",
+      "inn_hu": "pravasztatin",
+      "source_id": "CPIC-REC-SLCO1B1-PRAVASTATIN",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166264281",
+      "guidelinename": "SLCO1B1, ABCG2, CYP2C9, and Statins",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "IF": "CONTINUE",
+        "NF": "CONTINUE",
+        "PDF": "CONTINUE",
+        "DF": "CONTINUE",
+        "PF": "CONSIDER_DOSE_CHANGE"
+      },
+      "by_activity_score": null
+    },
+    {
+      "gene": "SLCO1B1",
+      "atc5": "C10AA07",
+      "inn": "rosuvastatin",
+      "inn_hu": "rozuvasztatin",
+      "source_id": "CPIC-REC-SLCO1B1-ROSUVASTATIN",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166264281",
+      "guidelinename": "SLCO1B1, ABCG2, CYP2C9, and Statins",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "PDF": "CONTINUE",
+        "PF": "CONSIDER_DOSE_CHANGE",
+        "IF": "CONTINUE",
+        "NF": "CONTINUE",
+        "DF": "CONTINUE"
+      },
+      "by_activity_score": null
+    },
+    {
+      "gene": "TPMT",
+      "atc5": "L01BB02",
+      "inn": "mercaptopurine",
+      "inn_hu": "merkaptopurin",
+      "source_id": "CPIC-REC-TPMT-MERCAPTOPURINE",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251442",
+      "guidelinename": "TPMT, NUDT15 and Thiopurines",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "NM": "CONTINUE",
+        "IM": "CONSIDER_DOSE_CHANGE",
+        "PIM": "CONSIDER_DOSE_CHANGE",
+        "PM": "CONSIDER_ALTERNATIVE"
+      },
+      "by_activity_score": null
+    },
+    {
+      "gene": "TPMT",
+      "atc5": "L01BB03",
+      "inn": "thioguanine",
+      "inn_hu": "tioguanin",
+      "source_id": "CPIC-REC-TPMT-THIOGUANINE",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251442",
+      "guidelinename": "TPMT, NUDT15 and Thiopurines",
+      "companion_rule": "other genes in lookupkey are Normal Metabolizer, Normal Function, No Result, n/a, or HLA negative",
+      "by_phenotype": {
+        "NM": "CONTINUE",
+        "IM": "CONSIDER_DOSE_CHANGE",
+        "PIM": "CONSIDER_DOSE_CHANGE",
+        "PM": "CONSIDER_DOSE_CHANGE"
+      },
+      "by_activity_score": null
+    }
+  ]
+}

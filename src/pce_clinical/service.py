@@ -14,6 +14,7 @@ from typing import Any
 from pce_clinical.consent import assert_render_allowed, gate_to_meta
 from pce_clinical.errors import B5, ClinicalError
 from pce_clinical.star_call import call_star_alleles
+from pce_clinical.pharmcat import PharmcatError
 from pce_clinical.explanation import build_explanation
 from pce_clinical.fhir import to_stu3_bundle
 from pce_clinical.store import ClinicalStore
@@ -238,6 +239,10 @@ class ClinicalService:
         self.audit(actor, "outside_call", "OutsideCall", case_id, "FR-240")
         return {"calls": stored}
 
+    def add_outside_call(self, case_id: str, item: dict[str, Any], actor: str) -> dict[str, Any]:
+        """One lab HLA-B / UGT1A1*28 (or other) outside-call merged onto the case."""
+        return self.add_outside_calls(case_id, [item], actor)
+
     def parse_outside_payload(self, raw: bytes, content_type: str) -> list[dict[str, Any]]:
         ct = (content_type or "").split(";")[0].strip().lower()
         text = raw.decode("utf-8")
@@ -319,17 +324,24 @@ class ClinicalService:
         reference = "GRCh38" if "GRCh38" in ref_line or "hg38" in ref_line else "GRCh37"
         digest = hashlib.sha256(raw).hexdigest()
         self.store.execute(
-            "INSERT INTO genomic_file(id, case_id, format, reference, sha256, size) "
-            "VALUES (?, ?, ?, ?, ?, ?)",
-            (rid, case_id, fmt, reference, digest, len(raw)),
-        )
-        self.store.execute(
             "UPDATE case_record SET call_source = 'VCF' WHERE id = ? AND call_source IS NULL",
             (case_id,),
         )
         self.audit(actor, "vcf", "GenomicFile", rid, "FR-200")
         enabled = MATCHER_ON if matcher_on is None else bool(matcher_on)
-        coverage = call_star_alleles(text, reference=reference, matcher_on=enabled)
+        try:
+            coverage = call_star_alleles(text, reference=reference, matcher_on=enabled)
+        except PharmcatError as exc:
+            raise ClinicalError("E-VCF-001", extra={"reason": str(exc)}) from exc
+        pc_ver = next((row.get("pharmcat_version") for row in coverage if row.get("pharmcat_version")), None)
+        pv_ver = next((row.get("pharmvar_version") for row in coverage if row.get("pharmvar_version")), None)
+        cpic_data = next((row.get("cpic_data_version") for row in coverage if row.get("cpic_data_version")), None)
+        self.store.execute(
+            "INSERT INTO genomic_file(id, case_id, format, reference, sha256, size, "
+            "matcher_on, pharmcat_version, pharmvar_version, cpic_data_version) "
+            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            (rid, case_id, fmt, reference, digest, len(raw), int(enabled), pc_ver, pv_ver, cpic_data),
+        )
         genes: list[dict[str, Any]] = []
         for row in coverage:
             cid = _id()
@@ -367,6 +379,9 @@ class ClinicalService:
             "sha256": digest,
             "size": len(raw),
             "matcher_on": enabled,
+            "pharmcat_version": pc_ver,
+            "pharmvar_version": pv_ver,
+            "cpic_data_version": cpic_data,
             "coverage": genes,
         }
 
@@ -408,6 +423,8 @@ class ClinicalService:
     def _coverage_as_calls(self, case_id: str, rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
         sample = self.store.one("SELECT * FROM sample WHERE case_id = ?", (case_id,))
         counselling = self.store.one("SELECT * FROM counselling WHERE case_id = ?", (case_id,))
+        gf = self.store.one("SELECT * FROM genomic_file WHERE case_id = ?", (case_id,))
+        matcher = bool(gf is not None and int(gf["matcher_on"] or 0) == 1)
         origin = sample["origin"] if sample else "SYN-LAB-001"
         signer = counselling["counsellor_id"] if counselling else "SYN-MD-001"
         calls: list[dict[str, Any]] = []
@@ -415,17 +432,25 @@ class ClinicalService:
             callability = row["callability"]
             if callability not in CALLABILITY_OK:
                 callability = "INDETERMINATE"
+            if matcher and row.get("diplotype"):
+                method = "PharmCAT NamedAlleleMatcher + Phenotyper"
+            elif matcher:
+                method = (
+                    "PharmCAT NamedAlleleMatcher + Phenotyper — "
+                    "e gén ebből a VCF-ből nem hívható"
+                )
+            else:
+                method = (
+                    "VCF lefedettség; a PharmCAT NamedAlleleMatcher ki "
+                    "(MATCHER_ON=false). Nincs diplotípus a VCF-ből."
+                )
             calls.append(
                 {
                     "gene": row["gene"],
                     "diplotype": row.get("diplotype"),
                     "calling_lab": origin,
                     "signing_physician": signer,
-                    "method": (
-                        "VCF csillag-allél hívó (pin-elt definiáló SNV)"
-                        if row.get("diplotype")
-                        else "VCF-lefedettség (csillag-allél hívó ki, vagy a gén nem SNV-panel)"
-                    ),
+                    "method": method,
                     "call_date": _now()[:10],
                     "phenotype": None,
                     "callability": callability,
@@ -509,6 +534,16 @@ class ClinicalService:
         if not primary["config_id"].endswith("@" + version):
             primary = dict(primary)
             primary["config_id"] = f"{CONFIG_ID_PREFIX}@{version}"
+        gf = self.store.one(
+            "SELECT * FROM genomic_file WHERE case_id = ? ORDER BY id DESC",
+            (case_id,),
+        )
+        if gf is not None and int(gf["matcher_on"] or 0) == 1:
+            primary = dict(primary)
+            primary["matcher_on"] = True
+            primary["pharmcat_version"] = gf["pharmcat_version"]
+            primary["pharmvar_version"] = gf["pharmvar_version"]
+            primary["cpic_data_version"] = gf["cpic_data_version"]
         try:
             assembled = assemble_b41(
                 engine=primary,
@@ -529,6 +564,15 @@ class ClinicalService:
             raise ClinicalError("E-EDU-001", extra={"reason": str(exc)}) from exc
         assembled["consent_granted_at"] = snap.consent_granted_at
         assembled["performing_org_license_id"] = snap.license_id
+        if primary.get("matcher_on"):
+            assembled["diplotipus_forras_hu"] = (
+                "A csillag-allél diplotípust a PharmCAT NamedAlleleMatcher és Phenotyper hívta "
+                f"(PharmCAT {assembled.get('pharmcat_version')}, "
+                f"allél-definíció {assembled.get('pharmvar_version')}, "
+                f"CPIC-adat {assembled.get('cpic_data_version')}). "
+                "A repo MATCHER_ON=false; ez a hívás matcher_on=true paraméterrel futott. "
+                "HLA-B VCF-ből nem hívott. Ha a matcher több diplotípust ad, nincs önkényes választás."
+            )
         try:
             assert_b41_contract(assembled)
         except RendererConfigError as exc:

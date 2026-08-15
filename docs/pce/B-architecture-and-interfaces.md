@@ -272,7 +272,7 @@ IEC 62304 SOUP = szoftver, amelyet nem a gyártó fejlesztett a 62304 szerint, d
 
 | Komponens | Licenc | Szerep | SOUP? | Kontroll |
 | --- | --- | --- | --- | --- |
-| PharmCAT (NamedAlleleMatcher, Phenotyper, Reporter) | MPL 2.0 | L3 VCF-útvonal | **Igen** | Verzió pin, SBOM, changelog review (F5-eset), derivátum közzététel |
+| PharmCAT (NamedAlleleMatcher, Phenotyper, Reporter) **3.4.0** | MPL 2.0 | L3 VCF-útvonal, `matcher_on=True` | **Igen** | Pin `pharmcat-3.4.0-pin.json`; jar `var/` gitignored; **nem** fork; changelog review (F5-eset) |
 | PharmCAT által hívott programok (pl. matching libraries) | **eltérhet** | L3 | **Igen, külön** | REG-080 tételes lista minden release-nél |
 | CPIC guidelines | Közzétett guideline | L4-static / L4-live tartalom | Nem SOUP — **tudásbázis** | Verzió, change-control, FR-510 |
 | DPWG / ClinPGx annotáció | Közzétett | L4 | Tudásbázis | Ugyanaz |

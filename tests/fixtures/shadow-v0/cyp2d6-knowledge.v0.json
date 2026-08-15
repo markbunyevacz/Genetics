@@ -38,6 +38,42 @@
     "NEG_5701": {
       "en": "HLA-B*57:01 negative",
       "hu": "HLA-B*57:01 negatív (laboreredmény)"
+    },
+    "POS_5801": {
+      "en": "HLA-B*58:01 positive",
+      "hu": "HLA-B*58:01 pozitív (laboreredmény)"
+    },
+    "NEG_5801": {
+      "en": "HLA-B*58:01 negative",
+      "hu": "HLA-B*58:01 negatív (laboreredmény)"
+    },
+    "POS_1502": {
+      "en": "HLA-B*15:02 positive",
+      "hu": "HLA-B*15:02 pozitív (laboreredmény)"
+    },
+    "NEG_1502": {
+      "en": "HLA-B*15:02 negative",
+      "hu": "HLA-B*15:02 negatív (laboreredmény)"
+    },
+    "IF": {
+      "en": "Increased Function",
+      "hu": "fokozott funkció (SLCO1B1)"
+    },
+    "PDF": {
+      "en": "Possible Decreased Function",
+      "hu": "lehetséges csökkent funkció (SLCO1B1)"
+    },
+    "LIM": {
+      "en": "Likely Intermediate Metabolizer",
+      "hu": "valószínű közepes metabolizáló"
+    },
+    "LPM": {
+      "en": "Likely Poor Metabolizer",
+      "hu": "valószínű szegény metabolizáló"
+    },
+    "RM": {
+      "en": "Rapid Metabolizer",
+      "hu": "gyors metabolizáló"
     }
   },
   "inventory": {
@@ -64,7 +100,11 @@
       },
       {
         "id": "CPIC-PREPARE12-LIVE-PAIRS",
-        "hu": "VAN: PREPARE-12 élő párosítás a pinelt CPIC recommendation_view stratégia-kategóriájából (CYP2B6–efavirenz, CYP2C9–celecoxib, CYP3A5–tacrolimus, DPYD–fluorouracil, SLCO1B1–simvastatin, TPMT–azathioprine, HLA-B–abacavir, UGT1A1–atazanavir, plusz a korábbi CYP2D6-SSRI és CYP2C19–clopidogrel). Nincs milligramm a live findingben."
+        "hu": "VAN: PREPARE-12 élő párosítás a pinelt CPIC recommendation_view stratégia-kategóriájából, génenként a rec-táblás szerekre (WHO ATC 7 karakter). Nincs milligramm. A warfarin a 2017-es diagram, nem rec_view sor."
+      },
+      {
+        "id": "CPIC-WARFARIN-2017",
+        "hu": "VAN: CPIC warfarin 2017 PDF (PMID 28198005). A recommendation_view üres; az élő pár a 2. ábra: CYP2C9+VKORC1 együtt, milligramm nélkül."
       }
     ],
     "hianyzik": [
@@ -77,15 +117,16 @@
         "hu": "NINCS: az FDA gátló-listája nem tartalmaz NM→szegény metabolizáló leképezést."
       },
       {
-        "id": "CPIC-F5-VKORC1-REC",
-        "hu": "NINCS: a CPIC recommendation_view F5-re és VKORC1-re üres. Élő párosítás ezekre nincs kitalálva."
+        "id": "CPIC-F5-REC",
+        "hu": "NINCS élő F5 pár: a CPIC recommendation_view F5-re 0 sor (eltrombopag és hormonális fogamzásgátló pair_view C, guideline nélkül). A pipeline megvan (CPIC_F5_SOURCE=off|mock|live). Prod/default = off. A mock fixture nem hivatalos CPIC ajánlás. LIVE üres, amíg a CPIC sort nem publikál."
       }
     ],
     "beszerzes": {
       "kinek": "A gyártó (ez a repo / engineering) tölti le és pin-eli. Nem a labor és nem a kórház.",
       "kitol": "CPIC (files.cpicpgx.org PDF + api.cpicpgx.org), FDA DDI Table 2-2, WHOCC ATC index, ClinPGx DPWG guidelineAnnotation.",
       "hogyan": "Nyilvános URL, accessed dátum, és a letöltött fájl a docs/pce/Sources/official/ mappában. Script: docs/pce/Sources/official/fetch_official_sources.py és tests/fixtures/f1plus-v0/extract_cpic_prepare12_tables.py. A motor a pin-elt JSON extractet olvassa, nem a PDF-et futáskor.",
-      "mikorra": "A 2020-as opioid és a 2023-as SSRI guideline, plusz az FDA lista, 2026-08-13-án megvan. SSRI NM→szegény sor: akkor, amikor a CPIC vagy az FDA ilyet kiad — addig szegény metabolizálót funkcionális címkeként írni tilos, a hiányt jelezni kell."
+      "mikorra": "A 2020-as opioid és a 2023-as SSRI guideline, plusz az FDA lista, 2026-08-13-án megvan. SSRI NM→szegény sor: akkor, amikor a CPIC vagy az FDA ilyet kiad — addig szegény metabolizálót funkcionális címkeként írni tilos, a hiányt jelezni kell.",
+      "warfarin_hu": "Warfarin: a gyártó pineli a 2017-es CPIC PDF-et. A motor a 2. ábra stratégia-kategóriáját írja, nem IWPC milligrammot. F5: rec_view-t a CPIC adja; amíg üres, nincs élő pár."
     }
   },
   "strategy_labels_hu": {
@@ -93,7 +134,8 @@
     "CONSIDER_DOSE_CHANGE": "A CPIC 2a tábla szerint a gén szerinti osztályban dózisváltoztatás megfontolandó (nem számolt mg).",
     "CONSIDER_ALTERNATIVE": "A CPIC 2a tábla szerint más szer megfontolandó.",
     "NO_GENE_BASED_DOSING": "A CPIC szerint erre a szerre nincs gén-alapú adagolás (fluoxetin: CPIC C).",
-    "INSUFFICIENT_RESOLUTION": "Csak csoportkód jött (5 karakter, pl. N06AB = SSRI-csoport). A párosításhoz hatóanyag-kód kell (7 karakter, WHO ATC 5. szint). Nem azért, mert egy szer egy beteget azonosítana: ugyanazt a hatóanyagot sok beteg szedheti. Az N06AB csoportban több hatóanyag van (paroxetin, fluoxetin, eszcitaloprám); az eszcitaloprám nem erős CYP2D6-gátló. A default export 7 karakteres kódot tart. Ha a DPO durvít csoportkódra, a párosítás szünetel."
+    "INSUFFICIENT_RESOLUTION": "Csak csoportkód jött (5 karakter, pl. N06AB = SSRI-csoport). A párosításhoz hatóanyag-kód kell (7 karakter, WHO ATC 5. szint). Nem azért, mert egy szer egy beteget azonosítana: ugyanazt a hatóanyagot sok beteg szedheti. Az N06AB csoportban több hatóanyag van (paroxetin, fluoxetin, eszcitaloprám); az eszcitaloprám nem erős CYP2D6-gátló. A default export 7 karakteres kódot tart. Ha a DPO durvít csoportkódra, a párosítás szünetel.",
+    "NO_RECOMMENDATION": "A pinelt CPIC recommendation_view ezen a gén szerinti osztályon nem ad ajánlást (insufficient/minimal evidence vagy No recommendation)."
   },
   "sources": [
     {
@@ -360,6 +402,30 @@
       "url": "https://www.clinpgx.org/guideline/PA166251453",
       "on_disk": "tests/fixtures/f1plus-v0/prepare12/ugt1a1-cpic-recommendation-view.v0.json",
       "claim": "UGT1A1–atazanavir: NM/IM no need to avoid; PM consider alternative especially if jaundice would be a concern."
+    },
+    {
+      "id": "CPIC-WARFARIN-2017",
+      "authority": "L2",
+      "accessed": "2026-08-15",
+      "url": "https://files.cpicpgx.org/data/guideline/publication/warfarin/2017/28198005.pdf",
+      "on_disk": "docs/pce/Sources/official/cpic-warfarin-2017-28198005.pdf",
+      "claim": "Figure 2: genotype-guided warfarin for adults. Footnote e: consider alternative if CYP2C9 poor metabolizer. Algorithms compute dose; PCE does not output milligrams."
+    },
+    {
+      "id": "PHARMCAT-3.4.0",
+      "authority": "L3",
+      "accessed": "2026-08-15",
+      "url": "https://github.com/PharmGKB/PharmCAT/releases/tag/v3.4.0",
+      "on_disk": "docs/pce/Sources/official/pharmcat-3.4.0-pin.json",
+      "claim": "PharmCAT 3.4.0 all-jar, MPL-2.0. NamedAlleleMatcher + Phenotyper CLI. Jar gitignored; sha256 pinned."
+    },
+    {
+      "id": "WHO-ATC-B01AA03",
+      "authority": "L1",
+      "accessed": "2026-08-15",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=B01AA03",
+      "on_disk": "docs/pce/Sources/official/whocc-atc-b01aa03.html",
+      "claim": "warfarin = B01AA03."
     }
   ],
   "diplotype_phenotype": [
@@ -658,6 +724,70 @@
       "cpic_generesult": "HLA-B*57:01 negative",
       "activity_score": null,
       "source_id": "CPIC-HLA-B-ABACAVIR"
+    },
+    {
+      "gene": "HLA-B",
+      "diplotype": "*58:01 positive",
+      "genotype_phenotype": "POS_5801",
+      "cpic_generesult": "HLA-B*58:01 positive",
+      "activity_score": null,
+      "source_id": "CPIC-HLA-B-ALLOPURINOL"
+    },
+    {
+      "gene": "HLA-B",
+      "diplotype": "*58:01 negative",
+      "genotype_phenotype": "NEG_5801",
+      "cpic_generesult": "HLA-B*58:01 negative",
+      "activity_score": null,
+      "source_id": "CPIC-HLA-B-ALLOPURINOL"
+    },
+    {
+      "gene": "HLA-B",
+      "diplotype": "*15:02 positive",
+      "genotype_phenotype": "POS_1502",
+      "cpic_generesult": "HLA-B*15:02 positive",
+      "activity_score": null,
+      "source_id": "CPIC-HLA-B-CARBAMAZEPINE"
+    },
+    {
+      "gene": "HLA-B",
+      "diplotype": "*15:02 negative",
+      "genotype_phenotype": "NEG_1502",
+      "cpic_generesult": "HLA-B*15:02 negative",
+      "activity_score": null,
+      "source_id": "CPIC-HLA-B-CARBAMAZEPINE"
+    },
+    {
+      "gene": "VKORC1",
+      "diplotype": "-1639G/-1639G",
+      "genotype_phenotype": "GG",
+      "cpic_generesult": "VKORC1 rs9923231 GG",
+      "activity_score": null,
+      "source_id": "CPIC-WARFARIN-2017"
+    },
+    {
+      "gene": "VKORC1",
+      "diplotype": "-1639G/-1639A",
+      "genotype_phenotype": "GA",
+      "cpic_generesult": "VKORC1 rs9923231 GA",
+      "activity_score": null,
+      "source_id": "CPIC-WARFARIN-2017"
+    },
+    {
+      "gene": "VKORC1",
+      "diplotype": "-1639A/-1639A",
+      "genotype_phenotype": "AA",
+      "cpic_generesult": "VKORC1 rs9923231 AA",
+      "activity_score": null,
+      "source_id": "CPIC-WARFARIN-2017"
+    },
+    {
+      "gene": "VKORC1",
+      "diplotype": "rs9923231 reference (C)/rs9923231 reference (C)",
+      "genotype_phenotype": "GG",
+      "cpic_generesult": "VKORC1 rs9923231 GG",
+      "activity_score": null,
+      "source_id": "CPIC-WARFARIN-2017"
     }
   ],
   "strong_cyp2d6_inhibitors": [
@@ -871,5 +1001,31 @@
     }
   ],
   "egfr_threshold": 30,
-  "egfr_threshold_source_id": "PCE-SPEC-B62"
+  "egfr_threshold_source_id": "PCE-SPEC-B62",
+  "extra_pairing_files": [
+    "tests/fixtures/shadow-v0/prepare12-rec-pairings.v0.json"
+  ],
+  "warfarin_diagram": {
+    "atc5": "B01AA03",
+    "inn": "warfarin",
+    "inn_hu": "warfarin",
+    "genes": [
+      "CYP2C9",
+      "VKORC1"
+    ],
+    "optional_gene": "CYP4F2",
+    "source_id": "CPIC-WARFARIN-2017",
+    "guidelineurl": "https://www.clinpgx.org/guideline/PA166251465",
+    "on_disk": "docs/pce/Sources/official/cpic-warfarin-2017-28198005.pdf",
+    "notesonusage": "Warfarin recommendation does not follow simple diplotype to phenotype translation. Read the guideline text and follow the recommendation diagram.",
+    "cyp2c9_pm_diplotypes": [
+      "*2/*3",
+      "*3/*2",
+      "*3/*3"
+    ],
+    "strategy_hu": {
+      "CONSIDER_DOSE_CHANGE": "A pinelt CPIC 2017 warfarin-diagram (PMID 28198005, Figure 2): mindkét gén megvan, nem CYP2C9 szegény metabolizáló. Publikált farmakogenetikai algoritmus használandó. A live finding nem számol milligrammot.",
+      "CONSIDER_ALTERNATIVE": "A pinelt CPIC 2017 warfarin-diagram 2. ábra (e) lábjegyzet: CYP2C9 szegény metabolizáló (*2/*3, *3/*3) — más orális antikoaguláns megfontolandó. Nem számolt mg."
+    }
+  }
 }

@@ -70,7 +70,11 @@ CREATE TABLE IF NOT EXISTS genomic_file (
   format TEXT,
   reference TEXT,
   sha256 TEXT NOT NULL,
-  size INTEGER NOT NULL
+  size INTEGER NOT NULL,
+  matcher_on INTEGER NOT NULL DEFAULT 0,
+  pharmcat_version TEXT,
+  pharmvar_version TEXT,
+  cpic_data_version TEXT
 );
 
 CREATE TABLE IF NOT EXISTS gene_coverage (
@@ -192,6 +196,15 @@ class ClinicalStore:
         cols = {row[1] for row in self.conn.execute("PRAGMA table_info(gene_coverage)")}
         if "diplotype" not in cols:
             self.conn.execute("ALTER TABLE gene_coverage ADD COLUMN diplotype TEXT")
+        gcols = {row[1] for row in self.conn.execute("PRAGMA table_info(genomic_file)")}
+        for col, spec in (
+            ("matcher_on", "INTEGER NOT NULL DEFAULT 0"),
+            ("pharmcat_version", "TEXT"),
+            ("pharmvar_version", "TEXT"),
+            ("cpic_data_version", "TEXT"),
+        ):
+            if col not in gcols:
+                self.conn.execute(f"ALTER TABLE genomic_file ADD COLUMN {col} {spec}")
         self.conn.commit()
 
     def execute(self, sql: str, params: tuple | dict = ()) -> sqlite3.Cursor:

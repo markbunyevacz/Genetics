@@ -135,10 +135,15 @@ def handle_request(
         if rest == "/files" and method == "POST":
             role = require_role(auth, WRITE_CASE)
             sample_id = (query.get("sample_id") or [None])[0]
+            matcher_raw = (query.get("matcher_on") or ["false"])[0]
+            matcher_on = str(matcher_raw).strip().lower() in {"1", "true", "yes"}
             length = int(headers.get("Content-Length") or len(raw))
             if length > 5 * 1024 * 1024 * 1024:
                 raise ClinicalError("E-VCF-004")
-            return _json_bytes(svc.add_vcf(case_id, raw, role, sample_id=sample_id), 201)
+            return _json_bytes(
+                svc.add_vcf(case_id, raw, role, sample_id=sample_id, matcher_on=matcher_on),
+                201,
+            )
         if rest == "/clinical-context" and method == "PUT":
             role = require_role(auth, WRITE_CASE)
             return _json_bytes(svc.put_clinical_context(case_id, body, role))

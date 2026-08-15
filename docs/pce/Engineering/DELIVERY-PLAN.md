@@ -209,7 +209,7 @@ Külön csomag: `src/pce_shadow/`. `pce_report` nem importálja.
 | M5 | eGFR < 30 → `reason: organ`, nem számított dózis | B.6.2 |
 | M6 | Determinisztikus | NFR-060 |
 | M7 | CI: `pce_report` AST-ban nincs `pce_shadow` | FR-470 |
-| M8 | PREPARE-12 élő párok a pinelt CPIC recommendation_view stratégia-kategóriájából (CYP2B6–efavirenz, CYP2C9–celecoxib aktivitási ponttal, CYP3A5–tacrolimus, DPYD–fluorouracil, SLCO1B1–simvastatin, TPMT–azathioprine, HLA-B–abacavir, UGT1A1–atazanavir). F5/VKORC1: **nincs** kitalált pár. Nincs `dose_mg`. | `tests/test_prepare12_ready.py` |
+| M8 | PREPARE-12 élő párok a pinelt CPIC recommendation_view stratégia-kategóriájából: index párok **és** a rec-táblás többi szer (kodein, kapecitabin, allopurinol, citalopram, …; ≥50 pár). Warfarin: 2017-es 2. ábra, CYP2C9+VKORC1, nincs mg. F5: adat-agnosztikus ingest (`CPIC_F5_SOURCE=off\|mock\|live`); prod **off**; mock nem hivatalos CPIC sor; nincs kitalált élő pár. Nincs `dose_mg`. | `tests/test_prepare12_ready.py`; `tests/test_f5_rec_pipeline.py` |
 
 Inhibitor tábla: FDA Table 2-2 erős index (paroxetin, fluoxetin) + WHO ATC 5. szint (7 karakter) + CPIC SSRI 2023 Table 2a stratégia-kategória. CPIC SSRI 2023: nincs NM→szegény metabolizáló sor. CPIC opioid 2020: van ilyen szabály opioidra — a paroxetin-SSRI példára **nem** keverjük. A HITL kártya kiírja: mi van, mi hiányzik, kitől, kinek kell beszerezni.
 
@@ -258,8 +258,8 @@ F1 default marad FR-240. VCF kell a missing-to-ref P0 teszthez. A csillag-allél
 | V3 | Multi-sample hozzárendelés nélkül → `E-VCF-002` | |
 | V4 | > 5 GB → `E-VCF-004` | |
 | V5 | ≥3 gold: hiányzó definiáló pozíció → INDETERMINATE, nem NORMAL. Minták: `tests/fixtures/vcf-gold-v0/` (gyártó SYN, Ensembl/dbSNP pin). 4. fájl: CYP2C9\*3. HLA-B / UGT1A1\*28 `not_snv`. CDC GeT-RM fizikai minta labor-QC, nem ezek a fájlok. | FR-210; PharmCAT `--absent-to-ref` **nincs** hívva |
-| V6 | Repo `MATCHER_ON is False`. A PharmCAT NamedAlleleMatcher nincs hívva. | FR-300 / OQ-05 |
-| V7 | BE-út: `call_star_alleles(..., matcher_on=True)` pin-elt definiáló pontmutációkból. Hiányzó hely → INDETERMINATE, soha nem `*1`. HLA-B / UGT1A1\*28 `NOT_TESTED` (laboreredmény outside-call). | `tests/test_prepare12_ready.py`; mint F2 `live_cds=True` |
+| V6 | Repo `MATCHER_ON is False`. Default `add_vcf` nem hív diplotípust. | FR-300 / OQ-05 |
+| V7 | `matcher_on=True`: PharmCAT 3.4.0 NamedAlleleMatcher + Phenotyper **hívva**. CYP2D6 \*4/\*4 CALLED a gold VCF-en. Több diplotípus / hiányzó hely → INDETERMINATE, soha nem kitalált `*1`. HLA-B / UGT1A1\*28 `NOT_TESTED`. Riport: pipeline / PharmVar / CPIC-adat verzió. | `tests/test_prepare12_ready.py`; mint F2 `live_cds=True` |
 
 ---
 
@@ -328,7 +328,7 @@ HIS fixture → intézményi gateway → `POST /v1/shadow/events` 202 → sor a 
 
 ## Kész definíció — PREPARE-12 élő párok + laboreredmény (2026-08-15)
 
-Shadow: a fenti gén–hatóanyag párok stratégia-kategóriát adnak milligramm nélkül. HLA-B\*57:01 pozitív + abakavir → CONSIDER_ALTERNATIVE. UGT1A1 \*28/\*28 + atazanavir → CONSIDER_ALTERNATIVE. F5/VKORC1 nincs kitalált pár. VCF: `matcher_on=True` CYP2D6 \*4/\*4 CALLED; default `add_vcf` nem hív diplotípust. Repo flagok false. OQ pecsét nincs.
+Shadow: index párok **és** a rec-táblás többi szer stratégia-kategóriát adnak milligramm nélkül. HLA-B\*57:01 pozitív + abakavir → CONSIDER_ALTERNATIVE. HLA-B\*58:01 pozitív + allopurinol → CONSIDER_ALTERNATIVE. CYP2D6 PM + kodein → CONSIDER_ALTERNATIVE. Warfarin: CYP2C9+VKORC1 a 2017-es 2. ábrából, nincs mg. F5 rec_view 0 → nincs kitalált pár. VCF: `matcher_on=True` PharmCAT NamedAlleleMatcher + Phenotyper; CYP2D6 \*4/\*4 CALLED; több diplotípus INDETERMINATE. Default `add_vcf` nem hív diplotípust. Repo flagok false. OQ pecsét nincs.
 
 ## Kész definíció — ETAP 0 SYN
 
