@@ -118,7 +118,7 @@
       },
       {
         "id": "CPIC-F5-REC",
-        "hu": "NINCS: a CPIC recommendation_view F5-re 0 sor (eltrombopag és hormonális fogamzásgátló pair_view C, guideline nélkül). Élő párt a gyártó nem talál ki. A CPIC-nek kell rec-sort kiadnia."
+        "hu": "NINCS élő F5 pár: a CPIC recommendation_view F5-re 0 sor (eltrombopag és hormonális fogamzásgátló pair_view C, guideline nélkül). A pipeline megvan (CPIC_F5_SOURCE=off|mock|live). Prod/default = off. A mock fixture nem hivatalos CPIC ajánlás. LIVE üres, amíg a CPIC sort nem publikál."
       }
     ],
     "beszerzes": {

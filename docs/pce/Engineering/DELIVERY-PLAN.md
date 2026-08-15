@@ -209,7 +209,7 @@ Külön csomag: `src/pce_shadow/`. `pce_report` nem importálja.
 | M5 | eGFR < 30 → `reason: organ`, nem számított dózis | B.6.2 |
 | M6 | Determinisztikus | NFR-060 |
 | M7 | CI: `pce_report` AST-ban nincs `pce_shadow` | FR-470 |
-| M8 | PREPARE-12 élő párok a pinelt CPIC recommendation_view stratégia-kategóriájából: index párok **és** a rec-táblás többi szer (kodein, kapecitabin, allopurinol, citalopram, …; ≥50 pár). Warfarin: 2017-es 2. ábra, CYP2C9+VKORC1, nincs mg. F5: **nincs** kitalált pár (rec_view 0). Nincs `dose_mg`. | `tests/test_prepare12_ready.py` |
+| M8 | PREPARE-12 élő párok a pinelt CPIC recommendation_view stratégia-kategóriájából: index párok **és** a rec-táblás többi szer (kodein, kapecitabin, allopurinol, citalopram, …; ≥50 pár). Warfarin: 2017-es 2. ábra, CYP2C9+VKORC1, nincs mg. F5: adat-agnosztikus ingest (`CPIC_F5_SOURCE=off\|mock\|live`); prod **off**; mock nem hivatalos CPIC sor; nincs kitalált élő pár. Nincs `dose_mg`. | `tests/test_prepare12_ready.py`; `tests/test_f5_rec_pipeline.py` |
 
 Inhibitor tábla: FDA Table 2-2 erős index (paroxetin, fluoxetin) + WHO ATC 5. szint (7 karakter) + CPIC SSRI 2023 Table 2a stratégia-kategória. CPIC SSRI 2023: nincs NM→szegény metabolizáló sor. CPIC opioid 2020: van ilyen szabály opioidra — a paroxetin-SSRI példára **nem** keverjük. A HITL kártya kiírja: mi van, mi hiányzik, kitől, kinek kell beszerezni.
 

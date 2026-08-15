@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pce-cpic-f5-recommendation-view",
+  "title": "CPIC recommendation_view row (F5). Official fields plus mock aliases.",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "recommendationid": {"type": ["integer", "null"]},
+    "drugid": {"type": ["string", "null"]},
+    "drugname": {"type": ["string", "null"]},
+    "guidelineid": {"type": ["integer", "null"]},
+    "guidelinename": {"type": ["string", "null"]},
+    "guidelineurl": {"type": ["string", "null"]},
+    "lookupkey": {
+      "type": ["object", "null"],
+      "additionalProperties": true,
+      "properties": {
+        "F5": {"type": ["string", "null"]}
+      }
+    },
+    "phenotypes": {"type": ["object", "null"]},
+    "phenotype": {"type": ["string", "null"]},
+    "activityscore": {"type": ["object", "null"]},
+    "implications": {"type": ["object", "null"]},
+    "implication": {"type": ["string", "null"]},
+    "drugrecommendation": {"type": ["string", "null"]},
+    "recommendation": {"type": ["string", "null"]},
+    "classification": {"type": ["string", "null"]},
+    "population": {"type": ["string", "null"]},
+    "comments": {"type": ["string", "null"]}
+  }
+}

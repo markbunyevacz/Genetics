@@ -1,0 +1,49 @@
+{
+  "id": "cpic-f5-mock",
+  "mocked": true,
+  "note_hu": "MOCK. A CPIC recommendation_view F5-re 0 sort ad. Ez a fájl a pipeline, a séma és a tesztek futtatására van. Nem hivatalos CPIC ajánlás. LIVE üres, amíg a CPIC sort nem publikál.",
+  "atc5": "G03AA07",
+  "inn": "levonorgestrel and ethinylestradiol",
+  "inn_hu": "levonorgesztrel és etinilösztradiol",
+  "who_atc_note": "A pinelt CPIC pair_view F5–hormonális fogamzásgátló kódja ATC:G03A (csoport). A mock 7 karakteres példa: G03AA07. Nem CPIC rec_view.",
+  "rows": [
+    {
+      "recommendationid": 99999,
+      "drugid": "RxNorm:203159",
+      "drugname": "hormonal contraceptives for systemic use",
+      "guidelineid": 12,
+      "lookupkey": {
+        "F5": "heterozygous"
+      },
+      "phenotype": "Factor V Leiden Heterozygote",
+      "implication": "Increased risk of venous thromboembolism.",
+      "recommendation": "Avoid estrogen-containing contraceptives. Consider alternative therapies.",
+      "comments": "Mocked recommendation for development and safety testing purposes. Not CPIC published."
+    },
+    {
+      "recommendationid": 99998,
+      "drugid": "RxNorm:203159",
+      "drugname": "hormonal contraceptives for systemic use",
+      "guidelineid": 12,
+      "lookupkey": {
+        "F5": "wild type"
+      },
+      "phenotype": "Factor V Leiden negative",
+      "implication": "Typical VTE risk from this genotype.",
+      "recommendation": "No genotype-based change. Continue therapy.",
+      "comments": "Mocked WT row for development. Not CPIC published."
+    },
+    {
+      "recommendationid": 99997,
+      "drugid": "RxNorm:203159",
+      "drugname": "hormonal contraceptives for systemic use",
+      "guidelineid": 12,
+      "lookupkey": {
+        "F5": null
+      },
+      "phenotype": null,
+      "recommendation": "Avoid estrogen-containing contraceptives.",
+      "comments": "Null F5 lookupkey must be skipped. Not CPIC published."
+    }
+  ]
+}

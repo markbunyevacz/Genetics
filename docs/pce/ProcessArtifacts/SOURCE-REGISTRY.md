@@ -77,6 +77,7 @@ Hozzáférés dátuma: 2026-08-12, kivéve ahol jelezve. Authority: L1 hivatalos
 | S071 | CPIC warfarin 2017 (Johnson et al., CPT; PMID 28198005) | Guideline | L2 | https://files.cpicpgx.org/data/guideline/publication/warfarin/2017/28198005.pdf ; pin: `Sources/official/cpic-warfarin-2017-28198005.pdf` ; ClinPGx PA166251465 | 2. ábra: CYP2C9+VKORC1. rec_view üres. Nincs milligramm a live findingben. |
 | S072 | CPIC rec_view → stratégia-kategória extract (többi PREPARE-12 szer) | Guideline extract | L2 | `tests/fixtures/shadow-v0/prepare12-rec-pairings.v0.json` ; builder: `Sources/official/build_prepare12_live_pairings.py` | 2026-08-15. Index párok nem felülírva. Nincs `dose_mg`. F5/VKORC1 nincs ebben a fájlban. |
 | S073 | WHOCC ATC/DDD Index a rec_view szerekre + warfarin B01AA03 | Hivatalos | L1 | https://www.whocc.no/atc_ddd_index/ ; `Sources/official/whocc-atc-*.html` (2026-08-15) | 7 karakteres hatóanyag-kód. tioguanine = L01BB03 (WHO írásmód). |
+| S074 | F5 mock recommendation_view fixture | Gyártói minta (nem CPIC publikáció) | L5 | `tests/fixtures/cpic_f5_mock.json` + séma `cpic_f5_recommendation.schema.json` | 2026-08-15. Pipeline-teszt. **Nem** hivatalos CPIC rec_view. Prod `CPIC_F5_SOURCE=off`. LIVE az API-ra vár. |
 
 **Nem került a registrybe (szándékos):** Fortune/Mordor/Straits TAM-számok (egymásnak ellentmondó L4/L5); Allelica ACC/AHA idézés (céges PR, `[C]`); YouScript 39%/71% kórházi csökkenés (céges közlés); punktum.net / mdxcro.com / IntuitionLabs mint Rule 11a primer (L4, S039-en keresztül említve).
 

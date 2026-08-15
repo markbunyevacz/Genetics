@@ -2,16 +2,26 @@
 from __future__ import annotations
 
 import json
+from collections.abc import Callable
 from pathlib import Path
 from typing import Any
+
+from pce_shadow.f5_rec import apply_f5_source
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_PATH = ROOT / "tests" / "fixtures" / "shadow-v0" / "cyp2d6-knowledge.v0.json"
 
 
 class KnowledgeTable:
-    def __init__(self, path: str | Path | None = None) -> None:
+    def __init__(
+        self,
+        path: str | Path | None = None,
+        *,
+        f5_source: str | None = None,
+        f5_fetch: Callable[[], list[Any]] | None = None,
+    ) -> None:
         self.path = Path(path) if path else DEFAULT_PATH
+        self.f5_source = "off"
         self.doc: dict[str, Any] = json.loads(self.path.read_text(encoding="utf-8"))
         self.config_id: str = str(self.doc["id"])
         self._dip: dict[tuple[str, str], dict[str, Any]] = {}
@@ -44,6 +54,7 @@ class KnowledgeTable:
         self.strategy_labels_hu: dict[str, str] = {
             str(k): str(v) for k, v in (self.doc.get("strategy_labels_hu") or {}).items()
         }
+        apply_f5_source(self, source=f5_source, fetch=f5_fetch)
 
     def phenotype_hu(self, code: str | None) -> str | None:
         if not code:
