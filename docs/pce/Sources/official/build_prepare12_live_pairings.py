@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import json
 import re
+import sys
 from collections import defaultdict
 from pathlib import Path
 
@@ -76,20 +77,39 @@ ATC = {
     ("TPMT", "thioguanine"): ("L01BB03", "tioguanin"),
 }
 
+ATC5_RE = re.compile(r"^[A-Z][0-9]{2}[A-Z]{2}[0-9]{2}$")
+
 # Index pairs already in cyp2d6-knowledge.v0.json — do not overwrite.
-SKIP = {
-    ("CYP2D6", "paroxetine"),
-    ("CYP2D6", "fluoxetine"),
-    ("CYP2C19", "clopidogrel"),
-    ("CYP2B6", "efavirenz"),
-    ("CYP2C9", "celecoxib"),
-    ("CYP3A5", "tacrolimus"),
-    ("DPYD", "fluorouracil"),
-    ("SLCO1B1", "simvastatin"),
-    ("TPMT", "azathioprine"),
-    ("HLA-B", "abacavir"),
-    ("UGT1A1", "atazanavir"),
-}
+SKIP = frozenset(
+    {
+        ("CYP2D6", "paroxetine"),
+        ("CYP2D6", "fluoxetine"),
+        ("CYP2C19", "clopidogrel"),
+        ("CYP2B6", "efavirenz"),
+        ("CYP2C9", "celecoxib"),
+        ("CYP3A5", "tacrolimus"),
+        ("DPYD", "fluorouracil"),
+        ("SLCO1B1", "simvastatin"),
+        ("TPMT", "azathioprine"),
+        ("HLA-B", "abacavir"),
+        ("UGT1A1", "atazanavir"),
+    }
+)
+
+
+def validate_atc_dict(atc: dict | None = None) -> None:
+    """Fail-fast if a hardcoded ATC-5 is not a 7-character WHO-style code."""
+    mapping = ATC if atc is None else atc
+    for key, val in mapping.items():
+        code = val[0] if isinstance(val, tuple) else val
+        if not isinstance(code, str) or ATC5_RE.fullmatch(code) is None:
+            raise ValueError(
+                f"invalid ATC-5 for {key!r}: {code!r} "
+                "(expected ^[A-Z][0-9]{2}[A-Z]{2}[0-9]{2}$)"
+            )
+
+
+validate_atc_dict()
 
 PHENO = {
     "ultrarapid metabolizer": "UM",
@@ -384,6 +404,11 @@ def build() -> dict:
 
 
 def main() -> int:
+    try:
+        validate_atc_dict()
+    except ValueError as exc:
+        print(f"FATAL {exc}", file=sys.stderr)
+        return 1
     doc = build()
     OUT.write_text(
         json.dumps({k: doc[k] for k in ("id", "accessed", "note", "pairings")}, indent=2, ensure_ascii=False)

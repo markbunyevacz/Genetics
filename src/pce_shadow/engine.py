@@ -12,6 +12,25 @@ from pce_shadow.table import KnowledgeTable, default_table
 ORGAN_REASON = "organ"
 
 
+def warfarin_strategy_matrix(diagram: dict[str, Any]) -> dict[str, str]:
+    """CYP2C9 diplotype → strategy. VKORC1 genotype does not change the category."""
+    alternative = "CONSIDER_ALTERNATIVE"
+    return {str(d).replace(" ", ""): alternative for d in (diagram.get("cyp2c9_pm_diplotypes") or ())}
+
+
+def warfarin_strategy_category(
+    cyp_diplotype: str,
+    cyp_phenotype: str | None,
+    diagram: dict[str, Any],
+) -> str:
+    """Declarative CYP2C9 → strategy map. VKORC1 must already be present (caller)."""
+    dip = str(cyp_diplotype).replace(" ", "")
+    matrix = dict(warfarin_strategy_matrix(diagram))
+    if cyp_phenotype == "PM":
+        matrix[dip] = "CONSIDER_ALTERNATIVE"
+    return matrix.get(dip, "CONSIDER_DOSE_CHANGE")
+
+
 def _activity_key(raw: Any) -> str | None:
     if raw is None:
         return None
@@ -228,12 +247,11 @@ def infer(
             cyp = next((g for g in genotype if g.get("gene") == "CYP2C9" and g.get("diplotype")), None)
             vkor = next((g for g in genotype if g.get("gene") == "VKORC1" and g.get("diplotype")), None)
             if not already and cyp and vkor:
-                dip = str(cyp.get("diplotype") or "").replace(" ", "")
-                pm_dips = {str(x).replace(" ", "") for x in (diagram.get("cyp2c9_pm_diplotypes") or [])}
-                if cyp.get("genotype_phenotype") == "PM" or dip in pm_dips:
-                    category = "CONSIDER_ALTERNATIVE"
-                else:
-                    category = "CONSIDER_DOSE_CHANGE"
+                category = warfarin_strategy_category(
+                    str(cyp.get("diplotype") or ""),
+                    cyp.get("genotype_phenotype") if isinstance(cyp.get("genotype_phenotype"), str) else None,
+                    diagram,
+                )
                 live_findings.append(
                     _finding(
                         gene="CYP2C9+VKORC1",

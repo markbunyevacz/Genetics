@@ -8,25 +8,31 @@ from __future__ import annotations
 import importlib.util
 import json
 import sys
+import os
 import tempfile
 import threading
 import unittest
 import urllib.error
 import urllib.request
 from pathlib import Path
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+from pce_clinical.pharmcat import PharmcatError, ensure_jar  # noqa: E402
 from pce_clinical.server import bind_clinical_server  # noqa: E402
+from pce_clinical.star_call import call_star_alleles  # noqa: E402
 from pce_report.flags import MATCHER_ON  # noqa: E402
 from pce_report.guidelines import prepare12_table  # noqa: E402
-from pce_report.render import render_f1plus  # noqa: E402
+from pce_report.render import RendererConfigError, render_f1plus  # noqa: E402
+from pce_report.schema import assemble_b41  # noqa: E402
 from pce_shadow.engine import infer  # noqa: E402
 from pce_shadow.f5_rec import (  # noqa: E402
     F5_ATC5,
     F5_SCHEMA_PATH,
     MOCK_PATH,
+    F5Source,
     MockF5Provider,
     OffF5Provider,
     classify_recommendation,
@@ -71,11 +77,14 @@ class F5SchemaTests(unittest.TestCase):
         payload = json.loads(MOCK_PATH.read_text(encoding="utf-8"))
         self.assertTrue(payload["mocked"])
         self.assertEqual(payload["atc5"], "G03AA07")
-        self.assertEqual(len(payload["rows"]), 3)
+        self.assertEqual(len(payload["rows"]), 4)
         for row in payload["rows"]:
             validate_rec_view_row(row)
         comments = " ".join(str(r.get("comments") or "") for r in payload["rows"])
         self.assertIn("Not CPIC published", comments)
+        lookup_vals = [r["lookupkey"]["F5"] for r in payload["rows"]]
+        self.assertIn("Leiden/Leiden", lookup_vals)
+        self.assertIn("heterozygous", lookup_vals)
 
     def test_null_f5_lookup_is_valid_but_skipped(self) -> None:
         row = {
@@ -107,9 +116,10 @@ class F5SchemaTests(unittest.TestCase):
 
 class F5ProviderSwitchTests(unittest.TestCase):
     def test_default_source_is_off(self) -> None:
-        self.assertEqual(resolve_source(None), "off")
+        self.assertIs(resolve_source(None), F5Source.DISABLED)
+        self.assertEqual(resolve_source(None).value, "off")
         self.assertEqual(OffF5Provider().rows(), [])
-        self.assertEqual(len(MockF5Provider().rows()), 3)
+        self.assertEqual(len(MockF5Provider().rows()), 4)
 
     def test_prod_table_has_no_f5_pairing(self) -> None:
         table = KnowledgeTable()
@@ -126,6 +136,7 @@ class F5ProviderSwitchTests(unittest.TestCase):
         self.assertEqual(pair["source_id"], "CPIC-F5-MOCK")
         self.assertEqual(pair["by_phenotype"]["HET"], "CONSIDER_ALTERNATIVE")
         self.assertEqual(pair["by_phenotype"]["WT"], "CONTINUE")
+        self.assertEqual(pair["by_phenotype"]["HOM"], "CONSIDER_ALTERNATIVE")
         self.assertNotIn("dose_mg", pair)
         van = " ".join(row["hu"] for row in table.inventory.get("van") or [])
         self.assertIn("MOCK", van)
@@ -156,6 +167,9 @@ class F5ProviderSwitchTests(unittest.TestCase):
         self.assertEqual(out["genotype_phenotype"][0]["genotype_phenotype"], "HET")
         self.assertNotIn("dose_mg", json.dumps(out))
         self.assertTrue(out["live_findings"][0]["source_id"].endswith("MOCK"))
+        hom = _infer_with(table, "F5", "Leiden/Leiden", F5_ATC5)
+        self.assertEqual(hom["genotype_phenotype"][0]["genotype_phenotype"], "HOM")
+        self.assertEqual(hom["live_findings"][0]["strategy_category"], "CONSIDER_ALTERNATIVE")
 
     def test_infer_mock_wt_negative(self) -> None:
         table = KnowledgeTable(f5_source="mock")
@@ -210,6 +224,7 @@ class RecViewAndWarfarinChecklistTests(unittest.TestCase):
 
     def test_builder_skip_protects_index_pairs(self) -> None:
         mod = _load_builder()
+        self.assertIsInstance(mod.SKIP, frozenset)
         self.assertIn(("CYP2D6", "paroxetine"), mod.SKIP)
         self.assertIn(("CYP2C19", "clopidogrel"), mod.SKIP)
         self.assertIn(("HLA-B", "abacavir"), mod.SKIP)
@@ -334,11 +349,241 @@ class PharmcatHttpMatcherOnTests(unittest.TestCase):
         cov = {row["gene"]: row for row in stored["coverage"]}
         self.assertEqual(cov["CYP2D6"]["diplotype"], "*4/*4")
         self.assertEqual(cov["CYP2D6"]["callability"], "CALLED")
+        self.assertEqual(cov["CYP2C9"]["diplotype"], "*4/*4")
+        self.assertEqual(cov["CYP2C9"]["callability"], "CALLED")
         self.assertEqual(cov["HLA-B"]["callability"], "NOT_TESTED")
         self.assertEqual(stored["pharmcat_version"], "3.4.0")
         self.assertTrue(stored["pharmvar_version"])
         self.assertTrue(stored["cpic_data_version"])
         self.assertFalse(MATCHER_ON)
+
+
+class RepoConformHardeningTests(unittest.TestCase):
+    def test_f5_source_invalid_token_throws(self) -> None:
+        with self.assertRaises(ValueError):
+            resolve_source("prod")
+        with self.assertRaises(ValueError):
+            resolve_source("yes")
+        with patch.dict(os.environ, {"CPIC_F5_SOURCE": "bogus"}):
+            with self.assertRaises(ValueError):
+                KnowledgeTable()
+
+    def test_f5_empty_recommendation_skipped(self) -> None:
+        row = {
+            "recommendationid": 1,
+            "drugid": "RxNorm:203159",
+            "guidelineid": 12,
+            "lookupkey": {"F5": "heterozygous"},
+            "phenotype": "Factor V Leiden Heterozygote",
+            "recommendation": "",
+            "comments": "empty rec must skip",
+        }
+        validate_rec_view_row(row)
+        pairings, dips, labels = transform_rows([row], mocked=True)
+        self.assertIsNone(classify_recommendation(""))
+        self.assertEqual(pairings, [])
+        self.assertEqual(dips, [])
+        self.assertEqual(labels, {})
+
+    def test_f5_empty_array_does_not_crash(self) -> None:
+        pairings, dips, labels = transform_rows([], mocked=True)
+        self.assertEqual(pairings, [])
+        self.assertEqual(dips, [])
+        self.assertEqual(labels, {})
+        table = KnowledgeTable(f5_source="live", f5_fetch=lambda: [])
+        self.assertEqual(table.f5_source, "live")
+        self.assertIsNone(table.pairing("F5", F5_ATC5))
+        out = _infer_with(table, "F5", "heterozygous", F5_ATC5)
+        self.assertEqual(out["live_findings"], [])
+
+    def test_f5_live_non_dict_row_fails_fast(self) -> None:
+        with self.assertRaises(ValueError):
+            validate_rec_view_row(["not-a-dict"])
+        with self.assertRaises(ValueError):
+            KnowledgeTable(f5_source="live", f5_fetch=lambda: ["not-a-dict"])
+        with self.assertRaises(ValueError):
+            KnowledgeTable(f5_source="live", f5_fetch=lambda: {"rows": []})
+
+    def test_index_pair_overwrite_throws_exception(self) -> None:
+        table = KnowledgeTable()
+        with self.assertRaises(ValueError):
+            table.add_pairing(
+                {"gene": "CYP2D6", "atc5": "N06AB05", "inn": "paroxetine"},
+                source="overwrite-test",
+            )
+        with self.assertRaises(ValueError):
+            table.add_pairing(
+                {"gene": "CYP2C19", "atc5": "B01AC04", "inn": "clopidogrel"},
+                source="overwrite-test",
+            )
+        self.assertEqual(table.pairing("CYP2D6", "N06AB05")["source_id"], "CPIC-SSRI-2023")
+        self.assertEqual(table.pairing("CYP2C19", "B01AC04")["inn"], "clopidogrel")
+
+    def test_atc_dict_keys_valid_format(self) -> None:
+        mod = _load_builder()
+        self.assertIsInstance(mod.SKIP, frozenset)
+        for key, val in mod.ATC.items():
+            code = val[0] if isinstance(val, tuple) else val
+            self.assertRegex(code, r"^[A-Z][0-9]{2}[A-Z]{2}[0-9]{2}$")
+            self.assertEqual(len(code), 7)
+        mod.validate_atc_dict()
+        with self.assertRaises(ValueError):
+            mod.validate_atc_dict({("CYP2D6", "bad"): ("N06AB", "x")})
+
+    def test_warfarin_full_matrix_parametric(self) -> None:
+        vkor_any = (
+            "-1639G/-1639G",
+            "-1639G/-1639A",
+            "-1639A/-1639A",
+            "rs9923231 reference (C)/rs9923231 reference (C)",
+        )
+        war = [{"system": "http://www.whocc.no/atc", "code": "B01AA03"}]
+        for cyp in ("*2/*3", "*3/*3"):
+            for vkor in vkor_any:
+                with self.subTest(cyp=cyp, vkor=vkor):
+                    out = infer(
+                        {
+                            "diplotypes": [
+                                {"gene": "CYP2C9", "diplotype": cyp, "callability": "CALLED"},
+                                {"gene": "VKORC1", "diplotype": vkor, "callability": "CALLED"},
+                            ],
+                            "medications": war,
+                        }
+                    )
+                    self.assertEqual(len(out["live_findings"]), 1)
+                    self.assertEqual(out["live_findings"][0]["strategy_category"], "CONSIDER_ALTERNATIVE")
+                    self.assertNotIn("dose_mg", json.dumps(out))
+        gg_aliases = (
+            "-1639G/-1639G",
+            "rs9923231 reference (C)/rs9923231 reference (C)",
+        )
+        for vkor in gg_aliases:
+            with self.subTest(branch="dose_change", vkor=vkor):
+                out = infer(
+                    {
+                        "diplotypes": [
+                            {"gene": "CYP2C9", "diplotype": "*1/*2", "callability": "CALLED"},
+                            {"gene": "VKORC1", "diplotype": vkor, "callability": "CALLED"},
+                        ],
+                        "medications": war,
+                    }
+                )
+                self.assertEqual(out["live_findings"][0]["strategy_category"], "CONSIDER_DOSE_CHANGE")
+        missing_cases = (
+            [{"gene": "CYP2C9", "diplotype": "*2/*3", "callability": "CALLED"}],
+            [{"gene": "VKORC1", "diplotype": "-1639G/-1639G", "callability": "CALLED"}],
+            [],
+        )
+        for dips in missing_cases:
+            with self.subTest(missing=dips):
+                out = infer({"diplotypes": dips, "medications": war})
+                self.assertEqual(out["live_findings"], [])
+
+    def test_ensure_jar_offline_missing_raises(self) -> None:
+        missing = Path("/tmp/pce-no-such-pharmcat-3.4.0-all.jar")
+        with patch.dict(os.environ, {"PCE_PHARMCAT_OFFLINE": "1"}):
+            with patch("pce_clinical.pharmcat.jar_path", return_value=missing):
+                with patch("pce_clinical.pharmcat.urllib.request.urlopen") as urlopen:
+                    with self.assertRaises(PharmcatError):
+                        ensure_jar()
+                    urlopen.assert_not_called()
+
+    def test_missing_version_metadata_raises_exception(self) -> None:
+        engine = render_f1plus(
+            outside_call={
+                "gene": "CYP2D6",
+                "diplotype": "*4/*4",
+                "callability": "CALLED",
+                "case_display_id": "SYN-CASE-VER",
+            },
+            table=prepare12_table(),
+        )
+        engine = dict(engine)
+        engine["matcher_on"] = True
+        kwargs = dict(
+            engine=engine,
+            report_id="SYN-RPT-VER",
+            case_id="SYN-CASE-VER",
+            counselling={"id": "SYN-C", "at": "2026-01-01T00:00:00+00:00", "counsellor_id": "SYN-MD-001"},
+            consent_granted_at="2026-01-02T00:00:00+00:00",
+            performing_org_license_id="SYN-LIC-001",
+            white_label={"org": "SYN-ORG-001", "signer_slot": "SYN-MD-001", "colophon": "Precision Clinical Engine"},
+            genes=[
+                {
+                    "gene": "CYP2D6",
+                    "diplotype": "*4/*4",
+                    "genotype_phenotype": None,
+                    "callability": "CALLED",
+                }
+            ],
+            omit_from_patient=frozenset(),
+        )
+        with self.assertRaises(RendererConfigError):
+            assemble_b41(**kwargs)
+        engine["pipeline_version"] = "pce-clinical-v0"
+        engine["pharmcat_version"] = "3.4.0"
+        engine["pharmvar_version"] = "pinned"
+        engine["cpic_data_version"] = "pinned"
+        ok = assemble_b41(**kwargs)
+        self.assertTrue(ok["matcher_on"])
+        engine["pharmvar_version"] = ""
+        with self.assertRaises(RendererConfigError):
+            assemble_b41(**kwargs)
+        engine["pharmvar_version"] = "pinned"
+        engine["cpic_data_version"] = None
+        with self.assertRaises(RendererConfigError):
+            assemble_b41(**kwargs)
+
+    def test_pharmcat_concurrent_requests_isolation(self) -> None:
+        self.assertFalse(MATCHER_ON)
+        gold = GOLD / "called-cyp2d6-star4-hom.vcf"
+        if not gold.is_file():
+            self.skipTest("gold VCF missing")
+        text = gold.read_text(encoding="utf-8")
+        errors: list[BaseException] = []
+        results: dict[str, object] = {}
+        flags: list[bool] = []
+
+        def run_on() -> None:
+            try:
+                flags.append(MATCHER_ON)
+                results["on"] = call_star_alleles(text, reference="GRCh38", matcher_on=True)
+            except BaseException as exc:
+                errors.append(exc)
+
+        def run_off() -> None:
+            try:
+                flags.append(MATCHER_ON)
+                results["off"] = call_star_alleles(text, reference="GRCh38", matcher_on=False)
+            except BaseException as exc:
+                errors.append(exc)
+
+        t_on = threading.Thread(target=run_on)
+        t_off = threading.Thread(target=run_off)
+        t_on.start()
+        t_off.start()
+        t_on.join(180)
+        t_off.join(180)
+        self.assertFalse(t_on.is_alive())
+        self.assertFalse(t_off.is_alive())
+        self.assertEqual(errors, [])
+        on_rows = {r["gene"]: r for r in results["on"]}  # type: ignore[arg-type]
+        off_rows = {r["gene"]: r for r in results["off"]}  # type: ignore[arg-type]
+        self.assertTrue(on_rows["CYP2D6"]["matcher_on"])
+        self.assertFalse(off_rows["CYP2D6"]["matcher_on"])
+        self.assertEqual(on_rows["CYP2D6"]["diplotype"], "*4/*4")
+        self.assertEqual(on_rows["CYP2C9"]["diplotype"], "*4/*4")
+        self.assertIsNone(off_rows["CYP2D6"]["diplotype"])
+        self.assertEqual(off_rows["CYP2D6"]["callability"], "NOT_TESTED")
+        self.assertFalse(MATCHER_ON)
+        self.assertTrue(all(flag is False for flag in flags))
+
+    def test_ci_forbids_live_f5_and_offline_jar(self) -> None:
+        yml = (ROOT / ".github" / "workflows" / "ci.yml").read_text(encoding="utf-8")
+        self.assertIn("CPIC_F5_SOURCE", yml)
+        self.assertIn("PCE_PHARMCAT_OFFLINE", yml)
+        self.assertIn("fetch_software_ready_pins.py --jar-only", yml)
+        self.assertIn("actions/setup-java@v4", yml)
 
 
 if __name__ == "__main__":

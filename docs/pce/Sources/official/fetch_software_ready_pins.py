@@ -4,13 +4,17 @@
 Does not rewrite MANIFEST top-level accessed (must stay 2026-08-13).
 Manufacturer (this repo) fetches. Not a lab or hospital task.
 
-Usage: python3 docs/pce/Sources/official/fetch_software_ready_pins.py
+Usage: python3 docs/pce/Sources/official/fetch_software_ready_pins.py [--jar-only]
+
+--jar-only writes the PharmCAT jar + pin JSON. It does not rewrite MANIFEST.json
+(top-level accessed must stay 2026-08-13).
 """
 from __future__ import annotations
 
 import hashlib
 import json
 import ssl
+import sys
 import time
 import urllib.request
 from pathlib import Path
@@ -122,31 +126,7 @@ def merge_manifest(rows: list[tuple[str, str, Path, str]]) -> None:
     print("ok", sum(1 for r in files if r.get("ok")), "accessed", manifest["accessed"])
 
 
-def main() -> int:
-    rows: list[tuple[str, str, Path, str]] = []
-
-    url = "https://files.cpicpgx.org/data/guideline/publication/warfarin/2017/28198005.pdf"
-    _ctype, data = fetch(url, "application/pdf")
-    path = DEST / "cpic-warfarin-2017-28198005.pdf"
-    path.write_bytes(data)
-    if not data.startswith(b"%PDF"):
-        raise SystemExit("warfarin PDF is not a PDF")
-    rows.append(("CPIC-WARFARIN-2017-PDF", url, path, "application/pdf"))
-    time.sleep(0.4)
-
-    for code, inn in WHO_ATC:
-        url = f"https://www.whocc.no/atc_ddd_index/?code={code}"
-        _ctype, data = fetch(url, "text/html")
-        path = DEST / f"whocc-atc-{code.lower()}.html"
-        path.write_bytes(data)
-        text = data.decode("utf-8", errors="replace").lower()
-        if code.lower() not in text:
-            raise SystemExit(f"WHO page missing code {code}")
-        if inn.lower() not in text:
-            raise SystemExit(f"WHO page {code} missing inn {inn}")
-        rows.append((f"WHO-ATC-{code}", url, path, "text/html"))
-        time.sleep(0.35)
-
+def write_jar_and_pin() -> Path:
     jar_dir = ROOT / "var" / "pharmcat"
     jar_dir.mkdir(parents=True, exist_ok=True)
     jar_path = jar_dir / f"pharmcat-{PHARMCAT_VERSION}-all.jar"
@@ -182,6 +162,40 @@ def main() -> int:
         + "\n",
         encoding="utf-8",
     )
+    return pin_meta
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = list(sys.argv[1:] if argv is None else argv)
+    if "--jar-only" in args:
+        write_jar_and_pin()
+        return 0
+
+    rows: list[tuple[str, str, Path, str]] = []
+
+    url = "https://files.cpicpgx.org/data/guideline/publication/warfarin/2017/28198005.pdf"
+    _ctype, data = fetch(url, "application/pdf")
+    path = DEST / "cpic-warfarin-2017-28198005.pdf"
+    path.write_bytes(data)
+    if not data.startswith(b"%PDF"):
+        raise SystemExit("warfarin PDF is not a PDF")
+    rows.append(("CPIC-WARFARIN-2017-PDF", url, path, "application/pdf"))
+    time.sleep(0.4)
+
+    for code, inn in WHO_ATC:
+        url = f"https://www.whocc.no/atc_ddd_index/?code={code}"
+        _ctype, data = fetch(url, "text/html")
+        path = DEST / f"whocc-atc-{code.lower()}.html"
+        path.write_bytes(data)
+        text = data.decode("utf-8", errors="replace").lower()
+        if code.lower() not in text:
+            raise SystemExit(f"WHO page missing code {code}")
+        if inn.lower() not in text:
+            raise SystemExit(f"WHO page {code} missing inn {inn}")
+        rows.append((f"WHO-ATC-{code}", url, path, "text/html"))
+        time.sleep(0.35)
+
+    pin_meta = write_jar_and_pin()
     rows.append(("PHARMCAT-3.4.0-PIN", PHARMCAT_JAR_URL, pin_meta, "application/json"))
 
     merge_manifest(rows)

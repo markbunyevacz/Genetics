@@ -8,16 +8,25 @@ CPIC_F5_SOURCE=off|mock|live
 from __future__ import annotations
 
 import json
+import logging
 import os
 import urllib.request
+from enum import Enum
 from pathlib import Path
 from typing import Any, Callable, Protocol
+
+log = logging.getLogger("pce_shadow.f5_rec")
 
 ROOT = Path(__file__).resolve().parents[2]
 MOCK_PATH = ROOT / "tests" / "fixtures" / "cpic_f5_mock.json"
 SCHEMA_PATH = ROOT / "tests" / "fixtures" / "cpic_f5_recommendation.schema.json"
 LIVE_URL = "https://api.cpicpgx.org/v1/recommendation_view?lookupkey->>F5=not.is.null"
-DEFAULT_SOURCE = "off"
+
+
+class F5Source(Enum):
+    DISABLED = "off"
+    MOCK = "mock"
+    LIVE = "live"
 
 # pair_view uses ATC:G03A (group). Mock pairing uses one 7-character example.
 MOCK_ATC5 = "G03AA07"
@@ -51,23 +60,38 @@ class RecViewProvider(Protocol):
         ...
 
 
-def resolve_source(explicit: str | None = None) -> str:
-    raw = (explicit if explicit is not None else os.environ.get("CPIC_F5_SOURCE") or DEFAULT_SOURCE)
+def resolve_source(explicit: str | F5Source | None = None) -> F5Source:
+    if isinstance(explicit, F5Source):
+        return explicit
+    raw = explicit if explicit is not None else os.environ.get("CPIC_F5_SOURCE")
+    if raw is None or str(raw).strip() == "":
+        return F5Source.DISABLED
     token = str(raw).strip().lower()
-    if token in {"off", "mock", "live"}:
-        return token
-    return DEFAULT_SOURCE
+    aliases = {
+        "off": F5Source.DISABLED,
+        "disabled": F5Source.DISABLED,
+        "mock": F5Source.MOCK,
+        "live": F5Source.LIVE,
+    }
+    if token in aliases:
+        return aliases[token]
+    raise ValueError(f"CPIC_F5_SOURCE invalid: {raw!r} (off|mock|live)")
 
 
 def validate_rec_view_row(row: Any) -> dict[str, Any]:
-    """Accept official CPIC fields and the mock aliases. F5 lookup may be missing or null."""
+    """Accept official CPIC fields and mock aliases. lookupkey.F5 may be null, not absent with a wrong type."""
     if not isinstance(row, dict):
+        log.critical("recommendation_view row is not an object: %s", type(row).__name__)
         raise ValueError("recommendation_view row must be an object")
+    if "lookupkey" not in row:
+        raise ValueError("lookupkey is required")
     lookup = row.get("lookupkey")
     if lookup is None:
-        lookup = {}
+        raise ValueError("lookupkey is required")
     if not isinstance(lookup, dict):
-        raise ValueError("lookupkey must be an object or null")
+        raise ValueError("lookupkey must be an object")
+    if "F5" not in lookup:
+        raise ValueError("lookupkey.F5 is required (string or null)")
     f5 = lookup.get("F5")
     if f5 is not None and not isinstance(f5, str):
         raise ValueError("lookupkey.F5 must be a string or null")
@@ -99,17 +123,15 @@ class LiveF5Provider:
     def rows(self) -> list[dict[str, Any]]:
         try:
             payload = self._fetch()
+        except ValueError:
+            raise
         except Exception:
+            log.exception("live F5 recommendation_view fetch failed")
             return []
         if not isinstance(payload, list):
-            return []
-        out: list[dict[str, Any]] = []
-        for item in payload:
-            try:
-                out.append(validate_rec_view_row(item))
-            except ValueError:
-                continue
-        return out
+            log.critical("recommendation_view payload is not a list: %s", type(payload).__name__)
+            raise ValueError("recommendation_view payload must be a list")
+        return [validate_rec_view_row(item) for item in payload]
 
 
 def _http_fetch_live() -> list[Any]:
@@ -119,13 +141,19 @@ def _http_fetch_live() -> list[Any]:
     )
     with urllib.request.urlopen(req, timeout=30) as resp:
         data = json.loads(resp.read().decode("utf-8"))
-    return data if isinstance(data, list) else []
+    if not isinstance(data, list):
+        log.critical("recommendation_view HTTP body is not a list: %s", type(data).__name__)
+        raise ValueError("recommendation_view payload must be a list")
+    return data
 
 
-def provider_for(source: str, *, fetch: Callable[[], list[Any]] | None = None) -> RecViewProvider:
-    if source == "mock":
+def provider_for(
+    source: str | F5Source, *, fetch: Callable[[], list[Any]] | None = None
+) -> RecViewProvider:
+    resolved = source if isinstance(source, F5Source) else resolve_source(source)
+    if resolved is F5Source.MOCK:
         return MockF5Provider()
-    if source == "live":
+    if resolved is F5Source.LIVE:
         return LiveF5Provider(fetch=fetch)
     return OffF5Provider()
 
@@ -273,17 +301,15 @@ def apply_f5_source(
 ) -> str:
     """Mutate a KnowledgeTable. Never overwrites an existing (gene, ATC5) pairing."""
     resolved = resolve_source(source)
-    table.f5_source = resolved
-    if resolved == "off":
-        return resolved
+    table.f5_source = resolved.value
+    if resolved is F5Source.DISABLED:
+        return resolved.value
     rows = provider_for(resolved, fetch=fetch).rows()
-    mocked = resolved == "mock"
+    mocked = resolved is F5Source.MOCK
     meta = load_mock_meta() if mocked else {}
     pairings, dips, labels = transform_rows(rows, mocked=mocked, mock_meta=meta)
     for row in pairings:
-        key = (row["gene"], str(row["atc5"]).upper())
-        if key not in table._pairings:
-            table._pairings[key] = row
+        table.add_pairing(row, source="f5_rec")
     for row in dips:
         key = (row["gene"], row["diplotype"])
         if key not in table._dip:
@@ -302,4 +328,4 @@ def apply_f5_source(
             }
         )
         table.inventory["van"] = van
-    return resolved
+    return resolved.value

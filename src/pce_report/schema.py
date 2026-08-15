@@ -211,6 +211,10 @@ def _statements_for_pair(
     return out
 
 
+def _present_version(val: Any) -> bool:
+    return isinstance(val, str) and bool(val.strip())
+
+
 def assemble_b41(
     *,
     engine: dict[str, Any],
@@ -224,6 +228,26 @@ def assemble_b41(
     omit_from_patient: frozenset[str],
 ) -> dict[str, Any]:
     """Wrap one or more gene engine payloads into the B.4.1 contract."""
+    matcher_on = bool(engine.get("matcher_on"))
+    pipeline_version = engine["pipeline_version"] if "pipeline_version" in engine else "pce-clinical-v0"
+    pharmcat_version = engine.get("pharmcat_version")
+    pharmvar_version = engine.get("pharmvar_version")
+    cpic_data_version = engine.get("cpic_data_version")
+    if matcher_on:
+        missing = [
+            name
+            for name, val in (
+                ("pipeline_version", pipeline_version),
+                ("pharmcat_version", pharmcat_version),
+                ("pharmvar_version", pharmvar_version),
+                ("cpic_data_version", cpic_data_version),
+            )
+            if not _present_version(val)
+        ]
+        if missing:
+            raise RendererConfigError(
+                "matcher_on clinical report missing version metadata: " + ", ".join(missing)
+            )
     gene = engine["case"]["gene"]
     phenotype = _phenotype_key(engine["case"].get("lab_phenotype_claim"), gene)
     positive = bool(engine["case"].get("positive_drug_assertion"))
@@ -292,10 +316,10 @@ def assemble_b41(
         "case_id": case_id,
         "version": 1,
         "config_id": engine["config_id"],
-        "pipeline_version": "pce-clinical-v0",
-        "pharmcat_version": engine.get("pharmcat_version"),
-        "pharmvar_version": engine.get("pharmvar_version"),
-        "cpic_data_version": engine.get("cpic_data_version"),
+        "pipeline_version": pipeline_version,
+        "pharmcat_version": pharmcat_version,
+        "pharmvar_version": pharmvar_version,
+        "cpic_data_version": cpic_data_version,
         "cpic_version": engine.get("accessed"),
         "dpwg_version": engine.get("dpwg_version") or dpwg_version(),
         "fda_table_version": engine.get("fda_table_version") or fda_table_version(),
@@ -316,7 +340,7 @@ def assemble_b41(
         "unsourced_claims": 0,
         "product": engine["product"],
         "module": engine["module"],
-        "matcher_on": bool(engine.get("matcher_on")),
+        "matcher_on": matcher_on,
         "live_cds": False,
         "a1_intended_purpose": engine["a1_intended_purpose"],
         "a11_disclaimer": engine["a11_disclaimer"],

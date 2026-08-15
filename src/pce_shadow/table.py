@@ -39,10 +39,7 @@ class KnowledgeTable:
         for rel in self.doc.get("extra_pairing_files") or []:
             extra = json.loads((ROOT / rel).read_text(encoding="utf-8"))
             for row in extra.get("pairings") or []:
-                gene = str(row.get("gene") or "").strip()
-                atc5 = str(row.get("atc5") or "").strip().upper()
-                if gene and atc5 and (gene, atc5) not in self._pairings:
-                    self._pairings[(gene, atc5)] = row
+                self.add_pairing(row, source=str(rel))
         self.warfarin = dict(self.doc.get("warfarin_diagram") or {})
         adj = self.doc.get("phenotype_adjustment") or {}
         self.nm_plus_strong: str | None = adj.get("nm_plus_strong_inhibitor")
@@ -94,6 +91,19 @@ class KnowledgeTable:
 
     def strong_inhibitor(self, atc: str) -> dict[str, Any] | None:
         return self._inhibitors.get(atc.strip().upper())
+
+    def add_pairing(self, row: dict[str, Any], *, source: str = "extra") -> None:
+        gene = str(row.get("gene") or "").strip()
+        atc5 = str(row.get("atc5") or "").strip().upper()
+        if not gene or not atc5:
+            raise ValueError(f"pairing from {source} needs gene and atc5")
+        key = (gene, atc5)
+        if key in self._pairings:
+            raise ValueError(
+                f"refusing to overwrite pairing {gene} {atc5} from {source}; "
+                "index pairs are immutable"
+            )
+        self._pairings[key] = row
 
     def pairing(self, gene: str, atc5: str) -> dict[str, Any] | None:
         return self._pairings.get((gene, atc5.strip().upper()))

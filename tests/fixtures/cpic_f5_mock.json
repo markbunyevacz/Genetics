@@ -34,6 +34,19 @@
       "comments": "Mocked WT row for development. Not CPIC published."
     },
     {
+      "recommendationid": 99996,
+      "drugid": "RxNorm:203159",
+      "drugname": "hormonal contraceptives for systemic use",
+      "guidelineid": 12,
+      "lookupkey": {
+        "F5": "Leiden/Leiden"
+      },
+      "phenotype": "Factor V Leiden Homozygote",
+      "implication": "Increased risk of venous thromboembolism.",
+      "recommendation": "Avoid estrogen-containing contraceptives. Consider alternative therapies.",
+      "comments": "Mocked HOM / Leiden/Leiden row for development. Not CPIC published."
+    },
+    {
       "recommendationid": 99997,
       "drugid": "RxNorm:203159",
       "drugname": "hormonal contraceptives for systemic use",

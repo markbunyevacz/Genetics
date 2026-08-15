@@ -422,4 +422,18 @@ A user: „Amíg a CPIC nem ad rec-sort, nincs mit párosítani” **nem** azt j
 | Flag | `LIVE_CDS=false`; `MATCHER_ON=false`; `IIA_SAFE_BLOCK=true`. OQ-k **nem** pecsét. |
 | Unittest | **184 OK** |
 
+---
+
+## 21. P06ai — repo-konform hardening (2026-08-15, D-49)
+
+A user: a klinikai mag stabil; a hiányzó enterprise-garanciákat **a meglévő stdlib + unittest + pinelt JSON** keretben kell bezárni. Nincs Pydantic, BeautifulSoup, pytest, külső coverage.
+
+| Tétel | Eredmény |
+| --- | --- |
+| F5 | `F5Source` Enum; ismeretlen token `ValueError`; mock=live `validate_rec_view_row`; nem-dict sor `log.critical` + fail-fast; HOM fixture; CI `CPIC_F5_SOURCE != live`. |
+| Rec / warfarin | SKIP `frozenset`; index `(gene, atc5)` felülírás `ValueError`; ATC-5 regex `^[A-Z][0-9]{2}[A-Z]{2}[0-9]{2}$`; warfarin deklaratív CYP2C9-mátrix. Hiányzó gén → üres `live_findings`. |
+| PharmCAT | CI: Java 17 + `fetch_software_ready_pins.py --jar-only` a tesztek előtt; `PCE_PHARMCAT_OFFLINE=1` — `ensure_jar()` nem hív GitHubot. `assemble_b41` matcher_on=True: négy nem-üres verzió. Gold VCF: CYP2D6 \*4/\*4 **és** CYP2C9 \*4/\*4 (PharmCAT 3.4.0 translation, rs56165452). |
+| Flag | `LIVE_CDS=false`; `MATCHER_ON=false`; `IIA_SAFE_BLOCK=true`. OQ-k **nem** pecsét. MANIFEST top-level `accessed` **2026-08-13**. |
+| Unittest | **195 OK** |
+
 

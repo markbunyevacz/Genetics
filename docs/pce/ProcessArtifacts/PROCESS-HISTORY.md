@@ -61,6 +61,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P05af | PREPARE-12 élő párok + HLA/UGT laboreredmény + VCF csillag-allél BE-út | 2026-08-15 | 2026-08-15 | DONE | User: pótold; ne hazudj „kód megvan”; HLA/UGT = befogadás nem laborvizsgálat | `star_call.py`; knowledge 11 pairing; outside-call fixture; 41 official pin; 158 unittest | E-25 |
 | P05ag | szoftver-KÉSZ: rec_view párok, warfarin-diagram, PharmCAT NamedAlleleMatcher | 2026-08-15 | 2026-08-15 | DONE | User: ki/honnan/mit; PharmCAT LEGYEN hívva; flag ki ≠ szoftver hiányzik | PharmCAT 3.4.0 wrap; rec_view ≥50 pár; warfarin Figure 2; F5 rec 0; 87 pin; **165 unittest** | E-26 |
 | P05ah | F5 adat-agnosztikus ingest (mock most, live később) | 2026-08-15 | 2026-08-15 | DONE | User: ne várjunk a CPIC API-ra; DataProvider + MOCK/LIVE + unit teszt | `f5_rec.py`; `cpic_f5_mock.json`; `CPIC_F5_SOURCE`; F1+ 0 rec sor; warfarin *2/*3 teszt; HTTP `matcher_on=true`; **184 unittest** | E-27 |
+| P05ai | Repo-konform biztonsági hardening (stdlib) | 2026-08-15 | 2026-08-15 | DONE | User: F5 Enum + fail-fast; index frozenset; ATC regex; warfarin mátrix; PharmCAT air-gap; 4 verzió; gold CYP2C9 *4/*4 | `F5Source`; `add_pairing` ValueError; `PCE_PHARMCAT_OFFLINE`; `assemble_b41` matcher verziólánc; **195 unittest** | E-28 |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -116,6 +117,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-46 | P05af | Maradék PREPARE-12 párok + HLA/UGT + matcher BE-út | ETAP 0 D-45 vágást user-skipnek olvasni / megírni a kódot, flag ki | **Megírni.** A user nem mondta, hogy a többi pár kimarad. HLA-B / UGT1A1\*28: laboreredmény befogadása, elemzése, felhasználása — a rendszer nem végzi a vizsgálatot. VCF csillag-allél: BE-út paraméterrel, mint F2 CDS. Repo `MATCHER_ON=false`. F5/VKORC1 rec üres → nincs kitalált pár. | User 2026-08-15 „PÓTOLD / SZÁLLÍTSD LE” | user |
 | D-47 | P05ag | Flag ki vs szoftver-KÉSZ | Státuszmondat / megírni, tesztelni, szállítani | **Szoftver-KÉSZ** = megtervezve, megírva, tesztelve, szállítva, demózható; **nem** prod éles. Repo flagok false. F5: CPIC rec_view 0 → nincs kitalált pár. Warfarin: 2017 PDF 2. ábra. Többi szer: rec_view extract. PharmCAT NamedAlleleMatcher+Phenotyper hívva `matcher_on=True`. | User 2026-08-15 „HANYADIK KÖRBEN BESZÉLJÜK MEG?” | user |
 | D-48 | P05ah | F5 fejlesztés az API előtt vs várakozás | Várni a rec_view sorra / mock pipeline most | **Mock most.** `CPIC_F5_SOURCE=off` prod. `mock` a lokális fixture. `live` az API; üres lista = nincs pár. Mock **nem** CPIC publikáció, nem megy a signed leletre. | User 2026-08-15 F5 spec | user |
+| D-49 | P05ai | Pydantic/coverage vs meglévő stack | Új függőség / natív szigor | **Stdlib + unittest.** `F5Source` Enum; ismeretlen token `ValueError`; mock=live validáció; SKIP `frozenset`; index felülírás `ValueError`; ATC regex; warfarin deklaratív mátrix; CI jar `--jar-only` + `PCE_PHARMCAT_OFFLINE`; matcher_on négy verzió fail-fast. OQ **nem** pecsét. | User 2026-08-15 hardening spec | user |
 
 ## 3. Error log
 
@@ -149,6 +151,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | E-25 | P05af | Scope / product mismatch | A maradék PREPARE-12 párokat és a HLA/UGT laboreredmény-utat „nincs mit bekapcsolni”-nak olvastuk. A HLA-tipizálást / TATA-box ismétlést tévesen a rendszer feladatának írtuk. | Switch: a user soha nem hagyta ki a párokat (D-45 ágens-vágás). Képesség = outside-call befogadás + guideline dump + élő párosítás. VCF csillag-allél BE-út megírva, flag ki. Unittest 158 OK. | D-46 |
 | E-26 | P05ag | Scope / missed delivery | A „ki/honnan” kérdést státuszmondattal válaszoltuk; a PharmCAT-pipákat „legyen” helyett leírásként olvastuk; a flag ki-t szoftver-hiánynak. | Retry: szereplőtábla + kód. PharmCAT 3.4.0 hívva. Rec_view párok + warfarin-diagram. Flagok false. Unittest 165 OK. | D-47 |
 | E-27 | P05ah | Scope / missed delivery | Az F5 „nincs rec-sor” mondatot fejlesztési stopnak olvastuk. | Switch: adat-agnosztikus pipeline mock fixture-ön; LIVE kapcsoló; prod off. Unittest 184 OK. | D-48 |
+| E-28 | P05ai | Cross-reference breakage | A warfarin helper kiemelésekor az `ORGAN_REASON` konstans kiesett. | Retry: konstans vissza; unittest `reason_organ` zöld. Unittest 195 OK. | D-49 |
 
 ## 4. File timeline
 

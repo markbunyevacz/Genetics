@@ -55,12 +55,27 @@ def jar_path() -> Path:
     return local
 
 
+def _offline() -> bool:
+    flag = os.environ.get("PCE_PHARMCAT_OFFLINE", "").strip().lower()
+    if flag in {"1", "true", "yes", "on"}:
+        return True
+    ci = os.environ.get("CI", "").strip().lower()
+    return ci in {"1", "true"}
+
+
 def ensure_jar() -> Path:
     pin = _pin()
     path = jar_path()
     expected = pin["sha256"]
-    if path.is_file() and hashlib.sha256(path.read_bytes()).hexdigest() == expected:
-        return path
+    if path.is_file():
+        digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        if digest == expected:
+            return path
+        raise PharmcatError(f"PharmCAT jar sha256 mismatch: {digest}")
+    if _offline():
+        raise PharmcatError(
+            f"PharmCAT jar missing at {path} (offline; CI must run fetch_software_ready_pins.py --jar-only)"
+        )
     path.parent.mkdir(parents=True, exist_ok=True)
     req = urllib.request.Request(
         pin["url"],
