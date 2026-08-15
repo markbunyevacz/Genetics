@@ -63,6 +63,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P05ah | F5 adat-agnosztikus ingest (mock most, live később) | 2026-08-15 | 2026-08-15 | DONE | User: ne várjunk a CPIC API-ra; DataProvider + MOCK/LIVE + unit teszt | `f5_rec.py`; `cpic_f5_mock.json`; `CPIC_F5_SOURCE`; F1+ 0 rec sor; warfarin *2/*3 teszt; HTTP `matcher_on=true`; **184 unittest** | E-27 |
 | P05ai | Repo-konform biztonsági hardening (stdlib) | 2026-08-15 | 2026-08-15 | DONE | User: F5 Enum + fail-fast; index frozenset; ATC regex; warfarin mátrix; PharmCAT air-gap; 4 verzió; gold CYP2C9 *4/*4 | `F5Source`; `add_pairing` ValueError; `PCE_PHARMCAT_OFFLINE`; `assemble_b41` matcher verziólánc; **195 unittest** | E-28 |
 | P05aj | Checklist-zárás stdlib keretben | 2026-08-15 | 2026-08-15 | DONE | User: F5DataProvider, fixture immutábilis, idempotencia, HTML parser, circuit breaker, warfarin kapu státusz | `F5DataProvider`; `warfarin_eval`; stdlib `HTMLParser`; `add_outside_call`; `config/production.env`; **211 unittest** | — |
+| P05ak | M4 IIa-safe mechanizmus + FR-id lánc | 2026-08-15 | 2026-08-15 | DONE | BA-audit S1/S2/S3 (tramadol, klopidogrel, FR-annotáció) | `IiaSafeFamily`; WHO L01BC03 pin; `tests/test_fr_trace.py`; CI FR-id lépés; **228 unittest** | — |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -120,6 +121,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-48 | P05ah | F5 fejlesztés az API előtt vs várakozás | Várni a rec_view sorra / mock pipeline most | **Mock most.** `CPIC_F5_SOURCE=off` prod. `mock` a lokális fixture. `live` az API; üres lista = nincs pár. Mock **nem** CPIC publikáció, nem megy a signed leletre. | User 2026-08-15 F5 spec | user |
 | D-49 | P05ai | Pydantic/coverage vs meglévő stack | Új függőség / natív szigor | **Stdlib + unittest.** `F5Source` Enum; ismeretlen token `ValueError`; mock=live validáció; SKIP `frozenset`; index felülírás `ValueError`; ATC regex; warfarin deklaratív mátrix; CI jar `--jar-only` + `PCE_PHARMCAT_OFFLINE`; matcher_on négy verzió fail-fast. OQ **nem** pecsét. | User 2026-08-15 hardening spec | user |
 | D-50 | P05aj | MissingGeneticDataException vs üres finding | Klinikai crash / státuszkód + üres `live_findings` | **Nincs crash.** Warfarin hiányzó gén → `warfarin_eval.status=MISSING_GENETIC_DATA`, üres `live_findings`. Nincs Pydantic/BS4/pytest. HTML pin: stdlib `HTMLParser`. | User 2026-08-15 checklist | user |
+| D-51 | P05ak | IIa-safe INN-literál vs mechanizmus | Marad a 7 ATC5 / angol INN / BA szerinti mechanizmus-család | **Mechanizmus-család.** Tramadol + tegafur + tioguanin + HU variáns a pinelt CPIC/WHO forrásból. L01BC*/L01BB* catch-all **elvetve** (gemcitabin/fludarabin). FR-420/250 más néven megvolt; FR-id CI annotációt mér, a P1/P2 hiányát explicit teszteli. | BA M4 audit 2026-08-13 | user |
 
 ## 3. Error log
 
@@ -192,6 +194,8 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | tests/fixtures/f1plus-v0/prepare12/ | P05w | P05ae | 12 gén CPIC pin; DPWG index + FDA extract |
 | docs/pce/Sales/pricing.md | P05z | P05af | `[Yp]=0` 15 felíró alatt; 41 pin; 158 teszt |
 | docs/pce/Sources/market/ | P05z | P05z | SMART + Semmelweis/KÉ pin |
-| src/pce_cds/ | P05ad | P05ad | F2 CDS Hooks cső; repo `LIVE_CDS=false` |
+| src/pce_cds/ | P05ad | P05ak | F2 CDS Hooks cső; IIa-safe mechanizmus-család |
 | src/pce_ui/cds.html | P05ad | P05ad | F2 lakat-UI |
-| tests/test_cds.py | P05ad | P05ad | lock / ON paraméter / timeout / IIa-safe / izoláció |
+| tests/test_cds.py | P05ad | P05ak | lock / ON / timeout / IIa-safe mátrix (tramadol, klopidogrel) |
+| tests/test_fr_trace.py | P05ak | P05ak | FR-id inventory + FR-250/420/700 + P1/P2 hiány |
+| docs/pce/Sources/official/whocc-atc-l01bc03.html | P05ak | P05ak | WHO tegafur = L01BC03 |

@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""FR-520 CDS pipe: lock default, ON via parameter, fail-open, IIa-safe kill-switch."""
+"""FR-520 CDS pipe: lock default, ON via parameter, fail-open, IIa-safe kill-switch.
+
+Also FR-530 SMART stub, FR-700 isolation (no pce_cds import from F1+).
+IIa-safe: G §2.4 mechanisms, not English INN literals only.
+"""
 from __future__ import annotations
 
 import json
@@ -14,7 +18,15 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from pce_cds.cards import TIMEOUT_S, build_cards  # noqa: E402
-from pce_cds.policy import IIA_SAFE_BLOCK  # noqa: E402
+from pce_cds.policy import (  # noqa: E402
+    IIA_SAFE_ATC_PREFIXES,
+    IIA_SAFE_ATC5,
+    IIA_SAFE_BLOCK,
+    IIA_SAFE_FAMILIES,
+    blocked_live_pairing,
+    is_iia_safe_med,
+    matching_families,
+)
 from pce_cds.server import bind_cds_server  # noqa: E402
 from pce_gateway.flags import LIVE_CDS  # noqa: E402
 from pce_report.flags import LIVE_CDS as REPORT_LIVE_CDS  # noqa: E402
@@ -106,6 +118,16 @@ class OnPathTests(unittest.TestCase):
         self.assertTrue(all(c.get("suggestions") == [] for c in out["cards"]))
         self.assertIn("nem elérhető", json.dumps(out, ensure_ascii=False))
 
+    def test_iia_safe_tramadol_no_suggestion(self) -> None:
+        hook = _hook(atc="N02AX02", gene="CYP2D6", star="*4/*4")
+        hook["prefetch"]["medications"] = [{"code": "N02AX02", "inn": "tramadol"}]
+        out = build_cards(hook, live_cds=True, iia_safe_block=True)
+        self.assertTrue(out["cards"])
+        self.assertTrue(all(c.get("suggestions") == [] for c in out["cards"]))
+        self.assertIn("nem elérhető", json.dumps(out, ensure_ascii=False))
+        blob = json.dumps(out, ensure_ascii=False)
+        self.assertNotIn("dose_mg", blob)
+
     def test_iia_safe_off_does_not_invent_codeine_row(self) -> None:
         hook = _hook(atc="R05DA04")
         hook["prefetch"]["medications"] = [{"code": "R05DA04", "inn": "codeine"}]
@@ -136,6 +158,91 @@ class OnPathTests(unittest.TestCase):
         finally:
             httpd.shutdown()
             httpd.server_close()
+
+
+class IiaSafeMechanismTests(unittest.TestCase):
+    """Behaviour of the G §2.4 kill-switch: mechanism families, not INN literals."""
+
+    def test_families_are_named_mechanisms(self) -> None:
+        ids = {f.mechanism_id for f in IIA_SAFE_FAMILIES}
+        self.assertEqual(
+            ids,
+            {
+                "DPYD-fluoropyrimidine",
+                "CYP2C19-clopidogrel",
+                "TPMT-NUDT15-thiopurine",
+                "CYP2D6-opioid",
+                "HLA-B-1502-aromatic-anticonvulsant",
+            },
+        )
+        self.assertIn("N02AX02", IIA_SAFE_ATC5)
+        self.assertIn("L01BC03", IIA_SAFE_ATC5)
+        self.assertIn("L01BB03", IIA_SAFE_ATC5)
+        self.assertIn("N03AF", IIA_SAFE_ATC_PREFIXES)
+        self.assertNotIn("L01BC", IIA_SAFE_ATC_PREFIXES)
+        self.assertNotIn("L01BB", IIA_SAFE_ATC_PREFIXES)
+
+    def test_blocks_audit_matrix(self) -> None:
+        blocked = (
+            ({"code": "B01AC04", "inn": "clopidogrel"}, "CYP2C19-clopidogrel"),
+            ({"code": "L01BC06", "inn": "capecitabine"}, "DPYD-fluoropyrimidine"),
+            ({"code": "R05DA04", "inn": "codeine"}, "CYP2D6-opioid"),
+            ({"code": "N03AF01", "inn": "carbamazepine"}, "HLA-B-1502-aromatic-anticonvulsant"),
+            ({"code": "L04AX01", "inn": "azathioprine"}, "TPMT-NUDT15-thiopurine"),
+            ({"display": "5-FU infúzió"}, "DPYD-fluoropyrimidine"),
+            ({"code": "N02AX02", "inn": "tramadol"}, "CYP2D6-opioid"),
+            ({"code": "L01BC03", "inn": "tegafur"}, "DPYD-fluoropyrimidine"),
+            ({"code": "L01BB03", "inn": "tioguanine"}, "TPMT-NUDT15-thiopurine"),
+            ({"code": "N03AB02", "inn": "phenytoin"}, "HLA-B-1502-aromatic-anticonvulsant"),
+            ({"display": "Klopidogrel Actavis 75 mg"}, "CYP2C19-clopidogrel"),
+            ({"inn_hu": "karbamazepin"}, "HLA-B-1502-aromatic-anticonvulsant"),
+            ({"inn_hu": "azatioprin"}, "TPMT-NUDT15-thiopurine"),
+            ({"inn_hu": "merkaptopurin"}, "TPMT-NUDT15-thiopurine"),
+            ({"inn_hu": "kapecitabin"}, "DPYD-fluoropyrimidine"),
+            ({"inn_hu": "kodein"}, "CYP2D6-opioid"),
+            ({"inn_hu": "fenitoin"}, "HLA-B-1502-aromatic-anticonvulsant"),
+            ({"code": "N03AF02"}, "HLA-B-1502-aromatic-anticonvulsant"),
+            ({"code": "N03AF03"}, "HLA-B-1502-aromatic-anticonvulsant"),
+        )
+        for med, family in blocked:
+            with self.subTest(med=med):
+                self.assertTrue(is_iia_safe_med(med), msg=med)
+                self.assertTrue(blocked_live_pairing(med, block=True))
+                self.assertIn(family, matching_families(med))
+
+    def test_does_not_block_outside_the_five_mechanisms(self) -> None:
+        allowed = (
+            {"code": "N06AB05", "inn": "paroxetine"},
+            {"code": "L01BC05", "inn": "gemcitabine"},
+            {"code": "L01BB05", "inn": "fludarabine"},
+            {"code": "M04AA01", "inn": "allopurinol"},
+            {"code": "N02AA01", "inn": "morphine"},
+            {"code": "C07AB02", "inn": "metoprolol"},
+        )
+        for med in allowed:
+            with self.subTest(med=med):
+                self.assertFalse(is_iia_safe_med(med), msg=med)
+                self.assertFalse(blocked_live_pairing(med, block=True))
+
+    def test_hungarian_brand_does_not_need_english_inn(self) -> None:
+        self.assertTrue(is_iia_safe_med({"name": "Klopidogrel Actavis 75 mg"}))
+        self.assertFalse(is_iia_safe_med({"name": "Paroxetin Actavis 20 mg"}))
+
+    def test_who_pins_cover_new_atc5(self) -> None:
+        official = ROOT / "docs" / "pce" / "Sources" / "official"
+        checks = (
+            ("whocc-atc-n02ax02.html", "N02AX02", "tramadol"),
+            ("whocc-atc-l01bc03.html", "L01BC03", "tegafur"),
+            ("whocc-atc-l01bb03.html", "L01BB03", "tioguanine"),
+            ("whocc-atc-n03ab02.html", "N03AB02", "phenytoin"),
+            ("whocc-atc-n03af02.html", "N03AF02", "oxcarbazepine"),
+            ("whocc-atc-b01ac04.html", "B01AC04", "clopidogrel"),
+        )
+        for name, code, inn in checks:
+            blob = (official / name).read_text(encoding="utf-8", errors="replace").lower()
+            with self.subTest(name=name):
+                self.assertIn(code.lower(), blob)
+                self.assertIn(inn.lower(), blob)
 
 
 class IsolationFromF1Tests(unittest.TestCase):

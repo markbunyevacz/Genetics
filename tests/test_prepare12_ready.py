@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""PREPARE-12 remaining live pairs, HLA-B / UGT1A1*28 lab ingest, VCF star-allele ON path."""
+"""PREPARE-12 remaining live pairs, HLA-B / UGT1A1*28 lab ingest, VCF star-allele ON path.
+
+FR-300 PharmCAT matcher_on path, FR-310 PREPARE-12 config_id.
+"""
 from __future__ import annotations
 
 import json

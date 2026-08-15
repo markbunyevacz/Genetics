@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""PCE-GW-461-04..10, ingest account, LIVE_CDS freeze — Gold V0."""
+"""PCE-GW-461-04..10, ingest account, LIVE_CDS freeze — Gold V0.
+
+FR-115 E-CONSENT-006, FR-461 k-cell, FR-700 LIVE_CDS freeze.
+"""
 from __future__ import annotations
 
 import copy

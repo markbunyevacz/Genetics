@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""WP-M — live pairing + phenoconversion without invented PM (FR-400-LIVE, FR-410-LIVE)."""
+"""WP-M — live pairing + phenoconversion without invented PM (FR-400-LIVE, FR-410-LIVE).
+
+FR-220 clinical context is stored, not applied on F1+. FR-440 writes HITL via ingest.
+"""
 from __future__ import annotations
 
 import ast

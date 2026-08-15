@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""FR-210: missing defining position is INDETERMINATE, not NORMAL. Matcher OFF."""
+"""FR-200 VCF ingest coverage + FR-210: missing defining position is INDETERMINATE, not NORMAL. Matcher OFF."""
 from __future__ import annotations
 
 import json

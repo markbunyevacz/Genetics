@@ -202,6 +202,7 @@ class OfficialPinTests(unittest.TestCase):
             "WHO-ATC-B01AA03",
             "WHO-ATC-N06AB04",
             "WHO-ATC-L01BC06",
+            "WHO-ATC-L01BC03",
             "WHO-ATC-M04AA01",
             "WHO-ATC-R05DA04",
             "PHARMCAT-3.4.0-PIN",

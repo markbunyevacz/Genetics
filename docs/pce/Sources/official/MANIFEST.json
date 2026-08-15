@@ -379,6 +379,16 @@
       "content_type": "text/html"
     },
     {
+      "id": "WHO-ATC-L01BC03",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=L01BC03",
+      "path": "docs/pce/Sources/official/whocc-atc-l01bc03.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 12438,
+      "sha256": "022f8bfb0ef0f51596f218dd89395f0a849a4dbc9bb11b53cfdf781f6a0576d9",
+      "content_type": "text/html"
+    },
+    {
       "id": "WHO-ATC-C10AA01",
       "url": "https://www.whocc.no/atc_ddd_index/?code=C10AA01",
       "path": "docs/pce/Sources/official/whocc-atc-c10aa01.html",

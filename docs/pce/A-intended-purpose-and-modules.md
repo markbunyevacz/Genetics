@@ -168,7 +168,7 @@ A D.1 nem írja a DPYD-ártalmat „halál”-nak. Az RA **páronként** válasz
 
 **OQ-06 kérdése:** melyik **osztály, páronként** — nem „melyik Notified Body”.
 
-**G gyártói javaslat (nem lezárt pecsét, [G](G-open-items.md) §2.4):** az első L4-live kiadáshoz **(a) IIa-safe párlista** — a fenti öt pár élő párosítása **ki**; statikus F1+ szöveg + „élő párosítás nem elérhető”. `[A]` Ha az RA 2026-10-31-ig nem dönt, a fejlesztés (a) szerint halad. `LIVE_CDS` a repóban **false**. A kill-switch **megvan** (`src/pce_cds/policy.py`, `IIA_SAFE_BLOCK=true`). Bekapcsolás: signed `LIVE_CDS=true`, nem új motor.
+**G gyártói javaslat (nem lezárt pecsét, [G](G-open-items.md) §2.4):** az első L4-live kiadáshoz **(a) IIa-safe párlista** — a fenti öt pár élő párosítása **ki**; statikus F1+ szöveg + „élő párosítás nem elérhető”. `[A]` Ha az RA 2026-10-31-ig nem dönt, a fejlesztés (a) szerint halad. `LIVE_CDS` a repóban **false**. A kill-switch **megvan** (`src/pce_cds/policy.py`, `IIA_SAFE_BLOCK=true`). A blokk a pinelt CPIC guideline szerinti **mechanizmus-családot** fedi (nem csak az angol INN-literált): tramadol a kodeinnel, tegafur a fluoropirimidinnel, tioguanin a tiopurinnal, magyar INN-variáns (`klopidogrel`). Bekapcsolás: signed `LIVE_CDS=true`, nem új motor.
 
 
 A D.1 nem írja a DPYD-ártalmat „halál”-nak. A III-oszlop a G-ben `[I]` javaslat, nem CPIC-halálállítás.

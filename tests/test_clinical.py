@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""WP-C / WP-K / WP-F / WP-Q / WP-X — FR-100 gate, B.3/B.4, B.5 HTTP."""
+"""WP-C / WP-K / WP-F / WP-Q / WP-X — FR-100 gate, B.3/B.4, B.5 HTTP.
+
+FR-110 withdraw/DSR, FR-120 append-only audit, FR-130 reid_store,
+FR-240 outside-call, FR-310 config_id, FR-420 gene-tagged findings,
+FR-490 intended purpose, FR-500 PDF/FHIR, FR-610 HU text, FR-710 explanation.
+"""
 from __future__ import annotations
 
 import inspect

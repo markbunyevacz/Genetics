@@ -78,14 +78,14 @@ Mérés: minden spec-tétel **FULL** / **PARTIAL** / **PLANNED** / **DEFERRED** 
 | FR-220 | P0 F1s; F1+ nem L4 | PARTIAL | **WP-K / M** | PUT tárol; a renderernek nincs gyógyszerlista-argumentuma; a lelet a gén guideline-tábláját listázza (`gyogyszerlista_a_leleten=false`); shadow `ABSENT` | FHIR medication bundle P1 |
 | FR-230 | P1 | — | **WP-P1** | — | DEFERRED |
 | FR-240 | Prod P0 | PARTIAL | **WP-K** | JSON+TSV HTTP; `E-CALL-001`; `W-CALL-010` + resolve | HL7 P1 |
-| FR-250 | Prod P0 | PARTIAL | **WP-N** | default 7 karakteres hatóanyag-kód; DPO durvíthat | HGVS/VRS VCF-path; OGYÉI `E-MAP-001` |
+| FR-250 | Prod P0 | PARTIAL | **WP-N** | default 7 karakteres hatóanyag-kód (`truncate_atc`); `E-MAP-001` a B.5 katalógusban; teszt: `tests/test_fr_trace.py` | HGVS/VRS VCF-path; OGYÉI mapping **nincs bekötve** (F1+ nem fogyaszt `MedicationEntry`-t) |
 | FR-300 | Prod P0 VCF; F1 OFF | PARTIAL | **WP-I / V** | PharmCAT 3.4.0 NamedAlleleMatcher + Phenotyper **hívva** `call_star_alleles(..., matcher_on=True)` / `POST .../files?matcher_on=true`. Riport: `pipeline_version`, `pharmcat_version`, `pharmvar_version`, `cpic_data_version`. Több diplotípus → INDETERMINATE, nincs önkényes `*1`. HLA-B VCF-ből NOT_TESTED. Repo `MATCHER_ON=false`. Jar SOUP, MPL 2.0, nem fork. | F1+ default ON tilos változáskezelés nélkül. CYP2D6 kópiaszám/hibrid SNP-VCF-ből nem jön ki → jelzett, nem kitalált |
 | FR-310 | Prod P0 | PARTIAL | **WP-T** | PREPARE-12 + `config_id`; 12 gén CPIC `pair_view` pin (S049) | change-control rekord; HLA-A/NUDT15 külön config |
 | FR-400-STATIC | Prod P0 F1+ | PARTIAL | **WP-T / R** | 12 gén CPIC pair dump; F5/VKORC1 üres rec **jelezve**; `dpwg_version` + ClinPGx DPWG annotation index URL-lel; `fda_table_version` + Table 2-2 CYP2D6 strong extract; nincs szintetizált harmadik ajánlás | DPWG teljes HTML tábla nem a findings-ben (index + pin); lektorált HU DPWG-szöveg |
 | FR-400-LIVE | P0 F1s | PARTIAL | **WP-M** | párosítás `(gén, 7 karakteres kód)` kulcson; index párok + a pinelt rec_view többi PREPARE-12 szere (≥50 pár, WHO ATC); warfarin: CYP2C9+VKORC1 a 2017-es 2. ábrából, **nincs** mg; **nincs** `dose_mg`; CYP2D6+clopidogrel nem párosít; F5: `CPIC_F5_SOURCE=off\|mock\|live` (prod/default **off**). Mock fixture a pipeline-t futtatja; **nem** hivatalos CPIC rec. LIVE üres fetch → nincs pár. F1+ lelet F5 rec_view továbbra is 0 sor. | F5 élő pár a signed leleten csak ha a CPIC rec_view sort ad; mock nem szivárog a leletre; nincs FK Report-ra |
 | FR-410-EDU | Prod P0 F1+ | PARTIAL | **WP-T / R** | token tiltás; EDU=null | forrásolt bekezdés vagy indokolt null; ≥5 ha–akkor gold |
 | FR-410-LIVE | P0 F1s | PARTIAL | **WP-M** | gén szerinti osztály immutábilis; FDA erős gátló ATC5-ön; **funkcionális szegény metabolizáló üres**; **pheno-gold-v0 N=32** | SSRI NM→szegény sor, ha a CPIC/FDA kiadja |
-| FR-420 | P0 F1+ struktúra | PARTIAL | **WP-R** | génenként findings; `severity_means_replace_prescribed=false` | CRITICAL F2 card később |
+| FR-420 | P0 F1+ struktúra | PARTIAL | **WP-R** | génenként findings; `severity_means_replace_prescribed=false` (`assemble_b41` + `tests/test_clinical.py` / `tests/test_fr_trace.py`) | CRITICAL F2 interruptive card pecsét után |
 | FR-430 | P2 | NG | — | — | nem épül |
 | FR-440 | P0 F1s | PARTIAL | **WP-H** | ingest 202 persist `hitl.sqlite`; store-hiba is 202 | aszinkron worker élesben |
 | FR-450 | P0 F1s | PARTIAL | **WP-H / U** | `hitl_reviewer` HTML + kártya; reason_code; clinician `E-ISO-001` | MFA éles |
@@ -102,7 +102,7 @@ Mérés: minden spec-tétel **FULL** / **PARTIAL** / **PLANNED** / **DEFERRED** 
 | FR-540 | P1 | — | **WP-P1** | — | OQ-13 |
 | FR-600 | P1 | — | **WP-P1** | — | HITL DISAGREE napló előkészítés H-ban |
 | FR-610 | Comp P0 HU | PARTIAL | **WP-L** | HU A.1.1; `text_hu_status` jelölés | nem LLM; lektorált HU később |
-| FR-700 | Comp P0 | PARTIAL | WP-I | CI grep + call-graph | a klinikai út a leletkészítéskor nem hívja a shadow motort |
+| FR-700 | Comp P0 | PARTIAL | WP-I | CI grep + `tests/test_fr_trace.py` (nincs openai/anthropic/langchain import) | a klinikai út a leletkészítéskor nem hívja a shadow motort |
 | FR-710 | Comp P0 | PARTIAL | **WP-X** | determinisztikus HU; hash; 6. § (6) | AuditEvent a magyarázat-kérésről megvan (a create_report mellett) |
 
 ---
@@ -345,7 +345,7 @@ A G5 ellentmondás: a Sales „ki van kapcsolva, nem hiányzik”; a TRACE FR-52
 | Lock HTTP | discovery `enabled: false`; POST 200 `cards: []`; `X-PCE-LIVE-CDS: false` |
 | ON út | csak teszt-paraméter `live_cds=True`; **nem** a repo konstans |
 | Fail-open | timeout 2 s → üres `cards` |
-| IIa-safe | G §2.4 INN + WHO ATC5; info, nincs suggestion |
+| IIa-safe | G §2.4 **mechanizmus-család** (ATC5 + HU INN-variáns); info, nincs suggestion. Tramadol / tegafur / tioguanin / `klopidogrel` bent. Nem L01BC*/L01BB* catch-all. |
 | SMART | stub `/.well-known/smart-configuration` |
 | Izoláció | `pce_report` / `pce_clinical` nem importál `pce_cds`-t (CI + teszt) |
 | OQ | 05 / 06 / 15 / 16 **nem** pecsét. A14 k≥5 / 0,5% változatlan |
@@ -450,5 +450,20 @@ A user checklist Pydantic / BeautifulSoup / pytest / 100% coverage-csomag / `Mis
 | PharmCAT | `matcher_on=False` nem hív `subprocess.run`. `shell=False`. Nincs `.first()` / `.fallback()`. `add_outside_call`. CYP2D6 `sv_determined=False`. |
 | Flag | `LIVE_CDS=false`; `MATCHER_ON=false`. OQ **nem** pecsét. |
 | Unittest | **211 OK** |
+
+---
+
+## 23. P06ak — M4 megfelelőség: IIa-safe mechanizmus + FR-id nyomonkövetés (2026-08-15, D-51)
+
+Független BA-audit (annotációt mért, viselkedést a 12 Compliance P0 + `pce_cds` IIa-safe blokkon). S1 klinikai lyuk: tramadol és magyar INN (`klopidogrel`) kiesett. S2: 24/36 FR-id nem szerepelt tesztben. S3: FR-420 és FR-250 *más néven* megvoltak.
+
+| Tétel | Eredmény |
+| --- | --- |
+| IIa-safe | `IiaSafeFamily` ötöd: DPYD-fluoropirimidin (FU / kapecitabin / tegafur), CYP2C19–clopidogrel, TPMT-tiopurin (+ tioguanin), CYP2D6-opioid (kodein **és** tramadol), HLA-B\*15:02 aromás antiepileptikum (N03AF + N03AB02/N03AB05). Magyar INN-variáns. WHO L01BC/L01BB **prefix nincs** (gemcitabin / fludarabin). Pin: S048/S049 + WHO L01BC03 (S075). |
+| FR-420 | Létezik: `severity_means_replace_prescribed=false`, findings gén-kulccsal. Nem hiányzott — jelöletlen volt. |
+| FR-250 | Létezik: 7 karakteres ATC a gatewayen. `E-MAP-001` katalógusban, F1+ riport **nem** emeli (nincs gyógyszerlista a leleten). HGVS/VRS továbbra is rés. |
+| FR-id CI | Minden spec `#### FR-…` heading token a `tests/`-ben. P1/P2 (FR-230/430/480/510/540/600) **hiány** tesztelve, nem hamis FULL. |
+| Flag | `LIVE_CDS=false`; `MATCHER_ON=false`; `IIA_SAFE_BLOCK=true`. OQ **nem** pecsét. MANIFEST `accessed` **2026-08-13**. Official pin **88** `ok`. |
+| Unittest | **228 OK** |
 
 

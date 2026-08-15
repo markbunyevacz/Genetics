@@ -59,6 +59,7 @@ WHO_ATC = [
     ("N06AX16", "venlafaxine"),
     ("N06AX26", "vortioxetine"),
     ("L01BC06", "capecitabine"),
+    ("L01BC03", "tegafur"),
     ("M04AA01", "allopurinol"),
     ("N03AF01", "carbamazepine"),
     ("N03AF02", "oxcarbazepine"),

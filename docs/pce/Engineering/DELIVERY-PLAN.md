@@ -273,7 +273,7 @@ A cső a dobozban van. A kimenet compile-time lakat. Bekapcsolás a fejlesztés 
 | F2-2 | `pce_clinical` `GET/POST /cds-services/` → 404 `E-ISO-002` | FR-470 |
 | F2-3 | Teszt `live_cds=True`: Card a shadow motorból; nincs `dose_mg`; nincs kitalált „szegény metabolizáló”; nincs PGx → info Card | FR-520 ON |
 | F2-4 | Timeout 2 s → üres `cards` (fail-open). A felírás nem blokkolódik. | NFR-011; R-010; E-TIMEOUT-CDS |
-| F2-5 | IIa-safe INN/ATC5 (A.4.1 / G §2.4): `IIA_SAFE_BLOCK=true` → info „élő párosítás nem elérhető”, üres suggestion | OQ-06 nyitott |
+| F2-5 | IIa-safe mechanizmus (A.4.1 / G §2.4): ATC5 + HU INN-variáns; `IIA_SAFE_BLOCK=true` → info „élő párosítás nem elérhető”, üres suggestion. Tramadol / tegafur / tioguanin / `klopidogrel` bent. | OQ-06 nyitott |
 | F2-6 | `GET /.well-known/smart-configuration` lakat: üres capabilities, magyar üzenet | FR-530 stub |
 | F2-7 | `pce_report` / `pce_clinical` **nem** importálja a `pce_cds`-t | FR-470 |
 
@@ -283,6 +283,7 @@ A cső a dobozban van. A kimenet compile-time lakat. Bekapcsolás a fejlesztés 
 - Given `pce_clinical`, When `GET /cds-services/pgx-order-sign`, Then 404 `E-ISO-002`.
 - Given teszt `live_cds=True` + paroxetin ATC5 + CYP2D6 NM, When order-sign, Then van Card, nincs `dose_mg`.
 - Given teszt `live_cds=True` + kodein ATC5 + `IIA_SAFE_BLOCK`, When order-sign, Then info, nincs suggestion.
+- Given teszt `live_cds=True` + tramadol ATC5 / `Klopidogrel Actavis` + `IIA_SAFE_BLOCK`, When order-sign, Then info, nincs suggestion.
 
 ---
 

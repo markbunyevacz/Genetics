@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""F1+ renderer: official CPIC tables, FR-210, FR-470 isolation, FR-500 PDF."""
+"""F1+ renderer: official CPIC tables, FR-210, FR-400-STATIC, FR-410-EDU,
+FR-470 isolation, FR-490 intended purpose, FR-500 PDF, FR-610 HU status.
+"""
 from __future__ import annotations
 
 import ast

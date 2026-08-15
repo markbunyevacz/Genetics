@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""FR-460 / PCE-GW-461-01..03 against Gold V0."""
+"""FR-130 / FR-250 / FR-460 / PCE-GW-461-01..03 against Gold V0.
+
+FR-250: default 7-character WHO substance code (truncate_atc).
+"""
 from __future__ import annotations
 
 import json

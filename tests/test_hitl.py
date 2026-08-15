@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""WP-H — HITL store, B.4.6 API, reviewer-blind UX, isolation from F1+ reports."""
+"""WP-H — HITL store, B.4.6 API, reviewer-blind UX, isolation from F1+ reports.
+
+FR-115 E-CONSENT-006 on PSEUDO ingest, FR-440 persist, FR-450 card,
+FR-450-BLIND sequential reveal, FR-470 clinician isolation.
+"""
 from __future__ import annotations
 
 import json
