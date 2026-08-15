@@ -12,11 +12,12 @@ from pathlib import Path
 from typing import Any
 
 from pce_clinical.consent import assert_render_allowed, gate_to_meta
-from pce_clinical.coverage import assess_coverage
 from pce_clinical.errors import B5, ClinicalError
+from pce_clinical.star_call import call_star_alleles
 from pce_clinical.explanation import build_explanation
 from pce_clinical.fhir import to_stu3_bundle
 from pce_clinical.store import ClinicalStore
+from pce_report.flags import MATCHER_ON
 from pce_report.guidelines import GuidelineTable, prepare12_table
 from pce_report.panel import CONFIG_ID_PREFIX
 from pce_report.pdf import write_pdf
@@ -287,7 +288,15 @@ class ClinicalService:
             "callability": callability,
         }
 
-    def add_vcf(self, case_id: str, raw: bytes, actor: str, *, sample_id: str | None = None) -> dict[str, Any]:
+    def add_vcf(
+        self,
+        case_id: str,
+        raw: bytes,
+        actor: str,
+        *,
+        sample_id: str | None = None,
+        matcher_on: bool | None = None,
+    ) -> dict[str, Any]:
         self._require_case(case_id)
         if len(raw) > VCF_MAX:
             raise ClinicalError("E-VCF-004")
@@ -319,20 +328,22 @@ class ClinicalService:
             (case_id,),
         )
         self.audit(actor, "vcf", "GenomicFile", rid, "FR-200")
-        coverage = assess_coverage(text, reference=reference)
+        enabled = MATCHER_ON if matcher_on is None else bool(matcher_on)
+        coverage = call_star_alleles(text, reference=reference, matcher_on=enabled)
         genes: list[dict[str, Any]] = []
         for row in coverage:
             cid = _id()
             self.store.execute(
                 "INSERT INTO gene_coverage(id, genomic_file_id, case_id, gene, callability, "
-                "missing_json, naive_missing_to_ref_would_claim, note_hu) "
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                "diplotype, missing_json, naive_missing_to_ref_would_claim, note_hu) "
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 (
                     cid,
                     rid,
                     case_id,
                     row["gene"],
                     row["callability"],
+                    row.get("diplotype"),
                     json.dumps(row.get("missing") or [], ensure_ascii=False),
                     row.get("naive_missing_to_ref_would_claim"),
                     row["note_hu"],
@@ -342,9 +353,11 @@ class ClinicalService:
                 {
                     "gene": row["gene"],
                     "callability": row["callability"],
+                    "diplotype": row.get("diplotype"),
                     "naive_missing_to_ref_would_claim": row.get("naive_missing_to_ref_would_claim"),
                     "note_hu": row["note_hu"],
                     "pharmcat_absent_to_ref": False,
+                    "matcher_on": enabled,
                 }
             )
         return {
@@ -353,7 +366,7 @@ class ClinicalService:
             "reference": reference,
             "sha256": digest,
             "size": len(raw),
-            "matcher_on": False,
+            "matcher_on": enabled,
             "coverage": genes,
         }
 
@@ -405,10 +418,14 @@ class ClinicalService:
             calls.append(
                 {
                     "gene": row["gene"],
-                    "diplotype": None,
+                    "diplotype": row.get("diplotype"),
                     "calling_lab": origin,
                     "signing_physician": signer,
-                    "method": "VCF-lefedettség (a PCE nem hív csillag-allélt a VCF-ből)",
+                    "method": (
+                        "VCF csillag-allél hívó (pin-elt definiáló SNV)"
+                        if row.get("diplotype")
+                        else "VCF-lefedettség (csillag-allél hívó ki, vagy a gén nem SNV-panel)"
+                    ),
                     "call_date": _now()[:10],
                     "phenotype": None,
                     "callability": callability,

@@ -73,9 +73,9 @@ Ha a DrugMap teszt **499 000 Ft** (VC-10, egy forrás) áll, a klinikus-sáv **a
 | `pce_cds` | F2 CDS Hooks cső (order-sign / order-select + SMART stub); repo `LIVE_CDS=false` → üres `cards` | Signed `LIVE_CDS=true` pecsét nélkül tilos |
 | `pce_ui` | Labor / klinikai / HITL HTML + F2 lakat-UI (`cds.html`) a fenti API-kra | Nem EESZT-kliens |
 
-Hivatalos klinikai pin: `docs/pce/Sources/official/MANIFEST.json` — **19** fájl `ok: true` a 2026-08-13 körben, SHA-256-tal, beleértve GDPR Art. 12 HTML/PDF, EMA 0,09 űrlap-utasítás, MDCG 2021-24, Health Canada PRCI (cél-cella 11), DHCS DDG V2.2 (Wayback). 2026-08-14 ETAP 0: **26** `ok: true` (+ DPWG ClinPGx, Ensembl POST, NCBI dbSNP, CYP2C19 diplotípus, WHO B01AC04, KNMP landing). A motor a pin-elt JSON extractet olvassa, nem a PDF-et futáskor.
+Hivatalos klinikai pin: `docs/pce/Sources/official/MANIFEST.json` — **19** fájl `ok: true` a 2026-08-13 körben, SHA-256-tal, beleértve GDPR Art. 12 HTML/PDF, EMA 0,09 űrlap-utasítás, MDCG 2021-24, Health Canada PRCI (cél-cella 11), DHCS DDG V2.2 (Wayback). 2026-08-14 ETAP 0: **26** `ok: true` (+ DPWG ClinPGx, Ensembl POST, NCBI dbSNP, CYP2C19 diplotípus, WHO B01AC04, KNMP landing). 2026-08-15: **41** `ok: true` (+ PREPARE-12 diplotípus-API és WHO ATC a maradék élő párokhoz). A motor a pin-elt JSON extractet olvassa, nem a PDF-et futáskor.
 
-Teszt: `PYTHONPATH=src python3 -m unittest discover -s tests -v` → **113 OK** (2026-08-13, G DSR + pin tesztekkel). A J-1…J-6 merge 108 volt; az árazási csomag 111; ez a G két DSR-tesztet ad. Nem 94. 2026-08-14 (D-44, `pce_cds`): **124 OK**. 2026-08-14 (D-45, ETAP 0): **134 OK**.
+Teszt: `PYTHONPATH=src python3 -m unittest discover -s tests -v` → **113 OK** (2026-08-13, G DSR + pin tesztekkel). A J-1…J-6 merge 108 volt; az árazási csomag 111; ez a G két DSR-tesztet ad. Nem 94. 2026-08-14 (D-44, `pce_cds`): **124 OK**. 2026-08-14 (D-45, ETAP 0): **134 OK**. 2026-08-15 (D-46): **158 OK**.
 
 `LIVE_CDS = false`. `MATCHER_ON = false`. Bent van ≠ be van kapcsolva.
 

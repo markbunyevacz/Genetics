@@ -6,7 +6,7 @@ import json
 import sys
 from pathlib import Path
 
-from pce_report.flags import LIVE_CDS, MATCHER_ON
+from pce_report.flags import LIVE_CDS
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -24,8 +24,8 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--pdf-out")
     p.add_argument("--actor", default="lab_signer")
     args = p.parse_args(argv)
-    if MATCHER_ON or LIVE_CDS:
-        print("F1+ matcher/LIVE_CDS must be false", file=sys.stderr)
+    if LIVE_CDS:
+        print("LIVE_CDS must be false on the F1+ renderer", file=sys.stderr)
         return 1
     if args.outside_call and not args.case_id:
         print(

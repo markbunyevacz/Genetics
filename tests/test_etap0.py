@@ -130,8 +130,8 @@ class VcfCatalogTests(unittest.TestCase):
         self.assertFalse(row["pharmcat_absent_to_ref"])
         self.assertEqual(rows["HLA-B"]["callability"], "NOT_TESTED")
         self.assertEqual(rows["UGT1A1"]["callability"], "NOT_TESTED")
-        self.assertIn("HLA-gépelés", rows["HLA-B"]["note_hu"])
-        self.assertIn("TA-ismétlődés", rows["UGT1A1"]["note_hu"])
+        self.assertIn("laboratóriumi HLA-tipizálás", rows["HLA-B"]["note_hu"])
+        self.assertIn("TATA-box", rows["UGT1A1"]["note_hu"])
         self.assertEqual(rows["CYP2D6"]["callability"], "NOT_TESTED")
 
 

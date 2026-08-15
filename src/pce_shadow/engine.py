@@ -12,6 +12,15 @@ from pce_shadow.table import KnowledgeTable, default_table
 ORGAN_REASON = "organ"
 
 
+def _activity_key(raw: Any) -> str | None:
+    if raw is None:
+        return None
+    text = str(raw).strip()
+    if not text or text.lower() in {"n/a", "none", "null"}:
+        return None
+    return text
+
+
 def _atc_code(med: dict[str, Any]) -> str | None:
     code = med.get("code")
     if isinstance(code, str) and code.strip():
@@ -72,6 +81,7 @@ def infer(
             "genotype_phenotype": code,
             "genotype_phenotype_hu": knowledge.phenotype_hu(code),
             "cpic_generesult": mapped["cpic_generesult"] if mapped else None,
+            "activity_score": mapped.get("activity_score") if mapped else None,
             "immutable": True,
             "source_id": mapped["source_id"] if mapped else None,
         }
@@ -158,20 +168,26 @@ def infer(
             pheno = gene_row.get("genotype_phenotype")
             for code in codes:
                 pairing = knowledge.pairing(gene, code)
-                if pairing and pheno and pairing.get("by_phenotype"):
-                    category = pairing["by_phenotype"].get(pheno)
-                    if category:
-                        live_findings.append(
-                            _finding(
-                                gene=gene,
-                                code=code,
-                                inn=pairing.get("inn"),
-                                category=category,
-                                source_id=pairing.get("source_id"),
-                                pairing=pairing,
-                            )
+                category = None
+                if pairing:
+                    as_map = pairing.get("by_activity_score")
+                    as_key = _activity_key(gene_row.get("activity_score"))
+                    if isinstance(as_map, dict) and as_key and as_key in as_map:
+                        category = as_map.get(as_key)
+                    elif pheno and pairing.get("by_phenotype"):
+                        category = pairing["by_phenotype"].get(pheno)
+                if pairing and category:
+                    live_findings.append(
+                        _finding(
+                            gene=gene,
+                            code=code,
+                            inn=pairing.get("inn"),
+                            category=category,
+                            source_id=pairing.get("source_id"),
+                            pairing=pairing,
                         )
-                        continue
+                    )
+                    continue
                 if pairing and pairing.get("strategy"):
                     live_findings.append(
                         _finding(

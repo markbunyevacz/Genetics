@@ -52,7 +52,8 @@ class CoverageGoldTests(unittest.TestCase):
         self.assertIsNone(rows["HLA-B"]["naive_missing_to_ref_would_claim"])
         self.assertEqual(rows["HLA-B"].get("catalog"), "not_snv")
         self.assertEqual(rows["UGT1A1"]["callability"], "NOT_TESTED")
-        self.assertIn("TA-ismétlődés", rows["UGT1A1"]["note_hu"])
+        self.assertIn("TATA-box", rows["UGT1A1"]["note_hu"])
+        self.assertIn("outside-call", rows["UGT1A1"]["note_hu"])
 
 
 if __name__ == "__main__":

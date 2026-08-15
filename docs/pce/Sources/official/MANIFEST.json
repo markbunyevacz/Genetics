@@ -270,6 +270,163 @@
       "sha256": "9fd8aabcddacb7b998f1098b692ad2b64d7b5cfcd98d03e69991754a03a80051",
       "content_type": "application/json",
       "note": "Slim GRCh38.p14 HGVS placements. Independent check of Ensembl GRCh38 chrpos."
+    },
+    {
+      "id": "CPIC-DIPLOTYPE-CYP2B6-API",
+      "url": "https://api.cpicpgx.org/v1/diplotype?genesymbol=eq.CYP2B6&diplotype=in.(*1/*1,*1/*6,*6/*6)",
+      "path": "docs/pce/Sources/official/cpic-api-diplotype-cyp2b6-2026-08-15.json",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 3302,
+      "sha256": "ad287456ef40072a97e2176189c0b455a08f7786ee1846cac2b9171c0543b131",
+      "content_type": "application/json",
+      "note": "CYP2B6 *1/*1 NM; *1/*6 IM; *6/*6 PM."
+    },
+    {
+      "id": "CPIC-DIPLOTYPE-CYP2C9-API",
+      "url": "https://api.cpicpgx.org/v1/diplotype?genesymbol=eq.CYP2C9&diplotype=in.(*1/*1,*1/*2,*1/*3,*2/*2,*2/*3,*3/*3)",
+      "path": "docs/pce/Sources/official/cpic-api-diplotype-cyp2c9-2026-08-15.json",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 5390,
+      "sha256": "56948560c453080a8727a8eaac07848406413a797d5e217e7d17db8b46bda0f1",
+      "content_type": "application/json",
+      "note": "CYP2C9 diplotype → NM/IM/PM + activity score."
+    },
+    {
+      "id": "CPIC-DIPLOTYPE-CYP3A5-API",
+      "url": "https://api.cpicpgx.org/v1/diplotype?genesymbol=eq.CYP3A5&diplotype=in.(*1/*1,*1/*3,*3/*3)",
+      "path": "docs/pce/Sources/official/cpic-api-diplotype-cyp3a5-2026-08-15.json",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 2571,
+      "sha256": "589ee6ee7d4a21564e1d6b4005be84024c43fd2ee76d97d84c7399759ffd5e04",
+      "content_type": "application/json",
+      "note": "CYP3A5 *1/*1 NM; *1/*3 IM; *3/*3 PM."
+    },
+    {
+      "id": "CPIC-DIPLOTYPE-DPYD-API",
+      "url": "https://api.cpicpgx.org/v1/diplotype?genesymbol=eq.DPYD",
+      "path": "docs/pce/Sources/official/cpic-api-diplotype-dpyd-2026-08-15.json",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 3041,
+      "sha256": "a87e7866c317986a59cc8a0e4fe14a5a4b38d8bdd418a413fb48454bdc276a9f",
+      "content_type": "application/json",
+      "note": "DPYD Reference/Reference NM AS 2.0; *2A het IM AS 1.0; *2A hom PM AS 0.0."
+    },
+    {
+      "id": "CPIC-DIPLOTYPE-SLCO1B1-API",
+      "url": "https://api.cpicpgx.org/v1/diplotype?genesymbol=eq.SLCO1B1&diplotype=in.(*1/*1,*1/*5,*5/*5)",
+      "path": "docs/pce/Sources/official/cpic-api-diplotype-slco1b1-2026-08-15.json",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 2826,
+      "sha256": "42f938da9cb95b0117596615daa0815ac6222bccc9dbd845fd5f15519b8fae9c",
+      "content_type": "application/json",
+      "note": "SLCO1B1 *1/*1 Normal Function; *1/*5 Decreased; *5/*5 Poor."
+    },
+    {
+      "id": "CPIC-DIPLOTYPE-TPMT-API",
+      "url": "https://api.cpicpgx.org/v1/diplotype?genesymbol=eq.TPMT",
+      "path": "docs/pce/Sources/official/cpic-api-diplotype-tpmt-2026-08-15.json",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 5494,
+      "sha256": "79f5959bdc2fa05413fc47e2283b61f648006a2a40bc9adbb8c494c4b97f1188",
+      "content_type": "application/json",
+      "note": "TPMT *1/*1 NM; *1/*2 and *1/*3C IM; *2/*3C and *3C/*3C PM."
+    },
+    {
+      "id": "CPIC-DIPLOTYPE-UGT1A1-API",
+      "url": "https://api.cpicpgx.org/v1/diplotype?genesymbol=eq.UGT1A1&diplotype=in.(*1/*1,*1/*28,*28/*28)",
+      "path": "docs/pce/Sources/official/cpic-api-diplotype-ugt1a1-2026-08-15.json",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 3168,
+      "sha256": "0476881f0fc959f929cb11497550a853f824387d66f20aa4d35837677c943cf0",
+      "content_type": "application/json",
+      "note": "UGT1A1 *1/*1 NM; *1/*28 IM; *28/*28 PM."
+    },
+    {
+      "id": "WHO-ATC-J05AG03",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=J05AG03",
+      "path": "docs/pce/Sources/official/whocc-atc-j05ag03.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 12913,
+      "sha256": "966e0621231f3281b1505a96ff1671e21b966ddbf1bc79bc4cf6bbc2c3252a5c",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-L04AD02",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=L04AD02",
+      "path": "docs/pce/Sources/official/whocc-atc-l04ad02.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 11094,
+      "sha256": "ab9c48cb00c92fbb37cfedf9cdfb4e74e85fa29b53f972e91db453d792c79ec9",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-L01BC02",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=L01BC02",
+      "path": "docs/pce/Sources/official/whocc-atc-l01bc02.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 12443,
+      "sha256": "bd19549ed759fedd66917beeab9949a6f439fdcd162c3488074b682f88dab9aa",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-C10AA01",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=C10AA01",
+      "path": "docs/pce/Sources/official/whocc-atc-c10aa01.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 11413,
+      "sha256": "15a1dd7d16adc71b3fef279727418ad757b700e3ae9538b84c3a48d05ea13841",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-L04AX01",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=L04AX01",
+      "path": "docs/pce/Sources/official/whocc-atc-l04ax01.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 11796,
+      "sha256": "fec02c39b1250cfd3693fa1a2617b2dbc434f1f26d7f6d102448dd8281951c04",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-J05AF06",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=J05AF06",
+      "path": "docs/pce/Sources/official/whocc-atc-j05af06.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 13124,
+      "sha256": "245f5bf664e2f02f0aabfcfd4d6bd96cba72904a198ebc9023d54bfb003d8235",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-J05AE08",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=J05AE08",
+      "path": "docs/pce/Sources/official/whocc-atc-j05ae08.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 12998,
+      "sha256": "9a94ef4246615f039b317282c304856f73bf5483ced3f4dd5871215343dfe87a",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-M01AH01",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=M01AH01",
+      "path": "docs/pce/Sources/official/whocc-atc-m01ah01.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 12543,
+      "sha256": "46805ebda4b3d1a2a8aff2bee015b24eba151c4e34659049dd3a1ae39c72b977",
+      "content_type": "text/html"
     }
   ]
 }

@@ -79,6 +79,7 @@ CREATE TABLE IF NOT EXISTS gene_coverage (
   case_id TEXT NOT NULL,
   gene TEXT NOT NULL,
   callability TEXT NOT NULL,
+  diplotype TEXT,
   missing_json TEXT NOT NULL,
   naive_missing_to_ref_would_claim TEXT,
   note_hu TEXT NOT NULL,
@@ -188,6 +189,9 @@ class ClinicalStore:
         self.conn.row_factory = sqlite3.Row
         self.conn.execute("PRAGMA foreign_keys = ON")
         self.conn.executescript(SCHEMA)
+        cols = {row[1] for row in self.conn.execute("PRAGMA table_info(gene_coverage)")}
+        if "diplotype" not in cols:
+            self.conn.execute("ALTER TABLE gene_coverage ADD COLUMN diplotype TEXT")
         self.conn.commit()
 
     def execute(self, sql: str, params: tuple | dict = ()) -> sqlite3.Cursor:

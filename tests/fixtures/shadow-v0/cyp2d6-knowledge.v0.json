@@ -18,6 +18,26 @@
     "UM": {
       "en": "Ultrarapid Metabolizer",
       "hu": "ultragyors metabolizáló (a gén alapján az enzim a szokásosnál gyorsabban működik)"
+    },
+    "NF": {
+      "en": "Normal Function",
+      "hu": "normál funkció (SLCO1B1, a gén alapján)"
+    },
+    "DF": {
+      "en": "Decreased Function",
+      "hu": "csökkent funkció (SLCO1B1, a gén alapján)"
+    },
+    "PF": {
+      "en": "Poor Function",
+      "hu": "gyenge funkció (SLCO1B1, a gén alapján)"
+    },
+    "POS_5701": {
+      "en": "HLA-B*57:01 positive",
+      "hu": "HLA-B*57:01 pozitív (laboreredmény)"
+    },
+    "NEG_5701": {
+      "en": "HLA-B*57:01 negative",
+      "hu": "HLA-B*57:01 negatív (laboreredmény)"
     }
   },
   "inventory": {
@@ -41,6 +61,10 @@
       {
         "id": "CPIC-CYP2C19-CLOPIDOGREL",
         "hu": "VAN: a CPIC CYP2C19–clopidogrel guideline (ClinPGx PA166251443) stratégia-kategóriája a gén szerinti osztályhoz kötött. A live finding nem tartalmaz milligrammot, és nem keveri a CPIC sort DPWG/FDA szöveggel."
+      },
+      {
+        "id": "CPIC-PREPARE12-LIVE-PAIRS",
+        "hu": "VAN: PREPARE-12 élő párosítás a pinelt CPIC recommendation_view stratégia-kategóriájából (CYP2B6–efavirenz, CYP2C9–celecoxib, CYP3A5–tacrolimus, DPYD–fluorouracil, SLCO1B1–simvastatin, TPMT–azathioprine, HLA-B–abacavir, UGT1A1–atazanavir, plusz a korábbi CYP2D6-SSRI és CYP2C19–clopidogrel). Nincs milligramm a live findingben."
       }
     ],
     "hianyzik": [
@@ -51,6 +75,10 @@
       {
         "id": "FDA-NM-TO-PM",
         "hu": "NINCS: az FDA gátló-listája nem tartalmaz NM→szegény metabolizáló leképezést."
+      },
+      {
+        "id": "CPIC-F5-VKORC1-REC",
+        "hu": "NINCS: a CPIC recommendation_view F5-re és VKORC1-re üres. Élő párosítás ezekre nincs kitalálva."
       }
     ],
     "beszerzes": {
@@ -148,6 +176,190 @@
       "accessed": "2026-08-13",
       "url": "docs/pce/PCE-SPEC-v1.2.md",
       "claim": "FR-410-LIVE / B.6.2: eGFR < 30 → reason organ, not a computed dose."
+    },
+    {
+      "id": "CPIC-DIPLOTYPE-CYP2B6-API",
+      "authority": "L2",
+      "accessed": "2026-08-15",
+      "url": "https://api.cpicpgx.org/v1/diplotype?genesymbol=eq.CYP2B6&diplotype=in.(*1/*1,*1/*6,*6/*6)",
+      "on_disk": "docs/pce/Sources/official/cpic-api-diplotype-cyp2b6-2026-08-15.json",
+      "claim": "CYP2B6 *1/*1 NM, *1/*6 IM, *6/*6 PM."
+    },
+    {
+      "id": "CPIC-DIPLOTYPE-CYP2C9-API",
+      "authority": "L2",
+      "accessed": "2026-08-15",
+      "url": "https://api.cpicpgx.org/v1/diplotype?genesymbol=eq.CYP2C9&diplotype=in.(*1/*1,*1/*2,*1/*3,*2/*2,*2/*3,*3/*3)",
+      "on_disk": "docs/pce/Sources/official/cpic-api-diplotype-cyp2c9-2026-08-15.json",
+      "claim": "CYP2C9 diplotípus → NM/IM/PM + aktivitási pont."
+    },
+    {
+      "id": "CPIC-DIPLOTYPE-CYP3A5-API",
+      "authority": "L2",
+      "accessed": "2026-08-15",
+      "url": "https://api.cpicpgx.org/v1/diplotype?genesymbol=eq.CYP3A5&diplotype=in.(*1/*1,*1/*3,*3/*3)",
+      "on_disk": "docs/pce/Sources/official/cpic-api-diplotype-cyp3a5-2026-08-15.json",
+      "claim": "CYP3A5 *1/*1 NM, *1/*3 IM, *3/*3 PM."
+    },
+    {
+      "id": "CPIC-DIPLOTYPE-DPYD-API",
+      "authority": "L2",
+      "accessed": "2026-08-15",
+      "url": "https://api.cpicpgx.org/v1/diplotype?genesymbol=eq.DPYD",
+      "on_disk": "docs/pce/Sources/official/cpic-api-diplotype-dpyd-2026-08-15.json",
+      "claim": "DPYD Reference/Reference NM AS 2.0; *2A het IM AS 1.0; *2A hom PM AS 0.0."
+    },
+    {
+      "id": "CPIC-DIPLOTYPE-SLCO1B1-API",
+      "authority": "L2",
+      "accessed": "2026-08-15",
+      "url": "https://api.cpicpgx.org/v1/diplotype?genesymbol=eq.SLCO1B1&diplotype=in.(*1/*1,*1/*5,*5/*5)",
+      "on_disk": "docs/pce/Sources/official/cpic-api-diplotype-slco1b1-2026-08-15.json",
+      "claim": "SLCO1B1 *1/*1 Normal Function; *1/*5 Decreased; *5/*5 Poor."
+    },
+    {
+      "id": "CPIC-DIPLOTYPE-TPMT-API",
+      "authority": "L2",
+      "accessed": "2026-08-15",
+      "url": "https://api.cpicpgx.org/v1/diplotype?genesymbol=eq.TPMT",
+      "on_disk": "docs/pce/Sources/official/cpic-api-diplotype-tpmt-2026-08-15.json",
+      "claim": "TPMT *1/*1 NM; *1/*2 and *1/*3C IM; *2/*3C and *3C/*3C PM."
+    },
+    {
+      "id": "CPIC-DIPLOTYPE-UGT1A1-API",
+      "authority": "L2",
+      "accessed": "2026-08-15",
+      "url": "https://api.cpicpgx.org/v1/diplotype?genesymbol=eq.UGT1A1&diplotype=in.(*1/*1,*1/*28,*28/*28)",
+      "on_disk": "docs/pce/Sources/official/cpic-api-diplotype-ugt1a1-2026-08-15.json",
+      "claim": "UGT1A1 *1/*1 NM; *1/*28 IM; *28/*28 PM."
+    },
+    {
+      "id": "WHO-ATC-J05AG03",
+      "authority": "L1",
+      "accessed": "2026-08-15",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=J05AG03",
+      "on_disk": "docs/pce/Sources/official/whocc-atc-j05ag03.html",
+      "claim": "efavirenz = J05AG03."
+    },
+    {
+      "id": "WHO-ATC-L04AD02",
+      "authority": "L1",
+      "accessed": "2026-08-15",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=L04AD02",
+      "on_disk": "docs/pce/Sources/official/whocc-atc-l04ad02.html",
+      "claim": "tacrolimus = L04AD02."
+    },
+    {
+      "id": "WHO-ATC-L01BC02",
+      "authority": "L1",
+      "accessed": "2026-08-15",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=L01BC02",
+      "on_disk": "docs/pce/Sources/official/whocc-atc-l01bc02.html",
+      "claim": "fluorouracil = L01BC02."
+    },
+    {
+      "id": "WHO-ATC-C10AA01",
+      "authority": "L1",
+      "accessed": "2026-08-15",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=C10AA01",
+      "on_disk": "docs/pce/Sources/official/whocc-atc-c10aa01.html",
+      "claim": "simvastatin = C10AA01."
+    },
+    {
+      "id": "WHO-ATC-L04AX01",
+      "authority": "L1",
+      "accessed": "2026-08-15",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=L04AX01",
+      "on_disk": "docs/pce/Sources/official/whocc-atc-l04ax01.html",
+      "claim": "azathioprine = L04AX01."
+    },
+    {
+      "id": "WHO-ATC-J05AF06",
+      "authority": "L1",
+      "accessed": "2026-08-15",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=J05AF06",
+      "on_disk": "docs/pce/Sources/official/whocc-atc-j05af06.html",
+      "claim": "abacavir = J05AF06."
+    },
+    {
+      "id": "WHO-ATC-J05AE08",
+      "authority": "L1",
+      "accessed": "2026-08-15",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=J05AE08",
+      "on_disk": "docs/pce/Sources/official/whocc-atc-j05ae08.html",
+      "claim": "atazanavir = J05AE08."
+    },
+    {
+      "id": "WHO-ATC-M01AH01",
+      "authority": "L1",
+      "accessed": "2026-08-15",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=M01AH01",
+      "on_disk": "docs/pce/Sources/official/whocc-atc-m01ah01.html",
+      "claim": "celecoxib = M01AH01."
+    },
+    {
+      "id": "CPIC-HLA-B-ABACAVIR",
+      "authority": "L2",
+      "accessed": "2026-08-15",
+      "url": "https://www.clinpgx.org/guideline/PA166251444",
+      "on_disk": "tests/fixtures/f1plus-v0/prepare12/hlab-cpic-recommendation-view.v0.json",
+      "claim": "*57:01 negative: standard; *57:01 positive: abacavir not recommended."
+    },
+    {
+      "id": "CPIC-CYP2B6-EFAVIRENZ",
+      "authority": "L2",
+      "accessed": "2026-08-15",
+      "url": "https://www.clinpgx.org/guideline/PA166251463",
+      "on_disk": "tests/fixtures/f1plus-v0/prepare12/cyp2b6-cpic-recommendation-view.v0.json",
+      "claim": "CYP2B6–efavirenz: UM/RM/NM standard start; IM/PM consider decreased start. Live pairing stores strategy category, not milligrams."
+    },
+    {
+      "id": "CPIC-CYP2C9-CELECOXIB",
+      "authority": "L2",
+      "accessed": "2026-08-15",
+      "url": "https://www.clinpgx.org/guideline/PA166251464",
+      "on_disk": "tests/fixtures/f1plus-v0/prepare12/cyp2c9-cpic-recommendation-view.v0.json",
+      "claim": "CYP2C9–celecoxib: activity score 2.0/1.5 recommended starting dose; 1.0/0.5/0.0 lowest start / caution. Live pairing uses activity score, not a blanket IM row."
+    },
+    {
+      "id": "CPIC-CYP3A5-TACROLIMUS",
+      "authority": "L2",
+      "accessed": "2026-08-15",
+      "url": "https://www.clinpgx.org/guideline/PA166251451",
+      "on_disk": "tests/fixtures/f1plus-v0/prepare12/cyp3a5-cpic-recommendation-view.v0.json",
+      "claim": "CYP3A5–tacrolimus: expresser (NM/IM) higher start + TDM; non-expresser (PM) standard start + TDM."
+    },
+    {
+      "id": "CPIC-DPYD-FLUOROURACIL",
+      "authority": "L2",
+      "accessed": "2026-08-15",
+      "url": "https://www.clinpgx.org/guideline/PA166251462",
+      "on_disk": "tests/fixtures/f1plus-v0/prepare12/dpyd-cpic-recommendation-view.v0.json",
+      "claim": "DPYD–fluorouracil: AS 2.0 no change; AS 1.0/1.5 reduce start; AS 0.0/0.5 avoid if alternative exists."
+    },
+    {
+      "id": "CPIC-SLCO1B1-SIMVASTATIN",
+      "authority": "L2",
+      "accessed": "2026-08-15",
+      "url": "https://www.clinpgx.org/guideline/PA166264281",
+      "on_disk": "tests/fixtures/f1plus-v0/prepare12/slco1b1-cpic-recommendation-view.v0.json",
+      "claim": "SLCO1B1–simvastatin: Normal Function desired start; Decreased/Poor Function alternative statin."
+    },
+    {
+      "id": "CPIC-TPMT-AZATHIOPRINE",
+      "authority": "L2",
+      "accessed": "2026-08-15",
+      "url": "https://www.clinpgx.org/guideline/PA166251442",
+      "on_disk": "tests/fixtures/f1plus-v0/prepare12/tpmt-cpic-recommendation-view.v0.json",
+      "claim": "TPMT–azathioprine with NUDT15 No Result: NM standard start; IM reduced start; PM non-thiopurine alternative."
+    },
+    {
+      "id": "CPIC-UGT1A1-ATAZANAVIR",
+      "authority": "L2",
+      "accessed": "2026-08-15",
+      "url": "https://www.clinpgx.org/guideline/PA166251453",
+      "on_disk": "tests/fixtures/f1plus-v0/prepare12/ugt1a1-cpic-recommendation-view.v0.json",
+      "claim": "UGT1A1–atazanavir: NM/IM no need to avoid; PM consider alternative especially if jaundice would be a concern."
     }
   ],
   "diplotype_phenotype": [
@@ -198,6 +410,254 @@
       "cpic_generesult": "Poor Metabolizer",
       "activity_score": null,
       "source_id": "CPIC-DIPLOTYPE-CYP2C19-API"
+    },
+    {
+      "gene": "CYP2B6",
+      "diplotype": "*1/*1",
+      "genotype_phenotype": "NM",
+      "cpic_generesult": "Normal Metabolizer",
+      "activity_score": null,
+      "source_id": "CPIC-DIPLOTYPE-CYP2B6-API"
+    },
+    {
+      "gene": "CYP2B6",
+      "diplotype": "*1/*6",
+      "genotype_phenotype": "IM",
+      "cpic_generesult": "Intermediate Metabolizer",
+      "activity_score": null,
+      "source_id": "CPIC-DIPLOTYPE-CYP2B6-API"
+    },
+    {
+      "gene": "CYP2B6",
+      "diplotype": "*6/*6",
+      "genotype_phenotype": "PM",
+      "cpic_generesult": "Poor Metabolizer",
+      "activity_score": null,
+      "source_id": "CPIC-DIPLOTYPE-CYP2B6-API"
+    },
+    {
+      "gene": "CYP2C9",
+      "diplotype": "*1/*1",
+      "genotype_phenotype": "NM",
+      "cpic_generesult": "Normal Metabolizer",
+      "activity_score": "2.0",
+      "source_id": "CPIC-DIPLOTYPE-CYP2C9-API"
+    },
+    {
+      "gene": "CYP2C9",
+      "diplotype": "*1/*2",
+      "genotype_phenotype": "IM",
+      "cpic_generesult": "Intermediate Metabolizer",
+      "activity_score": "1.5",
+      "source_id": "CPIC-DIPLOTYPE-CYP2C9-API"
+    },
+    {
+      "gene": "CYP2C9",
+      "diplotype": "*1/*3",
+      "genotype_phenotype": "IM",
+      "cpic_generesult": "Intermediate Metabolizer",
+      "activity_score": "1.0",
+      "source_id": "CPIC-DIPLOTYPE-CYP2C9-API"
+    },
+    {
+      "gene": "CYP2C9",
+      "diplotype": "*2/*2",
+      "genotype_phenotype": "IM",
+      "cpic_generesult": "Intermediate Metabolizer",
+      "activity_score": "1.0",
+      "source_id": "CPIC-DIPLOTYPE-CYP2C9-API"
+    },
+    {
+      "gene": "CYP2C9",
+      "diplotype": "*2/*3",
+      "genotype_phenotype": "PM",
+      "cpic_generesult": "Poor Metabolizer",
+      "activity_score": "0.5",
+      "source_id": "CPIC-DIPLOTYPE-CYP2C9-API"
+    },
+    {
+      "gene": "CYP2C9",
+      "diplotype": "*3/*3",
+      "genotype_phenotype": "PM",
+      "cpic_generesult": "Poor Metabolizer",
+      "activity_score": "0.0",
+      "source_id": "CPIC-DIPLOTYPE-CYP2C9-API"
+    },
+    {
+      "gene": "CYP3A5",
+      "diplotype": "*1/*1",
+      "genotype_phenotype": "NM",
+      "cpic_generesult": "Normal Metabolizer",
+      "activity_score": null,
+      "source_id": "CPIC-DIPLOTYPE-CYP3A5-API"
+    },
+    {
+      "gene": "CYP3A5",
+      "diplotype": "*1/*3",
+      "genotype_phenotype": "IM",
+      "cpic_generesult": "Intermediate Metabolizer",
+      "activity_score": null,
+      "source_id": "CPIC-DIPLOTYPE-CYP3A5-API"
+    },
+    {
+      "gene": "CYP3A5",
+      "diplotype": "*3/*3",
+      "genotype_phenotype": "PM",
+      "cpic_generesult": "Poor Metabolizer",
+      "activity_score": null,
+      "source_id": "CPIC-DIPLOTYPE-CYP3A5-API"
+    },
+    {
+      "gene": "DPYD",
+      "diplotype": "*1/*1",
+      "genotype_phenotype": "NM",
+      "cpic_generesult": "Normal Metabolizer",
+      "activity_score": "2.0",
+      "source_id": "CPIC-DIPLOTYPE-DPYD-API"
+    },
+    {
+      "gene": "DPYD",
+      "diplotype": "*1/*2A",
+      "genotype_phenotype": "IM",
+      "cpic_generesult": "Intermediate Metabolizer",
+      "activity_score": "1.0",
+      "source_id": "CPIC-DIPLOTYPE-DPYD-API"
+    },
+    {
+      "gene": "DPYD",
+      "diplotype": "*2A/*2A",
+      "genotype_phenotype": "PM",
+      "cpic_generesult": "Poor Metabolizer",
+      "activity_score": "0.0",
+      "source_id": "CPIC-DIPLOTYPE-DPYD-API"
+    },
+    {
+      "gene": "DPYD",
+      "diplotype": "Reference/Reference",
+      "genotype_phenotype": "NM",
+      "cpic_generesult": "Normal Metabolizer",
+      "activity_score": "2.0",
+      "source_id": "CPIC-DIPLOTYPE-DPYD-API"
+    },
+    {
+      "gene": "DPYD",
+      "diplotype": "c.1905+1G>A (*2A)/Reference",
+      "genotype_phenotype": "IM",
+      "cpic_generesult": "Intermediate Metabolizer",
+      "activity_score": "1.0",
+      "source_id": "CPIC-DIPLOTYPE-DPYD-API"
+    },
+    {
+      "gene": "DPYD",
+      "diplotype": "c.1905+1G>A (*2A)/c.1905+1G>A (*2A)",
+      "genotype_phenotype": "PM",
+      "cpic_generesult": "Poor Metabolizer",
+      "activity_score": "0.0",
+      "source_id": "CPIC-DIPLOTYPE-DPYD-API"
+    },
+    {
+      "gene": "SLCO1B1",
+      "diplotype": "*1/*1",
+      "genotype_phenotype": "NF",
+      "cpic_generesult": "Normal Function",
+      "activity_score": null,
+      "source_id": "CPIC-DIPLOTYPE-SLCO1B1-API"
+    },
+    {
+      "gene": "SLCO1B1",
+      "diplotype": "*1/*5",
+      "genotype_phenotype": "DF",
+      "cpic_generesult": "Decreased Function",
+      "activity_score": null,
+      "source_id": "CPIC-DIPLOTYPE-SLCO1B1-API"
+    },
+    {
+      "gene": "SLCO1B1",
+      "diplotype": "*5/*5",
+      "genotype_phenotype": "PF",
+      "cpic_generesult": "Poor Function",
+      "activity_score": null,
+      "source_id": "CPIC-DIPLOTYPE-SLCO1B1-API"
+    },
+    {
+      "gene": "TPMT",
+      "diplotype": "*1/*1",
+      "genotype_phenotype": "NM",
+      "cpic_generesult": "Normal Metabolizer",
+      "activity_score": null,
+      "source_id": "CPIC-DIPLOTYPE-TPMT-API"
+    },
+    {
+      "gene": "TPMT",
+      "diplotype": "*1/*2",
+      "genotype_phenotype": "IM",
+      "cpic_generesult": "Intermediate Metabolizer",
+      "activity_score": null,
+      "source_id": "CPIC-DIPLOTYPE-TPMT-API"
+    },
+    {
+      "gene": "TPMT",
+      "diplotype": "*1/*3C",
+      "genotype_phenotype": "IM",
+      "cpic_generesult": "Intermediate Metabolizer",
+      "activity_score": null,
+      "source_id": "CPIC-DIPLOTYPE-TPMT-API"
+    },
+    {
+      "gene": "TPMT",
+      "diplotype": "*2/*3C",
+      "genotype_phenotype": "PM",
+      "cpic_generesult": "Poor Metabolizer",
+      "activity_score": null,
+      "source_id": "CPIC-DIPLOTYPE-TPMT-API"
+    },
+    {
+      "gene": "TPMT",
+      "diplotype": "*3C/*3C",
+      "genotype_phenotype": "PM",
+      "cpic_generesult": "Poor Metabolizer",
+      "activity_score": null,
+      "source_id": "CPIC-DIPLOTYPE-TPMT-API"
+    },
+    {
+      "gene": "UGT1A1",
+      "diplotype": "*1/*1",
+      "genotype_phenotype": "NM",
+      "cpic_generesult": "Normal Metabolizer",
+      "activity_score": null,
+      "source_id": "CPIC-DIPLOTYPE-UGT1A1-API"
+    },
+    {
+      "gene": "UGT1A1",
+      "diplotype": "*1/*28",
+      "genotype_phenotype": "IM",
+      "cpic_generesult": "Intermediate Metabolizer",
+      "activity_score": null,
+      "source_id": "CPIC-DIPLOTYPE-UGT1A1-API"
+    },
+    {
+      "gene": "UGT1A1",
+      "diplotype": "*28/*28",
+      "genotype_phenotype": "PM",
+      "cpic_generesult": "Poor Metabolizer",
+      "activity_score": null,
+      "source_id": "CPIC-DIPLOTYPE-UGT1A1-API"
+    },
+    {
+      "gene": "HLA-B",
+      "diplotype": "*57:01 positive",
+      "genotype_phenotype": "POS_5701",
+      "cpic_generesult": "HLA-B*57:01 positive",
+      "activity_score": null,
+      "source_id": "CPIC-HLA-B-ABACAVIR"
+    },
+    {
+      "gene": "HLA-B",
+      "diplotype": "*57:01 negative",
+      "genotype_phenotype": "NEG_5701",
+      "cpic_generesult": "HLA-B*57:01 negative",
+      "activity_score": null,
+      "source_id": "CPIC-HLA-B-ABACAVIR"
     }
   ],
   "strong_cyp2d6_inhibitors": [
@@ -266,6 +726,147 @@
       "strategy_hu": {
         "CONTINUE": "A pinelt CPIC CYP2C19–clopidogrel guideline (ClinPGx PA166251443) szerint ebben a gén szerinti osztályban a clopidogrel folytatható standard adaggal (nem betegre számolt milligramm).",
         "CONSIDER_ALTERNATIVE": "A pinelt CPIC CYP2C19–clopidogrel guideline (ClinPGx PA166251443) szerint ebben a gén szerinti osztályban más szer megfontolandó (nem számolt mg)."
+      }
+    },
+    {
+      "gene": "CYP2B6",
+      "atc5": "J05AG03",
+      "inn": "efavirenz",
+      "inn_hu": "efavirenz",
+      "source_id": "CPIC-CYP2B6-EFAVIRENZ",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251463",
+      "by_phenotype": {
+        "UM": "CONTINUE",
+        "RM": "CONTINUE",
+        "NM": "CONTINUE",
+        "IM": "CONSIDER_DOSE_CHANGE",
+        "PM": "CONSIDER_DOSE_CHANGE"
+      },
+      "strategy_hu": {
+        "CONTINUE": "A pinelt CPIC CYP2B6–efavirenz recommendation_view szerint ebben a gén szerinti osztályban standard kezdés (nem betegre számolt milligramm a live findingben).",
+        "CONSIDER_DOSE_CHANGE": "A pinelt CPIC CYP2B6–efavirenz recommendation_view szerint ebben a gén szerinti osztályban dózisváltoztatás megfontolandó (nem számolt mg)."
+      }
+    },
+    {
+      "gene": "CYP2C9",
+      "atc5": "M01AH01",
+      "inn": "celecoxib",
+      "inn_hu": "celecoxib",
+      "source_id": "CPIC-CYP2C9-CELECOXIB",
+      "by_activity_score": {
+        "2.0": "CONTINUE",
+        "1.5": "CONTINUE",
+        "1.0": "CONSIDER_DOSE_CHANGE",
+        "0.5": "CONSIDER_DOSE_CHANGE",
+        "0.0": "CONSIDER_DOSE_CHANGE"
+      },
+      "by_phenotype": {
+        "NM": "CONTINUE",
+        "PM": "CONSIDER_DOSE_CHANGE"
+      },
+      "strategy_hu": {
+        "CONTINUE": "A pinelt CPIC CYP2C9–celecoxib recommendation_view (aktivitási pont 2.0/1.5) szerint ajánlott kezdőadag, nem számolt mg.",
+        "CONSIDER_DOSE_CHANGE": "A pinelt CPIC CYP2C9–celecoxib recommendation_view szerint alacsonyabb kezdés / óvatos titrálás megfontolandó (nem számolt mg)."
+      }
+    },
+    {
+      "gene": "CYP3A5",
+      "atc5": "L04AD02",
+      "inn": "tacrolimus",
+      "inn_hu": "takrolimusz",
+      "source_id": "CPIC-CYP3A5-TACROLIMUS",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251451",
+      "by_phenotype": {
+        "NM": "CONSIDER_DOSE_CHANGE",
+        "IM": "CONSIDER_DOSE_CHANGE",
+        "PM": "CONTINUE"
+      },
+      "strategy_hu": {
+        "CONSIDER_DOSE_CHANGE": "A pinelt CPIC CYP3A5–tacrolimus recommendation_view: expresszer (NM/IM) magasabb kezdés, TDM; a live finding nem milligramm.",
+        "CONTINUE": "A pinelt CPIC CYP3A5–tacrolimus recommendation_view: nem-expresszer (PM) standard kezdés, TDM; nem számolt mg."
+      }
+    },
+    {
+      "gene": "DPYD",
+      "atc5": "L01BC02",
+      "inn": "fluorouracil",
+      "inn_hu": "fluorouracil",
+      "source_id": "CPIC-DPYD-FLUOROURACIL",
+      "by_phenotype": {
+        "NM": "CONTINUE",
+        "IM": "CONSIDER_DOSE_CHANGE",
+        "PM": "CONSIDER_ALTERNATIVE"
+      },
+      "strategy_hu": {
+        "CONTINUE": "A pinelt CPIC DPYD–fluorouracil recommendation_view (aktivitási pont 2.0): nincs dózisváltoztatás-indok a genotípus alapján.",
+        "CONSIDER_DOSE_CHANGE": "A pinelt CPIC DPYD–fluorouracil recommendation_view (aktivitási pont 1.0/1.5): kezdőadag-csökkentés megfontolandó; a live finding nem számolt mg.",
+        "CONSIDER_ALTERNATIVE": "A pinelt CPIC DPYD–fluorouracil recommendation_view (aktivitási pont 0.0/0.5): a 5-fluorouracil kerülendő, ha van alternatíva. Nem számolt mg."
+      }
+    },
+    {
+      "gene": "SLCO1B1",
+      "atc5": "C10AA01",
+      "inn": "simvastatin",
+      "inn_hu": "szimvasztatin",
+      "source_id": "CPIC-SLCO1B1-SIMVASTATIN",
+      "by_phenotype": {
+        "NF": "CONTINUE",
+        "DF": "CONSIDER_ALTERNATIVE",
+        "PF": "CONSIDER_ALTERNATIVE"
+      },
+      "strategy_hu": {
+        "CONTINUE": "A pinelt CPIC SLCO1B1–simvastatin recommendation_view (Normal Function): kívánt kezdőadag, nem számolt mg.",
+        "CONSIDER_ALTERNATIVE": "A pinelt CPIC SLCO1B1–simvastatin recommendation_view (Decreased/Poor Function): más sztatin megfontolandó. Nem számolt mg."
+      }
+    },
+    {
+      "gene": "TPMT",
+      "atc5": "L04AX01",
+      "inn": "azathioprine",
+      "inn_hu": "azatioprin",
+      "source_id": "CPIC-TPMT-AZATHIOPRINE",
+      "by_phenotype": {
+        "NM": "CONTINUE",
+        "IM": "CONSIDER_DOSE_CHANGE",
+        "PM": "CONSIDER_ALTERNATIVE"
+      },
+      "strategy_hu": {
+        "CONTINUE": "A pinelt CPIC TPMT–azathioprine recommendation_view (NUDT15 No Result + TPMT NM): standard kezdés, nem számolt mg.",
+        "CONSIDER_DOSE_CHANGE": "A pinelt CPIC TPMT–azathioprine recommendation_view (NUDT15 No Result + TPMT IM): csökkentett kezdés megfontolandó; nem számolt mg.",
+        "CONSIDER_ALTERNATIVE": "A pinelt CPIC TPMT–azathioprine recommendation_view (NUDT15 No Result + TPMT PM): nem-tiopurin immunszuppresszáns megfontolandó."
+      }
+    },
+    {
+      "gene": "HLA-B",
+      "atc5": "J05AF06",
+      "inn": "abacavir",
+      "inn_hu": "abakavir",
+      "source_id": "CPIC-HLA-B-ABACAVIR",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251444",
+      "by_phenotype": {
+        "NEG_5701": "CONTINUE",
+        "POS_5701": "CONSIDER_ALTERNATIVE"
+      },
+      "strategy_hu": {
+        "CONTINUE": "A pinelt CPIC HLA-B–abacavir recommendation_view (*57:01 negative): standard abakavir, nem számolt mg.",
+        "CONSIDER_ALTERNATIVE": "A pinelt CPIC HLA-B–abacavir recommendation_view (*57:01 positive): az abakavir nem ajánlott."
+      }
+    },
+    {
+      "gene": "UGT1A1",
+      "atc5": "J05AE08",
+      "inn": "atazanavir",
+      "inn_hu": "atazanavir",
+      "source_id": "CPIC-UGT1A1-ATAZANAVIR",
+      "guidelineurl": "https://www.clinpgx.org/guideline/PA166251453",
+      "by_phenotype": {
+        "NM": "CONTINUE",
+        "IM": "CONTINUE",
+        "PM": "CONSIDER_ALTERNATIVE"
+      },
+      "strategy_hu": {
+        "CONTINUE": "A pinelt CPIC UGT1A1–atazanavir recommendation_view (NM/IM): nincs indok az atazanavir kerülésére a genetikai teszt alapján.",
+        "CONSIDER_ALTERNATIVE": "A pinelt CPIC UGT1A1–atazanavir recommendation_view (PM): alternatíva megfontolandó, különösen ha a sárgaság gondot okozna."
       }
     }
   ],

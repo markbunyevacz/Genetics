@@ -10,7 +10,7 @@
     "hol_a_harom_minta": "tests/fixtures/vcf-gold-v0/ — SYN VCF ebben a repóban, a gyártó készíti a FR-210 teszthez.",
     "cdc_get_rm": "https://www.cdc.gov/lab-quality/php/get-rm/reference-materials.html — fizikai referenciaanyag labor-QC-hez, nem ez a három fájl.",
     "pharmcat_teszt_vcf": "A PharmCAT GitHubon vannak teszt-VCF-ek; a --absent-to-ref és --unspecified-to-ref vakon nem hívható.",
-    "mikorra": "A három SYN missing-to-ref fájl 2026-08-13-án a repóban volt. 2026-08-14: a maradék PREPARE-12 SNV definiáló pozíció Ensembl POST + NCBI dbSNP pin (CYP2B6, CYP2C9, CYP3A5, F5, SLCO1B1, TPMT, VKORC1). HLA-B nem egyszerű SNV (HLA-gépelés). UGT1A1*28 (rs8175347) NCBI snp_class=delins / TA-ismétlődés, nem SNV. Matcher ki."
+    "mikorra": "A három SYN missing-to-ref fájl 2026-08-13-án a repóban volt. 2026-08-14: a maradék PREPARE-12 SNV definiáló pozíció Ensembl POST + NCBI dbSNP pin (CYP2B6, CYP2C9, CYP3A5, F5, SLCO1B1, TPMT, VKORC1). HLA-B nem egyszerű pontmutáció: laboratóriumi HLA-tipizálás, a laboreredményt outside-callban kell beküldeni. UGT1A1*28 (rs8175347) NCBI snp_class=delins, TATA-box (timin-adenin) ismétléshossz, nem pontmutáció. Matcher ki a repo konstansban; a BE-út matcher_on=true paraméterrel tesztelt."
   },
   "sources": [
     {
@@ -69,7 +69,11 @@
           "grch37_pos": 42524947,
           "ref": "C",
           "naive_missing_to_ref_would_claim": "Normal Metabolizer",
-          "why_opposite_hu": "A naiv missing-to-ref a hiányzó helyet C/C referenciának venné, tehát nem *4-nek. A CPIC SSRI 2023 2a táblában a gén szerinti normál metabolizáló (NM) paroxetin-sora CONTINUE, a szegény metabolizáló (PM, *4/*4) sora CONSIDER_DOSE_CHANGE — ez ellentétes ajánlás. A rendszer INDETERMINATE-et ír, nem NORMAL-t."
+          "why_opposite_hu": "A naiv missing-to-ref a hiányzó helyet C/C referenciának venné, tehát nem *4-nek. A CPIC SSRI 2023 2a táblában a gén szerinti normál metabolizáló (NM) paroxetin-sora CONTINUE, a szegény metabolizáló (PM, *4/*4) sora CONSIDER_DOSE_CHANGE — ez ellentétes ajánlás. A rendszer INDETERMINATE-et ír, nem NORMAL-t.",
+          "defining_alt_grch38": "T",
+          "star_is_alt_grch38": true,
+          "defining_alt_grch37": "T",
+          "star_is_alt_grch37": true
         }
       ]
     },
@@ -85,7 +89,11 @@
           "grch37_pos": 96541616,
           "ref": "G",
           "naive_missing_to_ref_would_claim": "Normal Metabolizer",
-          "why_opposite_hu": "A naiv missing-to-ref *1-szerű normál metabolizálót állítana. A CPIC clopidogrel guideline-ban a Normal Metabolizer és a Poor Metabolizer (*2/*2) sora eltér. A rendszer INDETERMINATE-et ír, nem NORMAL-t. Allélhívó ki."
+          "why_opposite_hu": "A naiv missing-to-ref *1-szerű normál metabolizálót állítana. A CPIC clopidogrel guideline-ban a Normal Metabolizer és a Poor Metabolizer (*2/*2) sora eltér. A rendszer INDETERMINATE-et ír, nem NORMAL-t. Allélhívó ki.",
+          "defining_alt_grch38": "A",
+          "star_is_alt_grch38": true,
+          "defining_alt_grch37": "A",
+          "star_is_alt_grch37": true
         }
       ]
     },
@@ -101,7 +109,11 @@
           "grch37_pos": 97915614,
           "ref": "C",
           "naive_missing_to_ref_would_claim": "Normal Metabolizer",
-          "why_opposite_hu": "A naiv missing-to-ref normál DPD-aktivitást feltételezne. A CPIC fluoropirimidin-táblában a Normal Metabolizer sora nem dóziscsökkentés; a no-function allél ellentétes. A rendszer INDETERMINATE-et ír, nem NORMAL-t."
+          "why_opposite_hu": "A naiv missing-to-ref normál DPD-aktivitást feltételezne. A CPIC fluoropirimidin-táblában a Normal Metabolizer sora nem dóziscsökkentés; a no-function allél ellentétes. A rendszer INDETERMINATE-et ír, nem NORMAL-t.",
+          "defining_alt_grch38": "T",
+          "star_is_alt_grch38": true,
+          "defining_alt_grch37": "T",
+          "star_is_alt_grch37": true
         }
       ]
     },
@@ -118,7 +130,11 @@
           "ref": "G",
           "ref_grch37": "G",
           "naive_missing_to_ref_would_claim": "Normal Metabolizer",
-          "why_opposite_hu": "A naiv missing-to-ref a hiányzó helyet referenciának venné, tehát nem a definiáló változatnak. A CPIC guideline-ban a gén szerinti normál metabolizáló és a csökkent/no-function osztály sora eltér. A rendszer INDETERMINATE-et ír, nem NORMAL-t. Allélhívó ki."
+          "why_opposite_hu": "A naiv missing-to-ref a hiányzó helyet referenciának venné, tehát nem a definiáló változatnak. A CPIC guideline-ban a gén szerinti normál metabolizáló és a csökkent/no-function osztály sora eltér. A rendszer INDETERMINATE-et ír, nem NORMAL-t. Allélhívó ki.",
+          "defining_alt_grch38": "T",
+          "star_is_alt_grch38": true,
+          "defining_alt_grch37": "T",
+          "star_is_alt_grch37": true
         }
       ]
     },
@@ -135,7 +151,11 @@
           "ref": "C",
           "ref_grch37": "C",
           "naive_missing_to_ref_would_claim": "Normal Metabolizer",
-          "why_opposite_hu": "A naiv missing-to-ref a hiányzó helyet referenciának venné, tehát nem a definiáló változatnak. A CPIC guideline-ban a gén szerinti normál metabolizáló és a csökkent/no-function osztály sora eltér. A rendszer INDETERMINATE-et ír, nem NORMAL-t. Allélhívó ki."
+          "why_opposite_hu": "A naiv missing-to-ref a hiányzó helyet referenciának venné, tehát nem a definiáló változatnak. A CPIC guideline-ban a gén szerinti normál metabolizáló és a csökkent/no-function osztály sora eltér. A rendszer INDETERMINATE-et ír, nem NORMAL-t. Allélhívó ki.",
+          "defining_alt_grch38": "T",
+          "star_is_alt_grch38": true,
+          "defining_alt_grch37": "T",
+          "star_is_alt_grch37": true
         },
         {
           "id": "CYP2C9-star3",
@@ -147,7 +167,11 @@
           "ref": "A",
           "ref_grch37": "A",
           "naive_missing_to_ref_would_claim": "Normal Metabolizer",
-          "why_opposite_hu": "A naiv missing-to-ref a hiányzó helyet referenciának venné, tehát nem a definiáló változatnak. A CPIC guideline-ban a gén szerinti normál metabolizáló és a csökkent/no-function osztály sora eltér. A rendszer INDETERMINATE-et ír, nem NORMAL-t. Allélhívó ki."
+          "why_opposite_hu": "A naiv missing-to-ref a hiányzó helyet referenciának venné, tehát nem a definiáló változatnak. A CPIC guideline-ban a gén szerinti normál metabolizáló és a csökkent/no-function osztály sora eltér. A rendszer INDETERMINATE-et ír, nem NORMAL-t. Allélhívó ki.",
+          "defining_alt_grch38": "C",
+          "star_is_alt_grch38": true,
+          "defining_alt_grch37": "C",
+          "star_is_alt_grch37": true
         }
       ]
     },
@@ -164,7 +188,11 @@
           "ref": "T",
           "ref_grch37": "C",
           "naive_missing_to_ref_would_claim": "Normal Metabolizer",
-          "why_opposite_hu": "A naiv missing-to-ref a hiányzó helyet referenciának venné, tehát nem a definiáló változatnak. A CPIC guideline-ban a gén szerinti normál metabolizáló és a csökkent/no-function osztály sora eltér. A rendszer INDETERMINATE-et ír, nem NORMAL-t. Allélhívó ki."
+          "why_opposite_hu": "A naiv missing-to-ref a hiányzó helyet referenciának venné, tehát nem a definiáló változatnak. A CPIC guideline-ban a gén szerinti normál metabolizáló és a csökkent/no-function osztály sora eltér. A rendszer INDETERMINATE-et ír, nem NORMAL-t. Allélhívó ki.",
+          "defining_alt_grch38": "C",
+          "star_is_alt_grch38": true,
+          "defining_alt_grch37": "T",
+          "star_is_alt_grch37": false
         }
       ]
     },
@@ -181,14 +209,18 @@
           "ref": "C",
           "ref_grch37": "T",
           "naive_missing_to_ref_would_claim": "wild-type Factor V (not Leiden)",
-          "why_opposite_hu": "A naiv missing-to-ref vad típusú (nem Leiden) Factor V-t feltételezne. A PCE nem hív allélt a VCF-ből. INDETERMINATE, nem NORMAL."
+          "why_opposite_hu": "A naiv missing-to-ref vad típusú (nem Leiden) Factor V-t feltételezne. A PCE nem hív allélt a VCF-ből. INDETERMINATE, nem NORMAL.",
+          "defining_alt_grch38": "T",
+          "star_is_alt_grch38": true,
+          "defining_alt_grch37": "C",
+          "star_is_alt_grch37": false
         }
       ]
     },
     "HLA-B": {
       "catalog": "not_snv",
       "positions": [],
-      "note_hu": "HLA-B definiáló változata (pl. HLA-B*57:01) HLA-gépelés, nem egyetlen SNV. Nincs kitalált HLA-SNV koordináta. NOT_TESTED, nem NORMAL.",
+      "note_hu": "HLA-B definiáló változata (például HLA-B*57:01) laboratóriumi HLA-tipizálással hívható, nem egyetlen pontmutációból. Nincs kitalált HLA pontmutációs koordináta. A laboreredményt outside-callban kell beküldeni. NOT_TESTED, nem NORMAL.",
       "reason": "hla_typing_not_snv"
     },
     "SLCO1B1": {
@@ -204,7 +236,11 @@
           "ref": "T",
           "ref_grch37": "T",
           "naive_missing_to_ref_would_claim": "Normal Metabolizer",
-          "why_opposite_hu": "A naiv missing-to-ref a hiányzó helyet referenciának venné, tehát nem a definiáló változatnak. A CPIC guideline-ban a gén szerinti normál metabolizáló és a csökkent/no-function osztály sora eltér. A rendszer INDETERMINATE-et ír, nem NORMAL-t. Allélhívó ki."
+          "why_opposite_hu": "A naiv missing-to-ref a hiányzó helyet referenciának venné, tehát nem a definiáló változatnak. A CPIC guideline-ban a gén szerinti normál metabolizáló és a csökkent/no-function osztály sora eltér. A rendszer INDETERMINATE-et ír, nem NORMAL-t. Allélhívó ki.",
+          "defining_alt_grch38": "C",
+          "star_is_alt_grch38": true,
+          "defining_alt_grch37": "C",
+          "star_is_alt_grch37": true
         }
       ]
     },
@@ -221,7 +257,11 @@
           "ref": "C",
           "ref_grch37": "C",
           "naive_missing_to_ref_would_claim": "Normal Metabolizer",
-          "why_opposite_hu": "A naiv missing-to-ref a hiányzó helyet referenciának venné, tehát nem a definiáló változatnak. A CPIC guideline-ban a gén szerinti normál metabolizáló és a csökkent/no-function osztály sora eltér. A rendszer INDETERMINATE-et ír, nem NORMAL-t. Allélhívó ki."
+          "why_opposite_hu": "A naiv missing-to-ref a hiányzó helyet referenciának venné, tehát nem a definiáló változatnak. A CPIC guideline-ban a gén szerinti normál metabolizáló és a csökkent/no-function osztály sora eltér. A rendszer INDETERMINATE-et ír, nem NORMAL-t. Allélhívó ki.",
+          "defining_alt_grch38": "G",
+          "star_is_alt_grch38": true,
+          "defining_alt_grch37": "G",
+          "star_is_alt_grch37": true
         },
         {
           "id": "TPMT-star3c",
@@ -233,7 +273,11 @@
           "ref": "T",
           "ref_grch37": "T",
           "naive_missing_to_ref_would_claim": "Normal Metabolizer",
-          "why_opposite_hu": "A naiv missing-to-ref a hiányzó helyet referenciának venné, tehát nem a definiáló változatnak. A CPIC guideline-ban a gén szerinti normál metabolizáló és a csökkent/no-function osztály sora eltér. A rendszer INDETERMINATE-et ír, nem NORMAL-t. Allélhívó ki."
+          "why_opposite_hu": "A naiv missing-to-ref a hiányzó helyet referenciának venné, tehát nem a definiáló változatnak. A CPIC guideline-ban a gén szerinti normál metabolizáló és a csökkent/no-function osztály sora eltér. A rendszer INDETERMINATE-et ír, nem NORMAL-t. Allélhívó ki.",
+          "defining_alt_grch38": "C",
+          "star_is_alt_grch38": true,
+          "defining_alt_grch37": "C",
+          "star_is_alt_grch37": true
         }
       ]
     },
@@ -241,7 +285,7 @@
       "catalog": "not_snv",
       "positions": [],
       "rsid_documented_not_used_as_snv": "rs8175347",
-      "note_hu": "UGT1A1*28 a TATA-box TA-ismétlődése (NCBI dbSNP rs8175347, snp_class=delins), nem egyszerű SNV. A pozíciót nem pin-eljük SNV-ként, és tag-SNP-t (pl. rs887829) sem használunk *28-helyettesítőnek. NOT_TESTED, nem NORMAL.",
+      "note_hu": "UGT1A1*28 a TATA-box (timin-adenin) ismétlődésének hossza (NCBI dbSNP rs8175347, snp_class=delins), nem egyszerű pontmutáció. A pozíciót nem pin-eljük pontmutációként, és helyettesítő pontmutációt (például rs887829) sem használunk *28-helyettesítőnek. A laboreredményt outside-callban kell beküldeni. NOT_TESTED, nem NORMAL.",
       "reason": "ta_repeat_not_snv"
     },
     "VKORC1": {
@@ -257,9 +301,14 @@
           "ref": "C",
           "ref_grch37": "C",
           "naive_missing_to_ref_would_claim": "VKORC1 -1639 reference (GG)",
-          "why_opposite_hu": "A naiv missing-to-ref a -1639 referencia-allélt feltételezné. A CPIC VKORC1–warfarin pár létezik; a recommendation_view üres, kitalált adagolás nincs. INDETERMINATE, nem NORMAL. Allélhívó ki."
+          "why_opposite_hu": "A naiv missing-to-ref a -1639 referencia-allélt feltételezné. A CPIC VKORC1–warfarin pár létezik; a recommendation_view üres, kitalált adagolás nincs. INDETERMINATE, nem NORMAL. Allélhívó ki.",
+          "defining_alt_grch38": "T",
+          "star_is_alt_grch38": true,
+          "defining_alt_grch37": "T",
+          "star_is_alt_grch37": true
         }
       ]
     }
-  }
+  },
+  "matcher_note_hu": "A csillag-allél hívó (call_star_alleles) a pin-elt definiáló SNV-k GT mezőjét olvassa, ha matcher_on=true. Alap: MATCHER_ON=false. HLA-B és UGT1A1*28 nem ebből a VCF-ből jön: a laboreredményt outside-callban kell beküldeni."
 }

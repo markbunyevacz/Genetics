@@ -134,6 +134,53 @@ class OfficialPinTests(unittest.TestCase):
         prepare12 = ROOT / "tests" / "fixtures" / "f1plus-v0" / "prepare12" / "index.v0.json"
         self.assertEqual(json.loads(prepare12.read_text(encoding="utf-8"))["accessed"], "2026-08-13")
 
+    def test_prepare12_live_pair_pins_2026_08_15(self) -> None:
+        manifest = json.loads((OFFICIAL / "MANIFEST.json").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["accessed"], "2026-08-13")
+        by_id = {row["id"]: row for row in manifest["files"]}
+        self.assertGreaterEqual(sum(1 for row in manifest["files"] if row.get("ok")), 41)
+        who_inn = {
+            "WHO-ATC-J05AG03": "efavirenz",
+            "WHO-ATC-L04AD02": "tacrolimus",
+            "WHO-ATC-L01BC02": "fluorouracil",
+            "WHO-ATC-C10AA01": "simvastatin",
+            "WHO-ATC-L04AX01": "azathioprine",
+            "WHO-ATC-J05AF06": "abacavir",
+            "WHO-ATC-J05AE08": "atazanavir",
+            "WHO-ATC-M01AH01": "celecoxib",
+        }
+        for pin_id, inn in who_inn.items():
+            row = by_id[pin_id]
+            raw = (ROOT / row["path"]).read_bytes()
+            self.assertEqual(hashlib.sha256(raw).hexdigest(), row["sha256"])
+            self.assertEqual(len(raw), row["bytes"])
+            text = raw.decode("utf-8", errors="replace").lower()
+            self.assertIn(inn, text)
+        cyp2c9 = json.loads((OFFICIAL / "cpic-api-diplotype-cyp2c9-2026-08-15.json").read_text())
+        by_dip = {row["diplotype"]: row for row in cyp2c9}
+        self.assertEqual(by_dip["*1/*2"]["generesult"], "Intermediate Metabolizer")
+        self.assertEqual(by_dip["*1/*2"]["totalactivityscore"], "1.5")
+        self.assertEqual(by_dip["*1/*3"]["totalactivityscore"], "1.0")
+        ugt = json.loads((OFFICIAL / "cpic-api-diplotype-ugt1a1-2026-08-15.json").read_text())
+        by_ugt = {row["diplotype"]: row["generesult"] for row in ugt}
+        self.assertEqual(by_ugt["*28/*28"], "Poor Metabolizer")
+        dpyd = json.loads((OFFICIAL / "cpic-api-diplotype-dpyd-2026-08-15.json").read_text())
+        by_dpyd = {row["diplotype"]: row["generesult"] for row in dpyd}
+        self.assertEqual(by_dpyd["Reference/Reference"], "Normal Metabolizer")
+        for pin_id in (
+            "CPIC-DIPLOTYPE-CYP2B6-API",
+            "CPIC-DIPLOTYPE-CYP2C9-API",
+            "CPIC-DIPLOTYPE-CYP3A5-API",
+            "CPIC-DIPLOTYPE-DPYD-API",
+            "CPIC-DIPLOTYPE-SLCO1B1-API",
+            "CPIC-DIPLOTYPE-TPMT-API",
+            "CPIC-DIPLOTYPE-UGT1A1-API",
+        ):
+            row = by_id[pin_id]
+            raw = (ROOT / row["path"]).read_bytes()
+            self.assertEqual(hashlib.sha256(raw).hexdigest(), row["sha256"])
+            self.assertEqual(len(raw), row["bytes"])
+
 
 if __name__ == "__main__":
     unittest.main()
