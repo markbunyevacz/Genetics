@@ -244,7 +244,6 @@ def infer(
                         extra={
                             "paired_genes": ["CYP2C9", "VKORC1"],
                             "strategy_category_hu": (diagram.get("strategy_hu") or {}).get(category),
-                            "no_dose_mg": True,
                         },
                     )
                 )

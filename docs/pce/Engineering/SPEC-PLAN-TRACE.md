@@ -402,6 +402,6 @@ A user: a flag ki **nem** azt jelenti, hogy a szoftver nincs megírva. Demózhat
 | Többi rec-táblás szer | CPIC recommendation_view + WHO ATC | `prepare12-rec-pairings.v0.json` + `whocc-atc-*.html` | `infer` stratégia-kategória, nincs mg. Index párok nem felülírva. |
 | Csillag-allél | PharmGKB PharmCAT 3.4.0 all-jar | GitHub release; sha256 pin; jar `var/` gitignored | NamedAlleleMatcher + Phenotyper hívva `matcher_on=True`. Repo flag false. |
 
-Official pin: **87** `ok: true`. MANIFEST top-level `accessed` **2026-08-13**.
+Official pin: **87** `ok: true`. MANIFEST top-level `accessed` **2026-08-13**. Unittest **165 OK**.
 
 
