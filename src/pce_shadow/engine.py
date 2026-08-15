@@ -221,6 +221,34 @@ def infer(
                         )
                     )
 
+        diagram = knowledge.warfarin
+        war_atc = str((diagram.get("atc5") or "")).upper()
+        if diagram and war_atc and war_atc in codes:
+            already = any(f.get("drug_atc") == war_atc for f in live_findings)
+            cyp = next((g for g in genotype if g.get("gene") == "CYP2C9" and g.get("diplotype")), None)
+            vkor = next((g for g in genotype if g.get("gene") == "VKORC1" and g.get("diplotype")), None)
+            if not already and cyp and vkor:
+                dip = str(cyp.get("diplotype") or "").replace(" ", "")
+                pm_dips = {str(x).replace(" ", "") for x in (diagram.get("cyp2c9_pm_diplotypes") or [])}
+                if cyp.get("genotype_phenotype") == "PM" or dip in pm_dips:
+                    category = "CONSIDER_ALTERNATIVE"
+                else:
+                    category = "CONSIDER_DOSE_CHANGE"
+                live_findings.append(
+                    _finding(
+                        gene="CYP2C9+VKORC1",
+                        code=war_atc,
+                        inn=diagram.get("inn") or "warfarin",
+                        category=category,
+                        source_id=diagram.get("source_id"),
+                        extra={
+                            "paired_genes": ["CYP2C9", "VKORC1"],
+                            "strategy_category_hu": (diagram.get("strategy_hu") or {}).get(category),
+                            "no_dose_mg": True,
+                        },
+                    )
+                )
+
     organ_flags: list[dict[str, Any]] = []
     for rec in obs:
         if not _is_egfr(rec):

@@ -427,6 +427,466 @@
       "bytes": 12543,
       "sha256": "46805ebda4b3d1a2a8aff2bee015b24eba151c4e34659049dd3a1ae39c72b977",
       "content_type": "text/html"
+    },
+    {
+      "id": "CPIC-WARFARIN-2017-PDF",
+      "url": "https://files.cpicpgx.org/data/guideline/publication/warfarin/2017/28198005.pdf",
+      "path": "docs/pce/Sources/official/cpic-warfarin-2017-28198005.pdf",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 410744,
+      "sha256": "b0c7d36e671f9e03185f5dde46f938b641e4375b6ec233178bf779892fc88eab",
+      "content_type": "application/pdf"
+    },
+    {
+      "id": "WHO-ATC-N06AB06",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=N06AB06",
+      "path": "docs/pce/Sources/official/whocc-atc-n06ab06.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 11186,
+      "sha256": "8b4bb8be4077921b17a01cd80853f99ffad3a8c2e62555e3c86b276c636bba73",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-N06AA09",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=N06AA09",
+      "path": "docs/pce/Sources/official/whocc-atc-n06aa09.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 11320,
+      "sha256": "13a65a5d591fb1c968244731bf4dca2ec4b827319b50ec98829feee8fa5625a6",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-N06AB04",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=N06AB04",
+      "path": "docs/pce/Sources/official/whocc-atc-n06ab04.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 11313,
+      "sha256": "1c469818c6d1cc1120a67760611cc6a05c1a22334ef752a74b0b221ebf039ad3",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-N06AA04",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=N06AA04",
+      "path": "docs/pce/Sources/official/whocc-atc-n06aa04.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 11319,
+      "sha256": "e867abc4e528158f61daa6379b8751eabd05eda6b7ebe8bfbb4dbc198a5412a7",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-A02BC06",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=A02BC06",
+      "path": "docs/pce/Sources/official/whocc-atc-a02bc06.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 11180,
+      "sha256": "a12f2477579e11b1524754aee47df68d3766297b5b9621f2efc7d3bab7b1067f",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-N06AA12",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=N06AA12",
+      "path": "docs/pce/Sources/official/whocc-atc-n06aa12.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 11314,
+      "sha256": "f5c57860e6cc3f974ff8a4090dc46e6c4fc7e8326f65d44b86dd8c296e2c2ef2",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-N06AA02",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=N06AA02",
+      "path": "docs/pce/Sources/official/whocc-atc-n06aa02.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 11317,
+      "sha256": "b2e018e2e84980dee59d6ce0926c183d3a73711466de9806356dd31776d82619",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-A02BC03",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=A02BC03",
+      "path": "docs/pce/Sources/official/whocc-atc-a02bc03.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 11177,
+      "sha256": "d70291c6334c6358ea34689807aa469b54188cb32ae37831ec8a290713438076",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-A02BC01",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=A02BC01",
+      "path": "docs/pce/Sources/official/whocc-atc-a02bc01.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 11302,
+      "sha256": "4c46431c81ba2f98b287f601cbc31c2f12b92e30bc42c65baadd889f7ee45e34",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-A02BC02",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=A02BC02",
+      "path": "docs/pce/Sources/official/whocc-atc-a02bc02.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 11304,
+      "sha256": "12ac27e41f7a05e8d8a7023211f9ebd571f4b1900212f95f677f04face7cc7ad",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-J02AC03",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=J02AC03",
+      "path": "docs/pce/Sources/official/whocc-atc-j02ac03.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 13208,
+      "sha256": "b0eb88872e9c01c0313bc8e1003ef4e03c0438a6e31705ff210dea0cdc6a20e0",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-M01AE09",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=M01AE09",
+      "path": "docs/pce/Sources/official/whocc-atc-m01ae09.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 12782,
+      "sha256": "76c1651338506879504817e7ab5ef74144aac14551a3d969b7ae6a9d81087cea",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-C10AA04",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=C10AA04",
+      "path": "docs/pce/Sources/official/whocc-atc-c10aa04.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 11413,
+      "sha256": "3bec888d342a255a82ece81d0a64216eb4b910c3358734af641b5d5efa7e36b5",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-N03AB05",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=N03AB05",
+      "path": "docs/pce/Sources/official/whocc-atc-n03ab05.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 10889,
+      "sha256": "de3345ef0db201585fb7657a13237de61c0e14b0f11f33ec0da1a9b6c95ac70c",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-M01AE01",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=M01AE01",
+      "path": "docs/pce/Sources/official/whocc-atc-m01ae01.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 12906,
+      "sha256": "50d07a9808aebec2a4e5eb5c5f5e99cd9bbfb401e21d18db160516a74627c98f",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-M01AC05",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=M01AC05",
+      "path": "docs/pce/Sources/official/whocc-atc-m01ac05.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 12734,
+      "sha256": "d9507e586f962eadfcb16fdfa185ba8f778a8ff400b6bed75a126bb13c6935c7",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-M01AC06",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=M01AC06",
+      "path": "docs/pce/Sources/official/whocc-atc-m01ac06.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 12733,
+      "sha256": "e2b3fff545fdb396a21edb7d33923f5e2ffb8c5e7e5eaf5c46db26263134a556",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-N03AB02",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=N03AB02",
+      "path": "docs/pce/Sources/official/whocc-atc-n03ab02.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 11012,
+      "sha256": "79eb06b888e1cecd8659648c7ec3cce367ca6b8aa9c816a271f40c5cc32f4b57",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-M01AC01",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=M01AC01",
+      "path": "docs/pce/Sources/official/whocc-atc-m01ac01.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 12733,
+      "sha256": "af14fc20c437456091b8953ce1029a263e57526e036f599e1099c232bc201b4d",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-M01AC02",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=M01AC02",
+      "path": "docs/pce/Sources/official/whocc-atc-m01ac02.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 12733,
+      "sha256": "f4a8c937498269951451230ddebc98994588aa0b45a7f8d5b4517d4b85beb607",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-N06BA09",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=N06BA09",
+      "path": "docs/pce/Sources/official/whocc-atc-n06ba09.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 11032,
+      "sha256": "07c3b65004d69d739afb06a9be796930d1e42971697fe66985080e740ff7a84f",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-R05DA04",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=R05DA04",
+      "path": "docs/pce/Sources/official/whocc-atc-r05da04.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 12471,
+      "sha256": "5c00daef718feec69e8a98ac7b58b6ad8b60587935659d9741b1fc0168f31b60",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-N06AA01",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=N06AA01",
+      "path": "docs/pce/Sources/official/whocc-atc-n06aa01.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 11191,
+      "sha256": "db2272a076eea92c9e0d10edbc7c1fbb2feb97eaefccb1f2599bf60734f43f88",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-N06AB08",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=N06AB08",
+      "path": "docs/pce/Sources/official/whocc-atc-n06ab08.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 11187,
+      "sha256": "6872c30ac0411e6dc0d55c7d4713962eba694d386aae8064c1e9b9acb293a273",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-R05DA03",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=R05DA03",
+      "path": "docs/pce/Sources/official/whocc-atc-r05da03.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 12475,
+      "sha256": "8ffa534a7e44edc6778eb0c0f9c63a164897f2479c698f626eaedcfd23ba4417",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-C07AB02",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=C07AB02",
+      "path": "docs/pce/Sources/official/whocc-atc-c07ab02.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 12155,
+      "sha256": "ee92cefaf8450ff46af8d6cdb8cc8b0a42bf19a776c14570658723775ac65013",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-N06AA10",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=N06AA10",
+      "path": "docs/pce/Sources/official/whocc-atc-n06aa10.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 11320,
+      "sha256": "015d3b881af027fec5dd38f98f76419fd532670fd71d4c740a1dea400c613ca7",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-L02BA01",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=L02BA01",
+      "path": "docs/pce/Sources/official/whocc-atc-l02ba01.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 11048,
+      "sha256": "c1b14b10a313299a72c0b5a6abda2f81be0c248924fb3fec9b17145517cc132b",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-N02AX02",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=N02AX02",
+      "path": "docs/pce/Sources/official/whocc-atc-n02ax02.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 12525,
+      "sha256": "01deb8d6402744a34dad6c1a96d82fbfaedbb2749ceb9bb7cc38ba1585a0eb2b",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-N06AA06",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=N06AA06",
+      "path": "docs/pce/Sources/official/whocc-atc-n06aa06.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 11321,
+      "sha256": "c4ff026a93c634845e66825c2a3662451c818d9fd5ca3c1c506806fc4ab0637e",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-N06AX16",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=N06AX16",
+      "path": "docs/pce/Sources/official/whocc-atc-n06ax16.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 11371,
+      "sha256": "4252acdfb6fcf2fb111c5891a9fa87c9cb61f4668ad4fecd4b822dc4e919a7e0",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-N06AX26",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=N06AX26",
+      "path": "docs/pce/Sources/official/whocc-atc-n06ax26.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 11372,
+      "sha256": "8dfa32deb863b7fd3860b1cd622c11ea9b32415e1e0025ebe3905bed43ec6fa6",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-L01BC06",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=L01BC06",
+      "path": "docs/pce/Sources/official/whocc-atc-l01bc06.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 12443,
+      "sha256": "d48fd34bc0ad00fe2398e19b7f12743d4d5dcc618fed4495552f018d74cf48c6",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-M04AA01",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=M04AA01",
+      "path": "docs/pce/Sources/official/whocc-atc-m04aa01.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 10898,
+      "sha256": "bc6c720b73834fa68fb9dfa32d84fb52285ea5fb989392e3627cadefd406c427",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-N03AF01",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=N03AF01",
+      "path": "docs/pce/Sources/official/whocc-atc-n03af01.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 10929,
+      "sha256": "2c13c56a8a5a211c84ce96cf8870597b458d109368d81ec3093bbd2927371937",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-N03AF02",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=N03AF02",
+      "path": "docs/pce/Sources/official/whocc-atc-n03af02.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 10804,
+      "sha256": "976445dd20f14ed18e60e1f77f6fbbd7804d6b38c42b885bc964637961381416",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-C10AA05",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=C10AA05",
+      "path": "docs/pce/Sources/official/whocc-atc-c10aa05.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 11414,
+      "sha256": "aaf5eaa30374f264f5d27e2608c772c3a3fd670b5ee815af36dc820b9b1e40fb",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-C10AA02",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=C10AA02",
+      "path": "docs/pce/Sources/official/whocc-atc-c10aa02.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 11412,
+      "sha256": "7a50a12a9f05a16e2ad74046e9b56625be9c6a38ac93e600465c34c100a6788a",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-C10AA08",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=C10AA08",
+      "path": "docs/pce/Sources/official/whocc-atc-c10aa08.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 11413,
+      "sha256": "d2d4d68f36b4ee1b0792f9be70a20634412771962838f0518ce8a58d1a516529",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-C10AA03",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=C10AA03",
+      "path": "docs/pce/Sources/official/whocc-atc-c10aa03.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 11413,
+      "sha256": "fb0f44838518c269388344fa7649f8cf69e47e81cc7dc742a249d3be7797b884",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-C10AA07",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=C10AA07",
+      "path": "docs/pce/Sources/official/whocc-atc-c10aa07.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 11414,
+      "sha256": "ab2009f351467cd2f0c1f576fd56ce1f055c67e62b725a7c9e5ac464a019cfef",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-L01BB02",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=L01BB02",
+      "path": "docs/pce/Sources/official/whocc-atc-l01bb02.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 12684,
+      "sha256": "6cc34145ad56d8de8b460415329461bfd129dfd8846e6033229fdd899cdd578c",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-L01BB03",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=L01BB03",
+      "path": "docs/pce/Sources/official/whocc-atc-l01bb03.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 12680,
+      "sha256": "2110cd3cbab54ea4a391f1780f500467039848441928d19f9722cff9d57c00f2",
+      "content_type": "text/html"
+    },
+    {
+      "id": "WHO-ATC-B01AA03",
+      "url": "https://www.whocc.no/atc_ddd_index/?code=B01AA03",
+      "path": "docs/pce/Sources/official/whocc-atc-b01aa03.html",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 10752,
+      "sha256": "b3b0491e5f6175d6af7ebd3388b05753a8cffd23e7eaec7193896d15b02bd8b2",
+      "content_type": "text/html"
+    },
+    {
+      "id": "PHARMCAT-3.4.0-PIN",
+      "url": "https://github.com/PharmGKB/PharmCAT/releases/download/v3.4.0/pharmcat-3.4.0-all.jar",
+      "path": "docs/pce/Sources/official/pharmcat-3.4.0-pin.json",
+      "accessed": "2026-08-15",
+      "ok": true,
+      "bytes": 630,
+      "sha256": "55d8dc331cbdf40a02a2a563b163637ebc8a6a476a431bf21d30361954b39459",
+      "content_type": "application/json"
     }
   ]
 }

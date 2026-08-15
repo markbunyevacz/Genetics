@@ -181,6 +181,36 @@ class OfficialPinTests(unittest.TestCase):
             self.assertEqual(hashlib.sha256(raw).hexdigest(), row["sha256"])
             self.assertEqual(len(raw), row["bytes"])
 
+    def test_software_ready_pins_2026_08_15(self) -> None:
+        manifest = json.loads((OFFICIAL / "MANIFEST.json").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["accessed"], "2026-08-13")
+        by_id = {row["id"]: row for row in manifest["files"]}
+        self.assertGreaterEqual(sum(1 for row in manifest["files"] if row.get("ok")), 87)
+        warfarin = ROOT / by_id["CPIC-WARFARIN-2017-PDF"]["path"]
+        self.assertTrue(warfarin.read_bytes().startswith(b"%PDF"))
+        who = (OFFICIAL / "whocc-atc-b01aa03.html").read_text(encoding="utf-8", errors="replace")
+        self.assertIn("B01AA03", who)
+        self.assertIn("warfarin", who.lower())
+        pin = json.loads((OFFICIAL / "pharmcat-3.4.0-pin.json").read_text(encoding="utf-8"))
+        self.assertEqual(pin["version"], "3.4.0")
+        self.assertEqual(pin["license"], "MPL-2.0")
+        self.assertTrue(pin["we_do_not_modify_the_jar"])
+        extra = ROOT / "tests" / "fixtures" / "shadow-v0" / "prepare12-rec-pairings.v0.json"
+        self.assertNotIn("dose_mg", extra.read_text(encoding="utf-8"))
+        for pin_id in (
+            "CPIC-WARFARIN-2017-PDF",
+            "WHO-ATC-B01AA03",
+            "WHO-ATC-N06AB04",
+            "WHO-ATC-L01BC06",
+            "WHO-ATC-M04AA01",
+            "WHO-ATC-R05DA04",
+            "PHARMCAT-3.4.0-PIN",
+        ):
+            row = by_id[pin_id]
+            raw = (ROOT / row["path"]).read_bytes()
+            self.assertEqual(hashlib.sha256(raw).hexdigest(), row["sha256"])
+            self.assertEqual(len(raw), row["bytes"])
+
 
 if __name__ == "__main__":
     unittest.main()

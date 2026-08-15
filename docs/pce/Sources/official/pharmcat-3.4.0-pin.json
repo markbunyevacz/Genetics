@@ -1,0 +1,14 @@
+{
+  "id": "PHARMCAT-3.4.0-ALL-JAR",
+  "accessed": "2026-08-15",
+  "url": "https://github.com/PharmGKB/PharmCAT/releases/download/v3.4.0/pharmcat-3.4.0-all.jar",
+  "version": "3.4.0",
+  "license": "MPL-2.0",
+  "license_url": "https://www.mozilla.org/en-US/MPL/2.0/",
+  "sha256": "9317ef632bf6c9786ff0d9d455d4c9f6d2882ebd66ad7256b4ae958ddf454741",
+  "bytes": 32292707,
+  "runtime_path": "var/pharmcat/pharmcat-3.4.0-all.jar",
+  "gitignored": true,
+  "who_obtains_hu": "A gyártó (ez a repo) tölti le a PharmCAT all-jar-t. A jar nincs a gitben (méret). Script: fetch_software_ready_pins.py.",
+  "we_do_not_modify_the_jar": true
+}

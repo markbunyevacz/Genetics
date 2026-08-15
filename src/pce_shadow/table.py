@@ -26,6 +26,14 @@ class KnowledgeTable:
             atc5 = str(row.get("atc5") or "").strip().upper()
             if gene and atc5:
                 self._pairings[(gene, atc5)] = row
+        for rel in self.doc.get("extra_pairing_files") or []:
+            extra = json.loads((ROOT / rel).read_text(encoding="utf-8"))
+            for row in extra.get("pairings") or []:
+                gene = str(row.get("gene") or "").strip()
+                atc5 = str(row.get("atc5") or "").strip().upper()
+                if gene and atc5 and (gene, atc5) not in self._pairings:
+                    self._pairings[(gene, atc5)] = row
+        self.warfarin = dict(self.doc.get("warfarin_diagram") or {})
         adj = self.doc.get("phenotype_adjustment") or {}
         self.nm_plus_strong: str | None = adj.get("nm_plus_strong_inhibitor")
         self.adjustment_status: str = str(adj.get("status") or "unknown")
@@ -59,10 +67,16 @@ class KnowledgeTable:
 
     def _hla_b_row(self, diplotype: str) -> dict[str, Any] | None:
         blob = diplotype.replace("HLA-B", "").replace(" ", "").lower()
-        if "57:01" in blob and "neg" not in blob:
-            return self._dip.get(("HLA-B", "*57:01 positive"))
-        if "57:01" in blob and "neg" in blob:
-            return self._dip.get(("HLA-B", "*57:01 negative"))
+        checks = (
+            ("57:01", "POS_5701", "NEG_5701", "*57:01 positive", "*57:01 negative"),
+            ("58:01", "POS_5801", "NEG_5801", "*58:01 positive", "*58:01 negative"),
+            ("15:02", "POS_1502", "NEG_1502", "*15:02 positive", "*15:02 negative"),
+        )
+        for token, _pos, _neg, pos_dip, neg_dip in checks:
+            if token in blob and "neg" in blob:
+                return self._dip.get(("HLA-B", neg_dip))
+            if token in blob:
+                return self._dip.get(("HLA-B", pos_dip))
         if blob in {"*x/*x", "negative", "negatív"}:
             return self._dip.get(("HLA-B", "*57:01 negative"))
         return None
