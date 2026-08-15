@@ -12,7 +12,7 @@
 
 Ez a melléklet döntési javaslat és levezetés: **nem** zárja az OQ-05 / OQ-06 / OQ-16 pecsétjét, **nem** tartalmaz listaárat, és **nem** Rule 11 határozat.
 
-A bemeneti vázlat 108 tesztet és S001–S055-öt említett. A G pecsét-napján (2026-08-13): unittest **113 OK**. 2026-08-14 (D-44, F2 cső): **124 OK**. 2026-08-14 (D-45, ETAP 0): **134 OK**. 2026-08-15 (D-46, PREPARE-12 ready): **158 OK**. 2026-08-15 (D-47, szoftver-KÉSZ): unittest **165 OK**. A SOURCE-REGISTRY S073-ig tart (S060 és S062 **lezárva**; S063–S066 ETAP 0; S067–S069 2026-08-15 index párok; S070–S073 PharmCAT 3.4.0 + warfarin + rec_view). Az F1+ allow-list **47** top-level kulcs (`ALLOWED_B41_TOP_LEVEL`, plusz `pharmvar_version` és `cpic_data_version`), deny-list **15** (`FORBIDDEN_B41_FIELDS`). A hivatalos forrás-pin **19** fájlnál `ok: true` (2026-08-13); ETAP 0 után **26**; index-pár kör után **41**; szoftver-KÉSZ után **87**.
+A bemeneti vázlat 108 tesztet és S001–S055-öt említett. A G pecsét-napján (2026-08-13): unittest **113 OK**. 2026-08-14 (D-44, F2 cső): **124 OK**. 2026-08-14 (D-45, ETAP 0): **134 OK**. 2026-08-15 (D-46, PREPARE-12 ready): **158 OK**. 2026-08-15 (D-47, szoftver-KÉSZ): unittest **165 OK**. 2026-08-15 (D-48, F5 mock pipeline): unittest **184 OK**. A SOURCE-REGISTRY S074-ig tart (S060 és S062 **lezárva**; S063–S066 ETAP 0; S067–S069 2026-08-15 index párok; S070–S073 PharmCAT 3.4.0 + warfarin + rec_view; S074 F5 mock L5). Az F1+ allow-list **47** top-level kulcs (`ALLOWED_B41_TOP_LEVEL`, plusz `pharmvar_version` és `cpic_data_version`), deny-list **15** (`FORBIDDEN_B41_FIELDS`). A hivatalos forrás-pin **19** fájlnál `ok: true` (2026-08-13); ETAP 0 után **26**; index-pár kör után **41**; szoftver-KÉSZ után **87**.
 
 ---
 

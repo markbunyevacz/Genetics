@@ -60,7 +60,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P06ae | Plan-vs-content az ETAP 0-ra | 2026-08-14 | 2026-08-14 | DONE | TRACE FR-210/400-STATIC/400-LIVE/461; T5/V5 | SPEC-PLAN-TRACE §17 | — |
 | P05af | PREPARE-12 élő párok + HLA/UGT laboreredmény + VCF csillag-allél BE-út | 2026-08-15 | 2026-08-15 | DONE | User: pótold; ne hazudj „kód megvan”; HLA/UGT = befogadás nem laborvizsgálat | `star_call.py`; knowledge 11 pairing; outside-call fixture; 41 official pin; 158 unittest | E-25 |
 | P05ag | szoftver-KÉSZ: rec_view párok, warfarin-diagram, PharmCAT NamedAlleleMatcher | 2026-08-15 | 2026-08-15 | DONE | User: ki/honnan/mit; PharmCAT LEGYEN hívva; flag ki ≠ szoftver hiányzik | PharmCAT 3.4.0 wrap; rec_view ≥50 pár; warfarin Figure 2; F5 rec 0; 87 pin; **165 unittest** | E-26 |
-| P05ah | F5 adat-agnosztikus ingest (mock most, live később) | 2026-08-15 | 2026-08-15 | DONE | User: ne várjunk a CPIC API-ra; DataProvider + MOCK/LIVE + unit teszt | `f5_rec.py`; `cpic_f5_mock.json`; `CPIC_F5_SOURCE`; F1+ 0 rec sor; warfarin *2/*3 teszt; HTTP `matcher_on=true` | E-27 |
+| P05ah | F5 adat-agnosztikus ingest (mock most, live később) | 2026-08-15 | 2026-08-15 | DONE | User: ne várjunk a CPIC API-ra; DataProvider + MOCK/LIVE + unit teszt | `f5_rec.py`; `cpic_f5_mock.json`; `CPIC_F5_SOURCE`; F1+ 0 rec sor; warfarin *2/*3 teszt; HTTP `matcher_on=true`; **184 unittest** | E-27 |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -148,7 +148,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | E-24 | P05ae | Scope / missed delivery | Az ETAP 0 „indulhat” mondatot későbbi engedélynek olvastuk, kód nem ment. Ensembl GET `{rsid}` HTTP 503. | Retry: user „Tedd meg!!!” → szállítás. Ensembl POST batch 200; NCBI független chrpos. Unittest 134 OK. | D-45 |
 | E-25 | P05af | Scope / product mismatch | A maradék PREPARE-12 párokat és a HLA/UGT laboreredmény-utat „nincs mit bekapcsolni”-nak olvastuk. A HLA-tipizálást / TATA-box ismétlést tévesen a rendszer feladatának írtuk. | Switch: a user soha nem hagyta ki a párokat (D-45 ágens-vágás). Képesség = outside-call befogadás + guideline dump + élő párosítás. VCF csillag-allél BE-út megírva, flag ki. Unittest 158 OK. | D-46 |
 | E-26 | P05ag | Scope / missed delivery | A „ki/honnan” kérdést státuszmondattal válaszoltuk; a PharmCAT-pipákat „legyen” helyett leírásként olvastuk; a flag ki-t szoftver-hiánynak. | Retry: szereplőtábla + kód. PharmCAT 3.4.0 hívva. Rec_view párok + warfarin-diagram. Flagok false. Unittest 165 OK. | D-47 |
-| E-27 | P05ah | Scope / missed delivery | Az F5 „nincs rec-sor” mondatot fejlesztési stopnak olvastuk. | Switch: adat-agnosztikus pipeline mock fixture-ön; LIVE kapcsoló; prod off. Unittest a mock HET/WT ágakra. | D-48 |
+| E-27 | P05ah | Scope / missed delivery | Az F5 „nincs rec-sor” mondatot fejlesztési stopnak olvastuk. | Switch: adat-agnosztikus pipeline mock fixture-ön; LIVE kapcsoló; prod off. Unittest 184 OK. | D-48 |
 
 ## 4. File timeline
 

@@ -129,7 +129,7 @@ class F5ProviderSwitchTests(unittest.TestCase):
         self.assertNotIn("dose_mg", pair)
         van = " ".join(row["hu"] for row in table.inventory.get("van") or [])
         self.assertIn("MOCK", van)
-        self.assertIn("nem hivatalos CPIC", van.lower())
+        self.assertIn("nem hivatalos cpic", van.lower())
 
     def test_mock_does_not_overwrite_index_pairs(self) -> None:
         table = KnowledgeTable(f5_source="mock")

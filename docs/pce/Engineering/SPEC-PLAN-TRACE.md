@@ -420,5 +420,6 @@ A user: „Amíg a CPIC nem ad rec-sort, nincs mit párosítani” **nem** azt j
 | Warfarin *2/*3 | CYP2C9+VKORC1 → CONSIDER_ALTERNATIVE. Egy gén → nincs finding. |
 | PharmCAT HTTP | `POST /v1/cases/{id}/files?matcher_on=true` gold VCF → CYP2D6 *4/*4 CALLED. Repo `MATCHER_ON=false`. |
 | Flag | `LIVE_CDS=false`; `MATCHER_ON=false`; `IIA_SAFE_BLOCK=true`. OQ-k **nem** pecsét. |
+| Unittest | **184 OK** |
 
 
