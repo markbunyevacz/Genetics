@@ -209,10 +209,13 @@ Külön csomag: `src/pce_shadow/`. `pce_report` nem importálja.
 | M5 | eGFR < 30 → `reason: organ`, nem számított dózis | B.6.2 |
 | M6 | Determinisztikus | NFR-060 |
 | M7 | CI: `pce_report` AST-ban nincs `pce_shadow` | FR-470 |
+| M8 | PREPARE-12 élő párok a pinelt CPIC recommendation_view stratégia-kategóriájából (CYP2B6–efavirenz, CYP2C9–celecoxib aktivitási ponttal, CYP3A5–tacrolimus, DPYD–fluorouracil, SLCO1B1–simvastatin, TPMT–azathioprine, HLA-B–abacavir, UGT1A1–atazanavir). F5/VKORC1: **nincs** kitalált pár. Nincs `dose_mg`. | `tests/test_prepare12_ready.py` |
 
 Inhibitor tábla: FDA Table 2-2 erős index (paroxetin, fluoxetin) + WHO ATC 5. szint (7 karakter) + CPIC SSRI 2023 Table 2a stratégia-kategória. CPIC SSRI 2023: nincs NM→szegény metabolizáló sor. CPIC opioid 2020: van ilyen szabály opioidra — a paroxetin-SSRI példára **nem** keverjük. A HITL kártya kiírja: mi van, mi hiányzik, kitől, kinek kell beszerezni.
 
 **ETAP 0:** a párosítás `(gén, ATC5)` kulcsú. CYP2C19–clopidogrel (`B01AC04`, WHO) a pinelt CPIC recommendation_view stratégia-kategóriájából. CYP2D6 + clopidogrel nem ad findinget. Funkcionális szegény metabolizáló továbbra is üres.
+
+**2026-08-15:** a maradék PREPARE-12 élő párok + HLA-B / UGT1A1\*28 laboreredmény-befogadás (outside-call). A rendszer **nem** végzi a laborvizsgálatot.
 
 **SYN kód:** `src/pce_shadow/`, `src/pce_hitl/` + `var/hitl.sqlite`, `src/pce_ui/hitl.html`. `python -m pce_hitl`. A klinikai folyamat a `/v1/hitl/**` hívásokra továbbra is 403/404-et ad (FR-470).
 
@@ -244,9 +247,9 @@ Inhibitor tábla: FDA Table 2-2 erős index (paroxetin, fluoxetin) + WHO ATC 5. 
 
 ---
 
-## WP-V — VCF út (FR-200, FR-210 gold) — matcher OFF
+## WP-V — VCF út (FR-200, FR-210 gold) — matcher repo flag OFF
 
-F1 default marad FR-240. VCF kell a missing-to-ref P0 teszthez.
+F1 default marad FR-240. VCF kell a missing-to-ref P0 teszthez. A csillag-allél BE-út megvan, mint a F2 CDS: paraméterrel tesztelve, repo konstans ki.
 
 | ID | AC |
 | --- | --- |
@@ -255,7 +258,8 @@ F1 default marad FR-240. VCF kell a missing-to-ref P0 teszthez.
 | V3 | Multi-sample hozzárendelés nélkül → `E-VCF-002` | |
 | V4 | > 5 GB → `E-VCF-004` | |
 | V5 | ≥3 gold: hiányzó definiáló pozíció → INDETERMINATE, nem NORMAL. Minták: `tests/fixtures/vcf-gold-v0/` (gyártó SYN, Ensembl/dbSNP pin). 4. fájl: CYP2C9\*3. HLA-B / UGT1A1\*28 `not_snv`. CDC GeT-RM fizikai minta labor-QC, nem ezek a fájlok. | FR-210; PharmCAT `--absent-to-ref` **nincs** hívva |
-| V6 | NamedAlleleMatcher **ki** | FR-300 / OQ-05 |
+| V6 | Repo `MATCHER_ON is False`. A PharmCAT NamedAlleleMatcher nincs hívva. | FR-300 / OQ-05 |
+| V7 | BE-út: `call_star_alleles(..., matcher_on=True)` pin-elt definiáló pontmutációkból. Hiányzó hely → INDETERMINATE, soha nem `*1`. HLA-B / UGT1A1\*28 `NOT_TESTED` (laboreredmény outside-call). | `tests/test_prepare12_ready.py`; mint F2 `live_cds=True` |
 
 ---
 
@@ -304,7 +308,7 @@ WP-M            →  WP-F2 (CDS a shadow motort hívja lock/ON paraméterrel)
 WP-I            →  végig CI (F1+ 404 + pce_cds izoláció)
 WP-Q            →  C/K mellett
 WP-N            →  M előtt (mapping)
-WP-V            →  R FR-210 gold; matcher OFF
+WP-V            →  R FR-210 gold; matcher repo flag OFF; BE-út paraméterrel
 WP-P1 / élő F2  →  pecsét + signed LIVE_CDS=true
 ```
 
@@ -321,6 +325,10 @@ HIS fixture → intézményi gateway → `POST /v1/shadow/events` 202 → sor a 
 ## Kész definíció — F2 SYN lakat
 
 `python -m pce_cds` → LOCKED. `GET /cds-services` `enabled: false`. POST üres `cards`. `pce_clinical` CDS 404. A teszt `live_cds=True` paraméterrel Card-ot ad `dose_mg` nélkül. Repo konstans false.
+
+## Kész definíció — PREPARE-12 élő párok + laboreredmény (2026-08-15)
+
+Shadow: a fenti gén–hatóanyag párok stratégia-kategóriát adnak milligramm nélkül. HLA-B\*57:01 pozitív + abakavir → CONSIDER_ALTERNATIVE. UGT1A1 \*28/\*28 + atazanavir → CONSIDER_ALTERNATIVE. F5/VKORC1 nincs kitalált pár. VCF: `matcher_on=True` CYP2D6 \*4/\*4 CALLED; default `add_vcf` nem hív diplotípust. Repo flagok false. OQ pecsét nincs.
 
 ## Kész definíció — ETAP 0 SYN
 

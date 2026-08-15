@@ -45,7 +45,27 @@ class KnowledgeTable:
         return str(hu) if hu else None
 
     def genotype_phenotype(self, gene: str, diplotype: str) -> dict[str, Any] | None:
-        return self._dip.get((gene, diplotype))
+        exact = self._dip.get((gene, diplotype))
+        if exact:
+            return exact
+        if "/" in diplotype:
+            left, right = diplotype.split("/", 1)
+            swapped = self._dip.get((gene, f"{right}/{left}"))
+            if swapped:
+                return swapped
+        if gene == "HLA-B":
+            return self._hla_b_row(diplotype)
+        return None
+
+    def _hla_b_row(self, diplotype: str) -> dict[str, Any] | None:
+        blob = diplotype.replace("HLA-B", "").replace(" ", "").lower()
+        if "57:01" in blob and "neg" not in blob:
+            return self._dip.get(("HLA-B", "*57:01 positive"))
+        if "57:01" in blob and "neg" in blob:
+            return self._dip.get(("HLA-B", "*57:01 negative"))
+        if blob in {"*x/*x", "negative", "negatív"}:
+            return self._dip.get(("HLA-B", "*57:01 negative"))
+        return None
 
     def strong_inhibitor(self, atc: str) -> dict[str, Any] | None:
         return self._inhibitors.get(atc.strip().upper())

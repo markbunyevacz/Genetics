@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from pce_report.flags import DIPLOTIPUS_FORRAS_HU, MATCHER_ON
+from pce_report.flags import DIPLOTIPUS_FORRAS_HU
 from pce_report.panel import PREPARE_12
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -84,9 +84,8 @@ def assess_coverage(
     """Per PREPARE-12 gene: INDETERMINATE if a pinned defining site is missing.
 
     Never CALLED. Never NORMAL. PharmCAT --absent-to-ref is not invoked.
+    Star-allele calling is `star_call.call_star_alleles` (matcher_on), not this function.
     """
-    if MATCHER_ON:
-        raise RuntimeError("F1 coverage must not run with MATCHER_ON")
     catalog = json.loads((catalog_path or DEFAULT_CATALOG).read_text(encoding="utf-8"))
     sites, blocks = parse_vcf_sites(text)
     genes = catalog.get("genes") or {}

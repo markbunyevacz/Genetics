@@ -1,0 +1,11 @@
+{
+  "case_display_id": "SYN-OC-UGT",
+  "gene": "UGT1A1",
+  "diplotype": "*28/*28",
+  "callability": "CALLED",
+  "calling_lab": "SYN-LAB-001",
+  "signing_physician": "SYN-MD-001",
+  "method": "outside-call",
+  "call_date": "2026-08-15",
+  "lab_phenotype": "UGT1A1 Poor Metabolizer"
+}

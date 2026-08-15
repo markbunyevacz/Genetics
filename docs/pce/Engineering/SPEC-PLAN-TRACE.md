@@ -42,7 +42,7 @@ Mérés: minden spec-tétel **FULL** / **PARTIAL** / **PLANNED** / **DEFERRED** 
 
 **Kód FULL (FR) = 0** szándékos: egy FR akkor FULL, ha **minden** AC + B-szerződés + D.2 TC zöld. GatewayEvent `id` / `org_id` / `payload_hash` / `received_at` megvan (G12); FR-461 monitor `org_id` / `org_display` = `SYN-ORG-001` (opák, nem kitalált kórháznév). Practitioner a Gold HIS-ben nem volt, a strip teszt szintetikus.
 
-**Terv-teljesség NOW: 27/27 = 100%.** Kód-teljesség NOW: 0 FULL + **26 PARTIAL** + 1 LOCK + **0 MISSING**. Plusz F2 cső (FR-520/530): **PARTIAL** lakattal, nem a 27 F1+/F1s NOW-sor. A Rés oszlop a még nyitott spec-pipa (HLA/UGT1A1*28 nem SNV; további élő párosítások; pecsét előtti élő Card). A termék jelzi a hiányt ott, ahol a guideline-tábla üres.
+**Terv-teljesség NOW: 27/27 = 100%.** Kód-teljesség NOW: 0 FULL + **26 PARTIAL** + 1 LOCK + **0 MISSING**. Plusz F2 cső (FR-520/530): **PARTIAL** lakattal, nem a 27 F1+/F1s NOW-sor. A Rés oszlop a még nyitott spec-pipa (HLA-B / UGT1A1\*28 a VCF pontmutációs panelből továbbra sem számolható — a laboreredmény outside-callban jön; F5/VKORC1 recommendation_view üres; pecsét előtti élő Card). A termék jelzi a hiányt ott, ahol a guideline-tábla üres.
 
 **Dataflow F1+ (DATAFLOW §5, 8 lépés):** 8/8 SYN-en végigjárható HTTP-n (`test_ui_and_iso_and_walk`). **F1s HITL (5 lépés):** 5/5 (`test_his_gateway_ingest_hitl_report_untouched` + HTTP vak walk).
 
@@ -74,15 +74,15 @@ Mérés: minden spec-tétel **FULL** / **PARTIAL** / **PLANNED** / **DEFERRED** 
 | FR-120 | Comp P0 F1+ | PARTIAL | **WP-Q** | append-only trigger + CSV/JSON | hash-chain **DEFERRED P1**; nyers VCF nincs a naplóban |
 | FR-130 | Comp P0 F1+ | PARTIAL | **WP-K** | `reid_store` külön tábla | L4 log-scanner PII: gateway + report dump |
 | FR-200 | Prod P0 VCF | PARTIAL | **WP-V** | `E-VCF-001..004`; W-CALL-010; coverage `add_vcf`-kor | 5 GB chunked; gz/tabix élesben |
-| FR-210 | Prod P0 | PARTIAL | **WP-R / V** | OC INDETERMINATE; **4 SYN VCF gold** (CYP2D6\*4, CYP2C19\*2, DPYD\*2A, CYP2C9\*3) → `INDETERMINATE`, nem NORMAL; 10 PREPARE-12 gén SNV-katalógus pinelve (Ensembl POST + NCBI); HLA-B / UGT1A1\*28 `not_snv` → `NOT_TESTED`; matcher ki | HLA-gépelés / TA-ismétlődés nem SNV (szándékos, nincs kitalált HLA-SNV); gz/tabix élesben |
+| FR-210 | Prod P0 | PARTIAL | **WP-R / V** | OC INDETERMINATE; **4 SYN VCF gold** (CYP2D6\*4, CYP2C19\*2, DPYD\*2A, CYP2C9\*3) → `INDETERMINATE`, nem NORMAL; 10 PREPARE-12 gén SNV-katalógus pinelve (Ensembl POST + NCBI); HLA-B / UGT1A1\*28 `not_snv` → `NOT_TESTED` a VCF-en; laboreredmény outside-callban befogadva (HLA-B\*57:01, UGT1A1\*28/\*28) | VCF pontmutációs panel nem HLA-tipizálás és nem TATA-box ismétléshossz (szándékos, nincs kitalált HLA pontmutáció); gz/tabix élesben |
 | FR-220 | P0 F1s; F1+ nem L4 | PARTIAL | **WP-K / M** | PUT tárol; a renderernek nincs gyógyszerlista-argumentuma; a lelet a gén guideline-tábláját listázza (`gyogyszerlista_a_leleten=false`); shadow `ABSENT` | FHIR medication bundle P1 |
 | FR-230 | P1 | — | **WP-P1** | — | DEFERRED |
 | FR-240 | Prod P0 | PARTIAL | **WP-K** | JSON+TSV HTTP; `E-CALL-001`; `W-CALL-010` + resolve | HL7 P1 |
 | FR-250 | Prod P0 | PARTIAL | **WP-N** | default 7 karakteres hatóanyag-kód; DPO durvíthat | HGVS/VRS VCF-path; OGYÉI `E-MAP-001` |
-| FR-300 | Prod P0 VCF; F1 OFF | LOCK | **WP-I** | `MATCHER_ON=false`; magyarázat a leleten (`diplotipus_forras_hu`) | F1+ ON tilos változáskezelés nélkül |
+| FR-300 | Prod P0 VCF; F1 OFF | LOCK | **WP-I / V** | Repo `MATCHER_ON=false`; magyarázat a leleten (`diplotipus_forras_hu`); BE-út: `call_star_alleles(..., matcher_on=True)` pin-elt definiáló pontmutációkból, tesztelve, hiányzó hely soha nem `*1` | F1+ ON tilos változáskezelés nélkül. Nem a teljes PharmCAT NamedAlleleMatcher (nincs kópiaszám, hibrid, HLA-B, UGT1A1\*28) |
 | FR-310 | Prod P0 | PARTIAL | **WP-T** | PREPARE-12 + `config_id`; 12 gén CPIC `pair_view` pin (S049) | change-control rekord; HLA-A/NUDT15 külön config |
 | FR-400-STATIC | Prod P0 F1+ | PARTIAL | **WP-T / R** | 12 gén CPIC pair dump; F5/VKORC1 üres rec **jelezve**; `dpwg_version` + ClinPGx DPWG annotation index URL-lel; `fda_table_version` + Table 2-2 CYP2D6 strong extract; nincs szintetizált harmadik ajánlás | DPWG teljes HTML tábla nem a findings-ben (index + pin); lektorált HU DPWG-szöveg |
-| FR-400-LIVE | P0 F1s | PARTIAL | **WP-M** | párosítás `(gén, 7 karakteres kód)` kulcson; CYP2D6 SSRI Table 2a + CYP2C19–clopidogrel (B01AC04) stratégia-kategória, **nincs** `dose_mg`; CYP2D6+clopidogrel nem párosít | további PREPARE-12 élő párok; nincs FK Report-ra |
+| FR-400-LIVE | P0 F1s | PARTIAL | **WP-M** | párosítás `(gén, 7 karakteres kód)` kulcson; CYP2D6 SSRI Table 2a + CYP2C19–clopidogrel + CYP2B6–efavirenz + CYP2C9–celecoxib (aktivitási pont, nem blanket IM) + CYP3A5–tacrolimus + DPYD–fluorouracil + SLCO1B1–simvastatin + TPMT–azathioprine + HLA-B–abacavir + UGT1A1–atazanavir; **nincs** `dose_mg`; CYP2D6+clopidogrel nem párosít; F5/VKORC1 rec üres → nincs kitalált pár | F5/VKORC1 rec amíg a CPIC nem ad sort; nincs FK Report-ra |
 | FR-410-EDU | Prod P0 F1+ | PARTIAL | **WP-T / R** | token tiltás; EDU=null | forrásolt bekezdés vagy indokolt null; ≥5 ha–akkor gold |
 | FR-410-LIVE | P0 F1s | PARTIAL | **WP-M** | gén szerinti osztály immutábilis; FDA erős gátló ATC5-ön; **funkcionális szegény metabolizáló üres**; **pheno-gold-v0 N=32** | SSRI NM→szegény sor, ha a CPIC/FDA kiadja |
 | FR-420 | P0 F1+ struktúra | PARTIAL | **WP-R** | génenként findings; `severity_means_replace_prescribed=false` | CRITICAL F2 card később |
@@ -113,7 +113,7 @@ Mérés: minden spec-tétel **FULL** / **PARTIAL** / **PLANNED** / **DEFERRED** 
 | --- | --- | --- | --- | --- |
 | 1 | P1 riport egy művelettel | WP-U + K + R | PARTIAL (HTTP + HTML) | FR-240, 400-STATIC, 500 |
 | 2 | P1 guideline-verzió | WP-T + F | PARTIAL | FR-310, 500 |
-| 3 | P1 hiányzó gén | WP-R / V | PARTIAL | FR-210; 4 VCF gold + OC INDETERMINATE; HLA/UGT `not_snv` |
+| 3 | P1 hiányzó gén | WP-R / V | PARTIAL | FR-210; 4 VCF gold + OC INDETERMINATE; HLA/UGT VCF `not_snv`, laboreredmény outside-call |
 | 4 | P1 white-label + aláíró | WP-F + U | PARTIAL | SYN-ORG slot + signer_slot; logo fájl később |
 | 5 | P1 újragenerálás | WP-P1 | DEFERRED | FR-510 |
 | 6–10 | P2 felírási riasztás | WP-F2 | PARTIAL (cső + lakat) | FR-520; NG-07; élő suggestion pecsétig LOCK |
@@ -229,7 +229,7 @@ A 2026-08-13 első terv WP-G + vékony R volt; a B.1 klinikai lánc hiányzott. 
 | CYP2D6-only, nincs DPWG/FDA | FR-400-STATIC | **PARTIAL** — 12 gén CPIC pair; F5/VKORC1 rec hiány **jelezve**; DPWG ClinPGx pin + FDA Table 2-2 kivonat a leleten (`dpwg_version` / `fda_table_version` nem null) |
 | EDU null | FR-410-EDU, FR-610 | spec-OK null; HU jelölés a statements-en |
 | Nincs 6. § (6) magyarázat | FR-710 | **PARTIAL** — determinisztikus HU |
-| HITL váz, nincs motor | FR-400-LIVE, 410-LIVE, 440–450 | **PARTIAL** — `pce_shadow` + `pce_hitl`; SSRI NM→szegény **nincs**, a hiány a kártyán; CYP2C19–clopidogrel élő párosítás gén-kulcson |
+| HITL váz, nincs motor | FR-400-LIVE, 410-LIVE, 440–450 | **PARTIAL** — `pce_shadow` + `pce_hitl`; SSRI NM→szegény **nincs**, a hiány a kártyán; PREPARE-12 élő párok gén-kulcson (F5/VKORC1 rec üres) |
 | Nincs IAM | FR-470, E.4 | **PARTIAL** — SYN szerep-token |
 | VCF gold ≥3 | FR-210 | **zárva** 4 SYN fájlra; 10 gén SNV-katalógus pinelve; HLA-B / UGT1A1\*28 `not_snv` |
 
@@ -371,5 +371,22 @@ A user ETAP 0 szállítást kért. A megelőző kör a „indulhat”-ot későb
 | Official pin | **26** `ok: true` (19 a 2026-08-13 körből + 7 ETAP 0). A MANIFEST `accessed` **2026-08-13** marad a régi sorokon. |
 
 Ensembl egyedi GET `/variation/human/{rsid}` 2026-08-14-én HTTP 503; a POST `/variation/homo_sapiens` batch 200. NCBI refsnp/eutils független GRCh38 chrpos-ellenőrzés.
+
+---
+
+## 18. P06af — PREPARE-12 élő párok + laboreredmény-befogadás + VCF csillag-allél BE-út (2026-08-15)
+
+A user: a maradék PREPARE-12 párokat **nem** ő hagyta ki; az ETAP 0 D-45 vágás volt. A rendszer **nem** végzi el a HLA-B / UGT1A1\*28 laborvizsgálatot — a laboreredményt befogadja, elemzi, felhasználja. „Nincs mit bekapcsolni” hamis volt: a BE-utat meg kell írni, a repo flag ki marad.
+
+| Tétel | Eredmény |
+| --- | --- |
+| Élő párok | CYP2B6–efavirenz (J05AG03), CYP2C9–celecoxib (M01AH01, aktivitási pont 2.0/1.5 CONTINUE, 1.0/0.5/0.0 CONSIDER_DOSE_CHANGE), CYP3A5–tacrolimus, DPYD–fluorouracil, SLCO1B1–simvastatin, TPMT–azathioprine (NUDT15 No Result), HLA-B–abacavir, UGT1A1–atazanavir. Nincs `dose_mg`. F5/VKORC1 **nincs** kitalált pár (üres recommendation_view). |
+| HLA-B / UGT1A1\*28 | Outside-call fixture + F1+ pair dump + élő párosítás. VCF `not_snv` → `NOT_TESTED`. Nincs kitalált HLA pontmutáció, nincs rs887829 \*28-helyettesítő. |
+| VCF csillag-allél | `call_star_alleles(..., matcher_on=True)`: CYP2D6 \*4/\*4 CALLED a pin-elt definiáló pontmutációból; hiányzó hely INDETERMINATE, nem \*1. Repo `MATCHER_ON=false`. Nem a teljes PharmCAT NamedAlleleMatcher. |
+| Flag | `LIVE_CDS=false`; `MATCHER_ON=false`; `IIA_SAFE_BLOCK=true`. OQ-05/06/15/16 **nem** pecsét. |
+| Official pin | **41** `ok: true`. MANIFEST top-level `accessed` **2026-08-13**. Új sorok `accessed: 2026-08-15`. |
+| Unittest | **158 OK** |
+
+A fluorouracil / azathioprine / clopidogrel IIa-safe listán van: az árnyék-motor párosít, a CDS suggestion pecsétig blokkolt (`IIA_SAFE_BLOCK=true`).
 
 

@@ -22,13 +22,13 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--pdf-out")
     p.add_argument("--actor", default="lab_signer")
     args = p.parse_args(argv)
-    if MATCHER_ON or LIVE_CDS:
-        print("F1+ matcher/LIVE_CDS must be false", file=sys.stderr)
+    if LIVE_CDS:
+        print("LIVE_CDS must be false on pce_clinical (clinical decision support is a separate process)", file=sys.stderr)
         return 1
     if args.mode == "serve":
         httpd = bind_clinical_server(args.db, port=args.port)
         bound = httpd.server_address[1]
-        print(f"pce_clinical on 127.0.0.1:{bound} db={args.db}")
+        print(f"pce_clinical on 127.0.0.1:{bound} db={args.db} MATCHER_ON={MATCHER_ON}")
         try:
             httpd.serve_forever()
         finally:

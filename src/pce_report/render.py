@@ -7,7 +7,6 @@ from pce_report.flags import (
     DIPLOTIPUS_FORRAS_HU,
     GYOGYSZERLISTA_MEGJEGYZES_HU,
     LIVE_CDS,
-    MATCHER_ON,
 )
 from pce_report.guidelines import GuidelineTable
 from pce_report.panel import CONFIG_ID_PREFIX, PREPARE_12
@@ -45,8 +44,8 @@ def render_f1plus(
 
     Keyword-only. There is no medications parameter (FR-470).
     """
-    if MATCHER_ON or LIVE_CDS:
-        raise RendererConfigError("F1+ matcher and LIVE_CDS must be false")
+    if LIVE_CDS:
+        raise RendererConfigError("F1+ LIVE_CDS must be false")
     if not isinstance(outside_call, dict):
         raise RendererConfigError("outside_call must be an object")
     for banned in (
