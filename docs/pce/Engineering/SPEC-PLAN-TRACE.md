@@ -436,4 +436,19 @@ A user: a klinikai mag stabil; a hiányzó enterprise-garanciákat **a meglévő
 | Flag | `LIVE_CDS=false`; `MATCHER_ON=false`; `IIA_SAFE_BLOCK=true`. OQ-k **nem** pecsét. MANIFEST top-level `accessed` **2026-08-13**. |
 | Unittest | **195 OK** |
 
+---
+
+## 22. P06aj — checklist-zárás stdlib keretben (2026-08-15, D-50)
+
+A user checklist Pydantic / BeautifulSoup / pytest / 100% coverage-csomag / `MissingGeneticDataException` crash nélkül, a meglévő stacken.
+
+| Tétel | Eredmény |
+| --- | --- |
+| F5 | `F5DataProvider` Protocol; fixture deepcopy (HET+HOM); kétszeres `apply_f5_source` nem duplikál; `config/production.env` = `off`; LIVE üres/hálózati hiba → nincs exception. |
+| Warfarin | Mindkét gén guard. Hiány → `MISSING_GENETIC_DATA` státusz, **üres** `live_findings`, nincs klinikai crash. Mátrix: `*2/*3`+AA, `*3/*3`+GA, `*1/*1`+AA, `*1/*2`+GG. |
+| HTML | stdlib `html.parser`. Csonka pin → `ValueError` / `exit 1`. Nincs BeautifulSoup. Index clopidogrel SKIP akkor is, ha valaki berakja az ATC szótárba. |
+| PharmCAT | `matcher_on=False` nem hív `subprocess.run`. `shell=False`. Nincs `.first()` / `.fallback()`. `add_outside_call`. CYP2D6 `sv_determined=False`. |
+| Flag | `LIVE_CDS=false`; `MATCHER_ON=false`. OQ **nem** pecsét. |
+| Unittest | **211 OK** |
+
 

@@ -35,6 +35,8 @@ jobs:
         run: |
           python3 -c "import os; tok=(os.environ.get('CPIC_F5_SOURCE') or '').strip().lower(); assert tok != 'live'"
           python3 -c "import sys; sys.path.insert(0,'src'); from pce_shadow.f5_rec import F5Source, resolve_source; assert resolve_source(None) is F5Source.DISABLED; assert resolve_source(None) is not F5Source.LIVE"
+          grep -q '^CPIC_F5_SOURCE=off$' config/production.env
+          ! grep -E '^[[:space:]]*CPIC_F5_SOURCE=live' config/production.env
       - name: FR-470 F1+ isolation
         run: |
           ! grep -R -n --include='*.py' "MedicationEntry" src/pce_report

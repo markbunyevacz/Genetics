@@ -2,12 +2,15 @@
 from __future__ import annotations
 
 import copy
+import logging
 import uuid
 from typing import Any
 
 from pce_gateway.transform import DEFAULT_MAX_ATC_LEVEL
 from pce_shadow.event import event_from_payload
 from pce_shadow.table import KnowledgeTable, default_table
+
+log = logging.getLogger("pce_shadow.engine")
 
 ORGAN_REASON = "organ"
 
@@ -179,6 +182,7 @@ def infer(
         return rec
 
     live_findings: list[dict[str, Any]] = []
+    warfarin_eval: dict[str, Any] | None = None
     if clinical_context != "ABSENT":
         for gene_row in genotype:
             gene = gene_row.get("gene")
@@ -186,59 +190,63 @@ def infer(
                 continue
             pheno = gene_row.get("genotype_phenotype")
             for code in codes:
-                pairing = knowledge.pairing(gene, code)
-                category = None
-                if pairing:
-                    as_map = pairing.get("by_activity_score")
-                    as_key = _activity_key(gene_row.get("activity_score"))
-                    if isinstance(as_map, dict) and as_key and as_key in as_map:
-                        category = as_map.get(as_key)
-                    elif pheno and pairing.get("by_phenotype"):
-                        category = pairing["by_phenotype"].get(pheno)
-                if pairing and category:
-                    live_findings.append(
-                        _finding(
-                            gene=gene,
-                            code=code,
-                            inn=pairing.get("inn"),
-                            category=category,
-                            source_id=pairing.get("source_id"),
-                            pairing=pairing,
+                try:
+                    pairing = knowledge.pairing(gene, code)
+                    category = None
+                    if pairing:
+                        as_map = pairing.get("by_activity_score")
+                        as_key = _activity_key(gene_row.get("activity_score"))
+                        if isinstance(as_map, dict) and as_key and as_key in as_map:
+                            category = as_map.get(as_key)
+                        elif pheno and pairing.get("by_phenotype"):
+                            category = pairing["by_phenotype"].get(pheno)
+                    if pairing and category:
+                        live_findings.append(
+                            _finding(
+                                gene=gene,
+                                code=code,
+                                inn=pairing.get("inn"),
+                                category=category,
+                                source_id=pairing.get("source_id"),
+                                pairing=pairing,
+                            )
                         )
-                    )
+                        continue
+                    if pairing and pairing.get("strategy"):
+                        live_findings.append(
+                            _finding(
+                                gene=gene,
+                                code=code,
+                                inn=pairing.get("inn"),
+                                category=pairing["strategy"],
+                                source_id=pairing.get("source_id"),
+                                pairing=pairing,
+                            )
+                        )
+                        continue
+                    prefix_hit = None
+                    for atc5 in knowledge.pairing_atc5_codes(gene):
+                        if atc5.startswith(code) and len(code) < 7:
+                            prefix_hit = knowledge.pairing(gene, atc5)
+                            break
+                    if prefix_hit:
+                        live_findings.append(
+                            _finding(
+                                gene=gene,
+                                code=code,
+                                inn=None,
+                                category="INSUFFICIENT_RESOLUTION",
+                                source_id=prefix_hit.get("source_id"),
+                                pairing=prefix_hit,
+                                extra={
+                                    "reason": "atc4_cannot_identify_strong_inhibitor_inn",
+                                    "reason_hu": knowledge.strategy_labels_hu.get("INSUFFICIENT_RESOLUTION"),
+                                },
+                            )
+                        )
+                except Exception:
+                    log.exception("rec-view pairing skipped gene=%s atc=%s", gene, code)
                     continue
-                if pairing and pairing.get("strategy"):
-                    live_findings.append(
-                        _finding(
-                            gene=gene,
-                            code=code,
-                            inn=pairing.get("inn"),
-                            category=pairing["strategy"],
-                            source_id=pairing.get("source_id"),
-                            pairing=pairing,
-                        )
-                    )
-                    continue
-                prefix_hit = None
-                for atc5 in knowledge.pairing_atc5_codes(gene):
-                    if atc5.startswith(code) and len(code) < 7:
-                        prefix_hit = knowledge.pairing(gene, atc5)
-                        break
-                if prefix_hit:
-                    live_findings.append(
-                        _finding(
-                            gene=gene,
-                            code=code,
-                            inn=None,
-                            category="INSUFFICIENT_RESOLUTION",
-                            source_id=prefix_hit.get("source_id"),
-                            pairing=prefix_hit,
-                            extra={
-                                "reason": "atc4_cannot_identify_strong_inhibitor_inn",
-                                "reason_hu": knowledge.strategy_labels_hu.get("INSUFFICIENT_RESOLUTION"),
-                            },
-                        )
-                    )
 
         diagram = knowledge.warfarin
         war_atc = str((diagram.get("atc5") or "")).upper()
@@ -246,7 +254,17 @@ def infer(
             already = any(f.get("drug_atc") == war_atc for f in live_findings)
             cyp = next((g for g in genotype if g.get("gene") == "CYP2C9" and g.get("diplotype")), None)
             vkor = next((g for g in genotype if g.get("gene") == "VKORC1" and g.get("diplotype")), None)
-            if not already and cyp and vkor:
+            missing: list[str] = []
+            if not cyp:
+                missing.append("CYP2C9")
+            if not vkor:
+                missing.append("VKORC1")
+            if already:
+                warfarin_eval = {"status": "ALREADY_PAIRED", "missing": []}
+            elif missing:
+                warfarin_eval = {"status": "MISSING_GENETIC_DATA", "missing": missing}
+            else:
+                warfarin_eval = {"status": "OK", "missing": []}
                 category = warfarin_strategy_category(
                     str(cyp.get("diplotype") or ""),
                     cyp.get("genotype_phenotype") if isinstance(cyp.get("genotype_phenotype"), str) else None,
@@ -364,5 +382,6 @@ def infer(
         "phenotype_class": event.get("phenotype_class"),
         "payload_hash": event.get("payload_hash"),
         "max_atc_level": max_atc_level,
+        "warfarin_eval": warfarin_eval,
     }
     return inference

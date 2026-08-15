@@ -7,13 +7,14 @@ CPIC_F5_SOURCE=off|mock|live
 """
 from __future__ import annotations
 
+import copy
 import json
 import logging
 import os
 import urllib.request
 from enum import Enum
 from pathlib import Path
-from typing import Any, Callable, Protocol
+from typing import Any, Callable, Protocol, runtime_checkable
 
 log = logging.getLogger("pce_shadow.f5_rec")
 
@@ -55,9 +56,15 @@ DIPLOTYPE_ALIASES = {
 }
 
 
-class RecViewProvider(Protocol):
+@runtime_checkable
+class F5DataProvider(Protocol):
+    """Business logic talks only to this. No HTTP client in infer/transform."""
+
     def rows(self) -> list[dict[str, Any]]:
         ...
+
+
+RecViewProvider = F5DataProvider
 
 
 def resolve_source(explicit: str | F5Source | None = None) -> F5Source:
@@ -113,7 +120,7 @@ class MockF5Provider:
         raw = doc.get("rows") if isinstance(doc, dict) else doc
         if not isinstance(raw, list):
             raise ValueError("cpic_f5_mock.json must be a list or {rows: [...]}")
-        return [validate_rec_view_row(item) for item in raw]
+        return [copy.deepcopy(validate_rec_view_row(item)) for item in raw]
 
 
 class LiveF5Provider:
@@ -149,7 +156,7 @@ def _http_fetch_live() -> list[Any]:
 
 def provider_for(
     source: str | F5Source, *, fetch: Callable[[], list[Any]] | None = None
-) -> RecViewProvider:
+) -> F5DataProvider:
     resolved = source if isinstance(source, F5Source) else resolve_source(source)
     if resolved is F5Source.MOCK:
         return MockF5Provider()
@@ -318,14 +325,15 @@ def apply_f5_source(
         table.phenotype_labels.setdefault(code, label)
     if mocked:
         van = list(table.inventory.get("van") or [])
-        van.append(
-            {
-                "id": "CPIC-F5-MOCK",
-                "hu": (
-                    "MOCK: a CPIC recommendation_view F5-re 0 sor. A pipeline a "
-                    "tests/fixtures/cpic_f5_mock.json fájlon fut. Ez nem hivatalos CPIC ajánlás."
-                ),
-            }
-        )
-        table.inventory["van"] = van
+        if not any(row.get("id") == "CPIC-F5-MOCK" for row in van):
+            van.append(
+                {
+                    "id": "CPIC-F5-MOCK",
+                    "hu": (
+                        "MOCK: a CPIC recommendation_view F5-re 0 sor. A pipeline a "
+                        "tests/fixtures/cpic_f5_mock.json fájlon fut. Ez nem hivatalos CPIC ajánlás."
+                    ),
+                }
+            )
+            table.inventory["van"] = van
     return resolved.value

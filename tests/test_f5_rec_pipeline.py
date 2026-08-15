@@ -32,10 +32,14 @@ from pce_shadow.f5_rec import (  # noqa: E402
     F5_ATC5,
     F5_SCHEMA_PATH,
     MOCK_PATH,
+    F5DataProvider,
     F5Source,
+    LiveF5Provider,
     MockF5Provider,
     OffF5Provider,
+    apply_f5_source,
     classify_recommendation,
+    provider_for,
     resolve_source,
     transform_rows,
     validate_rec_view_row,
@@ -257,6 +261,8 @@ class RecViewAndWarfarinChecklistTests(unittest.TestCase):
             }
         )
         self.assertEqual(out["live_findings"], [])
+        self.assertEqual(out["warfarin_eval"]["status"], "MISSING_GENETIC_DATA")
+        self.assertEqual(out["warfarin_eval"]["missing"], ["VKORC1"])
 
 
 class PharmcatHttpMatcherOnTests(unittest.TestCase):
@@ -457,6 +463,24 @@ class RepoConformHardeningTests(unittest.TestCase):
             "-1639G/-1639G",
             "rs9923231 reference (C)/rs9923231 reference (C)",
         )
+        dose_change_cases = (
+            ("*1/*1", "-1639A/-1639A"),
+            ("*1/*2", "-1639G/-1639G"),
+        )
+        for cyp, vkor in dose_change_cases:
+            with self.subTest(branch="dose_change", cyp=cyp, vkor=vkor):
+                out = infer(
+                    {
+                        "diplotypes": [
+                            {"gene": "CYP2C9", "diplotype": cyp, "callability": "CALLED"},
+                            {"gene": "VKORC1", "diplotype": vkor, "callability": "CALLED"},
+                        ],
+                        "medications": war,
+                    }
+                )
+                self.assertEqual(out["live_findings"][0]["strategy_category"], "CONSIDER_DOSE_CHANGE")
+                self.assertEqual(out["warfarin_eval"]["status"], "OK")
+                self.assertNotIn("dose_mg", json.dumps(out))
         for vkor in gg_aliases:
             with self.subTest(branch="dose_change", vkor=vkor):
                 out = infer(
@@ -478,6 +502,8 @@ class RepoConformHardeningTests(unittest.TestCase):
             with self.subTest(missing=dips):
                 out = infer({"diplotypes": dips, "medications": war})
                 self.assertEqual(out["live_findings"], [])
+                self.assertEqual(out["warfarin_eval"]["status"], "MISSING_GENETIC_DATA")
+                self.assertTrue(out["warfarin_eval"]["missing"])
 
     def test_ensure_jar_offline_missing_raises(self) -> None:
         missing = Path("/tmp/pce-no-such-pharmcat-3.4.0-all.jar")
@@ -584,6 +610,241 @@ class RepoConformHardeningTests(unittest.TestCase):
         self.assertIn("PCE_PHARMCAT_OFFLINE", yml)
         self.assertIn("fetch_software_ready_pins.py --jar-only", yml)
         self.assertIn("actions/setup-java@v4", yml)
+        self.assertIn("config/production.env", yml)
+        prod = (ROOT / "config" / "production.env").read_text(encoding="utf-8")
+        self.assertIn("CPIC_F5_SOURCE=off", prod)
+        self.assertNotIn("CPIC_F5_SOURCE=live", prod)
+        gitignore = (ROOT / ".gitignore").read_text(encoding="utf-8")
+        self.assertIn("var/pharmcat/", gitignore)
+        self.assertIn("*.jar", gitignore)
+
+    def test_f5_provider_is_interface_not_http(self) -> None:
+        off: F5DataProvider = OffF5Provider()
+        mock: F5DataProvider = provider_for(F5Source.MOCK)
+        live: F5DataProvider = provider_for(F5Source.LIVE, fetch=lambda: [])
+        self.assertIsInstance(off, F5DataProvider)
+        self.assertIsInstance(mock, F5DataProvider)
+        self.assertIsInstance(live, F5DataProvider)
+        self.assertEqual(off.rows(), [])
+        self.assertGreater(len(mock.rows()), 0)
+        self.assertEqual(live.rows(), [])
+        src = (ROOT / "src" / "pce_shadow" / "engine.py").read_text(encoding="utf-8")
+        self.assertNotIn("api.cpicpgx.org", src)
+        self.assertNotIn("urlopen", src)
+
+    def test_f5_mock_fixture_immutable_and_het_hom(self) -> None:
+        before = MOCK_PATH.read_bytes()
+        payload = json.loads(before.decode("utf-8"))
+        lookup_vals = [r["lookupkey"]["F5"] for r in payload["rows"]]
+        self.assertIn("heterozygous", lookup_vals)
+        self.assertIn("Leiden/Leiden", lookup_vals)
+        rows = MockF5Provider().rows()
+        rows[0]["recommendation"] = "MUTATED-MUST-NOT-WRITE"
+        rows[0]["lookupkey"]["F5"] = "MUTATED"
+        KnowledgeTable(f5_source="mock")
+        self.assertEqual(MOCK_PATH.read_bytes(), before)
+
+    def test_f5_unknown_json_keys_do_not_crash(self) -> None:
+        row = {
+            "recommendationid": 1,
+            "lookupkey": {"F5": "heterozygous", "extraGene": "*1/*1"},
+            "recommendation": "Avoid estrogen-containing contraceptives.",
+            "unexpected": {"nested": True},
+        }
+        validate_rec_view_row(row)
+        pairings, _dips, _labels = transform_rows([row], mocked=True)
+        self.assertEqual(len(pairings), 1)
+
+    def test_f5_pipeline_idempotent_no_duplicate_pairing(self) -> None:
+        table = KnowledgeTable(f5_source="mock")
+        n = len(table.pairings())
+        mock_ids = [row["id"] for row in table.inventory.get("van") or [] if row.get("id") == "CPIC-F5-MOCK"]
+        self.assertEqual(len(mock_ids), 1)
+        apply_f5_source(table, source="mock")
+        self.assertEqual(len(table.pairings()), n)
+        mock_ids = [row["id"] for row in table.inventory.get("van") or [] if row.get("id") == "CPIC-F5-MOCK"]
+        self.assertEqual(len(mock_ids), 1)
+        out1 = _infer_with(table, "F5", "heterozygous", F5_ATC5)
+        out2 = _infer_with(table, "F5", "heterozygous", F5_ATC5)
+        self.assertEqual(len(out1["live_findings"]), 1)
+        self.assertEqual(len(out2["live_findings"]), 1)
+
+    def test_f5_live_network_error_skips_without_exception(self) -> None:
+        def boom() -> list:
+            raise OSError("offline")
+
+        rows = LiveF5Provider(fetch=boom).rows()
+        self.assertEqual(rows, [])
+        table = KnowledgeTable(f5_source="live", f5_fetch=boom)
+        self.assertEqual(table.f5_source, "live")
+        self.assertIsNone(table.pairing("F5", F5_ATC5))
+
+    def test_f5_classify_dose_and_no_recommendation(self) -> None:
+        self.assertEqual(classify_recommendation("Consider a lower dose."), "CONSIDER_DOSE_CHANGE")
+        self.assertEqual(classify_recommendation("No recommendation"), "NO_RECOMMENDATION")
+        self.assertIsNone(classify_recommendation("unmapped prose"))
+
+    def test_f5_pheno_from_phenotypes_and_atc_on_row(self) -> None:
+        row = {
+            "lookupkey": {"F5": "not-a-mapped-token"},
+            "phenotypes": {"F5": "homozygous"},
+            "recommendation": "Avoid estrogen-containing contraceptives.",
+            "atc5": "G03AA07",
+            "drugname": "hormonal contraceptives for systemic use",
+        }
+        validate_rec_view_row(row)
+        pairings, _dips, _labels = transform_rows([row], mocked=True)
+        self.assertEqual(pairings[0]["by_phenotype"]["HOM"], "CONSIDER_ALTERNATIVE")
+        row2 = {
+            "lookupkey": {"F5": "still-unmapped"},
+            "phenotype": "wild type",
+            "recommendation": "No genotype-based change. Continue therapy.",
+        }
+        pairings2, _d, _l = transform_rows([row2], mocked=True)
+        self.assertEqual(pairings2[0]["by_phenotype"]["WT"], "CONTINUE")
+
+    def test_builder_script_cannot_emit_clopidogrel(self) -> None:
+        mod = _load_builder()
+        original = dict(mod.ATC)
+        mod.ATC[("CYP2C19", "clopidogrel")] = ("B01AC04", "klopidogrel")
+        try:
+            doc = mod.build()
+            keys = {(p["gene"], p["inn"]) for p in doc["pairings"]}
+            self.assertNotIn(("CYP2C19", "clopidogrel"), keys)
+            atcs = {(p["gene"], p["atc5"]) for p in doc["pairings"]}
+            self.assertNotIn(("CYP2C19", "B01AC04"), atcs)
+        finally:
+            mod.ATC.clear()
+            mod.ATC.update(original)
+
+    def test_html_truncated_who_pin_exits_nonzero(self) -> None:
+        mod = _load_builder()
+        tmp = Path(tempfile.mkdtemp()) / "whocc-atc-n06ab05.html"
+        tmp.write_text("<html><body>truncated, no ATC code</body></html>", encoding="utf-8")
+        with self.assertRaises(ValueError):
+            mod.verify_who_html(tmp, "N06AB05", ["paroxetine"])
+        with self.assertRaises(ValueError):
+            mod.verify_who_html_pins(
+                {("CYP2D6", "paroxetine"): ("N06AB05", "paroxetin")},
+                dest=tmp.parent,
+            )
+
+    def test_who_html_pins_parse_with_stdlib_parser(self) -> None:
+        mod = _load_builder()
+        mod.verify_who_html_pins()
+
+    def test_matcher_off_circuit_breaker_does_not_spawn_java(self) -> None:
+        text = (GOLD / "called-cyp2d6-star4-hom.vcf").read_text(encoding="utf-8")
+        with patch("pce_clinical.star_call.run_matcher_and_phenotyper") as run:
+            with patch("pce_clinical.pharmcat.subprocess.run") as sp:
+                call_star_alleles(text, reference="GRCh38", matcher_on=False)
+                call_star_alleles(text, reference="GRCh38")
+                run.assert_not_called()
+                sp.assert_not_called()
+        self.assertFalse(MATCHER_ON)
+
+    def test_pharmcat_wrapper_is_argv_list_not_shell(self) -> None:
+        src = (ROOT / "src" / "pce_clinical" / "pharmcat.py").read_text(encoding="utf-8")
+        self.assertNotIn("shell=True", src)
+        self.assertIn("shell=False", src)
+        self.assertNotIn(".first(", src)
+        self.assertNotIn(".fallback(", src)
+        self.assertIn("if len(names) == 1:", src)
+        self.assertIn("name = names[0]", src)
+
+    def test_add_outside_call_merges_hla_b(self) -> None:
+        from pce_clinical.service import ClinicalService
+        from pce_clinical.store import ClinicalStore
+
+        tmp = tempfile.NamedTemporaryFile(suffix=".sqlite", delete=False)
+        tmp.close()
+        svc = ClinicalService(ClinicalStore(tmp.name))
+        org = svc.create_org(
+            {"name": "SYN-ORG-001", "license_id": "SYN-LIC-001", "role": "lab"}, "lab_signer"
+        )
+        sub = svc.create_subject({"org_id": org["id"]}, "lab_signer")
+        case = svc.create_case(
+            {
+                "org_id": org["id"],
+                "subject_id": sub["id"],
+                "sample": {"collected_at": "2026-08-10", "type": "blood", "origin": "SYN-LAB-001"},
+            },
+            "lab_signer",
+        )
+        svc.add_counselling(
+            case["id"], {"counsellor_id": "SYN-MD-001", "occurred_at": "2026-08-09"}, "counsellor"
+        )
+        svc.add_consent(
+            case["id"],
+            {"granted_at": "2026-08-09", "scopes": ["pgx_report"], "omit_from_patient": []},
+            "counsellor",
+        )
+        out = svc.add_outside_call(
+            case["id"],
+            {
+                "gene": "HLA-B",
+                "diplotype": "*57:01 positive",
+                "callability": "CALLED",
+                "calling_lab": "SYN-LAB-001",
+                "signing_physician": "SYN-MD-001",
+                "method": "HLA typing",
+                "call_date": "2026-08-10",
+            },
+            "lab_signer",
+        )
+        self.assertEqual(out["calls"][0]["gene"], "HLA-B")
+        self.assertEqual(out["calls"][0]["diplotype"], "*57:01 positive")
+
+    def test_f5_http_fetch_live_mocked(self) -> None:
+        class _Resp:
+            def read(self) -> bytes:
+                return b"[]"
+
+            def __enter__(self) -> "_Resp":
+                return self
+
+            def __exit__(self, *args: object) -> None:
+                return None
+
+        with patch("pce_shadow.f5_rec.urllib.request.urlopen", return_value=_Resp()):
+            self.assertEqual(LiveF5Provider().rows(), [])
+        class _Obj:
+            def read(self) -> bytes:
+                return b"{}"
+
+            def __enter__(self) -> "_Obj":
+                return self
+
+            def __exit__(self, *args: object) -> None:
+                return None
+
+        with patch("pce_shadow.f5_rec.urllib.request.urlopen", return_value=_Obj()):
+            with self.assertRaises(ValueError):
+                LiveF5Provider().rows()
+
+    def test_cyp2d6_cnv_not_assumed_wild_type(self) -> None:
+        text = (GOLD / "called-cyp2d6-star4-hom.vcf").read_text(encoding="utf-8")
+        rows = {r["gene"]: r for r in call_star_alleles(text, reference="GRCh38", matcher_on=True)}
+        self.assertEqual(rows["CYP2D6"]["callability"], "CALLED")
+        self.assertIs(rows["CYP2D6"].get("sv_determined"), False)
+        self.assertIn("kópiaszám", rows["CYP2D6"]["note_hu"])
+
+    def test_rec_pairings_forbid_dose_mg_token(self) -> None:
+        blob = EXTRA.read_text(encoding="utf-8")
+        self.assertNotIn("dose_mg", blob)
+        self.assertNotIn("dose/day", blob.lower())
+        out = infer(
+            {
+                "diplotypes": [
+                    {"gene": "CYP2C9", "diplotype": "*1/*1", "callability": "CALLED"},
+                    {"gene": "VKORC1", "diplotype": "-1639A/-1639A", "callability": "CALLED"},
+                ],
+                "medications": [{"system": "http://www.whocc.no/atc", "code": "B01AA03"}],
+            }
+        )
+        finding = json.dumps(out["live_findings"])
+        self.assertNotIn("dose_mg", finding)
+        self.assertNotIn("mg/day", finding.lower())
 
 
 if __name__ == "__main__":

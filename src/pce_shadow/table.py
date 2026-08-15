@@ -12,6 +12,22 @@ ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_PATH = ROOT / "tests" / "fixtures" / "shadow-v0" / "cyp2d6-knowledge.v0.json"
 
 
+def _pairing_equivalent(left: dict[str, Any], right: dict[str, Any]) -> bool:
+    """Same clinical pairing: re-apply is a no-op. Different payload is overwrite."""
+    keys = ("gene", "atc5", "inn", "source_id", "by_phenotype", "by_activity_score", "strategy", "mocked")
+    def _norm(row: dict[str, Any]) -> dict[str, Any]:
+        out: dict[str, Any] = {}
+        for key in keys:
+            val = row.get(key)
+            if key == "atc5" and isinstance(val, str):
+                val = val.strip().upper()
+            if key == "gene" and isinstance(val, str):
+                val = val.strip()
+            out[key] = val
+        return out
+    return _norm(left) == _norm(right)
+
+
 class KnowledgeTable:
     def __init__(
         self,
@@ -99,6 +115,8 @@ class KnowledgeTable:
             raise ValueError(f"pairing from {source} needs gene and atc5")
         key = (gene, atc5)
         if key in self._pairings:
+            if _pairing_equivalent(self._pairings[key], row):
+                return
             raise ValueError(
                 f"refusing to overwrite pairing {gene} {atc5} from {source}; "
                 "index pairs are immutable"

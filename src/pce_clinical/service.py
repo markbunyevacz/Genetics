@@ -239,6 +239,10 @@ class ClinicalService:
         self.audit(actor, "outside_call", "OutsideCall", case_id, "FR-240")
         return {"calls": stored}
 
+    def add_outside_call(self, case_id: str, item: dict[str, Any], actor: str) -> dict[str, Any]:
+        """One lab HLA-B / UGT1A1*28 (or other) outside-call merged onto the case."""
+        return self.add_outside_calls(case_id, [item], actor)
+
     def parse_outside_payload(self, raw: bytes, content_type: str) -> list[dict[str, Any]]:
         ct = (content_type or "").split(";")[0].strip().lower()
         text = raw.decode("utf-8")

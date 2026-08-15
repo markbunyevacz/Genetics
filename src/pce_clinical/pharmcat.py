@@ -135,7 +135,7 @@ def run_matcher_and_phenotyper(vcf_text: str, *, workdir: Path | None = None) ->
         "-bf",
         "pce",
     ]
-    proc = subprocess.run(cmd, capture_output=True, text=True, timeout=180)
+    proc = subprocess.run(cmd, capture_output=True, text=True, timeout=180, shell=False)
     if proc.returncode != 0:
         raise PharmcatError(
             "PharmCAT NamedAlleleMatcher/Phenotyper failed: "

@@ -13,6 +13,7 @@ import json
 import re
 import sys
 from collections import defaultdict
+from html.parser import HTMLParser
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[4]
@@ -110,6 +111,44 @@ def validate_atc_dict(atc: dict | None = None) -> None:
 
 
 validate_atc_dict()
+
+
+class _HtmlText(HTMLParser):
+    def __init__(self) -> None:
+        super().__init__()
+        self.chunks: list[str] = []
+
+    def handle_data(self, data: str) -> None:
+        if data and data.strip():
+            self.chunks.append(data)
+
+    def text(self) -> str:
+        return " ".join(self.chunks)
+
+
+def verify_who_html(path: Path, code: str, names: list[str] | str) -> None:
+    """Stdlib HTMLParser. Pin must contain the 7-character ATC-5 and an INN alias. Not BeautifulSoup."""
+    if not isinstance(code, str) or ATC5_RE.fullmatch(code) is None:
+        raise ValueError(f"invalid ATC-5 {code!r}")
+    if not path.is_file():
+        raise ValueError(f"WHO ATC HTML missing: {path}")
+    raw = path.read_text(encoding="utf-8", errors="replace")
+    parser = _HtmlText()
+    parser.feed(raw)
+    blob = parser.text().lower()
+    if code.lower() not in blob:
+        raise ValueError(f"WHO HTML {path.name} missing ATC {code}")
+    aliases = [names] if isinstance(names, str) else list(names)
+    if not any(alias.lower() in blob for alias in aliases if alias):
+        raise ValueError(f"WHO HTML {path.name} missing INN {aliases}")
+
+
+def verify_who_html_pins(atc: dict | None = None, dest: Path | None = None) -> None:
+    mapping = ATC if atc is None else atc
+    html_dir = dest if dest is not None else ROOT / "docs" / "pce" / "Sources" / "official"
+    for (_gene, inn), (code, hu) in mapping.items():
+        verify_who_html(html_dir / f"whocc-atc-{code.lower()}.html", code, [inn, hu])
+
 
 PHENO = {
     "ultrarapid metabolizer": "UM",
@@ -406,6 +445,7 @@ def build() -> dict:
 def main() -> int:
     try:
         validate_atc_dict()
+        verify_who_html_pins()
     except ValueError as exc:
         print(f"FATAL {exc}", file=sys.stderr)
         return 1
