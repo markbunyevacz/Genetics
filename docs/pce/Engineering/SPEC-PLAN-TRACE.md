@@ -466,4 +466,16 @@ Független BA-audit (annotációt mért, viselkedést a 12 Compliance P0 + `pce_
 | Flag | `LIVE_CDS=false`; `MATCHER_ON=false`; `IIA_SAFE_BLOCK=true`. OQ **nem** pecsét. MANIFEST `accessed` **2026-08-13**. Official pin **88** `ok`. |
 | Unittest | **228 OK** |
 
+---
+
+## 24. P06al — elesett GTM + ZK rekord (2026-08-16, D-52)
+
+BA deviancia: 2026-08-09 koncepció tíz eleme vs `main`. Két elemnek **nem** volt döntési sora: longevity 1. fázis (#8) és Zero-Knowledge / local-first (#9). A többi (LIVE_CDS lakat, NG-03, MATCHER_ON, NG-02/FR-430, NG-07, SKU-P, parking lot pharma) már rögzítve volt.
+
+| Tétel | Eredmény |
+| --- | --- |
+| A16 | §0 feltevés: az eredeti sebességi 1. fázis **elesett**. v1.0 G4 már labor/klinika; v1.2 SKU-P intézmény = **több** pecsét. Longevity mint v1 vevő **ki**. Sales `sku-and-buyers.md` ugyanazt mondja. |
+| A17 | ZK / local-first **nincs** `src/`-ben. Helyette FR-460 + A12 + A13. Visszavenni = DPIA, nem flag. |
+| Nem pecsét | OQ-05/15/16 nyitott. `LIVE_CDS=false`; `MATCHER_ON=false`; `IIA_SAFE_BLOCK=true`. Nincs F-10 ebben a repóban. |
+| Teszt | `FallenGtmRecordTests`: A16/A17 sor, sku-and-buyers, `src/` ZK-tilalom. Unittest **231 OK**. |
 

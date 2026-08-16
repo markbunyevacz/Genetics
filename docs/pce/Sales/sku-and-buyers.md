@@ -89,6 +89,20 @@ Sávos placeholder + javasolt Ft-következtetés (YouScript 365 USD/év lista **
 
 ---
 
+## Elesett 1. fázis (A16) — longevity / biohacking **nem** v1 vevő
+
+Az eredeti koncepció (2026-08-09) 1. fázisának *indoka* nem tetszőleges célcsoport volt, hanem a sebesség: gyors piacra lépés, **nincs** szigorú kórházi szabályozási teher, a fizetőképes **longevity / biohacking** központok azonnal igénylik.
+
+Ez a feltevés **elesett** (spec A16, D-52). A gitbeli v1.0 G4 már labor/klinikai partnert mért; a v1.2 vevő **SKU-P** (klinika, magánellátó, kórház, ellátóhálózat) és SKU-H (HIS-vendor). A helyettesítő szegmens **nagyobb** MDR / 2008/XXI. / OQ-05–16 terhet hordoz, nem kisebbet. A „gyors piacra lépés” indok megfordult.
+
+Longevity / biohacking **nem** v1 vevőtípus. Vissza csak A16 explicit visszavonásával.
+
+**Architektúra (A17):** Zero-Knowledge / local-first **nincs** a termékben. Helyette intézményi gateway (FR-460) + irreverzibilis anonimizálás (A12) + k-anonymity (A13 / FR-461). A PII az intézményi zónában marad. ZK-re váltás új DPIA, nem compile-time flag.
+
+Ma eladható kimenet: **F1+ statikus, aláírt laborlelet.** A három lakat (`LIVE_CDS=false`, `MATCHER_ON=false`, `IIA_SAFE_BLOCK=true`) ezt tartja. Az eredeti „Ne írj fel clopidogrelt a vényírás pillanatában” demó F2, NG-07.
+
+---
+
 ## G4
 
-Fizetőnek számít: aláírt **rendszerlicenc** (klinika / kórház / hálózat / HIS-vendor). Nem számít: ingyenes demó, „majd ha CE”, labor amely csak adatot ad licenc nélkül.
+Fizetőnek számít: aláírt **rendszerlicenc** (klinika / kórház / hálózat / HIS-vendor). Nem számít: ingyenes demó, „majd ha CE”, labor amely csak adatot ad licenc nélkül. **Nem** számít longevity / biohacking központ, amíg A16 él.

@@ -62,4 +62,4 @@ Licencmondat: *„A PCE rendszerlicenc a `[HU|EU|US]` csomagot adja. Az F2/F3 kl
 4. MSP: rendszer feláll, F1+ (vagy sandbox) megy, F2 zárt, demó a lakatot is mutatja.
 5. F1s / F2 feloldás = külön aktiválási záradék, nem „majd bekapcsoljuk hétfőn”.
 
-G4: ≥ 3 **fizető rendszerlicenc** (klinika / intézmény / vendor), nem három eladott PDF.
+G4: ≥ 3 **fizető rendszerlicenc** (klinika / intézmény / vendor), nem három eladott PDF. Longevity / biohacking **nem** G4 vevő — A16 elesett (sku-and-buyers).

@@ -64,6 +64,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P05ai | Repo-konform biztonsági hardening (stdlib) | 2026-08-15 | 2026-08-15 | DONE | User: F5 Enum + fail-fast; index frozenset; ATC regex; warfarin mátrix; PharmCAT air-gap; 4 verzió; gold CYP2C9 *4/*4 | `F5Source`; `add_pairing` ValueError; `PCE_PHARMCAT_OFFLINE`; `assemble_b41` matcher verziólánc; **195 unittest** | E-28 |
 | P05aj | Checklist-zárás stdlib keretben | 2026-08-15 | 2026-08-15 | DONE | User: F5DataProvider, fixture immutábilis, idempotencia, HTML parser, circuit breaker, warfarin kapu státusz | `F5DataProvider`; `warfarin_eval`; stdlib `HTMLParser`; `add_outside_call`; `config/production.env`; **211 unittest** | — |
 | P05ak | M4 IIa-safe mechanizmus + FR-id lánc | 2026-08-15 | 2026-08-15 | DONE | BA-audit S1/S2/S3 (tramadol, klopidogrel, FR-annotáció) | `IiaSafeFamily`; WHO L01BC03 pin; `tests/test_fr_trace.py`; CI FR-id lépés; **228 unittest** | — |
+| P05al | Elesett GTM + ZK rögzítés (A16/A17) | 2026-08-16 | 2026-08-16 | DONE | BA deviancia: 2026-08-09 koncepció → `main` | A16/A17 §0.2; Sales sku-and-buyers; D-52; teszt a sorok ellen; **231 unittest** | — |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -122,6 +123,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-49 | P05ai | Pydantic/coverage vs meglévő stack | Új függőség / natív szigor | **Stdlib + unittest.** `F5Source` Enum; ismeretlen token `ValueError`; mock=live validáció; SKIP `frozenset`; index felülírás `ValueError`; ATC regex; warfarin deklaratív mátrix; CI jar `--jar-only` + `PCE_PHARMCAT_OFFLINE`; matcher_on négy verzió fail-fast. OQ **nem** pecsét. | User 2026-08-15 hardening spec | user |
 | D-50 | P05aj | MissingGeneticDataException vs üres finding | Klinikai crash / státuszkód + üres `live_findings` | **Nincs crash.** Warfarin hiányzó gén → `warfarin_eval.status=MISSING_GENETIC_DATA`, üres `live_findings`. Nincs Pydantic/BS4/pytest. HTML pin: stdlib `HTMLParser`. | User 2026-08-15 checklist | user |
 | D-51 | P05ak | IIa-safe INN-literál vs mechanizmus | Marad a 7 ATC5 / angol INN / BA szerinti mechanizmus-család | **Mechanizmus-család.** Tramadol + tegafur + tioguanin + HU variáns a pinelt CPIC/WHO forrásból. L01BC*/L01BB* catch-all **elvetve** (gemcitabin/fludarabin). FR-420/250 más néven megvolt; FR-id CI annotációt mér, a P1/P2 hiányát explicit teszteli. | BA M4 audit 2026-08-13 | user |
+| D-52 | P05al | Longevity 1. fázis + ZK/local-first | Csendben hagyni / §0 feltevés-sor | **A16 + A17.** Az eredeti „gyors, alacsony kórházi teher” 1. fázis **elesett**; v1 vevő SKU-P intézmény (több pecsét, nem kevesebb). ZK/local-first **nincs**; helyette FR-460 + A12/A13. A gitbeli v1.0 **nem** nevezte a longevityt (G4 már labor/klinika); a 10-elemű koncepció git-en kívül. Nincs F-10 rekord ebben a repóban. Flagok / OQ pecsét **változatlan**. | BA 2026-08-16 deviancia | user |
 
 ## 3. Error log
 
@@ -162,7 +164,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | Fájl | Létrehozva | Módosítva | Státusz |
 | --- | --- | --- | --- |
 | docs/pce/README.md | P00/P05 | P05ad (D-44 F2 cső) | v1.2; G5 cső lakattal |
-| docs/pce/PCE-SPEC-v1.2.md | P05b (git mv) | P05ad (D-44 FR-520/530) | v1.2; ATC-klauzula §10.2 (c); F2 cső |
+| docs/pce/PCE-SPEC-v1.2.md | P05b (git mv) | P05al (D-52 A16/A17) | v1.2; ATC-klauzula §10.2 (c); F2 cső; elesett GTM |
 | docs/pce/A-intended-purpose-and-modules.md | P05 | P05ad | DRAFT v1.2; L6-cds lakat |
 | docs/pce/B-architecture-and-interfaces.md | P05 | P05ad (B.4.4 `pce_cds`) | DRAFT v1.2 |
 | docs/pce/C-eeszt-f0-checklist.md | P05 | P05f (C.4 Outbound linkek) | DRAFT v1.2 |
@@ -170,7 +172,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | docs/pce/E-shadow-hitl.md | P05b | P05ad (E.8 `pce_cds`) | DRAFT v1.2 |
 | docs/pce/F-decision-package.md | P05e | P05ad (D-44 nem pecsét) | DRAFT v1.2; OQ-k ELŐTERJESZTVE |
 | docs/pce/Outbound/* | P05f | P05ad (OQ-05/15 cső vs 404) | TERVEZET; 16 első kimenő; A9 |
-| docs/pce/Sales/* | P05g | P05ad (demó üres cards) | TERVEZET rendszerlicenc |
+| docs/pce/Sales/* | P05g | P05al (D-52 A16 longevity elesett) | TERVEZET rendszerlicenc; longevity nem v1 vevő |
 | docs/pce/Sources/S028-* | P01c | P05i | L5 jegyzet + PDF |
 | docs/pce/ProcessArtifacts/* | P01–P06 | P05ad (D-44, E-23) | DRAFT |
 | docs/pce/Engineering/* | P05l | P06af (PREPARE-12 ready, TRACE §18) | SYN ticketek; P06 mátrix; kód `src/` |
@@ -197,5 +199,5 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | src/pce_cds/ | P05ad | P05ak | F2 CDS Hooks cső; IIa-safe mechanizmus-család |
 | src/pce_ui/cds.html | P05ad | P05ad | F2 lakat-UI |
 | tests/test_cds.py | P05ad | P05ak | lock / ON / timeout / IIa-safe mátrix (tramadol, klopidogrel) |
-| tests/test_fr_trace.py | P05ak | P05ak | FR-id inventory + FR-250/420/700 + P1/P2 hiány |
+| tests/test_fr_trace.py | P05ak | P05al | FR-id inventory + FR-250/420/700 + P1/P2 hiány + A16/A17 |
 | docs/pce/Sources/official/whocc-atc-l01bc03.html | P05ak | P05ak | WHO tegafur = L01BC03 |

@@ -35,6 +35,8 @@ Kérdés helyett rögzítve. Ha bármelyik hamis, a jelzett szakasz újraírand�
 | A13 | `[ASSUMPTION]` A gateway a ritka gén–gyógyszer kombinációt elnyomja (FR-461), vagy — ha longitudinális követés kell — az intézmény az álnevesített utat választja (re-ID + FR-115). | DPO (OQ-16) | OQ-16; WP29 05/2014 (k-anonimitás *technika*, nem küszöb); EDPB 01/2025 (álnevesített adat személyes adat marad, Rec. 26) | F1s HIS előtt | E.3.1, OQ-16 |
 | A14 | `[ASSUMPTION]` **7 karakteres kód validálva 2026-08-13 (D-38, §10.2 (c)).** Default hatóanyag-kód: WHO ATC **5. szint, 7 karakter** (pl. N06AB05 paroxetin, N06AB10 eszcitaloprám). A 5 karakteres csoportkód (4. szint, pl. N06AB) a párosításhoz **nem elég**. Ritka diplotípus küszöb **0,5%** és k-anonymity **k ≥ 5** intézményi cellán: **nem** a DPIA-ból jön (a DPIA nem létezik → körkörös). Külső horgony: WP29 05/2014 (k-anonimitás: legalább k másik; a nagyobb k erősebb, **k=5 nincs előírva**); EDPB 01/2025 (álnevesítés ≠ anonimitás). Health Canada PRCI (S060) `[V]`: risk=0,09 **és** cél-cella 11 beteg. DHCS DDG V2.2 (S062) `[V]`: numerátor <11 vagy nevező <20 000 — **USA/CA** aggregátum, **nem** EU-jog. A G k≥11 javaslat; az A14 **k ≥ 5** / 0,5% **marad**, amíg a DPO pecsétel. A számokat a DPO választja (OQ-16 III.B1–B4). A DPO **durvíthat** (ATC4 / ATC3 / nagyobb k) — akkor a gén–hatóanyag párosítás **szünetel**. A 7 karakteres kód **nem** azt jelenti, hogy egy szer azonosítja a beteget. | DPO (OQ-16 III.B1–B4) | D-38 (7 karakter) **DONE**; S060/S062 pin **DONE** (D-42); B1/B3 pecsét **nyitott** | OQ-16 pecsét / F1s HIS előtt | FR-461; OQ-16; [G](G-open-items.md) §4 |
 | A15 | A shadow/HITL validációs esetek megőrzése a **klinikai értékelési / vizsgálati protokoll** szerint (hónapok–évek, havi HITL). Feltétel: a rekord **már anonim** (OQ-16/A12) **vagy** van érvényes FR-115. **Nem** 72 órás puffer. | RA + DPO (OQ-15, OQ-16 C2) | OQ-15; OQ-16 C2 | F1s protokoll | E.5.1; FR-440 |
+| A16 | `[CORRECTED]` Az eredeti koncepció (2026-08-09) 1. fázisának *indoka* — gyors piacra lépés, **nincs** szigorú kórházi szabályozási teher, fizetőképes **longevity / biohacking** központok — **elesett**. A v1.0 G4 már labor/klinikai partnert mért; a v1.2 vevő **SKU-P** (klinika, magánellátó, kórház, ellátóhálózat). A helyettesítő szegmens **nagyobb** MDR / 2008/XXI. / OQ-05–16 terhet hordoz, nem kisebbet. Longevity mint v1 vevőtípus **ki**; vissza csak e sor explicit visszavonásával. | Ügyvezetés | D-52 | rögzítve 2026-08-16 | G4; [Sales/sku-and-buyers.md](Sales/sku-and-buyers.md); A1 |
+| A17 | `[CORRECTED]` **Zero-Knowledge / local-first** architektúra **nincs** a v1.2-ben (`src/`-ben 0 találat). Helyette: intézményi gateway (FR-460), irreverzibilis anonimizálás default (A12), k-anonymity (A13, FR-461). A PII az intézményi zónában marad; a PCE nem ZK-bizonyíték. ZK-re váltás új architektúra + DPIA, nem compile-time flag. | DPO (OQ-16) | D-52 | rögzítve 2026-08-16 | B; E; FR-460; FR-461 |
 
 **Nem feltevés, hanem verifikált korlát:** a hazai jogi és EESZT-korlátok (§4) nem tárgyalhatók terméktervezéssel.
 
@@ -48,6 +50,17 @@ Kérdés helyett rögzítve. Ha bármelyik hamis, a jelzett szakasz újraírand�
 | **Mit nem** | Nem a HITL tár alapértelmezett élettartama. Nem „minden shadow 72 h után elvész”. | Nem mentesít a visszavonási kaszkád alól. |
 
 VC-12: az „A10 = 72 órás shadow-puffer” olvasat **hibás**. A havi review A15-öt igényel.
+
+### 0.2 Elesett eredeti GTM és architektúra (A16, A17)
+
+Nem új termékirány. Annak a rögzítése, hogy a 2026-08-09-es koncepció két eleme **szándékosan nincs** a v1.2-ben, és miért:
+
+| Eredeti elem | Hol volt | Ma | Miért nem „majd később csendben” |
+| --- | --- | --- | --- |
+| 1. fázis: longevity / biohacking, *mert* gyors és alacsony kórházi teher | Koncepció 2026-08-09 (a gitbeli v1.0 G4 már labor/klinika) | SKU-P intézménynek (A16) | A helyettesítő vevő **több** pecsétet visel (OQ-05/15/16), nem kevesebbet. A sebességi indok megfordult. |
+| Zero-Knowledge / local-first | Ugyanaz a koncepció; a gitbeli specben sem volt FR | Intézményi gateway + A12/A13 (A17) | Más adatvédelmi modell. Visszavenni = új DPIA, nem flag. |
+
+A ma eladható kimenet: **F1+ statikus, aláírt laborlelet.** A három lakat (`LIVE_CDS=false`, `MATCHER_ON=false`, `IIA_SAFE_BLOCK=true`) ezt tartja. Az eredeti „Ne írj fel clopidogrelt a vényírás pillanatában” demó **F2**, NG-07. Az egész hibrid **A1-en** áll; OQ-05 nyitott.
 
 ---
 
@@ -85,7 +98,7 @@ Outcome-ok, nem output-ok.
 | **G5** | A v2 (IIa) útvonal ne igényeljen újraírást | QMS + ugyanaz az L4-live motor shadowban, mint F3-on; klinikai UI-kapcsoló külön | REG-030; FR-470 flag |
 | **G6** | Nincs szabályozási bypass | 0 shadow/CDSS inferencia a klinikai pathen F1+ buildben | FR-470 CI |
 
-**Üzleti goal, amit nem a termék teljesít:** az MKIK-akkreditációhoz szükséges referenciák. G4 ezt szolgálja.
+**Üzleti goal, amit nem a termék teljesít:** az MKIK-akkreditációhoz szükséges referenciák. G4 ezt szolgálja. G4 vevő = intézményi SKU-P (**A16**). Longevity / biohacking **nem** G4 vevő; a „gyors, alacsony kórházi teher” 1. fázis **elesett**.
 
 ### 2.1 Success metrics (write-spec)
 
@@ -726,7 +739,7 @@ A csomagok és a **gyártói kérés** a [F mellékletben](F-decision-package.md
 
 **2026-08-13 (D-42, §10.2 (c)):** S060 Health Canada PRCI és S062 DHCS DDG V2.2 **pinelve**. A k≥11 **Health Canada `[V]`**, nem 1/0,09 `[I]`. Az A14 k≥5 / 0,5% **nem** DPO-pecsét. DHCS 20 000 **nem** EU-jog.
 
-**2026-08-14 (D-44, §10.2 (c)):** F2 CDS Hooks cső (`src/pce_cds/`, `python -m pce_cds`) a dobozban van. Repo `LIVE_CDS=false`: discovery `enabled: false`, POST 200 üres `cards` (fail-open). Bekapcsolás = signed `LIVE_CDS=true`, nem újraírás, nem admin-config. A `pce_clinical` processzuson a CDS **404** `E-ISO-002` marad. OQ-05 / OQ-06 / OQ-15 / OQ-16 **nem** zárul. A14 k≥5 / 0,5% változatlan.
+**2026-08-16 (D-52, §10.2 (c)):** A16/A17 — elesett longevity-GTM és Zero-Knowledge/local-first. Nem új FR. OQ-k **nem** pecsét. A14 / flagok változatlanok.
 
 Az OQ-05 / OQ-15 / OQ-16 / OQ-01 / OQ-03 / OQ-17 **nem** zárulnak le. ELŐTERJESZTVE / NYITOTT maradnak. OQ-06 nyitott (RA); G §2.4 (a) fallback `[A]` 2026-10-31.
 
@@ -841,6 +854,9 @@ Váz:
 - Feature-attribution (SHAP-osztály) **csak** ha később külön ML komponens kerül a rendszerbe (nem LLM; nem v1 PGx-core). S028 analógia. Nem G3.
 - Pharma kohorsz-toborzás (EHDS 2031+)
 - Biztosítói prevenciós modul
+- T2D PRS + emelkedett glükóz → diabetológiai konzílium (eredeti koncepció kártyája; FR-430 P2, nincs kimenet)
+- Longevity / biohacking mint v1 vevő — **elesett** (A16); ne szivárogjon vissza G4-be
+- Zero-Knowledge / local-first — **elesett** (A17); ne szivárogjon vissza FR-460 helyére
 - Engineering ticket-bontás és gold-set annotációs SOP — **következő munka**, nem spec-feladat (§10.2)
 
 ---

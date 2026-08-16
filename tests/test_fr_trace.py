@@ -156,5 +156,37 @@ class DeferredFrTests(unittest.TestCase):
         self.assertNotIn("alert_fatigue", src_blob)
 
 
+class FallenGtmRecordTests(unittest.TestCase):
+    """A16/A17: original phase-1 speed rationale and ZK/local-first fell. Stay on the record."""
+
+    def test_spec_has_a16_a17_rows(self) -> None:
+        spec = SPEC.read_text(encoding="utf-8")
+        self.assertIn("| A16 |", spec)
+        self.assertIn("| A17 |", spec)
+        self.assertIn("longevity / biohacking", spec)
+        self.assertIn("Zero-Knowledge / local-first", spec)
+        self.assertIn("elesett", spec)
+        self.assertIn("### 0.2 Elesett eredeti GTM és architektúra (A16, A17)", spec)
+
+    def test_sku_and_buyers_records_fallen_longevity(self) -> None:
+        sku = (ROOT / "docs" / "pce" / "Sales" / "sku-and-buyers.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("A16", sku)
+        self.assertIn("longevity", sku.lower())
+        self.assertIn("biohacking", sku.lower())
+        self.assertIn("elesett", sku)
+        self.assertIn("A17", sku)
+        self.assertIn("Zero-Knowledge", sku)
+
+    def test_src_has_no_zero_knowledge_or_local_first(self) -> None:
+        for path in (ROOT / "src").rglob("*.py"):
+            blob = path.read_text(encoding="utf-8").lower()
+            self.assertNotIn("zero-knowledge", blob, msg=str(path))
+            self.assertNotIn("zero knowledge", blob, msg=str(path))
+            self.assertNotIn("local-first", blob, msg=str(path))
+            self.assertNotIn("local first", blob, msg=str(path))
+
+
 if __name__ == "__main__":
     unittest.main()
