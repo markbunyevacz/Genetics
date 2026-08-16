@@ -510,3 +510,18 @@ BA: a pivot indoka (hatályos Rule 11 alatt gyakorlatilag nincs Class I MDSW) ip
 | Flag / OQ | `LIVE_CDS=false`; `MATCHER_ON=false`; `IIA_SAFE_BLOCK=true`. OQ **nem** pecsét. |
 | Unittest | **241 OK** |
 
+---
+
+## 27. P06ao — OQ-05 teszt-jegyzőkönyv a unittest fából (2026-08-16, D-55)
+
+A user két opciót adott: a 195→241 delta fókusza, vagy OQ-05 pecsét-jegyzőkönyv. A kettő nem verseng. A 46 új teszt a jegyzőkönyv tartalomjegyzéke. A generátor **nem** tölti a V. pecsétet.
+
+| Tétel | Eredmény |
+| --- | --- |
+| 195→241 | +46. D-50 ops/F1s (F5 fail-open, warfarin státusz, PharmCAT circuit breaker). D-51 F2 IIa-safe + FR-id; FR-250/420/700 = III. D-52 A16/A17 rekord. D-53 L01BC = OQ-06; HGVS-kapu = III.4. D-54 Q4 pin, pecsét nélkül. |
+| Generátor | `docs/pce/ProcessArtifacts/BuildScripts/generate_oq05_protocol.py` — AST + zárt evidenciatábla + mapped unittest. Stdlib. |
+| Jegyzőkönyv | `OQ-05-TEST-PROTOCOL.md`. Státusz ELŐTERJESZTVE. Q1–Q3/III mapped OK. Q2 és Q4 szoftver:`partial`. |
+| E-31 | Brief/G Q1 allow-list **45 → 47**. G §3.2 teszt-szám 124 → 250. |
+| Flag / OQ | `LIVE_CDS=false`; `MATCHER_ON=false`; `IIA_SAFE_BLOCK=true`. OQ **nem** pecsét. |
+| Unittest | **250 OK** |
+

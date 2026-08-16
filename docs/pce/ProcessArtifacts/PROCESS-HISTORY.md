@@ -67,6 +67,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P05al | Elesett GTM + ZK rögzítés (A16/A17) | 2026-08-16 | 2026-08-16 | DONE | BA deviancia: 2026-08-09 koncepció → `main` | A16/A17 §0.2; Sales sku-and-buyers; D-52; teszt a sorok ellen; **231 unittest** | — |
 | P05am | BA M4 újraellenőrzés (L01BC* + HGVS-kapu) | 2026-08-16 | 2026-08-16 | DONE | BA: L01BC* rossz volt; MANIFEST dátum; HGVS MATCHER_ON-hoz | S076 ellenpélda-pin; N3/V8; E-29; D-53; **237 unittest** | — |
 | P05an | COM(2025) 1023 F3-elágazás + OQ-05 Q4 | 2026-08-16 | 2026-08-16 | DONE | BA: Rule 11 pivot, NB-benchmark, COM 1023, MDCG 2024-7 mint S065 | A18 §0.3; OQ-05 Q4; S077–S080; E-30; D-54; **241 unittest**; flagok false | E-30 |
+| P05ao | OQ-05 teszt-jegyzőkönyv a unittest fából | 2026-08-16 | 2026-08-16 | DONE | User: 195→241 fókusz vs OQ-05 pecsét-jegyzőkönyv; mindkettő, pecsét nélkül | `BuildScripts/generate_oq05_protocol.py`; `OQ-05-TEST-PROTOCOL.md`; E-31 45→47; **250 unittest**; OQ **nem** pecsét | E-31 |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -128,6 +129,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-52 | P05al | Longevity 1. fázis + ZK/local-first | Csendben hagyni / §0 feltevés-sor | **A16 + A17.** Az eredeti „gyors, alacsony kórházi teher” 1. fázis **elesett**; v1 vevő SKU-P intézmény (több pecsét, nem kevesebb). ZK/local-first **nincs**; helyette FR-460 + A12/A13. A gitbeli v1.0 **nem** nevezte a longevityt (G4 már labor/klinika); a 10-elemű koncepció git-en kívül. Nincs F-10 rekord ebben a repóban. Flagok / OQ pecsét **változatlan**. | BA 2026-08-16 deviancia | user |
 | D-53 | P05am | L01BC* prefix; MANIFEST dátum; HGVS hátralék | Prefix catch-all / 5. szint; dátumok egységesítése; HGVS külön P1 | **Prefix elvetve** (S076). Top-level `accessed` fagyasztva; sor = pin napja. HGVS/VRS a `MATCHER_ON=true` előfeltétele, nem külön NOW. | BA M4 újraellenőrzés | user |
 | D-54 | P05an | COM(2025) 1023 mint 2026-os stratégia vs F3-elágazás | Átsorolni Class I-re / figyelmen kívül hagyni / fork az F3-nál | **A18 fork.** 2026-os terv = hatályos Rule 11. COM = javaslat (Art. 5: +20 nap + 6 hó). OQ-05 Q4 a javasolt szöveget egyszer kérdezi. Flag / OQ pecsét **változatlan**. MDCG 2024-7 **nem** Rule 11 Q&A, **nem** S065. G4 WTP **nem** validált. | BA 2026-08-16 COM/NB kör | user |
+| D-55 | P05ao | 195→241 áttekintés vs OQ-05 jegyzőkönyv-generátor | Csak inventory / pecsét-sztori / evidencialista a meglévő unittestből | **Generátor + történeti delta.** A 46 új teszt zöme F2/F1s/ops/stratégia. Q1–Q3 mapped tesztek OK; Q2/Q4 szoftver:`partial`. V. pecsét üres. Flagok false. | User 2026-08-16 két opció | user |
 
 ## 3. Error log
 
@@ -164,13 +166,14 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | E-28 | P05ai | Cross-reference breakage | A warfarin helper kiemelésekor az `ORGAN_REASON` konstans kiesett. | Retry: konstans vissza; unittest `reason_organ` zöld. Unittest 195 OK. | D-49 |
 | E-29 | P05am | Incomplete verification / imprecise claim | A M4 közlés: MANIFEST `accessed` „2026-08-13 marad” — a BA három dátumot mért a sorokon. | **Top-level** fagyasztva 2026-08-13; a sorok a pin napját viselik. Teszt rögzíti. Nem egységesítés. | D-53 |
 | E-30 | P05an | Hallucinated / wrong cite | BA: MDCG 2024-7 = „Q&A on Rule 11”, pineld **S065**-ként. | **CORRECTED.** MDCG 2024-7 = PAR-sablon (NB-kijelölés, rev.1 2025-01), nem Rule 11 Q&A. S065 = WHO B01AC04. Operatív Rule 11: S004/S005/S061. COM 1023 = S077/S080. | D-54; VC-18 |
+| E-31 | P05ao | Cross-reference / stale number | OQ-05 brief Q1 és G §3.2 `ALLOWED_B41_TOP_LEVEL` = **45**; `schema.py` **47**. G §3.2 teszt-szám **124** (D-44). | Brief + G a kód élő méretére (47) és a 250-es suite-ra. Jegyzőkönyv a `schema.py`-t méri. Nem pecsét. | D-55 |
 
 ## 4. File timeline
 
 | Fájl | Létrehozva | Módosítva | Státusz |
 | --- | --- | --- | --- |
 | docs/pce/README.md | P00/P05 | P05ad (D-44 F2 cső) | v1.2; G5 cső lakattal |
-| docs/pce/PCE-SPEC-v1.2.md | P05b (git mv) | P05an (D-54 A18 COM fork) | v1.2; ATC-klauzula §10.2 (c); F2 cső; elesett GTM; COM F3-elágazás |
+| docs/pce/PCE-SPEC-v1.2.md | P05b (git mv) | P05ao (D-55 OQ-05 jegyzőkönyv) | v1.2; ATC-klauzula §10.2 (c); F2 cső; elesett GTM; COM F3-elágazás |
 | docs/pce/A-intended-purpose-and-modules.md | P05 | P05ad | DRAFT v1.2; L6-cds lakat |
 | docs/pce/B-architecture-and-interfaces.md | P05 | P05ad (B.4.4 `pce_cds`) | DRAFT v1.2 |
 | docs/pce/C-eeszt-f0-checklist.md | P05 | P05f (C.4 Outbound linkek) | DRAFT v1.2 |
@@ -196,7 +199,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | src/pce_report/static_pins.py | P05ae | P05ae | DPWG/FDA verzió a leleten |
 | src/pce_shadow/ | P05u | P05af | PREPARE-12 élő párok; aktivitási pont a celecoxibnál |
 | src/pce_gateway/kcell.py | P05o | P05ae | monitor `org_id` / `org_display` |
-| docs/pce/G-open-items.md | P05aa | P05an (COM §7; 96 pin) | Javaslat, nem pecsét; S055/S060/S062 LEZÁRVA; S063–S080 |
+| docs/pce/G-open-items.md | P05aa | P05ao (D-55 250 teszt; E-31 47) | Javaslat, nem pecsét; S055/S060/S062 LEZÁRVA; S063–S080 |
 | tests/fixtures/pheno-gold-v0/ | P05y | P05y | N=32; G3 nevező |
 | src/pce_report/schema.py | P05r | P05y | B.4.1 allow-list |
 | tests/fixtures/f1plus-v0/prepare12/ | P05w | P05ae | 12 gén CPIC pin; DPWG index + FDA extract |
@@ -215,4 +218,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | docs/pce/Sources/official/swd-2025-1050-mdr-ivdr-simplification.pdf | P05an | P05an | SWD(2025) 1050 (S078) |
 | docs/pce/Sources/official/gleiss-lutz-com-2025-1023-rule-11.html | P05an | P05an | Gleiss Lutz Rule 11 / AI Omnibus (S079) |
 | docs/pce/Sources/official/eur-lex-com-2025-1023.html | P05an | P05an | EUR-Lex COM 1023 HTML, olvasható Rule 11 (S080) |
-| docs/pce/Outbound/OQ-05-counsel-brief.md | P05f | P05an | Q4 COM javasolt Rule 11; Q1–Q3 pecsét áll |
+| docs/pce/Outbound/OQ-05-counsel-brief.md | P05f | P05ao | Q4 COM; Q1 allow-list 47 (E-31); jegyzőkönyv melléklet, pecsét áll |
+| docs/pce/ProcessArtifacts/BuildScripts/generate_oq05_protocol.py | P05ao | P05ao | OQ-05 evidencialista; nem pecsét |
+| docs/pce/ProcessArtifacts/OQ-05-TEST-PROTOCOL.md | P05ao | P05ao | gépelt jegyzőkönyv; V. pecsét üres |
+| tests/test_oq05_protocol.py | P05ao | P05ao | drift + no-seal + 195→241 = 46 |

@@ -764,6 +764,8 @@ A csomagok és a **gyártói kérés** a [F mellékletben](F-decision-package.md
 
 **2026-08-16 (D-54, §10.2 (c)):** A18 — COM(2025) 1023 F3-elágazásként. 2026-os Rule 11 stratégia **változatlan**. OQ-05 **Q4** a counsel-briefbe. OQ-k **nem** pecsét. Flagok változatlanok. A BA „MDCG 2024-7 = Rule 11 Q&A” állítás **hibás** (E-30); S065 marad WHO B01AC04.
 
+**2026-08-16 (D-55, §10.2 (c)):** OQ-05 teszt-jegyzőkönyv a meglévő unittest fából (`ProcessArtifacts/OQ-05-TEST-PROTOCOL.md`). **Nem** pecsét. Q1–Q3 szoftver-evidencia; Q2/Q4 osztály counsel. E-31: brief/G Q1 allow-list **45 → 47** (a `schema.py` élő mérete). Flagok változatlanok.
+
 Az OQ-05 / OQ-15 / OQ-16 / OQ-01 / OQ-03 / OQ-17 **nem** zárulnak le. ELŐTERJESZTVE / NYITOTT maradnak. OQ-06 nyitott (RA); G §2.4 (a) fallback `[A]` 2026-10-31.
 
 A fejlesztés **elindulhat** a lenti határon. „F.6 nélkül nem indul a mérföldkő” = nincs **éles betegadat, HIS-csatlakozás, nem-MDSW forgalmazás**. Nem azt jelenti, hogy a git üresen marad.

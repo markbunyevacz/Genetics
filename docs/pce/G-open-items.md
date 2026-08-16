@@ -12,7 +12,7 @@
 
 Ez a melléklet döntési javaslat és levezetés: **nem** zárja az OQ-05 / OQ-06 / OQ-16 pecsétjét, **nem** tartalmaz listaárat, és **nem** Rule 11 határozat.
 
-A bemeneti vázlat 108 tesztet és S001–S055-öt említett. A G pecsét-napján (2026-08-13): unittest **113 OK**. 2026-08-14 (D-44, F2 cső): **124 OK**. 2026-08-14 (D-45, ETAP 0): **134 OK**. 2026-08-15 (D-46, PREPARE-12 ready): **158 OK**. 2026-08-15 (D-47, szoftver-KÉSZ): unittest **165 OK**. 2026-08-15 (D-48, F5 mock pipeline): unittest **184 OK**. 2026-08-15 (D-49, repo-konform hardening): unittest **195 OK**. 2026-08-15 (D-50, checklist-zárás): unittest **211 OK**. 2026-08-15 (D-51, M4 IIa-safe mechanizmus): unittest **228 OK**. 2026-08-16 (D-52, A16/A17 elesett GTM): unittest **231 OK**. 2026-08-16 (D-53, L01BC* ellenpélda + HGVS-kapu): unittest **237 OK**. 2026-08-16 (D-54, COM(2025) 1023 F3-elágazás): unittest **241 OK**. A SOURCE-REGISTRY S080-ig tart (S077–S080 = COM/SWD/Gleiss/EUR-Lex). Az F1+ allow-list **47** top-level kulcs (`ALLOWED_B41_TOP_LEVEL`, plusz `pharmvar_version` és `cpic_data_version`), deny-list **15** (`FORBIDDEN_B41_FIELDS`). A hivatalos forrás-pin D-53 után **92** `ok`; D-54 után **96** `ok`.
+A bemeneti vázlat 108 tesztet és S001–S055-öt említett. A G pecsét-napján (2026-08-13): unittest **113 OK**. 2026-08-14 (D-44, F2 cső): **124 OK**. 2026-08-14 (D-45, ETAP 0): **134 OK**. 2026-08-15 (D-46, PREPARE-12 ready): **158 OK**. 2026-08-15 (D-47, szoftver-KÉSZ): unittest **165 OK**. 2026-08-15 (D-48, F5 mock pipeline): unittest **184 OK**. 2026-08-15 (D-49, repo-konform hardening): unittest **195 OK**. 2026-08-15 (D-50, checklist-zárás): unittest **211 OK**. 2026-08-15 (D-51, M4 IIa-safe mechanizmus): unittest **228 OK**. 2026-08-16 (D-52, A16/A17 elesett GTM): unittest **231 OK**. 2026-08-16 (D-53, L01BC* ellenpélda + HGVS-kapu): unittest **237 OK**. 2026-08-16 (D-54, COM(2025) 1023 F3-elágazás): unittest **241 OK**. 2026-08-16 (D-55, OQ-05 teszt-jegyzőkönyv generátor): unittest **250 OK**. A SOURCE-REGISTRY S080-ig tart (S077–S080 = COM/SWD/Gleiss/EUR-Lex). Az F1+ allow-list **47** top-level kulcs (`ALLOWED_B41_TOP_LEVEL`, plusz `pharmvar_version` és `cpic_data_version`), deny-list **15** (`FORBIDDEN_B41_FIELDS`). A hivatalos forrás-pin D-53 után **92** `ok`; D-54 után **96** `ok`. Az OQ-05 szoftver-evidencia jegyzőkönyv: `ProcessArtifacts/OQ-05-TEST-PROTOCOL.md` — **nem** pecsét.
 
 ---
 
@@ -80,7 +80,7 @@ Ez a szakasz **nem** pecsételi az OQ-06-ot. Az A.4.1 tábla nyitott marad.
 
 `[V]` MDCG 2019-11 Rev.1 (S005): modulonkénti értékelés; egy adminisztratív platformba ágyazott orvosi modul **csak azt a modult** vonja az eszköz-rezsimbe, **feltéve, hogy a határok és a függőségek dokumentáltak.**
 
-`[I]` A PCE CI-invariánsok (`LIVE_CDS is False`, zárt 45 kulcsos allow-list, 15-elemű deny-list, `! grep MedicationEntry src/pce_report`, `! grep pce_gateway.pipeline src/pce_report`) **pontosan ez a dokumentáció**, és gépileg ellenőrzött. Ez nem pecsételi az osztályt.
+`[I]` A PCE CI-invariánsok (`LIVE_CDS is False`, zárt **47** kulcsos allow-list, 15-elemű deny-list, `! grep MedicationEntry src/pce_report`, `! grep pce_gateway.pipeline src/pce_report`) **pontosan ez a dokumentáció**, és gépileg ellenőrzött. Ez nem pecsételi az osztályt.
 
 ## 2.2 A kritikus megkülönböztetés: F1+ statikus ≠ L4-live
 
@@ -148,7 +148,7 @@ A helyes, szűk, eldönthető kérdés:
 **Nem-MDSW / Rule 11c Class I mellett:**
 
 1. `[I]` **Nincs beteg-specifikus szelekció.** Két azonos genotípusú beteg azonos leletet kap, akkor is, ha az egyik semmit nem szed, a másik tízféle szert.
-2. `[V]` **A modulhatár gépileg bizonyított.** Zárt allow-list 45 kulcsra, 15-elemű deny-list nested kulcson is, `LIVE_CDS is False` CI-assert, öt izolációs grep (MedicationEntry, medication_entry, pce_gateway.pipeline, pce_shadow, pce_cds a `pce_report`/`pce_clinical` ellen), **124** zöld teszt. MDCG 2019-11 Rev.1 a modulonkénti értékeléshez dokumentált határokat követel. A `pce_cds` a dobozban van; az F1+ processzuson a CDS továbbra is 404.
+2. `[V]` **A modulhatár gépileg bizonyított.** Zárt allow-list **47** kulcsra, 15-elemű deny-list nested kulcson is, `LIVE_CDS is False` CI-assert, öt izolációs grep (MedicationEntry, medication_entry, pce_gateway.pipeline, pce_shadow, pce_cds a `pce_report`/`pce_clinical` ellen), **250** zöld teszt. A Q1–Q3 szoftver-evidencia gépelt jegyzőkönyve: `ProcessArtifacts/OQ-05-TEST-PROTOCOL.md` (**nem** pecsét; E-31: a 45-ös allow-list szám a brief/G régi sora volt). MDCG 2019-11 Rev.1 a modulonkénti értékeléshez dokumentált határokat követel. A `pce_cds` a dobozban van; az F1+ processzuson a CDS továbbra is 404.
 3. `[V]` Az aláíró a labor orvosa (FR-490); a `dose_mg` tiltott token.
 
 **IIa mellett:**
@@ -163,7 +163,7 @@ Három **igen/nem** kérdés a **hatályos** Rule 11-re, plusz **Q4** a javaslat
 
 | # | Kérdés | Melléklet |
 | --- | --- | --- |
-| **Q1** | A §3.1 szerinti kimenet Rule 11 hatálya alatt áll, vagy Rule 11c Class I? | `tests/test_report.py`, `schema.py` allow-list, példa-lelet |
+| **Q1** | A §3.1 szerinti kimenet Rule 11 hatálya alatt áll, vagy Rule 11c Class I? | `tests/test_report.py`, `schema.py` allow-list **47**, `OQ-05-TEST-PROTOCOL.md`, példa-lelet |
 | **Q2** | Ha Rule 11 alatt áll: a beteg-specifikus szelekció hiánya elegendő-e az **IIa alatti** besoroláshoz? | ugyanaz |
 | **Q3** | Ha a válasz Q1-re „Class I”: elegendő-e a jelenlegi CI-invariáns-készlet az MDCG Rev.1 „dokumentált határok és függőségek” követelményéhez? | `.github/workflows/ci.yml` |
 | **Q4** | F1+ és L4-live a COM(2025) 1023 **javasolt** Rule 11 alatt? Az A.4.1 tábla illeszkedik-e a critical/serious/non-serious eszkalációhoz? **Nem** pecsételi Q1–Q3-at. | S077/S080; A.4.1 |

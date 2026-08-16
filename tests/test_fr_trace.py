@@ -207,6 +207,8 @@ class Com1023F3ForkTests(unittest.TestCase):
         self.assertIn("COM(2025) 1023", brief)
         self.assertIn("pecsételi Q1–Q3", brief)
         self.assertIn("MDCG 2024-7 nem melléklet", brief)
+        self.assertIn("OQ-05-TEST-PROTOCOL.md", brief)
+        self.assertIn("**nem** pecsét", brief)
 
     def test_registry_s077_is_com_s065_stays_clopidogrel(self) -> None:
         registry = (
