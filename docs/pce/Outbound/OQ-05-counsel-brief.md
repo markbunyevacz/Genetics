@@ -160,6 +160,8 @@ Az A.4.1 tábla (DPYD S=5, CYP2C19–clopidogrel, kodein, HLA-B\*15:02, tiopurin
 
 Kérjük a három közül **egyet** megjelölni **Q1–Q3-ra**. Ha Feltétellel: a feltételek a specbe kerülnek (FR/CI), nem szóbeli. A **Q4** válasz külön bekezdés; **nem** helyettesíti a lenti pecsétet.
 
+Gyártói kitöltési javaslat (a négyzetek **üresek** maradnak): [OQ-05-feltetellel-tervezet.md](OQ-05-feltetellel-tervezet.md). A 250 teszt **nem** IGEN. Az F5 fail-open és a CI JAR HTTP **nem** NEM. Pecsétig Class I MDSW dosszié (G §3.4).
+
 ### Döntés
 
 - [ ] **IGEN** — az A.1 F1+, a III. invariánsok folyamatos fennállása mellett, a counsel megítélése szerint **nem** valósít meg MDSW-t; Notified Body a forgalomba hozatalhoz **nem** szükséges *ebből a minősítésből*. (Egyéb kötelezettségek — GDPR, 2008/XXI., termékfelelősség — ettől függetlenek.)
@@ -200,6 +202,6 @@ Az alábbi szöveg **csak akkor** használható, ha a fenti döntés IGEN vagy a
 | Aláírás / pecsét | .................................... |
 | Mellékelt dosszié verziója | PCE-SPEC-v1.2 + A melléklet (A.0, A.1, A.1.1, A.1.2, A.4, A.8) |
 
-**Mellékletek:** PCE-SPEC-v1.2; A melléklet; F.1; G §3 + §7; MDCG 2019-11 Rev.1 (a counsel saját példánya); COM(2025) 1023 final PDF + EUR-Lex HTML (S077/S080); `tests/test_report.py`; `src/pce_report/schema.py`; `.github/workflows/ci.yml`; `docs/pce/ProcessArtifacts/OQ-05-TEST-PROTOCOL.md` (gépelt szoftver-evidencia, **nem** pecsét). Tandem/punktum/mdxcro **nem** a minősítés primer forrása. **MDCG 2024-7 nem melléklet** — az a PAR-sablon (NB-kijelölés), nem Rule 11 Q&A (E-30).
+**Mellékletek:** PCE-SPEC-v1.2; A melléklet; F.1; G §3 + §7; MDCG 2019-11 Rev.1 (a counsel saját példánya); COM(2025) 1023 final PDF + EUR-Lex HTML (S077/S080); `tests/test_report.py`; `src/pce_report/schema.py`; `.github/workflows/ci.yml`; `docs/pce/ProcessArtifacts/OQ-05-TEST-PROTOCOL.md` (gépelt szoftver-evidencia, **nem** pecsét); `docs/pce/Outbound/OQ-05-feltetellel-tervezet.md` (gyártói záradék-tervezet, **nem** pecsét). Tandem/punktum/mdxcro **nem** a minősítés primer forrása. **MDCG 2024-7 nem melléklet** — az a PAR-sablon (NB-kijelölés), nem Rule 11 Q&A (E-30).
 
 *Ez az irat gyártói kérés. Nem helyettesíti a counsel független vizsgálatát. OQ-05 a F.6 sor kitöltéséig nyitott.*

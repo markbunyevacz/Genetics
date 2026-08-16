@@ -525,3 +525,18 @@ A user két opciót adott: a 195→241 delta fókusza, vagy OQ-05 pecsét-jegyz�
 | Flag / OQ | `LIVE_CDS=false`; `MATCHER_ON=false`; `IIA_SAFE_BLOCK=true`. OQ **nem** pecsét. |
 | Unittest | **250 OK** |
 
+---
+
+## 28. P06ap — OQ-05 FELTÉTELLEL-tervezet + R-OPS (2026-08-16, D-56)
+
+A user három V. utat adott (IGEN / FELTÉTELLEL / NEM) és két opciót (záradék-szöveg vs fail-open sprint). A V. pecsét Rule 11, nem szoftver-OQ. A checkbox **üres**.
+
+| Tétel | Eredmény |
+| --- | --- |
+| IGEN a suite méretéből | **Elvetve.** Q1 szoftver:`partial`. IV.1 nyitva (gén-szintű terápiás szöveg lehet 11a). |
+| NEM a fail-openből | **Elvetve.** R-OPS-01/02 shadow/CI ops, nem A.1 Rule 11. |
+| FELTÉTELLEL-tervezet | `Outbound/OQ-05-feltetellel-tervezet.md`: három lakat + újra-nyitás; Q4 nem helyettesít; R-OPS dosszié IV. |
+| D-56 | Fail-fast **nem** pecsét-előfeltétel. E-31 = 45→47, nem HGVS. |
+| Flag / OQ | `LIVE_CDS=false`; `MATCHER_ON=false`; `IIA_SAFE_BLOCK=true`. OQ **nem** pecsét. |
+| Unittest | **251 OK** |
+

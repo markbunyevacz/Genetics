@@ -209,6 +209,13 @@ class Com1023F3ForkTests(unittest.TestCase):
         self.assertIn("MDCG 2024-7 nem melléklet", brief)
         self.assertIn("OQ-05-TEST-PROTOCOL.md", brief)
         self.assertIn("**nem** pecsét", brief)
+        self.assertIn("- [ ] **IGEN**", brief)
+        self.assertIn("- [ ] **NEM**", brief)
+        self.assertIn("- [ ] **FELTÉTELLEL**", brief)
+        self.assertNotIn("- [x] **IGEN**", brief)
+        self.assertNotIn("- [x] **NEM**", brief)
+        self.assertNotIn("- [x] **FELTÉTELLEL**", brief)
+        self.assertIn("OQ-05-feltetellel-tervezet.md", brief)
 
     def test_registry_s077_is_com_s065_stays_clopidogrel(self) -> None:
         registry = (

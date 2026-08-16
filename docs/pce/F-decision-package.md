@@ -50,9 +50,9 @@ A disclaimer (A.1.1 / FR-490) **nem** felelősségkizárás és **nem** MDSW-kim
 
 Csomag: A.1, A.1.1, A.1.2, FR-400-STATIC, FR-410-EDU, FR-470, REG-010, MDCG 2019-11 Rev.1.
 
-**Küldendő irat:** [Outbound/OQ-05-counsel-brief.md](Outbound/OQ-05-counsel-brief.md) — Q1–Q3 + Igen/Nem/Feltétellel; A.1 szó szerint; a pecsét nem előre „nem MDSW”.
+**Küldendő irat:** [Outbound/OQ-05-counsel-brief.md](Outbound/OQ-05-counsel-brief.md) — Q1–Q3 + Igen/Nem/Feltétellel; A.1 szó szerint; a pecsét nem előre „nem MDSW”. Gyártói FELTÉTELLEL-tervezet (checkbox **üres**): [OQ-05-feltetellel-tervezet.md](Outbound/OQ-05-feltetellel-tervezet.md).
 
-**Pecsétig `[A]` (G §3.4):** Class I MDSW technical file, nem „nem eszköz”.
+**Pecsétig `[A]` (G §3.4):** Class I MDSW technical file, nem „nem eszköz”. A unittest-suite mérete nem IGEN. Az F5 fail-open / CI JAR HTTP nem NEM.
 
 ---
 

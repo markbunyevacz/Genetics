@@ -73,6 +73,28 @@ class Oq05ProtocolGeneratorTests(unittest.TestCase):
         self.assertIn("szoftver nem minősít", text)
         self.assertIn("LIVE_CDS ettől nem billen", text)
         self.assertIn("Nem tölti ki az OQ-05 V. szakasz", text)
+        self.assertIn("suite méret **nem** IGEN pecsét", text)
+        self.assertIn("R-OPS-01", text)
+        self.assertIn("R-OPS-02", text)
+        self.assertIn("nem pecsét-feloldó", text)
+        self.assertIn("Nem outside-call, nem HGVS", text)
+
+    def test_feltetellel_tervezet_is_not_a_seal(self) -> None:
+        path = ROOT / "docs" / "pce" / "Outbound" / "OQ-05-feltetellel-tervezet.md"
+        text = path.read_text(encoding="utf-8")
+        self.assertIn("**Nem** pecsét", text)
+        self.assertIn("LIVE_CDS=false", text)
+        self.assertIn("MATCHER_ON=false", text)
+        self.assertIn("IIA_SAFE_BLOCK=true", text)
+        self.assertIn("R-OPS-01", text)
+        self.assertIn("R-OPS-02", text)
+        self.assertIn("A unittest-suite mérete **nem** IGEN pecsét", text)
+        self.assertIn("A két ops-kockázat **nem** NEM pecsét", text)
+        self.assertNotIn("OQ-05 LEZÁRVA", text)
+        self.assertNotIn("- [x]", text)
+        self.assertNotIn("E-31/HGVS", text)
+        self.assertIn("45 → 47", text)
+        self.assertIn("Class I MDSW", text)
 
     def test_committed_protocol_matches_generator(self) -> None:
         expected = self.gen.render("2026-08-16", run_mapped=True)

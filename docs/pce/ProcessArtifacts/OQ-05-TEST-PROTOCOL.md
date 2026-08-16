@@ -19,8 +19,9 @@ Ez a jegyzőkönyv azt dokumentálja, hogy a D-49 hardening pontjai és a ráép
 | `IIA_SAFE_BLOCK` | `true` |
 | `ALLOWED_B41_TOP_LEVEL` | **47** (`src/pce_report/schema.py`) |
 | `FORBIDDEN_B41_FIELDS` | **15** |
-| Unittest készlet (loader) | **250** teszt |
-| AST `test_*` metódus | **250** |
+| Unittest készlet (loader) | **251** teszt |
+| AST `test_*` metódus | **251** |
+| Q1–Q4/III/OPS mapped egyedi teszt | **51** (nem a teljes 251) |
 
 Az OQ-05 brief Q1 allow-list száma megegyezik a `schema.py` élő méretével.
 
@@ -425,6 +426,7 @@ Minden `test_*` a fában. A `mapped` oszlop akkor `igen`, ha a teszt szerepel a 
 | `tests/test_oq05_protocol.py` | `test_committed_protocol_matches_generator` | nem |
 | `tests/test_oq05_protocol.py` | `test_delta_195_241_has_46_and_all_exist` | nem |
 | `tests/test_oq05_protocol.py` | `test_every_mapped_id_exists_in_ast` | nem |
+| `tests/test_oq05_protocol.py` | `test_feltetellel_tervezet_is_not_a_seal` | nem |
 | `tests/test_oq05_protocol.py` | `test_generated_text_is_not_a_seal` | nem |
 | `tests/test_oq05_protocol.py` | `test_mapped_tests_run_ok` | nem |
 | `tests/test_oq05_protocol.py` | `test_q2_is_partial_and_q4_does_not_unlock_flags` | nem |
@@ -542,5 +544,17 @@ Minden `test_*` a fában. A `mapped` oszlop akkor `igen`, ha a teszt szerepel a 
 - Nem állítja, hogy a CI job hermetikusan hálózat nélkül fut. A JAR-pin HTTP a tesztek *előtt* fut; az air-gap a `PCE_PHARMCAT_OFFLINE=1` tesztfázis.
 - Nem állítja, hogy az F5 live út fail-fast. Hálózati `OSError` → üres lista (fail-open).
 - Nem pecsételi az OQ-06-ot (IIa-safe párok) és nem billenti a `LIVE_CDS` / `MATCHER_ON` / `IIA_SAFE_BLOCK` lakatot.
+- A 251-es suite méret **nem** IGEN pecsét. Az F5 fail-open és a CI JAR HTTP **nem** NEM pecsét.
+
+## 5. Maradék ops-kockázat — nem Q1–Q3 döntő, nem pecsét-feloldó
+
+Két szándékos viselkedés. A gyártói záradék-tervezet: `docs/pce/Outbound/OQ-05-feltetellel-tervezet.md`. D-56: fail-fast-re váltás **nem** OQ-05 előfeltétel.
+
+| ID | Tény | Hol | OQ-05 viszony |
+| --- | --- | --- | --- |
+| **R-OPS-01** | F5 live `OSError` → `[]` (fail-open). Prod `CPIC_F5_SOURCE=off`. Mock nem megy az aláírt leletre. | `LiveF5Provider.rows()`; OPS-F5 tesztek | Shadow/F1s ops. Nem Rule 11 vs 11c. |
+| **R-OPS-02** | CI a tesztek előtt HTTP-n tölti a pinelt JAR-t. Tesztfázis: `PCE_PHARMCAT_OFFLINE=1`. | `.github/workflows/ci.yml`; OPS-PHARMCAT tesztek | Matcher default ki. Nem a teljes job air-gap. |
+
+**E-31** a brief/G allow-list 45→47 (`schema.py`). Nem outside-call, nem HGVS.
 
 *Generálta: `docs/pce/ProcessArtifacts/BuildScripts/generate_oq05_protocol.py`. Újragenerálás: `PYTHONPATH=src python3 …/generate_oq05_protocol.py --write`.*

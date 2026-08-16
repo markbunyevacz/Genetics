@@ -68,6 +68,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P05am | BA M4 újraellenőrzés (L01BC* + HGVS-kapu) | 2026-08-16 | 2026-08-16 | DONE | BA: L01BC* rossz volt; MANIFEST dátum; HGVS MATCHER_ON-hoz | S076 ellenpélda-pin; N3/V8; E-29; D-53; **237 unittest** | — |
 | P05an | COM(2025) 1023 F3-elágazás + OQ-05 Q4 | 2026-08-16 | 2026-08-16 | DONE | BA: Rule 11 pivot, NB-benchmark, COM 1023, MDCG 2024-7 mint S065 | A18 §0.3; OQ-05 Q4; S077–S080; E-30; D-54; **241 unittest**; flagok false | E-30 |
 | P05ao | OQ-05 teszt-jegyzőkönyv a unittest fából | 2026-08-16 | 2026-08-16 | DONE | User: 195→241 fókusz vs OQ-05 pecsét-jegyzőkönyv; mindkettő, pecsét nélkül | `BuildScripts/generate_oq05_protocol.py`; `OQ-05-TEST-PROTOCOL.md`; E-31 45→47; **250 unittest**; OQ **nem** pecsét | E-31 |
+| P05ap | OQ-05 FELTÉTELLEL-tervezet + R-OPS maradék kockázat | 2026-08-16 | 2026-08-16 | DONE | User: V. pecsét három út; FELTÉTELLEL-szöveg vs fail-open sprint | `OQ-05-feltetellel-tervezet.md`; jegyzőkönyv §5 R-OPS-01/02; V. checkbox üres; D-56: fail-fast **nem** pecsét-előfeltétel; **251 unittest** | — |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -130,6 +131,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-53 | P05am | L01BC* prefix; MANIFEST dátum; HGVS hátralék | Prefix catch-all / 5. szint; dátumok egységesítése; HGVS külön P1 | **Prefix elvetve** (S076). Top-level `accessed` fagyasztva; sor = pin napja. HGVS/VRS a `MATCHER_ON=true` előfeltétele, nem külön NOW. | BA M4 újraellenőrzés | user |
 | D-54 | P05an | COM(2025) 1023 mint 2026-os stratégia vs F3-elágazás | Átsorolni Class I-re / figyelmen kívül hagyni / fork az F3-nál | **A18 fork.** 2026-os terv = hatályos Rule 11. COM = javaslat (Art. 5: +20 nap + 6 hó). OQ-05 Q4 a javasolt szöveget egyszer kérdezi. Flag / OQ pecsét **változatlan**. MDCG 2024-7 **nem** Rule 11 Q&A, **nem** S065. G4 WTP **nem** validált. | BA 2026-08-16 COM/NB kör | user |
 | D-55 | P05ao | 195→241 áttekintés vs OQ-05 jegyzőkönyv-generátor | Csak inventory / pecsét-sztori / evidencialista a meglévő unittestből | **Generátor + történeti delta.** A 46 új teszt zöme F2/F1s/ops/stratégia. Q1–Q3 mapped tesztek OK; Q2/Q4 szoftver:`partial`. V. pecsét üres. Flagok false. | User 2026-08-16 két opció | user |
+| D-56 | P05ap | V. pecsét: IGEN / FELTÉTELLEL / NEM vs gyártói tervezet | Kitölteni a checkboxot / fail-open fail-fast sprint / tervezet pecsét nélkül | **Tervezet, pecsét nélkül.** IGEN a 250 tesztből kategóriahiba. NEM a fail-openből kategóriahiba. FELTÉTELLEL-szöveg a három lakat + újra-nyitás; R-OPS-01/02 dosszié IV, nem pecsét-kapu. Flagok false. | User 2026-08-16 három út | user |
 
 ## 3. Error log
 
@@ -218,7 +220,8 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | docs/pce/Sources/official/swd-2025-1050-mdr-ivdr-simplification.pdf | P05an | P05an | SWD(2025) 1050 (S078) |
 | docs/pce/Sources/official/gleiss-lutz-com-2025-1023-rule-11.html | P05an | P05an | Gleiss Lutz Rule 11 / AI Omnibus (S079) |
 | docs/pce/Sources/official/eur-lex-com-2025-1023.html | P05an | P05an | EUR-Lex COM 1023 HTML, olvasható Rule 11 (S080) |
-| docs/pce/Outbound/OQ-05-counsel-brief.md | P05f | P05ao | Q4 COM; Q1 allow-list 47 (E-31); jegyzőkönyv melléklet, pecsét áll |
-| docs/pce/ProcessArtifacts/BuildScripts/generate_oq05_protocol.py | P05ao | P05ao | OQ-05 evidencialista; nem pecsét |
-| docs/pce/ProcessArtifacts/OQ-05-TEST-PROTOCOL.md | P05ao | P05ao | gépelt jegyzőkönyv; V. pecsét üres |
-| tests/test_oq05_protocol.py | P05ao | P05ao | drift + no-seal + 195→241 = 46 |
+| docs/pce/Outbound/OQ-05-counsel-brief.md | P05f | P05ap | Q4 COM; Q1 47; FELTÉTELLEL-tervezet pointer; pecsét áll |
+| docs/pce/Outbound/OQ-05-feltetellel-tervezet.md | P05ap | P05ap | gyártói záradék; checkbox üres |
+| docs/pce/ProcessArtifacts/BuildScripts/generate_oq05_protocol.py | P05ao | P05ap | + §5 R-OPS; mapped ≠ suite |
+| docs/pce/ProcessArtifacts/OQ-05-TEST-PROTOCOL.md | P05ao | P05ap | gépelt jegyzőkönyv; V. pecsét üres |
+| tests/test_oq05_protocol.py | P05ao | P05ap | drift + no-seal + tervezet |

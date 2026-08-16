@@ -27,6 +27,7 @@ A telephelyi lánc **kötött**: `OQ-16 → OQ-15 → OQ-03`. Az OQ-05 **nem** v
 | Fájl | OQ | Címzett | Típus |
 | --- | --- | --- | --- |
 | [OQ-05-counsel-brief.md](OQ-05-counsel-brief.md) | OQ-05 | Külső jogi és szabályozási tanácsadó | Állásfoglalás-kérés |
+| [OQ-05-feltetellel-tervezet.md](OQ-05-feltetellel-tervezet.md) | OQ-05 | Ugyanaz (melléklet) | Gyártói FELTÉTELLEL záradék-tervezet; **nem** pecsét |
 | [OQ-16-dpo-dpia-kerdoiv.md](OQ-16-dpo-dpia-kerdoiv.md) | OQ-16 | DPO / DPIA munkacsoport | Igen/nem kontrollcsomag |
 | [OQ-16-kuldesi-csomag.md](OQ-16-kuldesi-csomag.md) | OQ-16 | Küldő (belső) | Boríték + változó-tábla; **első kimenő irat** |
 | [OQ-15-intezmenyi-ra-egyoldalas.md](OQ-15-intezmenyi-ra-egyoldalas.md) | OQ-15 | Intézményi RA / orvosigazgató / etikai bizottság | Jóváhagyási kérelem |
