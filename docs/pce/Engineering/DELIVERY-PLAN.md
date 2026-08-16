@@ -99,7 +99,7 @@ Store: `CounsellingRecord`, `ConsentRecord`, `Sample`, `DeletionCertificate` a c
 | --- | --- | --- |
 | N1 | ATC + verziózott mapping a riport metaadatában | A gateway ATC-csonkolása már megvan; a klinikai út ugyanazt a csonkolást használja, ha gyógyszerlistát *tárol* |
 | N2 | Ismeretlen kód → `NEEDS_MAPPING` / `E-MAP-001`, nincs csendes hiányos lista | Shadow LIVE input |
-| N3 | HGVS/VRS left-align | csak WP-V VCF-path |
+| N3 | HGVS/VRS left-align + trim | **HGVS/VRS előfeltétel: `MATCHER_ON=true`.** Amíg a repo flag false és F1 = FR-240, N3 nem NOW. Kapcsoláskor WP-V V8. |
 
 OGYÉI gépi licence OQ-11 `[NEEDS VERIFICATION]` — SYN-en ATC WHO; nem kitalált HU törzs.
 
@@ -260,6 +260,7 @@ F1 default marad FR-240. VCF kell a missing-to-ref P0 teszthez. A csillag-allél
 | V5 | ≥3 gold: hiányzó definiáló pozíció → INDETERMINATE, nem NORMAL. Minták: `tests/fixtures/vcf-gold-v0/` (gyártó SYN, Ensembl/dbSNP pin). 4. fájl: CYP2C9\*3. HLA-B / UGT1A1\*28 `not_snv`. CDC GeT-RM fizikai minta labor-QC, nem ezek a fájlok. | FR-210; PharmCAT `--absent-to-ref` **nincs** hívva |
 | V6 | Repo `MATCHER_ON is False`. Default `add_vcf` nem hív diplotípust. | FR-300 / OQ-05 |
 | V7 | `matcher_on=True`: PharmCAT 3.4.0 NamedAlleleMatcher + Phenotyper **hívva**. CYP2D6 \*4/\*4 CALLED a gold VCF-en. Több diplotípus / hiányzó hely → INDETERMINATE, soha nem kitalált `*1`. HLA-B / UGT1A1\*28 `NOT_TESTED`. Riport: pipeline / PharmVar / CPIC-adat verzió. | `tests/test_prepare12_ready.py`; mint F2 `live_cds=True` |
+| V8 | HGVS + GA4GH VRS, left-align + trim a VCF variáns-bemeneten | **Előfeltétel:** repo vagy tenancy `MATCHER_ON=true`. N3. Amíg false, nincs mit normalizálni (FR-240 diplotípus-string). |
 
 ---
 
@@ -295,7 +296,7 @@ FR-230 LRI, FR-480 enciklopédia `GET /v1/encyclopedia` (nincs order-sign Card a
 
 ## Expliciten tilos pecsét / CE előtt
 
-Éles HIS, `LIVE_CDS=true` a *repo konstansban* / LOCK tenancyen, matcher ON F1+, valódi TAJ, kitalált G1/G2/C2, US F2 (OQ-17), §13 gold-set SOP, PRS (FR-430), EESZT írás (NG-05), LLM klinikai szöveg. A `pce_cds` cső **nem** tilos — a suggestion a felírónak tilos.
+Éles HIS, `LIVE_CDS=true` a *repo konstansban* / LOCK tenancyen, matcher ON F1+ HGVS/VRS nélkül (N3/V8), valódi TAJ, kitalált G1/G2/C2, US F2 (OQ-17), §13 gold-set SOP, PRS (FR-430), EESZT írás (NG-05), LLM klinikai szöveg. A `pce_cds` cső **nem** tilos — a suggestion a felírónak tilos. HGVS/VRS előfeltétel: `MATCHER_ON=true`.
 
 ---
 

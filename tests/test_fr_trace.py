@@ -188,5 +188,34 @@ class FallenGtmRecordTests(unittest.TestCase):
             self.assertNotIn("local first", blob, msg=str(path))
 
 
+class MatcherOnHgvsGateTests(unittest.TestCase):
+    """FR-250 HGVS/VRS is gated on MATCHER_ON=true — not a separate NOW backlog (D-53)."""
+
+    def test_spec_and_trace_bind_hgvs_to_matcher_on(self) -> None:
+        spec = SPEC.read_text(encoding="utf-8")
+        self.assertIn("HGVS és GA4GH VRS", spec)
+        self.assertIn("Előfeltétel:** `MATCHER_ON=true`", spec)
+        trace = (ROOT / "docs" / "pce" / "Engineering" / "SPEC-PLAN-TRACE.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("HGVS/VRS előfeltétel: `MATCHER_ON=true`", trace)
+        plan = (ROOT / "docs" / "pce" / "Engineering" / "DELIVERY-PLAN.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("HGVS/VRS előfeltétel: `MATCHER_ON=true`", plan)
+        self.assertIn("V8", plan)
+
+    def test_src_has_no_hgvs_or_vrs_implementation(self) -> None:
+        for path in (ROOT / "src").rglob("*.py"):
+            blob = path.read_text(encoding="utf-8").lower()
+            self.assertNotIn("hgvs", blob, msg=str(path))
+            self.assertNotIn("ga4gh", blob, msg=str(path))
+            self.assertNotIn("left-align", blob, msg=str(path))
+            self.assertNotIn("left_align", blob, msg=str(path))
+            # bare "vrs" is too short; require the standard token
+            self.assertNotIn("ga4gh vrs", blob, msg=str(path))
+            self.assertNotIn("allele_vrs", blob, msg=str(path))
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -65,6 +65,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P05aj | Checklist-zárás stdlib keretben | 2026-08-15 | 2026-08-15 | DONE | User: F5DataProvider, fixture immutábilis, idempotencia, HTML parser, circuit breaker, warfarin kapu státusz | `F5DataProvider`; `warfarin_eval`; stdlib `HTMLParser`; `add_outside_call`; `config/production.env`; **211 unittest** | — |
 | P05ak | M4 IIa-safe mechanizmus + FR-id lánc | 2026-08-15 | 2026-08-15 | DONE | BA-audit S1/S2/S3 (tramadol, klopidogrel, FR-annotáció) | `IiaSafeFamily`; WHO L01BC03 pin; `tests/test_fr_trace.py`; CI FR-id lépés; **228 unittest** | — |
 | P05al | Elesett GTM + ZK rögzítés (A16/A17) | 2026-08-16 | 2026-08-16 | DONE | BA deviancia: 2026-08-09 koncepció → `main` | A16/A17 §0.2; Sales sku-and-buyers; D-52; teszt a sorok ellen; **231 unittest** | — |
+| P05am | BA M4 újraellenőrzés (L01BC* + HGVS-kapu) | 2026-08-16 | 2026-08-16 | DONE | BA: L01BC* rossz volt; MANIFEST dátum; HGVS MATCHER_ON-hoz | S076 ellenpélda-pin; N3/V8; E-29; D-53; **237 unittest** | — |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -124,6 +125,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-50 | P05aj | MissingGeneticDataException vs üres finding | Klinikai crash / státuszkód + üres `live_findings` | **Nincs crash.** Warfarin hiányzó gén → `warfarin_eval.status=MISSING_GENETIC_DATA`, üres `live_findings`. Nincs Pydantic/BS4/pytest. HTML pin: stdlib `HTMLParser`. | User 2026-08-15 checklist | user |
 | D-51 | P05ak | IIa-safe INN-literál vs mechanizmus | Marad a 7 ATC5 / angol INN / BA szerinti mechanizmus-család | **Mechanizmus-család.** Tramadol + tegafur + tioguanin + HU variáns a pinelt CPIC/WHO forrásból. L01BC*/L01BB* catch-all **elvetve** (gemcitabin/fludarabin). FR-420/250 más néven megvolt; FR-id CI annotációt mér, a P1/P2 hiányát explicit teszteli. | BA M4 audit 2026-08-13 | user |
 | D-52 | P05al | Longevity 1. fázis + ZK/local-first | Csendben hagyni / §0 feltevés-sor | **A16 + A17.** Az eredeti „gyors, alacsony kórházi teher” 1. fázis **elesett**; v1 vevő SKU-P intézmény (több pecsét, nem kevesebb). ZK/local-first **nincs**; helyette FR-460 + A12/A13. A gitbeli v1.0 **nem** nevezte a longevityt (G4 már labor/klinika); a 10-elemű koncepció git-en kívül. Nincs F-10 rekord ebben a repóban. Flagok / OQ pecsét **változatlan**. | BA 2026-08-16 deviancia | user |
+| D-53 | P05am | L01BC* prefix; MANIFEST dátum; HGVS hátralék | Prefix catch-all / 5. szint; dátumok egységesítése; HGVS külön P1 | **Prefix elvetve** (S076). Top-level `accessed` fagyasztva; sor = pin napja. HGVS/VRS a `MATCHER_ON=true` előfeltétele, nem külön NOW. | BA M4 újraellenőrzés | user |
 
 ## 3. Error log
 
@@ -158,6 +160,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | E-26 | P05ag | Scope / missed delivery | A „ki/honnan” kérdést státuszmondattal válaszoltuk; a PharmCAT-pipákat „legyen” helyett leírásként olvastuk; a flag ki-t szoftver-hiánynak. | Retry: szereplőtábla + kód. PharmCAT 3.4.0 hívva. Rec_view párok + warfarin-diagram. Flagok false. Unittest 165 OK. | D-47 |
 | E-27 | P05ah | Scope / missed delivery | Az F5 „nincs rec-sor” mondatot fejlesztési stopnak olvastuk. | Switch: adat-agnosztikus pipeline mock fixture-ön; LIVE kapcsoló; prod off. Unittest 184 OK. | D-48 |
 | E-28 | P05ai | Cross-reference breakage | A warfarin helper kiemelésekor az `ORGAN_REASON` konstans kiesett. | Retry: konstans vissza; unittest `reason_organ` zöld. Unittest 195 OK. | D-49 |
+| E-29 | P05am | Incomplete verification / imprecise claim | A M4 közlés: MANIFEST `accessed` „2026-08-13 marad” — a BA három dátumot mért a sorokon. | **Top-level** fagyasztva 2026-08-13; a sorok a pin napját viselik. Teszt rögzíti. Nem egységesítés. | D-53 |
 
 ## 4. File timeline
 
@@ -185,7 +188,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | src/pce_shadow/f5_rec.py | P05ah | P05ah | F5 DataProvider; off/mock/live |
 | tests/fixtures/cpic_f5_mock.json | P05ah | P05ah | MOCK rec_view; nem CPIC publikáció |
 | tests/test_f5_rec_pipeline.py | P05ah | P05ah | mock HET/WT; warfarin *2/*3; HTTP matcher_on |
-| docs/pce/Sources/official/ | P05x | P05ag | **87** `ok`; MANIFEST `accessed` 2026-08-13 |
+| docs/pce/Sources/official/ | P05x | P05am | **92** `ok`; top-level `accessed` 2026-08-13; sorok 13/14/15/16 |
 | tests/fixtures/vcf-gold-v0/ | P05w | P05af | 4 missing-to-ref + `called-cyp2d6-star4-hom.vcf`; HLA/UGT `not_snv` |
 | src/pce_report/static_pins.py | P05ae | P05ae | DPWG/FDA verzió a leleten |
 | src/pce_shadow/ | P05u | P05af | PREPARE-12 élő párok; aktivitási pont a celecoxibnál |
@@ -198,6 +201,10 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | docs/pce/Sources/market/ | P05z | P05z | SMART + Semmelweis/KÉ pin |
 | src/pce_cds/ | P05ad | P05ak | F2 CDS Hooks cső; IIa-safe mechanizmus-család |
 | src/pce_ui/cds.html | P05ad | P05ad | F2 lakat-UI |
-| tests/test_cds.py | P05ad | P05ak | lock / ON / timeout / IIa-safe mátrix (tramadol, klopidogrel) |
-| tests/test_fr_trace.py | P05ak | P05al | FR-id inventory + FR-250/420/700 + P1/P2 hiány + A16/A17 |
+| tests/test_cds.py | P05ad | P05am | lock / ON / timeout / IIa-safe 13/13 + 6/6 + 7/7 + L01BC ellenpélda |
+| tests/test_fr_trace.py | P05ak | P05am | FR-id + A16/A17 + HGVS MATCHER_ON-kapu |
 | docs/pce/Sources/official/whocc-atc-l01bc03.html | P05ak | P05ak | WHO tegafur = L01BC03 |
+| docs/pce/Sources/official/whocc-atc-l01bc01.html | P05am | P05am | WHO citarabin = L01BC01 (S076 ellenpélda) |
+| docs/pce/Sources/official/whocc-atc-l01bc05.html | P05am | P05am | WHO gemcitabin = L01BC05 (S076) |
+| docs/pce/Sources/official/whocc-atc-l01bb04.html | P05am | P05am | WHO kladribin = L01BB04 (S076) |
+| docs/pce/Sources/official/whocc-atc-l01bb05.html | P05am | P05am | WHO fludarabin = L01BB05 (S076) |

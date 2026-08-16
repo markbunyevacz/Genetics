@@ -34,4 +34,8 @@ A PREPARE-12 gén `pair_view` / `recommendation_view` JSON: `tests/fixtures/f1pl
 
 A motor futáskor **nem** parse-olja a PDF-et. A pinelt JSON-kivonatot olvassa. A PDF/HTML itt van, hogy a forrás ne csak URL legyen.
 
-Újraletöltés: `python3 docs/pce/Sources/official/fetch_official_sources.py` (2026-08-13 kör). ETAP 0 pin: `python3 docs/pce/Sources/official/fetch_etap0_pins.py` — a MANIFEST `accessed` mezőjét a régi sorokon **nem** írja felül.
+A többi WHO 5. szintű hatóanyag-oldal a `MANIFEST.json`-ban van, nem ebben a táblában. IIa-safe **ellenpélda** (2026-08-16, S076): `whocc-atc-l01bc01.html` citarabin, `whocc-atc-l01bc05.html` gemcitabin, `whocc-atc-l01bb04.html` kladribin, `whocc-atc-l01bb05.html` fludarabin.
+
+**MANIFEST `accessed`:** a top-level mező **2026-08-13** marad (az első kör fagyasztása). A sorok a *saját* pin napjukat viselik (`2026-08-13` / `14` / `15` / `16`). Ez szándékos, nem egységesítés.
+
+Újraletöltés: `python3 docs/pce/Sources/official/fetch_official_sources.py` (2026-08-13 kör). ETAP 0 pin: `python3 docs/pce/Sources/official/fetch_etap0_pins.py` — a MANIFEST `accessed` mezőjét a régi sorokon **nem** írja felül. A `--jar-only` **nem** hív `merge_manifest`-et.

@@ -212,6 +212,52 @@ class OfficialPinTests(unittest.TestCase):
             self.assertEqual(hashlib.sha256(raw).hexdigest(), row["sha256"])
             self.assertEqual(len(raw), row["bytes"])
 
+    def test_manifest_accessed_is_pin_day_not_unified(self) -> None:
+        """Top-level freeze 2026-08-13; each file keeps the day it was pinned (E-29 / D-53)."""
+        manifest = json.loads((OFFICIAL / "MANIFEST.json").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["accessed"], "2026-08-13")
+        allowed = {"2026-08-13", "2026-08-14", "2026-08-15", "2026-08-16"}
+        dates = {row["accessed"] for row in manifest["files"]}
+        self.assertTrue(dates <= allowed, msg=dates)
+        self.assertEqual(
+            {"2026-08-13", "2026-08-14", "2026-08-15", "2026-08-16"},
+            dates,
+        )
+        by_id = {row["id"]: row for row in manifest["files"]}
+        self.assertEqual(by_id["CPIC-SSRI-2023-PDF"]["accessed"], "2026-08-13")
+        self.assertEqual(by_id["WHO-ATC-B01AC04"]["accessed"], "2026-08-14")
+        self.assertEqual(by_id["WHO-ATC-L01BC03"]["accessed"], "2026-08-15")
+        self.assertEqual(by_id["WHO-ATC-L01BC05"]["accessed"], "2026-08-16")
+        who5 = [
+            row
+            for row in manifest["files"]
+            if str(row["id"]).startswith("WHO-ATC-") and row["id"] != "WHO-ATC-STRUCTURE"
+        ]
+        self.assertGreaterEqual(len(who5), 62)
+        self.assertGreaterEqual(sum(1 for row in manifest["files"] if row.get("ok")), 92)
+
+    def test_l01bc_counterexample_pins_2026_08_16(self) -> None:
+        manifest = json.loads((OFFICIAL / "MANIFEST.json").read_text(encoding="utf-8"))
+        by_id = {row["id"]: row for row in manifest["files"]}
+        expected = {
+            "WHO-ATC-L01BC01": "cytarabine",
+            "WHO-ATC-L01BC05": "gemcitabine",
+            "WHO-ATC-L01BB04": "cladribine",
+            "WHO-ATC-L01BB05": "fludarabine",
+        }
+        for pin_id, inn in expected.items():
+            row = by_id[pin_id]
+            raw = (ROOT / row["path"]).read_bytes()
+            self.assertEqual(row["accessed"], "2026-08-16")
+            self.assertEqual(hashlib.sha256(raw).hexdigest(), row["sha256"])
+            self.assertEqual(len(raw), row["bytes"])
+            text = raw.decode("utf-8", errors="replace")
+            self.assertIn(inn, text.lower())
+        gem = (OFFICIAL / "whocc-atc-l01bc05.html").read_text(encoding="utf-8", errors="replace")
+        self.assertIn("Pyrimidine analogues", gem)
+        flu = (OFFICIAL / "whocc-atc-l01bb05.html").read_text(encoding="utf-8", errors="replace")
+        self.assertIn("Purine analogues", flu)
+
 
 if __name__ == "__main__":
     unittest.main()

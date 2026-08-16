@@ -228,6 +228,55 @@ class IiaSafeMechanismTests(unittest.TestCase):
         self.assertTrue(is_iia_safe_med({"name": "Klopidogrel Actavis 75 mg"}))
         self.assertFalse(is_iia_safe_med({"name": "Paroxetin Actavis 20 mg"}))
 
+    def test_ba_reaudit_block_pass_and_hungarian_names(self) -> None:
+        """BA 2026-08-16 matrix: 13 blocked, 6 pass, 7 HU display without ATC."""
+        blocked = (
+            {"code": "R05DA04", "inn": "codeine"},
+            {"code": "N02AX02", "inn": "tramadol"},
+            {"code": "L01BC02", "inn": "fluorouracil"},
+            {"code": "L01BC06", "inn": "capecitabine"},
+            {"code": "L01BC03", "inn": "tegafur"},
+            {"code": "L04AX01", "inn": "azathioprine"},
+            {"code": "L01BB02", "inn": "mercaptopurine"},
+            {"code": "L01BB03", "inn": "thioguanine"},
+            {"code": "N03AF01", "inn": "carbamazepine"},
+            {"code": "N03AF02", "inn": "oxcarbazepine"},
+            {"code": "N03AB02", "inn": "phenytoin"},
+            {"code": "N03AB05", "inn": "fosphenytoin"},
+            {"code": "B01AC04", "inn": "clopidogrel"},
+        )
+        self.assertEqual(len(blocked), 13)
+        for med in blocked:
+            with self.subTest(block=med):
+                self.assertTrue(is_iia_safe_med(med), msg=med)
+
+        allowed = (
+            {"code": "N06AB05", "inn": "paroxetine"},
+            {"code": "L01BC05", "inn": "gemcitabine"},
+            {"code": "L01BB05", "inn": "fludarabine"},
+            {"code": "L01BC01", "inn": "cytarabine"},
+            {"code": "L01BB04", "inn": "cladribine"},
+            {"code": "N06AB06", "inn": "sertraline"},
+        )
+        self.assertEqual(len(allowed), 6)
+        for med in allowed:
+            with self.subTest(pass_=med):
+                self.assertFalse(is_iia_safe_med(med), msg=med)
+
+        hungarian = (
+            "Klopidogrel Actavis 75 mg",
+            "Karbamazepin Teva 200mg",
+            "Azatioprin retard",
+            "Kodein-foszfát",
+            "Tramadol-hidroklorid",
+            "Kapecitabin Accord",
+            "5-FU infúzió",
+        )
+        self.assertEqual(len(hungarian), 7)
+        for name in hungarian:
+            with self.subTest(hu=name):
+                self.assertTrue(is_iia_safe_med({"name": name}), msg=name)
+
     def test_who_pins_cover_new_atc5(self) -> None:
         official = ROOT / "docs" / "pce" / "Sources" / "official"
         checks = (
@@ -237,12 +286,33 @@ class IiaSafeMechanismTests(unittest.TestCase):
             ("whocc-atc-n03ab02.html", "N03AB02", "phenytoin"),
             ("whocc-atc-n03af02.html", "N03AF02", "oxcarbazepine"),
             ("whocc-atc-b01ac04.html", "B01AC04", "clopidogrel"),
+            ("whocc-atc-l01bc01.html", "L01BC01", "cytarabine"),
+            ("whocc-atc-l01bc05.html", "L01BC05", "gemcitabine"),
+            ("whocc-atc-l01bb04.html", "L01BB04", "cladribine"),
+            ("whocc-atc-l01bb05.html", "L01BB05", "fludarabine"),
         )
         for name, code, inn in checks:
             blob = (official / name).read_text(encoding="utf-8", errors="replace").lower()
             with self.subTest(name=name):
                 self.assertIn(code.lower(), blob)
                 self.assertIn(inn.lower(), blob)
+
+    def test_l01bc_prefix_would_false_positive_on_pinned_who(self) -> None:
+        official = ROOT / "docs" / "pce" / "Sources" / "official"
+        gem = (official / "whocc-atc-l01bc05.html").read_text(encoding="utf-8", errors="replace")
+        self.assertIn("Pyrimidine analogues", gem)
+        self.assertIn("L01BC05", gem)
+        self.assertIn("gemcitabine", gem.lower())
+        cla = (official / "whocc-atc-l01bb04.html").read_text(encoding="utf-8", errors="replace")
+        self.assertIn("Purine analogues", cla)
+        self.assertIn("L01BB04", cla)
+        self.assertIn("cladribine", cla.lower())
+        self.assertNotIn("L01BC", IIA_SAFE_ATC_PREFIXES)
+        self.assertNotIn("L01BB", IIA_SAFE_ATC_PREFIXES)
+        self.assertFalse(is_iia_safe_med({"code": "L01BC05"}))
+        self.assertFalse(is_iia_safe_med({"code": "L01BC01"}))
+        self.assertFalse(is_iia_safe_med({"code": "L01BB04"}))
+        self.assertFalse(is_iia_safe_med({"code": "L01BB05"}))
 
 
 class IsolationFromF1Tests(unittest.TestCase):

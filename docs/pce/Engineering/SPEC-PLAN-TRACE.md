@@ -57,7 +57,7 @@ Mérés: minden spec-tétel **FULL** / **PARTIAL** / **PLANNED** / **DEFERRED** 
 | **NOW-F1+** | §10.2 L0–L2, FR-240, 210, 310, 400-STATIC, 410-EDU, 490, 500 PDF/FHIR, 470, 700 | WP-C, K, N, T, F, R, U, X, L, Q |
 | **NOW-F1s** | §10.2 440/450/450-BLIND/460/461/410-LIVE SYN | WP-G (kész), H, M |
 | **NOW-F2-PIPE** | FR-520 cső + FR-530 stub; `LIVE_CDS=false` | **WP-F2** |
-| **LOCK** | `LIVE_CDS=true` a repo konstansban, matcher ON F1+, MedicationEntry a rendererben, élő HIS, élő suggestion a felírónak | WP-I negatív CI |
+| **LOCK** | `LIVE_CDS=true` a repo konstansban; matcher ON F1+ **HGVS/VRS nélkül** (N3/V8); MedicationEntry a rendererben; élő HIS; élő suggestion a felírónak | WP-I negatív CI |
 | **LATER-P1** | FR-230, 480, 510, 540, 600, 610-EN-UI, 120 hash-chain, 220 FHIR | WP-P1 |
 | **LATER-F2** | élő Card / SMART interruptive pecsét után | signed `LIVE_CDS=true` + REG-011 |
 | **P2 / parking** | FR-430, §13, NG-01–06, EESZT írás | nem kód |
@@ -78,7 +78,7 @@ Mérés: minden spec-tétel **FULL** / **PARTIAL** / **PLANNED** / **DEFERRED** 
 | FR-220 | P0 F1s; F1+ nem L4 | PARTIAL | **WP-K / M** | PUT tárol; a renderernek nincs gyógyszerlista-argumentuma; a lelet a gén guideline-tábláját listázza (`gyogyszerlista_a_leleten=false`); shadow `ABSENT` | FHIR medication bundle P1 |
 | FR-230 | P1 | — | **WP-P1** | — | DEFERRED |
 | FR-240 | Prod P0 | PARTIAL | **WP-K** | JSON+TSV HTTP; `E-CALL-001`; `W-CALL-010` + resolve | HL7 P1 |
-| FR-250 | Prod P0 | PARTIAL | **WP-N** | default 7 karakteres hatóanyag-kód (`truncate_atc`); `E-MAP-001` a B.5 katalógusban; teszt: `tests/test_fr_trace.py` | HGVS/VRS VCF-path; OGYÉI mapping **nincs bekötve** (F1+ nem fogyaszt `MedicationEntry`-t) |
+| FR-250 | Prod P0 | PARTIAL | **WP-N** | default 7 karakteres hatóanyag-kód (`truncate_atc`); `E-MAP-001` a B.5 katalógusban; teszt: `tests/test_fr_trace.py` | ATC/OGYÉI: mapping **nincs bekötve** (F1+ nem fogyaszt `MedicationEntry`-t). **HGVS/VRS előfeltétel: `MATCHER_ON=true`.** Amíg false + FR-240, a spec „ahol variáns bemenet van” ága nem él — nem külön hátralék. |
 | FR-300 | Prod P0 VCF; F1 OFF | PARTIAL | **WP-I / V** | PharmCAT 3.4.0 NamedAlleleMatcher + Phenotyper **hívva** `call_star_alleles(..., matcher_on=True)` / `POST .../files?matcher_on=true`. Riport: `pipeline_version`, `pharmcat_version`, `pharmvar_version`, `cpic_data_version`. Több diplotípus → INDETERMINATE, nincs önkényes `*1`. HLA-B VCF-ből NOT_TESTED. Repo `MATCHER_ON=false`. Jar SOUP, MPL 2.0, nem fork. | F1+ default ON tilos változáskezelés nélkül. CYP2D6 kópiaszám/hibrid SNP-VCF-ből nem jön ki → jelzett, nem kitalált |
 | FR-310 | Prod P0 | PARTIAL | **WP-T** | PREPARE-12 + `config_id`; 12 gén CPIC `pair_view` pin (S049) | change-control rekord; HLA-A/NUDT15 külön config |
 | FR-400-STATIC | Prod P0 F1+ | PARTIAL | **WP-T / R** | 12 gén CPIC pair dump; F5/VKORC1 üres rec **jelezve**; `dpwg_version` + ClinPGx DPWG annotation index URL-lel; `fda_table_version` + Table 2-2 CYP2D6 strong extract; nincs szintetizált harmadik ajánlás | DPWG teljes HTML tábla nem a findings-ben (index + pin); lektorált HU DPWG-szöveg |
@@ -461,7 +461,7 @@ Független BA-audit (annotációt mért, viselkedést a 12 Compliance P0 + `pce_
 | --- | --- |
 | IIa-safe | `IiaSafeFamily` ötöd: DPYD-fluoropirimidin (FU / kapecitabin / tegafur), CYP2C19–clopidogrel, TPMT-tiopurin (+ tioguanin), CYP2D6-opioid (kodein **és** tramadol), HLA-B\*15:02 aromás antiepileptikum (N03AF + N03AB02/N03AB05). Magyar INN-variáns. WHO L01BC/L01BB **prefix nincs** (gemcitabin / fludarabin). Pin: S048/S049 + WHO L01BC03 (S075). |
 | FR-420 | Létezik: `severity_means_replace_prescribed=false`, findings gén-kulccsal. Nem hiányzott — jelöletlen volt. |
-| FR-250 | Létezik: 7 karakteres ATC a gatewayen. `E-MAP-001` katalógusban, F1+ riport **nem** emeli (nincs gyógyszerlista a leleten). HGVS/VRS továbbra is rés. |
+| FR-250 | Létezik: 7 karakteres ATC a gatewayen. `E-MAP-001` katalógusban, F1+ riport **nem** emeli (nincs gyógyszerlista a leleten). HGVS/VRS **nem** külön hátralék: **előfeltétel `MATCHER_ON=true`.** |
 | FR-id CI | Minden spec `#### FR-…` heading token a `tests/`-ben. P1/P2 (FR-230/430/480/510/540/600) **hiány** tesztelve, nem hamis FULL. |
 | Flag | `LIVE_CDS=false`; `MATCHER_ON=false`; `IIA_SAFE_BLOCK=true`. OQ **nem** pecsét. MANIFEST `accessed` **2026-08-13**. Official pin **88** `ok`. |
 | Unittest | **228 OK** |
@@ -478,4 +478,19 @@ BA deviancia: 2026-08-09 koncepció tíz eleme vs `main`. Két elemnek **nem** v
 | A17 | ZK / local-first **nincs** `src/`-ben. Helyette FR-460 + A12 + A13. Visszavenni = DPIA, nem flag. |
 | Nem pecsét | OQ-05/15/16 nyitott. `LIVE_CDS=false`; `MATCHER_ON=false`; `IIA_SAFE_BLOCK=true`. Nincs F-10 ebben a repóban. |
 | Teszt | `FallenGtmRecordTests`: A16/A17 sor, sku-and-buyers, `src/` ZK-tilalom. Unittest **231 OK**. |
+
+---
+
+## 25. P06am — BA M4 újraellenőrzés: L01BC* + MANIFEST dátum + HGVS-kapu (2026-08-16, D-53)
+
+A BA igazolta: a `L01BC*` / `L01BB*` prefix-catch-all **rossz**. WHO 4. szint anatómiai-terápiás taxonómia, nem PGx-mechanizmus. Pinelt ellenpélda (2026-08-16): citarabin L01BC01, gemcitabin L01BC05 a „Pyrimidine analogues” alatt; kladribin L01BB04, fludarabin L01BB05 a „Purine analogues” alatt — egyiknek sincs DPYD- vagy TPMT-mechanizmusa.
+
+| Tétel | Eredmény |
+| --- | --- |
+| L01BC* / L01BB* | **Elvetve marad.** `IIA_SAFE_ATC_PREFIXES` nem tartalmazza. Teszt: 13 blokk + 6 kontroll + 7 HU név. |
+| MANIFEST `accessed` | Top-level **2026-08-13** (első kör fagyasztása). Sorok: 2026-08-13 / 14 / 15 / 16 a *pin napja*. A „egységesen 2026-08-13” közlés **pontatlan** volt (E-29); a top-level zárolás szándékos. |
+| WHO 5. szint | BA újraellenőrzéskor **58** hatóanyag-oldal (+ 1 structure). Most +4 ellenpélda → **62** hatóanyag + structure. Official pin **92** `ok`. |
+| FR-250 HGVS/VRS | **HGVS/VRS előfeltétel: `MATCHER_ON=true`.** N3/V8. `src/`-ben 0 HGVS/VRS implementáció — helyes, amíg a matcher ki. |
+| Flag / OQ | `LIVE_CDS=false`; `MATCHER_ON=false`; `IIA_SAFE_BLOCK=true`. OQ **nem** pecsét. |
+| Unittest | **237 OK** |
 

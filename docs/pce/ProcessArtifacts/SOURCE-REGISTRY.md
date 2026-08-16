@@ -79,6 +79,7 @@ Hozzáférés dátuma: 2026-08-12, kivéve ahol jelezve. Authority: L1 hivatalos
 | S073 | WHOCC ATC/DDD Index a rec_view szerekre + warfarin B01AA03 | Hivatalos | L1 | https://www.whocc.no/atc_ddd_index/ ; `Sources/official/whocc-atc-*.html` (2026-08-15) | 7 karakteres hatóanyag-kód. tioguanine = L01BB03 (WHO írásmód). |
 | S074 | F5 mock recommendation_view fixture | Gyártói minta (nem CPIC publikáció) | L5 | `tests/fixtures/cpic_f5_mock.json` + séma `cpic_f5_recommendation.schema.json` | 2026-08-15. Pipeline-teszt. **Nem** hivatalos CPIC rec_view. Prod `CPIC_F5_SOURCE=off`. LIVE az API-ra vár. |
 | S075 | WHOCC ATC/DDD Index L01BC03 | Hivatalos | L1 | https://www.whocc.no/atc_ddd_index/?code=L01BC03 ; `Sources/official/whocc-atc-l01bc03.html` | tegafur = L01BC03. 2026-08-15. CPIC DPYD rec_view `pair_drugnames` már tartalmazza. IIa-safe fluoropirimidin-ág. |
+| S076 | WHOCC ATC/DDD Index L01BC01, L01BC05, L01BB04, L01BB05 | Hivatalos | L1 | https://www.whocc.no/atc_ddd_index/ ; `Sources/official/whocc-atc-l01bc01.html` stb. | 2026-08-16. **Ellenpélda** a L01BC*/L01BB* prefix ellen: citarabin, gemcitabin, kladribin, fludarabin. 4. szint ≠ PGx-mechanizmus. |
 
 **Nem került a registrybe (szándékos):** Fortune/Mordor/Straits TAM-számok (egymásnak ellentmondó L4/L5); Allelica ACC/AHA idézés (céges PR, `[C]`); YouScript 39%/71% kórházi csökkenés (céges közlés); punktum.net / mdxcro.com / IntuitionLabs mint Rule 11a primer (L4, S039-en keresztül említve).
 

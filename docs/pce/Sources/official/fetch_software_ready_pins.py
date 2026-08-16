@@ -4,6 +4,12 @@
 Does not rewrite MANIFEST top-level accessed (must stay 2026-08-13).
 Manufacturer (this repo) fetches. Not a lab or hospital task.
 
+L01BC01/L01BC05/L01BB04/L01BB05 are *not* in WHO_ATC below. They are
+IIa-safe counterexamples (S076, accessed 2026-08-16): pyrimidine/purine
+analogues without DPYD/TPMT mechanism. Do not add them to this 2026-08-15
+loop — merge would stamp TODAY onto new rows only, but a full re-run of
+this list is a different pin day.
+
 Usage: python3 docs/pce/Sources/official/fetch_software_ready_pins.py [--jar-only]
 
 --jar-only writes the PharmCAT jar + pin JSON. It does not rewrite MANIFEST.json

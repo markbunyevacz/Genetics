@@ -353,7 +353,7 @@ Az F1 default útvonal. A partnerlabor **már meghívott** diplotípusa.
 
 #### FR-250 · Variáns- és terminológia-normalizálás — **Product P0**
 
-- [ ] Variáns-reprezentáció HGVS és GA4GH VRS szerint, left-align + trim, ahol variáns bemenet van.
+- [ ] Variáns-reprezentáció HGVS és GA4GH VRS szerint, left-align + trim, ahol variáns bemenet van. **Előfeltétel:** `MATCHER_ON=true` (VCF-útvonal). Amíg a repo `MATCHER_ON=false` és az F1 default FR-240 (outside-call), a feltétel nem teljesül — ez **nem** külön NOW-hátralék (D-53; TRACE N3/V8).
 - [ ] Gyógyszer: ATC + hazai törzs (OGYÉI/PHARMINDEX) `[NEEDS VERIFICATION]` gépi licence (OQ-11). Labor: LOINC. Fenotípus: SNOMED CT vagy CPIC-terminológia.
 - [ ] Given ismeretlen gyógyszerkód, When mapping, Then `NEEDS_MAPPING`, **nincs** csendes hiányos gyógyszerlistás riport (`E-MAP-001`).
 - [ ] A mapping-táblák verziózottak; a verzió a riport metaadatában szerepel.
@@ -740,6 +740,8 @@ A csomagok és a **gyártói kérés** a [F mellékletben](F-decision-package.md
 **2026-08-13 (D-42, §10.2 (c)):** S060 Health Canada PRCI és S062 DHCS DDG V2.2 **pinelve**. A k≥11 **Health Canada `[V]`**, nem 1/0,09 `[I]`. Az A14 k≥5 / 0,5% **nem** DPO-pecsét. DHCS 20 000 **nem** EU-jog.
 
 **2026-08-16 (D-52, §10.2 (c)):** A16/A17 — elesett longevity-GTM és Zero-Knowledge/local-first. Nem új FR. OQ-k **nem** pecsét. A14 / flagok változatlanok.
+
+**2026-08-16 (D-53, §10.2 (c)):** FR-250 HGVS/VRS pipa a `MATCHER_ON=true` előfeltételéhez kötve. L01BC*/L01BB* prefix **elvetve** marad (pinelt ellenpélda: gemcitabin / citarabin / fludarabin / kladribin). MANIFEST: top-level `accessed` **2026-08-13**; a sorok a pin napját viselik. OQ-k **nem** pecsét. Flagok változatlanok.
 
 Az OQ-05 / OQ-15 / OQ-16 / OQ-01 / OQ-03 / OQ-17 **nem** zárulnak le. ELŐTERJESZTVE / NYITOTT maradnak. OQ-06 nyitott (RA); G §2.4 (a) fallback `[A]` 2026-10-31.
 
