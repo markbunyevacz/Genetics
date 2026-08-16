@@ -28,6 +28,7 @@ A telephelyi lánc **kötött**: `OQ-16 → OQ-15 → OQ-03`. Az OQ-05 **nem** v
 | --- | --- | --- | --- |
 | [OQ-05-counsel-brief.md](OQ-05-counsel-brief.md) | OQ-05 | Külső jogi és szabályozási tanácsadó | Állásfoglalás-kérés |
 | [OQ-05-feltetellel-tervezet.md](OQ-05-feltetellel-tervezet.md) | OQ-05 | Ugyanaz (melléklet) | Gyártói FELTÉTELLEL záradék-tervezet; **nem** pecsét |
+| [OQ-05-SEND-PACK.md](OQ-05-SEND-PACK.md) | OQ-05 | Ugyanaz (boríték) | Tartalomjegyzék + SHA-256; **nem** pecsét; saját hashét nem tartalmazza |
 | [OQ-16-dpo-dpia-kerdoiv.md](OQ-16-dpo-dpia-kerdoiv.md) | OQ-16 | DPO / DPIA munkacsoport | Igen/nem kontrollcsomag |
 | [OQ-16-kuldesi-csomag.md](OQ-16-kuldesi-csomag.md) | OQ-16 | Küldő (belső) | Boríték + változó-tábla; **első kimenő irat** |
 | [OQ-15-intezmenyi-ra-egyoldalas.md](OQ-15-intezmenyi-ra-egyoldalas.md) | OQ-15 | Intézményi RA / orvosigazgató / etikai bizottság | Jóváhagyási kérelem |
@@ -46,7 +47,7 @@ A telephelyi lánc **kötött**: `OQ-16 → OQ-15 → OQ-03`. Az OQ-05 **nem** v
 2. **OQ-15** (intézményi RA) — **csak lezárt OQ-16 után**. Reviewer-vak HITL kérelem; HIS pecsét: OQ-15 **és** OQ-16.
 3. **OQ-03** (labor) — REG-020 / opcionális `[Yl]`; labornevet itt **nem** találunk ki.
 
-**OQ-05** (gyártói counsel) — F1+ nem-MDSW *kérés*. A gén-szintű CPIC szöveg továbbra is eshet a Rule 11a alá. Kórházi név **nem** kell. A válasz a telephely **F1+ ON/LOCK** (vagy IIa) flagjét adja, nem a HIS-csatlakozást. Extra melléklet ehhez az irathoz: [OQ-05-feltetellel-tervezet.md](OQ-05-feltetellel-tervezet.md); [OQ-05-TEST-PROTOCOL.md](../ProcessArtifacts/OQ-05-TEST-PROTOCOL.md) (**nem** pecsét); gold fixture `tests/fixtures/f1plus-v0/outside-call-cyp2d6-called.json` (**nem** aláírt PDF). REG-030 **nem** küldési feltétel.
+**OQ-05** (gyártói counsel) — F1+ nem-MDSW *kérés*. A gén-szintű CPIC szöveg továbbra is eshet a Rule 11a alá. Kórházi név **nem** kell. A válasz a telephely **F1+ ON/LOCK** (vagy IIa) flagjét adja, nem a HIS-csatlakozást. Extra melléklet ehhez az irathoz: [OQ-05-feltetellel-tervezet.md](OQ-05-feltetellel-tervezet.md); [OQ-05-TEST-PROTOCOL.md](../ProcessArtifacts/OQ-05-TEST-PROTOCOL.md) (**nem** pecsét); gold fixture `tests/fixtures/f1plus-v0/outside-call-cyp2d6-called.json` (**nem** aláírt PDF); [OQ-05-SEND-PACK.md](OQ-05-SEND-PACK.md) (SHA-256 boríték, **nem** pecsét). REG-030 **nem** küldési feltétel.
 
 **OQ-01** (belső) — 2026-09-30 ISO 9001 / 4. melléklet 2.1; C-000. **Nem** „ISO megújítás”. Redmine ≠ EESZT FHIR (NG-05).
 

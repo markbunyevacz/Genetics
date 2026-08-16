@@ -70,6 +70,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P05ao | OQ-05 teszt-jegyzőkönyv a unittest fából | 2026-08-16 | 2026-08-16 | DONE | User: 195→241 fókusz vs OQ-05 pecsét-jegyzőkönyv; mindkettő, pecsét nélkül | `BuildScripts/generate_oq05_protocol.py`; `OQ-05-TEST-PROTOCOL.md`; E-31 45→47; **250 unittest**; OQ **nem** pecsét | E-31 |
 | P05ap | OQ-05 FELTÉTELLEL-tervezet + R-OPS maradék kockázat | 2026-08-16 | 2026-08-16 | DONE | User: V. pecsét három út; FELTÉTELLEL-szöveg vs fail-open sprint | `OQ-05-feltetellel-tervezet.md`; jegyzőkönyv §5 R-OPS-01/02; V. checkbox üres; D-56: fail-fast **nem** pecsét-előfeltétel; **251 unittest** | — |
 | P05aq | OQ-05 counsel-küldés citáció vs Class I REG-030 | 2026-08-16 | 2026-08-16 | DONE | User: REG-dosszié áttekintés vs tervezet hivatkozás-ellenőrzés a formális átadás előtt | Küldési kapu = citáció; REG-030 **nem** send-blocker; D.1 kezdeti 14971; gold JSON ≠ PDF; G §3.2 250 IGEN-érv ki; CI `IIA_SAFE_BLOCK`; V. üres; D-57; **258 unittest** | E-32 |
+| P05ar | OQ-05 send-pack SHA-256 boríték | 2026-08-16 | 2026-08-16 | DONE | User: formális tartalomjegyzék + SHA-256 a counsel átadás-átvételhez | `OQ-05-SEND-PACK.md`; REG-010/gold/D.1/tervezet + brief VI; boríték nem hashéli magát; REG-030 nincs a táblában; V. üres; D-58; **261 unittest** | — |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -134,6 +135,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-55 | P05ao | 195→241 áttekintés vs OQ-05 jegyzőkönyv-generátor | Csak inventory / pecsét-sztori / evidencialista a meglévő unittestből | **Generátor + történeti delta.** A 46 új teszt zöme F2/F1s/ops/stratégia. Q1–Q3 mapped tesztek OK; Q2/Q4 szoftver:`partial`. V. pecsét üres. Flagok false. | User 2026-08-16 két opció | user |
 | D-56 | P05ap | V. pecsét: IGEN / FELTÉTELLEL / NEM vs gyártói tervezet | Kitölteni a checkboxot / fail-open fail-fast sprint / tervezet pecsét nélkül | **Tervezet, pecsét nélkül.** IGEN a 250 tesztből kategóriahiba. NEM a fail-openből kategóriahiba. FELTÉTELLEL-szöveg a három lakat + újra-nyitás; R-OPS-01/02 dosszié IV, nem pecsét-kapu. Flagok false. | User 2026-08-16 három út | user |
 | D-57 | P05aq | Class I MDSW REG-dosszié vs OQ-05 citáció a counsel-átadás előtt | Teljes REG-030/14971/PMS/DoC áttekintés küldési kapuként / a brief+tervezet hivatkozásainak ellenőrzése | **Citáció.** REG-010 = A melléklet (már a csomagban). REG-030 F2-párhuzamos, **nem** send-blocker. D.1 kezdeti, nem teljes dosszié. V. üres. Flagok false. | User 2026-08-16 átadás-előtti kérdés | user |
+| D-58 | P05ar | SHA-256 boríték a counsel-átadáshoz | Csak a négy név (REG-010/gold/D.1/tervezet) / a brief VI. teljes mellékletlista / REG-030 QMS byte is | **Brief VI. + a négy név.** Boríték nem hashéli magát. REG-030 nincs a táblában. V. üres. Flagok false. IIA_SAFE_BLOCK = IIa-safe pár-lakat, **nem** COM-mentesség. | User 2026-08-16 checksum kérés | user |
 
 ## 3. Error log
 
@@ -223,9 +225,11 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | docs/pce/Sources/official/swd-2025-1050-mdr-ivdr-simplification.pdf | P05an | P05an | SWD(2025) 1050 (S078) |
 | docs/pce/Sources/official/gleiss-lutz-com-2025-1023-rule-11.html | P05an | P05an | Gleiss Lutz Rule 11 / AI Omnibus (S079) |
 | docs/pce/Sources/official/eur-lex-com-2025-1023.html | P05an | P05an | EUR-Lex COM 1023 HTML, olvasható Rule 11 (S080) |
-| docs/pce/Outbound/OQ-05-counsel-brief.md | P05f | P05aq | Q4 COM; Q1 gold fixture; Q3 10 teszt; pecsét áll |
-| docs/pce/Outbound/OQ-05-feltetellel-tervezet.md | P05ap | P05aq | gyártói záradék; §6 küldési kapu; checkbox üres |
-| docs/pce/ProcessArtifacts/BuildScripts/generate_oq05_protocol.py | P05ao | P05aq | + D-57 send-pack; mapped ≠ suite |
-| docs/pce/ProcessArtifacts/OQ-05-TEST-PROTOCOL.md | P05ao | P05aq | gépelt jegyzőkönyv; V. pecsét üres |
-| tests/test_oq05_protocol.py | P05ao | P05aq | send-pack citáció + 51/10 lakat |
+| docs/pce/Outbound/OQ-05-counsel-brief.md | P05f | P05ar | Q4 COM; Q1 gold; SEND-PACK pointer; pecsét áll |
+| docs/pce/Outbound/OQ-05-feltetellel-tervezet.md | P05ap | P05ar | gyártói záradék; §6 + SHA-256 pointer; checkbox üres |
+| docs/pce/ProcessArtifacts/BuildScripts/generate_oq05_protocol.py | P05ao | P05ar | + D-58 send-pack; mapped ≠ suite |
+| docs/pce/ProcessArtifacts/OQ-05-TEST-PROTOCOL.md | P05ao | P05ar | gépelt jegyzőkönyv; V. pecsét üres |
+| tests/test_oq05_protocol.py | P05ao | P05ar | send-pack SHA-256 + 51/10 lakat |
 | .github/workflows/ci.yml | P05ad | P05aq | `IIA_SAFE_BLOCK is True` |
+| docs/pce/Outbound/OQ-05-SEND-PACK.md | P05ar | P05ar | tartalomjegyzék + SHA-256; nem pecsét |
+| docs/pce/ProcessArtifacts/BuildScripts/generate_oq05_send_pack.py | P05ar | P05ar | stdlib SHA-256 boríték |

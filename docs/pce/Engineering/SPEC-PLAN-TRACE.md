@@ -555,3 +555,17 @@ A user a formális counsel-átadás előtt két utat adott: Class I MDSW (G §3.
 | Flag / OQ | `LIVE_CDS=false`; `MATCHER_ON=false`; `IIA_SAFE_BLOCK=true`. OQ **nem** pecsét. |
 | Unittest | **258 OK** |
 
+---
+
+## 30. P06ar — OQ-05 send-pack SHA-256 boríték (2026-08-16, D-58)
+
+A user a kiküldéshez formális tartalomjegyzéket és SHA-256 listát kért (REG-010, gold JSON, D.1, tervezet). A V. pecsét Rule 11, nem szoftver-OQ. A checkbox **üres**.
+
+| Tétel | Eredmény |
+| --- | --- |
+| Boríték | `Outbound/OQ-05-SEND-PACK.md`. 15 hashed fájl = brief VI. + a négy név. Saját hashét **nem** tartalmazza. |
+| REG-030 | **Nincs** a hash-táblában. Nem küldési feltétel. |
+| IIA_SAFE_BLOCK | IIa-safe pár-lakat a CI-ben. **Nem** COM(2025) 1023 mentesség. |
+| Flag / OQ | `LIVE_CDS=false`; `MATCHER_ON=false`; `IIA_SAFE_BLOCK=true`. OQ **nem** pecsét. |
+| Unittest | **261 OK** |
+

@@ -515,6 +515,11 @@ def render(date: str, *, run_mapped: bool) -> str:
         "`Oq05CounselSendPackTests` (**nem** mapped Q1–Q3 evidencia)."
     )
     a("")
+    a(
+        "**D-58:** átadás-átvételi SHA-256 boríték: `docs/pce/Outbound/OQ-05-SEND-PACK.md`. "
+        "Nem pecsét. A boríték a saját hashét nem tartalmazza. REG-030 nincs a hash-táblában."
+    )
+    a("")
     a("*Generálta: `docs/pce/ProcessArtifacts/BuildScripts/generate_oq05_protocol.py`. Újragenerálás: `PYTHONPATH=src python3 …/generate_oq05_protocol.py --write`.*")
     a("")
     text = "\n".join(lines)

@@ -770,6 +770,8 @@ A csomagok és a **gyártói kérés** a [F mellékletben](F-decision-package.md
 
 **2026-08-16 (D-57, §10.2 (c)):** Counsel-küldés kapuja = OQ-05 csomag citációi, **nem** a REG-030 teljes Class I QMS. D.1 kezdeti 14971, nem teljes dosszié. REG-010 = A melléklet (már a csomagban). Q1 melléklet = gold JSON fixture, nem aláírt PDF. G §3.2 suite-méret nem IGEN-érv. CI fagyasztja az `IIA_SAFE_BLOCK=true`-t is. V. checkbox **üres**. Flagok változatlanok.
 
+**2026-08-16 (D-58, §10.2 (c)):** OQ-05 küldőcsomag tartalomjegyzék + SHA-256 boríték (`Outbound/OQ-05-SEND-PACK.md`). **Nem** pecsét. A boríték a saját hashét nem tartalmazza. REG-030 byte **nincs** a hash-táblában. V. checkbox **üres**. Flagok változatlanok.
+
 Az OQ-05 / OQ-15 / OQ-16 / OQ-01 / OQ-03 / OQ-17 **nem** zárulnak le. ELŐTERJESZTVE / NYITOTT maradnak. OQ-06 nyitott (RA); G §2.4 (a) fallback `[A]` 2026-10-31.
 
 A fejlesztés **elindulhat** a lenti határon. „F.6 nélkül nem indul a mérföldkő” = nincs **éles betegadat, HIS-csatlakozás, nem-MDSW forgalmazás**. Nem azt jelenti, hogy a git üresen marad.

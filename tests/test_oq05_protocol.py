@@ -2,6 +2,7 @@
 """OQ-05 protocol generator: evidence pack from unittest, not a seal."""
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import json
 import unittest
@@ -9,14 +10,24 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "docs" / "pce" / "ProcessArtifacts" / "BuildScripts" / "generate_oq05_protocol.py"
+SEND_SCRIPT = ROOT / "docs" / "pce" / "ProcessArtifacts" / "BuildScripts" / "generate_oq05_send_pack.py"
 PROTOCOL = ROOT / "docs" / "pce" / "ProcessArtifacts" / "OQ-05-TEST-PROTOCOL.md"
 BRIEF = ROOT / "docs" / "pce" / "Outbound" / "OQ-05-counsel-brief.md"
 TERVEZET = ROOT / "docs" / "pce" / "Outbound" / "OQ-05-feltetellel-tervezet.md"
+SEND_PACK = ROOT / "docs" / "pce" / "Outbound" / "OQ-05-SEND-PACK.md"
 GOLD = ROOT / "tests" / "fixtures" / "f1plus-v0" / "outside-call-cyp2d6-called.json"
 
 
 def _mod():
     spec = importlib.util.spec_from_file_location("generate_oq05_protocol", SCRIPT)
+    assert spec is not None and spec.loader is not None
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def _send_mod():
+    spec = importlib.util.spec_from_file_location("generate_oq05_send_pack", SEND_SCRIPT)
     assert spec is not None and spec.loader is not None
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
@@ -30,6 +41,7 @@ class Oq05CounselSendPackTests(unittest.TestCase):
         listed = (
             ROOT / "docs" / "pce" / "Outbound" / "OQ-05-counsel-brief.md",
             ROOT / "docs" / "pce" / "Outbound" / "OQ-05-feltetellel-tervezet.md",
+            ROOT / "docs" / "pce" / "Outbound" / "OQ-05-SEND-PACK.md",
             ROOT / "docs" / "pce" / "Outbound" / "README.md",
             ROOT / "docs" / "pce" / "A-intended-purpose-and-modules.md",
             ROOT / "docs" / "pce" / "D-risk-and-traceability.md",
@@ -39,6 +51,7 @@ class Oq05CounselSendPackTests(unittest.TestCase):
             ROOT / "docs" / "pce" / "ProcessArtifacts" / "OQ-05-TEST-PROTOCOL.md",
             ROOT / "docs" / "pce" / "ProcessArtifacts" / "SOURCE-REGISTRY.md",
             ROOT / "docs" / "pce" / "ProcessArtifacts" / "BuildScripts" / "generate_oq05_protocol.py",
+            ROOT / "docs" / "pce" / "ProcessArtifacts" / "BuildScripts" / "generate_oq05_send_pack.py",
             ROOT / "docs" / "pce" / "Sources" / "official" / "fetch_software_ready_pins.py",
             ROOT / "docs" / "pce" / "Sources" / "official" / "com-2025-1023-act.pdf",
             ROOT / "docs" / "pce" / "Sources" / "official" / "eur-lex-com-2025-1023.html",
@@ -64,6 +77,7 @@ class Oq05CounselSendPackTests(unittest.TestCase):
         self.assertNotIn("E-31/HGVS", brief)
         self.assertIn("G §3.4", brief)
         self.assertIn("Q3-claim **10** unittest-id", brief)
+        self.assertIn("OQ-05-SEND-PACK.md", brief)
         self.assertIn("MATCHER_ON is False", brief)
         self.assertIn("IIA_SAFE_BLOCK is True", brief)
         self.assertRegex(brief, r"- \[ \] \*\*IGEN\*\*")
@@ -87,6 +101,7 @@ class Oq05CounselSendPackTests(unittest.TestCase):
         self.assertIn("**nem** küldési feltétel", text)
         self.assertIn("kezdeti", text)
         self.assertIn("REG-010", text)
+        self.assertIn("OQ-05-SEND-PACK.md", text)
         self.assertNotIn("OQ-05 LEZÁRVA", text)
 
     def test_g_q1_points_to_gold_fixture(self) -> None:
@@ -101,6 +116,41 @@ class Oq05CounselSendPackTests(unittest.TestCase):
         ci = (ROOT / ".github" / "workflows" / "ci.yml").read_text(encoding="utf-8")
         self.assertIn("IIA_SAFE_BLOCK", ci)
         self.assertIn("assert IIA_SAFE_BLOCK is True", ci)
+
+    def test_send_pack_committed_matches_generator(self) -> None:
+        gen = _send_mod()
+        self.assertEqual(SEND_PACK.read_text(encoding="utf-8"), gen.render("2026-08-16"))
+
+    def test_send_pack_hashes_match_bytes(self) -> None:
+        gen = _send_mod()
+        recs = gen.records()
+        self.assertEqual(len(recs), len(gen.PACK_ITEMS))
+        ids = {r.item.pack_id for r in recs}
+        self.assertEqual(ids, {"COVER", "FELT", "SPEC", "REG-010", "F1", "G", "D1", "PROTOCOL", "REGISTRY", "GOLD", "TEST-REPORT", "SCHEMA", "CI", "S077", "S080"})
+        for rec in recs:
+            blob = (ROOT / rec.item.relpath).read_bytes()
+            self.assertEqual(rec.size, len(blob))
+            self.assertEqual(rec.sha256, hashlib.sha256(blob).hexdigest())
+            self.assertNotEqual(rec.item.relpath, "docs/pce/Outbound/OQ-05-SEND-PACK.md")
+
+    def test_send_pack_is_not_a_seal_and_names_handover_files(self) -> None:
+        text = SEND_PACK.read_text(encoding="utf-8")
+        self.assertIn("**Átadás-átvételi boríték — nem pecsét.**", text)
+        self.assertIn("Csomag-ujjlenyomat", text)
+        self.assertIn("REG-010", text)
+        self.assertIn("tests/fixtures/f1plus-v0/outside-call-cyp2d6-called.json", text)
+        self.assertIn("docs/pce/D-risk-and-traceability.md", text)
+        self.assertIn("docs/pce/Outbound/OQ-05-feltetellel-tervezet.md", text)
+        self.assertIn("Mapped 51 egyedi teszt; Q3 = 10", text)
+        self.assertNotIn("OQ-05 LEZÁRVA", text)
+        self.assertNotIn("- [x]", text)
+        self.assertNotIn("E-31/HGVS", text)
+        self.assertIn("saját SHA-256-ját nem tartalmazza", text)
+        self.assertIn("Aláírt példa-lelet PDF", text)
+        self.assertIn("REG-030 QMS fájl", text)
+        self.assertIn("nem COM-mentesség", text)
+        gold_pdf = GOLD.with_suffix(".pdf")
+        self.assertFalse(gold_pdf.is_file())
 
 
 class Oq05ProtocolGeneratorTests(unittest.TestCase):
@@ -180,6 +230,8 @@ class Oq05ProtocolGeneratorTests(unittest.TestCase):
         self.assertIn("D-57", text)
         self.assertIn("REG-030", text)
         self.assertIn("Oq05CounselSendPackTests", text)
+        self.assertIn("D-58", text)
+        self.assertIn("OQ-05-SEND-PACK.md", text)
 
     def test_feltetellel_tervezet_is_not_a_seal(self) -> None:
         path = ROOT / "docs" / "pce" / "Outbound" / "OQ-05-feltetellel-tervezet.md"
@@ -200,6 +252,7 @@ class Oq05ProtocolGeneratorTests(unittest.TestCase):
         self.assertIn("REG-030", text)
         self.assertIn("**nem** küldési feltétel", text)
         self.assertIn("test_outbound_listed_paths_exist", text)
+        self.assertIn("OQ-05-SEND-PACK.md", text)
 
     def test_committed_protocol_matches_generator(self) -> None:
         expected = self.gen.render("2026-08-16", run_mapped=True)
