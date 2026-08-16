@@ -768,6 +768,8 @@ A csomagok és a **gyártói kérés** a [F mellékletben](F-decision-package.md
 
 **2026-08-16 (D-56, §10.2 (c)):** OQ-05 V. FELTÉTELLEL gyártói záradék-tervezet. A V. checkbox **üres**. A unittest-suite mérete nem IGEN pecsét; R-OPS-01/02 (F5 fail-open, CI JAR HTTP) nem NEM pecsét és nem pecsét-feloldó sprint. Pecsétig Class I MDSW (G §3.4). Flagok változatlanok.
 
+**2026-08-16 (D-57, §10.2 (c)):** Counsel-küldés kapuja = OQ-05 csomag citációi, **nem** a REG-030 teljes Class I QMS. D.1 kezdeti 14971, nem teljes dosszié. REG-010 = A melléklet (már a csomagban). Q1 melléklet = gold JSON fixture, nem aláírt PDF. G §3.2 suite-méret nem IGEN-érv. CI fagyasztja az `IIA_SAFE_BLOCK=true`-t is. V. checkbox **üres**. Flagok változatlanok.
+
 Az OQ-05 / OQ-15 / OQ-16 / OQ-01 / OQ-03 / OQ-17 **nem** zárulnak le. ELŐTERJESZTVE / NYITOTT maradnak. OQ-06 nyitott (RA); G §2.4 (a) fallback `[A]` 2026-10-31.
 
 A fejlesztés **elindulhat** a lenti határon. „F.6 nélkül nem indul a mérföldkő” = nincs **éles betegadat, HIS-csatlakozás, nem-MDSW forgalmazás**. Nem azt jelenti, hogy a git üresen marad.

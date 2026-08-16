@@ -540,3 +540,18 @@ A user három V. utat adott (IGEN / FELTÉTELLEL / NEM) és két opciót (zárad
 | Flag / OQ | `LIVE_CDS=false`; `MATCHER_ON=false`; `IIA_SAFE_BLOCK=true`. OQ **nem** pecsét. |
 | Unittest | **251 OK** |
 
+---
+
+## 29. P06aq — OQ-05 counsel-küldés citáció, nem REG-030 dosszié (2026-08-16, D-57)
+
+A user a formális counsel-átadás előtt két utat adott: Class I MDSW (G §3.4) REG-dokumentáció áttekintése, vagy a FELTÉTELLEL-tervezet hivatkozásainak ellenőrzése. A V. pecsét Rule 11, nem szoftver-OQ. A checkbox **üres**.
+
+| Tétel | Eredmény |
+| --- | --- |
+| Küldési kapu | Brief + melléklet-útvonalak + kategóriahiba-mentes záradék. **Nem** a teljes Class I technical file. |
+| REG-010 | A melléklet — már a counsel-csomagban. |
+| REG-030 | ISO 13485 / 62304 / 14971 QMS, F2-párhuzamos. **Nem** OQ-05 send-blocker. D.1 kezdeti, nem teljes dosszié. |
+| E-32 | G §3.2 250 IGEN-érv → mapped **51** / Q3 **10**. Q1 „példa-lelet” → gold JSON, nem PDF. CI `IIA_SAFE_BLOCK`. |
+| Flag / OQ | `LIVE_CDS=false`; `MATCHER_ON=false`; `IIA_SAFE_BLOCK=true`. OQ **nem** pecsét. |
+| Unittest | **258 OK** |
+

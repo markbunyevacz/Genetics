@@ -24,9 +24,9 @@ A G melléklet szerint a fenti egyetlen kérdés még túl tág. Kérjük **elő
 
 | # | Kérdés | Melléklet |
 | --- | --- | --- |
-| **Q1** | Az a kimenet, amely a vizsgált génekre a **teljes, szűretlen**, verziózott guideline-táblát nyomtatja a diplotípus mellé, anélkül hogy ismerné a beteg gyógyszerlistáját — Rule 11 hatálya, vagy Rule 11c Class I? | `tests/test_report.py`; `src/pce_report/schema.py` (`ALLOWED_B41_TOP_LEVEL` = 47, `FORBIDDEN_B41_FIELDS` = 15); példa-lelet; gépelt jegyzőkönyv: `ProcessArtifacts/OQ-05-TEST-PROTOCOL.md` (**nem** pecsét) |
+| **Q1** | Az a kimenet, amely a vizsgált génekre a **teljes, szűretlen**, verziózott guideline-táblát nyomtatja a diplotípus mellé, anélkül hogy ismerné a beteg gyógyszerlistáját — Rule 11 hatálya, vagy Rule 11c Class I? | `tests/test_report.py`; `src/pce_report/schema.py` (`ALLOWED_B41_TOP_LEVEL` = 47, `FORBIDDEN_B41_FIELDS` = 15); gold outside-call fixture `tests/fixtures/f1plus-v0/outside-call-cyp2d6-called.json` (**nem** aláírt PDF); gépelt jegyzőkönyv: `ProcessArtifacts/OQ-05-TEST-PROTOCOL.md` (**nem** pecsét) |
 | **Q2** | Ha Rule 11 alatt áll: a beteg-specifikus szelekció hiánya elegendő-e az **IIa alatti** besoroláshoz? | ugyanaz |
-| **Q3** | Ha Q1 = Class I: elegendő-e a CI-invariáns-készlet (`LIVE_CDS is False`; `! grep MedicationEntry src/pce_report`; `! grep pce_gateway.pipeline src/pce_report`) az MDCG Rev.1 dokumentált modulhatárhoz? | `.github/workflows/ci.yml` |
+| **Q3** | Ha Q1 = Class I: elegendő-e a CI-invariáns-készlet (`LIVE_CDS is False`; `MATCHER_ON is False`; `IIA_SAFE_BLOCK is True`; `! grep MedicationEntry src/pce_report`; `! grep pce_gateway.pipeline src/pce_report`) az MDCG Rev.1 dokumentált modulhatárhoz? A Q3-claim **10** unittest-id a jegyzőkönyvben, nem a teljes suite. | `.github/workflows/ci.yml`; `ProcessArtifacts/OQ-05-TEST-PROTOCOL.md` Q3 |
 | **Q4** | Mi az F1+ (L4-static) és az L4-live besorolása a COM(2025) 1023 szerinti **javasolt** Rule 11 alatt (alapértelmezés Class I; critical / serious / non-serious)? Az A.4.1 páronkénti súlyossági tábla megfelel-e az ott javasolt eszkalációs logikának? | COM(2025) 1023 PDF (S077); EUR-Lex HTML (S080); A.4.1; G §2.4 / §7 |
 
 Ha a válasz **Q1 = Rule 11 és Q2 = nem**, az F1+ klinikai kimenet IIa pályára esik (REG-010 újra; a forgalomba hozatalhoz Notified Body szükséges).
@@ -160,7 +160,7 @@ Az A.4.1 tábla (DPYD S=5, CYP2C19–clopidogrel, kodein, HLA-B\*15:02, tiopurin
 
 Kérjük a három közül **egyet** megjelölni **Q1–Q3-ra**. Ha Feltétellel: a feltételek a specbe kerülnek (FR/CI), nem szóbeli. A **Q4** válasz külön bekezdés; **nem** helyettesíti a lenti pecsétet.
 
-Gyártói kitöltési javaslat (a négyzetek **üresek** maradnak): [OQ-05-feltetellel-tervezet.md](OQ-05-feltetellel-tervezet.md). A 250 teszt **nem** IGEN. Az F5 fail-open és a CI JAR HTTP **nem** NEM. Pecsétig Class I MDSW dosszié (G §3.4).
+Gyártói kitöltési javaslat (a négyzetek **üresek** maradnak): [OQ-05-feltetellel-tervezet.md](OQ-05-feltetellel-tervezet.md). A unittest-suite mérete **nem** IGEN. Az F5 fail-open és a CI JAR HTTP **nem** NEM. Pecsétig Class I MDSW dosszié (G §3.4).
 
 ### Döntés
 
@@ -202,6 +202,6 @@ Az alábbi szöveg **csak akkor** használható, ha a fenti döntés IGEN vagy a
 | Aláírás / pecsét | .................................... |
 | Mellékelt dosszié verziója | PCE-SPEC-v1.2 + A melléklet (A.0, A.1, A.1.1, A.1.2, A.4, A.8) |
 
-**Mellékletek:** PCE-SPEC-v1.2; A melléklet; F.1; G §3 + §7; MDCG 2019-11 Rev.1 (a counsel saját példánya); COM(2025) 1023 final PDF + EUR-Lex HTML (S077/S080); `tests/test_report.py`; `src/pce_report/schema.py`; `.github/workflows/ci.yml`; `docs/pce/ProcessArtifacts/OQ-05-TEST-PROTOCOL.md` (gépelt szoftver-evidencia, **nem** pecsét); `docs/pce/Outbound/OQ-05-feltetellel-tervezet.md` (gyártói záradék-tervezet, **nem** pecsét). Tandem/punktum/mdxcro **nem** a minősítés primer forrása. **MDCG 2024-7 nem melléklet** — az a PAR-sablon (NB-kijelölés), nem Rule 11 Q&A (E-30).
+**Mellékletek:** PCE-SPEC-v1.2; A melléklet (REG-010); F.1; G §3 + §7; MDCG 2019-11 Rev.1 (a counsel saját példánya; a repo S004/S005 URL-t pinel, PDF-et **nem**); COM(2025) 1023 final PDF + EUR-Lex HTML (S077/S080); `tests/test_report.py`; `src/pce_report/schema.py`; `.github/workflows/ci.yml`; gold outside-call fixture `tests/fixtures/f1plus-v0/outside-call-cyp2d6-called.json` (**nem** aláírt PDF); `docs/pce/ProcessArtifacts/OQ-05-TEST-PROTOCOL.md` (gépelt szoftver-evidencia, **nem** pecsét); `docs/pce/Outbound/OQ-05-feltetellel-tervezet.md` (gyártói záradék-tervezet, **nem** pecsét). A D melléklet **kezdeti** ISO 14971 nyilvántartás, **nem** teljes dosszié; REG-030 **nem** küldési feltétel. Tandem/punktum/mdxcro **nem** a minősítés primer forrása. **MDCG 2024-7 nem melléklet** — az a PAR-sablon (NB-kijelölés), nem Rule 11 Q&A (E-30).
 
 *Ez az irat gyártói kérés. Nem helyettesíti a counsel független vizsgálatát. OQ-05 a F.6 sor kitöltéséig nyitott.*

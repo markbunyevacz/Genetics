@@ -19,9 +19,9 @@ Ez a jegyzőkönyv azt dokumentálja, hogy a D-49 hardening pontjai és a ráép
 | `IIA_SAFE_BLOCK` | `true` |
 | `ALLOWED_B41_TOP_LEVEL` | **47** (`src/pce_report/schema.py`) |
 | `FORBIDDEN_B41_FIELDS` | **15** |
-| Unittest készlet (loader) | **251** teszt |
-| AST `test_*` metódus | **251** |
-| Q1–Q4/III/OPS mapped egyedi teszt | **51** (nem a teljes 251) |
+| Unittest készlet (loader) | **258** teszt |
+| AST `test_*` metódus | **258** |
+| Q1–Q4/III/OPS mapped egyedi teszt | **51** (nem a teljes 258) |
 
 Az OQ-05 brief Q1 allow-list száma megegyezik a `schema.py` élő méretével.
 
@@ -422,6 +422,12 @@ Minden `test_*` a fában. A `mapped` oszlop akkor `igen`, ha a teszt szerepel a 
 | `tests/test_official_pins.py` | `test_manifest_and_binaries` | nem |
 | `tests/test_official_pins.py` | `test_prepare12_live_pair_pins_2026_08_15` | nem |
 | `tests/test_official_pins.py` | `test_software_ready_pins_2026_08_15` | nem |
+| `tests/test_oq05_protocol.py` | `test_brief_does_not_freeze_suite_size_as_igen_argument` | nem |
+| `tests/test_oq05_protocol.py` | `test_ci_freezes_iia_safe_block` | nem |
+| `tests/test_oq05_protocol.py` | `test_g_q1_points_to_gold_fixture` | nem |
+| `tests/test_oq05_protocol.py` | `test_gold_fixture_is_unsigned_json_not_pdf` | nem |
+| `tests/test_oq05_protocol.py` | `test_outbound_listed_paths_exist` | nem |
+| `tests/test_oq05_protocol.py` | `test_tervezet_send_gate_is_citation_not_reg030` | nem |
 | `tests/test_oq05_protocol.py` | `test_brief_q1_allow_list_matches_schema` | nem |
 | `tests/test_oq05_protocol.py` | `test_committed_protocol_matches_generator` | nem |
 | `tests/test_oq05_protocol.py` | `test_delta_195_241_has_46_and_all_exist` | nem |
@@ -429,6 +435,7 @@ Minden `test_*` a fában. A `mapped` oszlop akkor `igen`, ha a teszt szerepel a 
 | `tests/test_oq05_protocol.py` | `test_feltetellel_tervezet_is_not_a_seal` | nem |
 | `tests/test_oq05_protocol.py` | `test_generated_text_is_not_a_seal` | nem |
 | `tests/test_oq05_protocol.py` | `test_mapped_tests_run_ok` | nem |
+| `tests/test_oq05_protocol.py` | `test_mapped_unique_and_q3_count_are_classification_evidence` | nem |
 | `tests/test_oq05_protocol.py` | `test_q2_is_partial_and_q4_does_not_unlock_flags` | nem |
 | `tests/test_oq05_protocol.py` | `test_repo_locks_are_the_compile_time_values` | nem |
 | `tests/test_oq05_protocol.py` | `test_script_and_protocol_exist` | nem |
@@ -544,7 +551,7 @@ Minden `test_*` a fában. A `mapped` oszlop akkor `igen`, ha a teszt szerepel a 
 - Nem állítja, hogy a CI job hermetikusan hálózat nélkül fut. A JAR-pin HTTP a tesztek *előtt* fut; az air-gap a `PCE_PHARMCAT_OFFLINE=1` tesztfázis.
 - Nem állítja, hogy az F5 live út fail-fast. Hálózati `OSError` → üres lista (fail-open).
 - Nem pecsételi az OQ-06-ot (IIa-safe párok) és nem billenti a `LIVE_CDS` / `MATCHER_ON` / `IIA_SAFE_BLOCK` lakatot.
-- A 251-es suite méret **nem** IGEN pecsét. Az F5 fail-open és a CI JAR HTTP **nem** NEM pecsét.
+- A 258-es suite méret **nem** IGEN pecsét. Az F5 fail-open és a CI JAR HTTP **nem** NEM pecsét.
 
 ## 5. Maradék ops-kockázat — nem Q1–Q3 döntő, nem pecsét-feloldó
 
@@ -556,5 +563,7 @@ Két szándékos viselkedés. A gyártói záradék-tervezet: `docs/pce/Outbound
 | **R-OPS-02** | CI a tesztek előtt HTTP-n tölti a pinelt JAR-t. Tesztfázis: `PCE_PHARMCAT_OFFLINE=1`. | `.github/workflows/ci.yml`; OPS-PHARMCAT tesztek | Matcher default ki. Nem a teljes job air-gap. |
 
 **E-31** a brief/G allow-list 45→47 (`schema.py`). Nem outside-call, nem HGVS.
+
+**D-57:** a counsel-küldés kapuja a brief melléklet-útvonalai, nem a REG-030 teljes Class I QMS. D.1 kezdeti 14971, nem teljes dosszié. REG-010 = A melléklet. A Q1–Q4/III/OPS mapped egyedi teszt **51**, a Q3 **10**; a suite méret **nem** IGEN. Send-pack citáció: `tests/test_oq05_protocol.py` `Oq05CounselSendPackTests` (**nem** mapped Q1–Q3 evidencia).
 
 *Generálta: `docs/pce/ProcessArtifacts/BuildScripts/generate_oq05_protocol.py`. Újragenerálás: `PYTHONPATH=src python3 …/generate_oq05_protocol.py --write`.*

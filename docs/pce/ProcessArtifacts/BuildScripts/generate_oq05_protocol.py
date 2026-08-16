@@ -506,6 +506,15 @@ def render(date: str, *, run_mapped: bool) -> str:
     a("")
     a("**E-31** a brief/G allow-list 45→47 (`schema.py`). Nem outside-call, nem HGVS.")
     a("")
+    q3 = next(c for c in CLAIMS if c.claim_id == "Q3")
+    a(
+        f"**D-57:** a counsel-küldés kapuja a brief melléklet-útvonalai, nem a REG-030 teljes Class I QMS. "
+        f"D.1 kezdeti 14971, nem teljes dosszié. REG-010 = A melléklet. "
+        f"A Q1–Q4/III/OPS mapped egyedi teszt **{len(mapped_set)}**, a Q3 **{len(q3.tests)}**; "
+        "a suite méret **nem** IGEN. Send-pack citáció: `tests/test_oq05_protocol.py` "
+        "`Oq05CounselSendPackTests` (**nem** mapped Q1–Q3 evidencia)."
+    )
+    a("")
     a("*Generálta: `docs/pce/ProcessArtifacts/BuildScripts/generate_oq05_protocol.py`. Újragenerálás: `PYTHONPATH=src python3 …/generate_oq05_protocol.py --write`.*")
     a("")
     text = "\n".join(lines)

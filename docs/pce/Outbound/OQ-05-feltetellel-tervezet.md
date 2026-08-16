@@ -78,4 +78,12 @@ Ha a counsel a FELTÉTELLEL helyett NEM-et (MDSW) jelöl: a fenti 2–3. pont a 
 
 G §3.4 `[A]`: Class I MDSW technical file, amíg a counsel nem pecsétel. Nem „nem eszköz”. Q4 nem pecsét. Flagok false.
 
+---
+
+## 6. Counsel-küldés vs Class I MDSW dosszié
+
+A formális átadás kapuja **nem** a REG-030 teljes QMS (ISO 13485 / IEC 62304 / ISO 14971 fájl, PMS, gyártói nyilatkozat, EUDAMED-regisztráció). Az a teher G §3.4 szerint pecsétig *párhuzamos* F2-pálya. D.1 **kezdeti** 14971 nyilvántartás, **nem** teljes dosszié (`D-risk-and-traceability.md`). REG-010 = A melléklet, már a counsel-csomagban.
+
+A küldés kapuja: a brief melléklet-útvonalai léteznek; a V. checkbox üres; a kategóriahibák nincsenek a záradékban (suite méret ≠ IGEN; F5 fail-open / CI JAR HTTP ≠ NEM; E-31 ≠ HGVS). Gép: `test_oq05_protocol.Oq05CounselSendPackTests.test_outbound_listed_paths_exist` (a testosztály a citációkat méri, **nem** pecsétel). REG-030 **nem** küldési feltétel.
+
 *Ez az irat gyártói kitöltési javaslat. A brief V. checkboxai és a VI. aláírás a counselé.*

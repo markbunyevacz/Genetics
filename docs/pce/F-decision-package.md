@@ -48,9 +48,9 @@ A disclaimer (A.1.1 / FR-490) **nem** felelősségkizárás és **nem** MDSW-kim
 
 **Ami a záráshoz még hiányzik:** a counsel aláírása. Ez a fájl azt nem helyettesíti. Ha a válasz nem, az F1+ IIa pályára esik (REG-010 újra).
 
-Csomag: A.1, A.1.1, A.1.2, FR-400-STATIC, FR-410-EDU, FR-470, REG-010, MDCG 2019-11 Rev.1.
+Csomag: A.1, A.1.1, A.1.2, FR-400-STATIC, FR-410-EDU, FR-470, REG-010 (A melléklet), MDCG 2019-11 Rev.1 (counsel saját példánya). REG-030 (ISO 13485 / 62304 / 14971 QMS) **nem** a kiküldés előfeltétele; D.1 kezdeti 14971, nem teljes dosszié.
 
-**Küldendő irat:** [Outbound/OQ-05-counsel-brief.md](Outbound/OQ-05-counsel-brief.md) — Q1–Q3 + Igen/Nem/Feltétellel; A.1 szó szerint; a pecsét nem előre „nem MDSW”. Gyártói FELTÉTELLEL-tervezet (checkbox **üres**): [OQ-05-feltetellel-tervezet.md](Outbound/OQ-05-feltetellel-tervezet.md).
+**Küldendő irat:** [Outbound/OQ-05-counsel-brief.md](Outbound/OQ-05-counsel-brief.md) — Q1–Q3 + Igen/Nem/Feltétellel; A.1 szó szerint; a pecsét nem előre „nem MDSW”. Gyártói FELTÉTELLEL-tervezet (checkbox **üres**): [OQ-05-feltetellel-tervezet.md](Outbound/OQ-05-feltetellel-tervezet.md). Gold input: `tests/fixtures/f1plus-v0/outside-call-cyp2d6-called.json` (**nem** aláírt PDF).
 
 **Pecsétig `[A]` (G §3.4):** Class I MDSW technical file, nem „nem eszköz”. A unittest-suite mérete nem IGEN. Az F5 fail-open / CI JAR HTTP nem NEM.
 

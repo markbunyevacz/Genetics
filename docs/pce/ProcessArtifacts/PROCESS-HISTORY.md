@@ -69,6 +69,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P05an | COM(2025) 1023 F3-elágazás + OQ-05 Q4 | 2026-08-16 | 2026-08-16 | DONE | BA: Rule 11 pivot, NB-benchmark, COM 1023, MDCG 2024-7 mint S065 | A18 §0.3; OQ-05 Q4; S077–S080; E-30; D-54; **241 unittest**; flagok false | E-30 |
 | P05ao | OQ-05 teszt-jegyzőkönyv a unittest fából | 2026-08-16 | 2026-08-16 | DONE | User: 195→241 fókusz vs OQ-05 pecsét-jegyzőkönyv; mindkettő, pecsét nélkül | `BuildScripts/generate_oq05_protocol.py`; `OQ-05-TEST-PROTOCOL.md`; E-31 45→47; **250 unittest**; OQ **nem** pecsét | E-31 |
 | P05ap | OQ-05 FELTÉTELLEL-tervezet + R-OPS maradék kockázat | 2026-08-16 | 2026-08-16 | DONE | User: V. pecsét három út; FELTÉTELLEL-szöveg vs fail-open sprint | `OQ-05-feltetellel-tervezet.md`; jegyzőkönyv §5 R-OPS-01/02; V. checkbox üres; D-56: fail-fast **nem** pecsét-előfeltétel; **251 unittest** | — |
+| P05aq | OQ-05 counsel-küldés citáció vs Class I REG-030 | 2026-08-16 | 2026-08-16 | DONE | User: REG-dosszié áttekintés vs tervezet hivatkozás-ellenőrzés a formális átadás előtt | Küldési kapu = citáció; REG-030 **nem** send-blocker; D.1 kezdeti 14971; gold JSON ≠ PDF; G §3.2 250 IGEN-érv ki; CI `IIA_SAFE_BLOCK`; V. üres; D-57; **258 unittest** | E-32 |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -132,6 +133,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-54 | P05an | COM(2025) 1023 mint 2026-os stratégia vs F3-elágazás | Átsorolni Class I-re / figyelmen kívül hagyni / fork az F3-nál | **A18 fork.** 2026-os terv = hatályos Rule 11. COM = javaslat (Art. 5: +20 nap + 6 hó). OQ-05 Q4 a javasolt szöveget egyszer kérdezi. Flag / OQ pecsét **változatlan**. MDCG 2024-7 **nem** Rule 11 Q&A, **nem** S065. G4 WTP **nem** validált. | BA 2026-08-16 COM/NB kör | user |
 | D-55 | P05ao | 195→241 áttekintés vs OQ-05 jegyzőkönyv-generátor | Csak inventory / pecsét-sztori / evidencialista a meglévő unittestből | **Generátor + történeti delta.** A 46 új teszt zöme F2/F1s/ops/stratégia. Q1–Q3 mapped tesztek OK; Q2/Q4 szoftver:`partial`. V. pecsét üres. Flagok false. | User 2026-08-16 két opció | user |
 | D-56 | P05ap | V. pecsét: IGEN / FELTÉTELLEL / NEM vs gyártói tervezet | Kitölteni a checkboxot / fail-open fail-fast sprint / tervezet pecsét nélkül | **Tervezet, pecsét nélkül.** IGEN a 250 tesztből kategóriahiba. NEM a fail-openből kategóriahiba. FELTÉTELLEL-szöveg a három lakat + újra-nyitás; R-OPS-01/02 dosszié IV, nem pecsét-kapu. Flagok false. | User 2026-08-16 három út | user |
+| D-57 | P05aq | Class I MDSW REG-dosszié vs OQ-05 citáció a counsel-átadás előtt | Teljes REG-030/14971/PMS/DoC áttekintés küldési kapuként / a brief+tervezet hivatkozásainak ellenőrzése | **Citáció.** REG-010 = A melléklet (már a csomagban). REG-030 F2-párhuzamos, **nem** send-blocker. D.1 kezdeti, nem teljes dosszié. V. üres. Flagok false. | User 2026-08-16 átadás-előtti kérdés | user |
 
 ## 3. Error log
 
@@ -169,19 +171,20 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | E-29 | P05am | Incomplete verification / imprecise claim | A M4 közlés: MANIFEST `accessed` „2026-08-13 marad” — a BA három dátumot mért a sorokon. | **Top-level** fagyasztva 2026-08-13; a sorok a pin napját viselik. Teszt rögzíti. Nem egységesítés. | D-53 |
 | E-30 | P05an | Hallucinated / wrong cite | BA: MDCG 2024-7 = „Q&A on Rule 11”, pineld **S065**-ként. | **CORRECTED.** MDCG 2024-7 = PAR-sablon (NB-kijelölés, rev.1 2025-01), nem Rule 11 Q&A. S065 = WHO B01AC04. Operatív Rule 11: S004/S005/S061. COM 1023 = S077/S080. | D-54; VC-18 |
 | E-31 | P05ao | Cross-reference / stale number | OQ-05 brief Q1 és G §3.2 `ALLOWED_B41_TOP_LEVEL` = **45**; `schema.py` **47**. G §3.2 teszt-szám **124** (D-44). | Brief + G a kód élő méretére (47) és a 250-es suite-ra. Jegyzőkönyv a `schema.py`-t méri. Nem pecsét. | D-55 |
+| E-32 | P05aq | Cross-reference / category error | G §3.2 **250** zöld teszt mint nem-MDSW `[V]` érv; Q1 melléklet „példa-lelet” aláírt PDF nélkül; brief V. „A 250 teszt **nem** IGEN”; CI nem fagyasztotta az `IIA_SAFE_BLOCK`-ot, pedig a záradék 2. pontja megköveteli. | Suite méret kikerült az IGEN-érvből (mapped **51**, Q3 **10**). Q1 = gold JSON fixture, nem PDF. Brief V. a suite méretére utal, nem fagyasztott számra. CI assert `IIA_SAFE_BLOCK is True`. Nem pecsét. | D-57 |
 
 ## 4. File timeline
 
 | Fájl | Létrehozva | Módosítva | Státusz |
 | --- | --- | --- | --- |
 | docs/pce/README.md | P00/P05 | P05ad (D-44 F2 cső) | v1.2; G5 cső lakattal |
-| docs/pce/PCE-SPEC-v1.2.md | P05b (git mv) | P05ao (D-55 OQ-05 jegyzőkönyv) | v1.2; ATC-klauzula §10.2 (c); F2 cső; elesett GTM; COM F3-elágazás |
+| docs/pce/PCE-SPEC-v1.2.md | P05b (git mv) | P05aq (D-57 send-pack citáció) | v1.2; ATC-klauzula §10.2 (c); F2 cső; elesett GTM; COM F3-elágazás |
 | docs/pce/A-intended-purpose-and-modules.md | P05 | P05ad | DRAFT v1.2; L6-cds lakat |
 | docs/pce/B-architecture-and-interfaces.md | P05 | P05ad (B.4.4 `pce_cds`) | DRAFT v1.2 |
 | docs/pce/C-eeszt-f0-checklist.md | P05 | P05f (C.4 Outbound linkek) | DRAFT v1.2 |
-| docs/pce/D-risk-and-traceability.md | P05 | P05ad (R-010 / FR-520) | DRAFT v1.2 |
+| docs/pce/D-risk-and-traceability.md | P05 | P05aq (D-57: REG-030 nem send-blocker) | DRAFT v1.2; kezdeti 14971 |
 | docs/pce/E-shadow-hitl.md | P05b | P05ad (E.8 `pce_cds`) | DRAFT v1.2 |
-| docs/pce/F-decision-package.md | P05e | P05ad (D-44 nem pecsét) | DRAFT v1.2; OQ-k ELŐTERJESZTVE |
+| docs/pce/F-decision-package.md | P05e | P05aq (D-57 citáció / REG-030) | DRAFT v1.2; OQ-k ELŐTERJESZTVE |
 | docs/pce/Outbound/* | P05f | P05ad (OQ-05/15 cső vs 404) | TERVEZET; 16 első kimenő; A9 |
 | docs/pce/Sales/* | P05g | P05al (D-52 A16 longevity elesett) | TERVEZET rendszerlicenc; longevity nem v1 vevő |
 | docs/pce/Sources/S028-* | P01c | P05i | L5 jegyzet + PDF |
@@ -201,7 +204,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | src/pce_report/static_pins.py | P05ae | P05ae | DPWG/FDA verzió a leleten |
 | src/pce_shadow/ | P05u | P05af | PREPARE-12 élő párok; aktivitási pont a celecoxibnál |
 | src/pce_gateway/kcell.py | P05o | P05ae | monitor `org_id` / `org_display` |
-| docs/pce/G-open-items.md | P05aa | P05ao (D-55 250 teszt; E-31 47) | Javaslat, nem pecsét; S055/S060/S062 LEZÁRVA; S063–S080 |
+| docs/pce/G-open-items.md | P05aa | P05aq (D-57 citáció; E-32) | Javaslat, nem pecsét; S055/S060/S062 LEZÁRVA; S063–S080 |
 | tests/fixtures/pheno-gold-v0/ | P05y | P05y | N=32; G3 nevező |
 | src/pce_report/schema.py | P05r | P05y | B.4.1 allow-list |
 | tests/fixtures/f1plus-v0/prepare12/ | P05w | P05ae | 12 gén CPIC pin; DPWG index + FDA extract |
@@ -220,8 +223,9 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | docs/pce/Sources/official/swd-2025-1050-mdr-ivdr-simplification.pdf | P05an | P05an | SWD(2025) 1050 (S078) |
 | docs/pce/Sources/official/gleiss-lutz-com-2025-1023-rule-11.html | P05an | P05an | Gleiss Lutz Rule 11 / AI Omnibus (S079) |
 | docs/pce/Sources/official/eur-lex-com-2025-1023.html | P05an | P05an | EUR-Lex COM 1023 HTML, olvasható Rule 11 (S080) |
-| docs/pce/Outbound/OQ-05-counsel-brief.md | P05f | P05ap | Q4 COM; Q1 47; FELTÉTELLEL-tervezet pointer; pecsét áll |
-| docs/pce/Outbound/OQ-05-feltetellel-tervezet.md | P05ap | P05ap | gyártói záradék; checkbox üres |
-| docs/pce/ProcessArtifacts/BuildScripts/generate_oq05_protocol.py | P05ao | P05ap | + §5 R-OPS; mapped ≠ suite |
-| docs/pce/ProcessArtifacts/OQ-05-TEST-PROTOCOL.md | P05ao | P05ap | gépelt jegyzőkönyv; V. pecsét üres |
-| tests/test_oq05_protocol.py | P05ao | P05ap | drift + no-seal + tervezet |
+| docs/pce/Outbound/OQ-05-counsel-brief.md | P05f | P05aq | Q4 COM; Q1 gold fixture; Q3 10 teszt; pecsét áll |
+| docs/pce/Outbound/OQ-05-feltetellel-tervezet.md | P05ap | P05aq | gyártói záradék; §6 küldési kapu; checkbox üres |
+| docs/pce/ProcessArtifacts/BuildScripts/generate_oq05_protocol.py | P05ao | P05aq | + D-57 send-pack; mapped ≠ suite |
+| docs/pce/ProcessArtifacts/OQ-05-TEST-PROTOCOL.md | P05ao | P05aq | gépelt jegyzőkönyv; V. pecsét üres |
+| tests/test_oq05_protocol.py | P05ao | P05aq | send-pack citáció + 51/10 lakat |
+| .github/workflows/ci.yml | P05ad | P05aq | `IIA_SAFE_BLOCK is True` |

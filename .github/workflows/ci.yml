@@ -31,6 +31,7 @@ jobs:
         run: |
           python3 -c "import sys; sys.path.insert(0,'src'); from pce_gateway.flags import LIVE_CDS; assert LIVE_CDS is False"
           python3 -c "import sys; sys.path.insert(0,'src'); from pce_report.flags import MATCHER_ON, LIVE_CDS; assert MATCHER_ON is False and LIVE_CDS is False"
+          python3 -c "import sys; sys.path.insert(0,'src'); from pce_cds.policy import IIA_SAFE_BLOCK; assert IIA_SAFE_BLOCK is True"
       - name: CPIC_F5_SOURCE freeze
         run: |
           python3 -c "import os; tok=(os.environ.get('CPIC_F5_SOURCE') or '').strip().lower(); assert tok != 'live'"

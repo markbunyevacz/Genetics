@@ -12,7 +12,7 @@
 
 Ez a melléklet döntési javaslat és levezetés: **nem** zárja az OQ-05 / OQ-06 / OQ-16 pecsétjét, **nem** tartalmaz listaárat, és **nem** Rule 11 határozat.
 
-A bemeneti vázlat 108 tesztet és S001–S055-öt említett. A G pecsét-napján (2026-08-13): unittest **113 OK**. 2026-08-14 (D-44, F2 cső): **124 OK**. 2026-08-14 (D-45, ETAP 0): **134 OK**. 2026-08-15 (D-46, PREPARE-12 ready): **158 OK**. 2026-08-15 (D-47, szoftver-KÉSZ): unittest **165 OK**. 2026-08-15 (D-48, F5 mock pipeline): unittest **184 OK**. 2026-08-15 (D-49, repo-konform hardening): unittest **195 OK**. 2026-08-15 (D-50, checklist-zárás): unittest **211 OK**. 2026-08-15 (D-51, M4 IIa-safe mechanizmus): unittest **228 OK**. 2026-08-16 (D-52, A16/A17 elesett GTM): unittest **231 OK**. 2026-08-16 (D-53, L01BC* ellenpélda + HGVS-kapu): unittest **237 OK**. 2026-08-16 (D-54, COM(2025) 1023 F3-elágazás): unittest **241 OK**. 2026-08-16 (D-55, OQ-05 teszt-jegyzőkönyv generátor): unittest **250 OK**. 2026-08-16 (D-56, OQ-05 FELTÉTELLEL-tervezet): unittest **251 OK**. A SOURCE-REGISTRY S080-ig tart (S077–S080 = COM/SWD/Gleiss/EUR-Lex). Az F1+ allow-list **47** top-level kulcs (`ALLOWED_B41_TOP_LEVEL`, plusz `pharmvar_version` és `cpic_data_version`), deny-list **15** (`FORBIDDEN_B41_FIELDS`). A hivatalos forrás-pin D-53 után **92** `ok`; D-54 után **96** `ok`. Az OQ-05 szoftver-evidencia jegyzőkönyv: `ProcessArtifacts/OQ-05-TEST-PROTOCOL.md` — **nem** pecsét. Gyártói V. záradék-tervezet: `Outbound/OQ-05-feltetellel-tervezet.md` — **nem** pecsét.
+A bemeneti vázlat 108 tesztet és S001–S055-öt említett. A G pecsét-napján (2026-08-13): unittest **113 OK**. 2026-08-14 (D-44, F2 cső): **124 OK**. 2026-08-14 (D-45, ETAP 0): **134 OK**. 2026-08-15 (D-46, PREPARE-12 ready): **158 OK**. 2026-08-15 (D-47, szoftver-KÉSZ): unittest **165 OK**. 2026-08-15 (D-48, F5 mock pipeline): unittest **184 OK**. 2026-08-15 (D-49, repo-konform hardening): unittest **195 OK**. 2026-08-15 (D-50, checklist-zárás): unittest **211 OK**. 2026-08-15 (D-51, M4 IIa-safe mechanizmus): unittest **228 OK**. 2026-08-16 (D-52, A16/A17 elesett GTM): unittest **231 OK**. 2026-08-16 (D-53, L01BC* ellenpélda + HGVS-kapu): unittest **237 OK**. 2026-08-16 (D-54, COM(2025) 1023 F3-elágazás): unittest **241 OK**. 2026-08-16 (D-55, OQ-05 teszt-jegyzőkönyv generátor): unittest **250 OK**. 2026-08-16 (D-56, OQ-05 FELTÉTELLEL-tervezet): unittest **251 OK**. 2026-08-16 (D-57, counsel-küldés citáció): unittest **258 OK**; mapped evidenciatábla **51**, Q3 **10** (a suite mérete nem IGEN pecsét). A SOURCE-REGISTRY S080-ig tart (S077–S080 = COM/SWD/Gleiss/EUR-Lex). Az F1+ allow-list **47** top-level kulcs (`ALLOWED_B41_TOP_LEVEL`, plusz `pharmvar_version` és `cpic_data_version`), deny-list **15** (`FORBIDDEN_B41_FIELDS`). A hivatalos forrás-pin D-53 után **92** `ok`; D-54 után **96** `ok`. Az OQ-05 szoftver-evidencia jegyzőkönyv: `ProcessArtifacts/OQ-05-TEST-PROTOCOL.md` — **nem** pecsét. Gyártói V. záradék-tervezet: `Outbound/OQ-05-feltetellel-tervezet.md` — **nem** pecsét.
 
 ---
 
@@ -148,7 +148,7 @@ A helyes, szűk, eldönthető kérdés:
 **Nem-MDSW / Rule 11c Class I mellett:**
 
 1. `[I]` **Nincs beteg-specifikus szelekció.** Két azonos genotípusú beteg azonos leletet kap, akkor is, ha az egyik semmit nem szed, a másik tízféle szert.
-2. `[V]` **A modulhatár gépileg bizonyított.** Zárt allow-list **47** kulcsra, 15-elemű deny-list nested kulcson is, `LIVE_CDS is False` CI-assert, öt izolációs grep (MedicationEntry, medication_entry, pce_gateway.pipeline, pce_shadow, pce_cds a `pce_report`/`pce_clinical` ellen), **250** zöld teszt. A Q1–Q3 szoftver-evidencia gépelt jegyzőkönyve: `ProcessArtifacts/OQ-05-TEST-PROTOCOL.md` (**nem** pecsét; E-31: a 45-ös allow-list szám a brief/G régi sora volt). MDCG 2019-11 Rev.1 a modulonkénti értékeléshez dokumentált határokat követel. A `pce_cds` a dobozban van; az F1+ processzuson a CDS továbbra is 404.
+2. `[V]` **A modulhatár gépileg bizonyított.** Zárt allow-list **47** kulcsra, 15-elemű deny-list nested kulcson is, `LIVE_CDS is False` / `MATCHER_ON is False` / `IIA_SAFE_BLOCK is True` CI-assert, öt izolációs grep (MedicationEntry, medication_entry, pce_gateway.pipeline, pce_shadow, pce_cds a `pce_report`/`pce_clinical` ellen). A Q1–Q3 szoftver-evidencia gépelt jegyzőkönyve: `ProcessArtifacts/OQ-05-TEST-PROTOCOL.md` (**nem** pecsét; E-31: a 45-ös allow-list szám a brief/G régi sora volt). A mapped evidenciatábla **51** egyedi tesztet kezel, a Q3 **10**-et; a suite mérete **nem** IGEN pecsét. MDCG 2019-11 Rev.1 a modulonkénti értékeléshez dokumentált határokat követel. A `pce_cds` a dobozban van; az F1+ processzuson a CDS továbbra is 404.
 3. `[V]` Az aláíró a labor orvosa (FR-490); a `dose_mg` tiltott token.
 
 **IIa mellett:**
@@ -163,9 +163,9 @@ Három **igen/nem** kérdés a **hatályos** Rule 11-re, plusz **Q4** a javaslat
 
 | # | Kérdés | Melléklet |
 | --- | --- | --- |
-| **Q1** | A §3.1 szerinti kimenet Rule 11 hatálya alatt áll, vagy Rule 11c Class I? | `tests/test_report.py`, `schema.py` allow-list **47**, `OQ-05-TEST-PROTOCOL.md`, példa-lelet |
+| **Q1** | A §3.1 szerinti kimenet Rule 11 hatálya alatt áll, vagy Rule 11c Class I? | `tests/test_report.py`, `schema.py` allow-list **47**, `OQ-05-TEST-PROTOCOL.md`, `tests/fixtures/f1plus-v0/outside-call-cyp2d6-called.json` (gold input, nem aláírt PDF) |
 | **Q2** | Ha Rule 11 alatt áll: a beteg-specifikus szelekció hiánya elegendő-e az **IIa alatti** besoroláshoz? | ugyanaz |
-| **Q3** | Ha a válasz Q1-re „Class I”: elegendő-e a jelenlegi CI-invariáns-készlet az MDCG Rev.1 „dokumentált határok és függőségek” követelményéhez? | `.github/workflows/ci.yml` |
+| **Q3** | Ha a válasz Q1-re „Class I”: elegendő-e a jelenlegi CI-invariáns-készlet az MDCG Rev.1 „dokumentált határok és függőségek” követelményéhez? A Q3-claim **10** unittest-id, nem a teljes suite. | `.github/workflows/ci.yml`; `OQ-05-TEST-PROTOCOL.md` Q3 |
 | **Q4** | F1+ és L4-live a COM(2025) 1023 **javasolt** Rule 11 alatt? Az A.4.1 tábla illeszkedik-e a critical/serious/non-serious eszkalációhoz? **Nem** pecsételi Q1–Q3-at. | S077/S080; A.4.1 |
 
 ## 3.4 A biztonságos alapértelmezés, amíg nincs pecsét
@@ -175,7 +175,7 @@ Három **igen/nem** kérdés a **hatályos** Rule 11-re, plusz **Q4** a javaslat
 Indoklás:
 
 - Class I esetén **nincs Notified Body**, tehát az MDCG 2025-6 szerint **nem** magas kockázatú AI-rendszer. Az AI Act 2028-08-02-i tervezési határidő ettől a Class I pozíciótól **nem** indul el (VC-09: a dátum `[NEEDS VERIFICATION]`).
-- A Class I terhe: technical file, ISO 14971, PMS, gyártói nyilatkozat, regisztráció. `[E]` Ez **3–5 hónap** munka egy meglévő QMS mellett; D.1, A melléklet, teszt-lefedettség **már** a repóban van.
+- A Class I terhe: technical file, ISO 14971, PMS, gyártói nyilatkozat, regisztráció. `[E]` Ez **3–5 hónap** munka egy meglévő QMS mellett. A repóban **már** van: D.1 **kezdeti** 14971 nyilvántartás (**nem** teljes dosszié; a teljes fájl REG-030, F2-vel párhuzamos), A melléklet (REG-010), Q1–Q3 szoftver-evidencia. A REG-030 **nem** az OQ-05 counsel-küldés előfeltétele.
 - Ha a counsel utóbb IIa-t mond, a Class I dosszié **beszámít** az IIa dossziéba. Ha „nem eszköz”-ként haladtok és a counsel IIa-t mond, nulláról kezditek.
 
 Ez a legolcsóbb visszafordítható pozíció. **Nem** dönti el az OQ-05-öt, és **nem** írja felül az A.6 elemzést (élő PGx-terápia nem 11c). Gyártói FELTÉTELLEL-záradék a counsel kitöltéséhez (checkbox üres): [OQ-05-feltetellel-tervezet.md](Outbound/OQ-05-feltetellel-tervezet.md). A unittest-suite mérete nem IGEN; az F5 fail-open / CI JAR HTTP nem NEM.

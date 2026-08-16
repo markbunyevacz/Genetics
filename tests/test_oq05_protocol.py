@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import unittest
 from pathlib import Path
 
@@ -10,6 +11,8 @@ ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "docs" / "pce" / "ProcessArtifacts" / "BuildScripts" / "generate_oq05_protocol.py"
 PROTOCOL = ROOT / "docs" / "pce" / "ProcessArtifacts" / "OQ-05-TEST-PROTOCOL.md"
 BRIEF = ROOT / "docs" / "pce" / "Outbound" / "OQ-05-counsel-brief.md"
+TERVEZET = ROOT / "docs" / "pce" / "Outbound" / "OQ-05-feltetellel-tervezet.md"
+GOLD = ROOT / "tests" / "fixtures" / "f1plus-v0" / "outside-call-cyp2d6-called.json"
 
 
 def _mod():
@@ -18,6 +21,86 @@ def _mod():
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     return mod
+
+
+class Oq05CounselSendPackTests(unittest.TestCase):
+    """Counsel-csomag hivatkozásai léteznek; V. üres. Nem pecsét; nem Class I QMS."""
+
+    def test_outbound_listed_paths_exist(self) -> None:
+        listed = (
+            ROOT / "docs" / "pce" / "Outbound" / "OQ-05-counsel-brief.md",
+            ROOT / "docs" / "pce" / "Outbound" / "OQ-05-feltetellel-tervezet.md",
+            ROOT / "docs" / "pce" / "Outbound" / "README.md",
+            ROOT / "docs" / "pce" / "A-intended-purpose-and-modules.md",
+            ROOT / "docs" / "pce" / "D-risk-and-traceability.md",
+            ROOT / "docs" / "pce" / "F-decision-package.md",
+            ROOT / "docs" / "pce" / "G-open-items.md",
+            ROOT / "docs" / "pce" / "PCE-SPEC-v1.2.md",
+            ROOT / "docs" / "pce" / "ProcessArtifacts" / "OQ-05-TEST-PROTOCOL.md",
+            ROOT / "docs" / "pce" / "ProcessArtifacts" / "SOURCE-REGISTRY.md",
+            ROOT / "docs" / "pce" / "ProcessArtifacts" / "BuildScripts" / "generate_oq05_protocol.py",
+            ROOT / "docs" / "pce" / "Sources" / "official" / "fetch_software_ready_pins.py",
+            ROOT / "docs" / "pce" / "Sources" / "official" / "com-2025-1023-act.pdf",
+            ROOT / "docs" / "pce" / "Sources" / "official" / "eur-lex-com-2025-1023.html",
+            ROOT / "src" / "pce_report" / "schema.py",
+            ROOT / "src" / "pce_report" / "render.py",
+            ROOT / "src" / "pce_cds" / "policy.py",
+            ROOT / "src" / "pce_shadow" / "f5_rec.py",
+            ROOT / "src" / "pce_clinical" / "pharmcat.py",
+            ROOT / "tests" / "test_report.py",
+            ROOT / ".github" / "workflows" / "ci.yml",
+            GOLD,
+        )
+        missing = [str(p.relative_to(ROOT)) for p in listed if not p.is_file()]
+        self.assertEqual(missing, [])
+
+    def test_brief_does_not_freeze_suite_size_as_igen_argument(self) -> None:
+        brief = BRIEF.read_text(encoding="utf-8")
+        self.assertNotIn("250 teszt", brief)
+        self.assertNotIn("251 teszt", brief)
+        self.assertIn("A unittest-suite mérete **nem** IGEN", brief)
+        self.assertIn("tests/fixtures/f1plus-v0/outside-call-cyp2d6-called.json", brief)
+        self.assertNotIn("példa-lelet", brief)
+        self.assertNotIn("E-31/HGVS", brief)
+        self.assertIn("G §3.4", brief)
+        self.assertIn("Q3-claim **10** unittest-id", brief)
+        self.assertIn("MATCHER_ON is False", brief)
+        self.assertIn("IIA_SAFE_BLOCK is True", brief)
+        self.assertRegex(brief, r"- \[ \] \*\*IGEN\*\*")
+        self.assertRegex(brief, r"- \[ \] \*\*NEM\*\*")
+        self.assertRegex(brief, r"- \[ \] \*\*FELTÉTELLEL\*\*")
+        self.assertNotIn("- [x] **IGEN**", brief)
+        self.assertNotIn("- [x] **NEM**", brief)
+        self.assertNotIn("- [x] **FELTÉTELLEL**", brief)
+
+    def test_gold_fixture_is_unsigned_json_not_pdf(self) -> None:
+        self.assertTrue(GOLD.is_file())
+        self.assertFalse(GOLD.with_suffix(".pdf").is_file())
+        payload = json.loads(GOLD.read_text(encoding="utf-8"))
+        self.assertEqual(payload["gene"], "CYP2D6")
+        self.assertEqual(payload["method"], "outside-call")
+
+    def test_tervezet_send_gate_is_citation_not_reg030(self) -> None:
+        text = TERVEZET.read_text(encoding="utf-8")
+        self.assertIn("test_outbound_listed_paths_exist", text)
+        self.assertIn("REG-030", text)
+        self.assertIn("**nem** küldési feltétel", text)
+        self.assertIn("kezdeti", text)
+        self.assertIn("REG-010", text)
+        self.assertNotIn("OQ-05 LEZÁRVA", text)
+
+    def test_g_q1_points_to_gold_fixture(self) -> None:
+        g = (ROOT / "docs" / "pce" / "G-open-items.md").read_text(encoding="utf-8")
+        self.assertIn("tests/fixtures/f1plus-v0/outside-call-cyp2d6-called.json", g)
+        self.assertNotIn("példa-lelet", g)
+        self.assertIn("mapped evidenciatábla **51**", g)
+        self.assertIn("Q3 **10**", g)
+        self.assertIn("REG-030 **nem** az OQ-05 counsel-küldés előfeltétele", g)
+
+    def test_ci_freezes_iia_safe_block(self) -> None:
+        ci = (ROOT / ".github" / "workflows" / "ci.yml").read_text(encoding="utf-8")
+        self.assertIn("IIA_SAFE_BLOCK", ci)
+        self.assertIn("assert IIA_SAFE_BLOCK is True", ci)
 
 
 class Oq05ProtocolGeneratorTests(unittest.TestCase):
@@ -49,6 +132,22 @@ class Oq05ProtocolGeneratorTests(unittest.TestCase):
         self.assertEqual(self.flags["ALLOWED_B41"], 47)
         self.assertEqual(self.flags["FORBIDDEN_B41"], 15)
 
+    def test_mapped_unique_and_q3_count_are_classification_evidence(self) -> None:
+        self.assertEqual(len(self.gen.mapped_ids()), 51)
+        scopes = {c.claim_id: c.software_scope for c in self.gen.CLAIMS}
+        self.assertEqual(scopes["Q1"], "partial")
+        self.assertEqual(scopes["Q2"], "partial")
+        self.assertEqual(scopes["Q3"], "yes")
+        self.assertEqual(scopes["Q4"], "partial")
+        self.assertEqual(scopes["III.1"], "yes")
+        self.assertEqual(scopes["III.2"], "partial")
+        self.assertEqual(scopes["III.3"], "partial")
+        self.assertEqual(scopes["III.4"], "yes")
+        self.assertEqual(scopes["III.5"], "yes")
+        self.assertEqual(scopes["III.6"], "yes")
+        q3 = next(c for c in self.gen.CLAIMS if c.claim_id == "Q3")
+        self.assertEqual(len(q3.tests), 10)
+
     def test_brief_q1_allow_list_matches_schema(self) -> None:
         cited = self.gen.brief_allowed_cite()
         self.assertEqual(cited, self.flags["ALLOWED_B41"])
@@ -78,6 +177,9 @@ class Oq05ProtocolGeneratorTests(unittest.TestCase):
         self.assertIn("R-OPS-02", text)
         self.assertIn("nem pecsét-feloldó", text)
         self.assertIn("Nem outside-call, nem HGVS", text)
+        self.assertIn("D-57", text)
+        self.assertIn("REG-030", text)
+        self.assertIn("Oq05CounselSendPackTests", text)
 
     def test_feltetellel_tervezet_is_not_a_seal(self) -> None:
         path = ROOT / "docs" / "pce" / "Outbound" / "OQ-05-feltetellel-tervezet.md"
@@ -95,6 +197,9 @@ class Oq05ProtocolGeneratorTests(unittest.TestCase):
         self.assertNotIn("E-31/HGVS", text)
         self.assertIn("45 → 47", text)
         self.assertIn("Class I MDSW", text)
+        self.assertIn("REG-030", text)
+        self.assertIn("**nem** küldési feltétel", text)
+        self.assertIn("test_outbound_listed_paths_exist", text)
 
     def test_committed_protocol_matches_generator(self) -> None:
         expected = self.gen.render("2026-08-16", run_mapped=True)

@@ -6,7 +6,7 @@
 | **Dátum** | 2026-08-12 |
 | **Szabvány** | ISO 14971 (kezdeti nyilvántartás, **nem** teljes dosszié); IEC 62304; MDR Annex I GSPR |
 
-A teljes ISO 14971 fájl a QMS-ben (REG-030) készül. Itt a spec-ből következő, **már azonosított** veszélyek és a rájuk kötött követelmények. Új veszély a fejlesztés során → új sor, nem csendes javítás (IR-08).
+A teljes ISO 14971 fájl a QMS-ben (REG-030) készül. Itt a spec-ből következő, **már azonosított** veszélyek és a rájuk kötött követelmények. Új veszély a fejlesztés során → új sor, nem csendes javítás (IR-08). Az OQ-05 counsel-csomag a Rule 11 kérdést viszi; a REG-030 **nem** a brief kiküldésének előfeltétele.
 
 Súlyosság / előfordulás / detektálhatóság: 1–5. RPN = S×O×D. Küszöb: RPN ≥ 40 vagy S = 5 → kötelező kockázatcsökkentés a v1 előtt.
 
