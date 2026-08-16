@@ -494,3 +494,19 @@ A BA igazolta: a `L01BC*` / `L01BB*` prefix-catch-all **rossz**. WHO 4. szint an
 | Flag / OQ | `LIVE_CDS=false`; `MATCHER_ON=false`; `IIA_SAFE_BLOCK=true`. OQ **nem** pecsét. |
 | Unittest | **237 OK** |
 
+---
+
+## 26. P06an — COM(2025) 1023 F3-elágazás + OQ-05 Q4 (2026-08-16, D-54)
+
+BA: a pivot indoka (hatályos Rule 11 alatt gyakorlatilag nincs Class I MDSW) iparági konszenzus; F3 18–36 hó egyezik ~24 hó NB-kommentárral; COM(2025) 1023 a premisszát később megváltoztathatja. A 2026-os terv **nem** a javaslatra épül.
+
+| Tétel | Eredmény |
+| --- | --- |
+| A18 | 2026-os stratégia = **hatályos** Rule 11. COM = javaslat. F3 = döntési elágazás. Nem `LIVE_CDS` feloldás. |
+| Q4 | OQ-05 counsel-brief: F1+ / L4-live a *javasolt* Rule 11 alatt + A.4.1. Q1–Q3 pecsét változatlan. |
+| Pin | S077 COM PDF; S078 SWD; S079 Gleiss L4; S080 EUR-Lex HTML (olvasható Rule 11). Official **96** `ok`. Top-level `accessed` **2026-08-13**. |
+| E-30 | MDCG 2024-7 **nem** Rule 11 Q&A; S065 marad B01AC04. |
+| Nem `[V]` | 30% összesített teher; 2027 Q2 elfogadás; Have Your Say 03-18; NB 13–18 / 6–12 / 24 hó; G4 WTP. |
+| Flag / OQ | `LIVE_CDS=false`; `MATCHER_ON=false`; `IIA_SAFE_BLOCK=true`. OQ **nem** pecsét. |
+| Unittest | **241 OK** |
+

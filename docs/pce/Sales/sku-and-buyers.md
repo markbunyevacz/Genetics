@@ -106,3 +106,5 @@ Ma eladható kimenet: **F1+ statikus, aláírt laborlelet.** A három lakat (`LI
 ## G4
 
 Fizetőnek számít: aláírt **rendszerlicenc** (klinika / kórház / hálózat / HIS-vendor). Nem számít: ingyenes demó, „majd ha CE”, labor amely csak adatot ad licenc nélkül. **Nem** számít longevity / biohacking központ, amíg A16 él.
+
+**G4 hajlandóság `[NEEDS VERIFICATION]`:** nincs pinelt adat, hogy laborok fizetnek-e értelmező szoftverért, vagy házon belül építik. Európai PGx-CDSS árbevétel **nincs**. A ≥3 fizető licenc **hipotézis**, nem megfigyelt kategória (G §7.5).

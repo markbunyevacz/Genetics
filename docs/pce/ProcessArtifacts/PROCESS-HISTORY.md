@@ -66,6 +66,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | P05ak | M4 IIa-safe mechanizmus + FR-id lánc | 2026-08-15 | 2026-08-15 | DONE | BA-audit S1/S2/S3 (tramadol, klopidogrel, FR-annotáció) | `IiaSafeFamily`; WHO L01BC03 pin; `tests/test_fr_trace.py`; CI FR-id lépés; **228 unittest** | — |
 | P05al | Elesett GTM + ZK rögzítés (A16/A17) | 2026-08-16 | 2026-08-16 | DONE | BA deviancia: 2026-08-09 koncepció → `main` | A16/A17 §0.2; Sales sku-and-buyers; D-52; teszt a sorok ellen; **231 unittest** | — |
 | P05am | BA M4 újraellenőrzés (L01BC* + HGVS-kapu) | 2026-08-16 | 2026-08-16 | DONE | BA: L01BC* rossz volt; MANIFEST dátum; HGVS MATCHER_ON-hoz | S076 ellenpélda-pin; N3/V8; E-29; D-53; **237 unittest** | — |
+| P05an | COM(2025) 1023 F3-elágazás + OQ-05 Q4 | 2026-08-16 | 2026-08-16 | DONE | BA: Rule 11 pivot, NB-benchmark, COM 1023, MDCG 2024-7 mint S065 | A18 §0.3; OQ-05 Q4; S077–S080; E-30; D-54; **241 unittest**; flagok false | E-30 |
 
 **Nem futtatott:** P04 work-package gate (a plan rögzítette a hatókört); P07 (P06 után, ha gap); P08 translation; P09 fusion. G0–G6 user-gate-ek a cloud-agent plan-jóváhagyással helyettesítve (A1–A13 explicit feltevés).
 
@@ -126,6 +127,7 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | D-51 | P05ak | IIa-safe INN-literál vs mechanizmus | Marad a 7 ATC5 / angol INN / BA szerinti mechanizmus-család | **Mechanizmus-család.** Tramadol + tegafur + tioguanin + HU variáns a pinelt CPIC/WHO forrásból. L01BC*/L01BB* catch-all **elvetve** (gemcitabin/fludarabin). FR-420/250 más néven megvolt; FR-id CI annotációt mér, a P1/P2 hiányát explicit teszteli. | BA M4 audit 2026-08-13 | user |
 | D-52 | P05al | Longevity 1. fázis + ZK/local-first | Csendben hagyni / §0 feltevés-sor | **A16 + A17.** Az eredeti „gyors, alacsony kórházi teher” 1. fázis **elesett**; v1 vevő SKU-P intézmény (több pecsét, nem kevesebb). ZK/local-first **nincs**; helyette FR-460 + A12/A13. A gitbeli v1.0 **nem** nevezte a longevityt (G4 már labor/klinika); a 10-elemű koncepció git-en kívül. Nincs F-10 rekord ebben a repóban. Flagok / OQ pecsét **változatlan**. | BA 2026-08-16 deviancia | user |
 | D-53 | P05am | L01BC* prefix; MANIFEST dátum; HGVS hátralék | Prefix catch-all / 5. szint; dátumok egységesítése; HGVS külön P1 | **Prefix elvetve** (S076). Top-level `accessed` fagyasztva; sor = pin napja. HGVS/VRS a `MATCHER_ON=true` előfeltétele, nem külön NOW. | BA M4 újraellenőrzés | user |
+| D-54 | P05an | COM(2025) 1023 mint 2026-os stratégia vs F3-elágazás | Átsorolni Class I-re / figyelmen kívül hagyni / fork az F3-nál | **A18 fork.** 2026-os terv = hatályos Rule 11. COM = javaslat (Art. 5: +20 nap + 6 hó). OQ-05 Q4 a javasolt szöveget egyszer kérdezi. Flag / OQ pecsét **változatlan**. MDCG 2024-7 **nem** Rule 11 Q&A, **nem** S065. G4 WTP **nem** validált. | BA 2026-08-16 COM/NB kör | user |
 
 ## 3. Error log
 
@@ -161,13 +163,14 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | E-27 | P05ah | Scope / missed delivery | Az F5 „nincs rec-sor” mondatot fejlesztési stopnak olvastuk. | Switch: adat-agnosztikus pipeline mock fixture-ön; LIVE kapcsoló; prod off. Unittest 184 OK. | D-48 |
 | E-28 | P05ai | Cross-reference breakage | A warfarin helper kiemelésekor az `ORGAN_REASON` konstans kiesett. | Retry: konstans vissza; unittest `reason_organ` zöld. Unittest 195 OK. | D-49 |
 | E-29 | P05am | Incomplete verification / imprecise claim | A M4 közlés: MANIFEST `accessed` „2026-08-13 marad” — a BA három dátumot mért a sorokon. | **Top-level** fagyasztva 2026-08-13; a sorok a pin napját viselik. Teszt rögzíti. Nem egységesítés. | D-53 |
+| E-30 | P05an | Hallucinated / wrong cite | BA: MDCG 2024-7 = „Q&A on Rule 11”, pineld **S065**-ként. | **CORRECTED.** MDCG 2024-7 = PAR-sablon (NB-kijelölés, rev.1 2025-01), nem Rule 11 Q&A. S065 = WHO B01AC04. Operatív Rule 11: S004/S005/S061. COM 1023 = S077/S080. | D-54; VC-18 |
 
 ## 4. File timeline
 
 | Fájl | Létrehozva | Módosítva | Státusz |
 | --- | --- | --- | --- |
 | docs/pce/README.md | P00/P05 | P05ad (D-44 F2 cső) | v1.2; G5 cső lakattal |
-| docs/pce/PCE-SPEC-v1.2.md | P05b (git mv) | P05al (D-52 A16/A17) | v1.2; ATC-klauzula §10.2 (c); F2 cső; elesett GTM |
+| docs/pce/PCE-SPEC-v1.2.md | P05b (git mv) | P05an (D-54 A18 COM fork) | v1.2; ATC-klauzula §10.2 (c); F2 cső; elesett GTM; COM F3-elágazás |
 | docs/pce/A-intended-purpose-and-modules.md | P05 | P05ad | DRAFT v1.2; L6-cds lakat |
 | docs/pce/B-architecture-and-interfaces.md | P05 | P05ad (B.4.4 `pce_cds`) | DRAFT v1.2 |
 | docs/pce/C-eeszt-f0-checklist.md | P05 | P05f (C.4 Outbound linkek) | DRAFT v1.2 |
@@ -188,12 +191,12 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | src/pce_shadow/f5_rec.py | P05ah | P05ah | F5 DataProvider; off/mock/live |
 | tests/fixtures/cpic_f5_mock.json | P05ah | P05ah | MOCK rec_view; nem CPIC publikáció |
 | tests/test_f5_rec_pipeline.py | P05ah | P05ah | mock HET/WT; warfarin *2/*3; HTTP matcher_on |
-| docs/pce/Sources/official/ | P05x | P05am | **92** `ok`; top-level `accessed` 2026-08-13; sorok 13/14/15/16 |
+| docs/pce/Sources/official/ | P05x | P05an | **96** `ok`; top-level `accessed` 2026-08-13; sorok 13/14/15/16; S077–S080 |
 | tests/fixtures/vcf-gold-v0/ | P05w | P05af | 4 missing-to-ref + `called-cyp2d6-star4-hom.vcf`; HLA/UGT `not_snv` |
 | src/pce_report/static_pins.py | P05ae | P05ae | DPWG/FDA verzió a leleten |
 | src/pce_shadow/ | P05u | P05af | PREPARE-12 élő párok; aktivitási pont a celecoxibnál |
 | src/pce_gateway/kcell.py | P05o | P05ae | monitor `org_id` / `org_display` |
-| docs/pce/G-open-items.md | P05aa | P05af (158 teszt; 41 pin) | Javaslat, nem pecsét; S055/S060/S062 LEZÁRVA; S063–S069 |
+| docs/pce/G-open-items.md | P05aa | P05an (COM §7; 96 pin) | Javaslat, nem pecsét; S055/S060/S062 LEZÁRVA; S063–S080 |
 | tests/fixtures/pheno-gold-v0/ | P05y | P05y | N=32; G3 nevező |
 | src/pce_report/schema.py | P05r | P05y | B.4.1 allow-list |
 | tests/fixtures/f1plus-v0/prepare12/ | P05w | P05ae | 12 gén CPIC pin; DPWG index + FDA extract |
@@ -202,9 +205,14 @@ LIVE-UPDATE. Hibák nem kerülnek felülírásra.
 | src/pce_cds/ | P05ad | P05ak | F2 CDS Hooks cső; IIa-safe mechanizmus-család |
 | src/pce_ui/cds.html | P05ad | P05ad | F2 lakat-UI |
 | tests/test_cds.py | P05ad | P05am | lock / ON / timeout / IIa-safe 13/13 + 6/6 + 7/7 + L01BC ellenpélda |
-| tests/test_fr_trace.py | P05ak | P05am | FR-id + A16/A17 + HGVS MATCHER_ON-kapu |
+| tests/test_fr_trace.py | P05ak | P05an | FR-id + A16/A17/A18 + HGVS MATCHER_ON-kapu |
 | docs/pce/Sources/official/whocc-atc-l01bc03.html | P05ak | P05ak | WHO tegafur = L01BC03 |
 | docs/pce/Sources/official/whocc-atc-l01bc01.html | P05am | P05am | WHO citarabin = L01BC01 (S076 ellenpélda) |
 | docs/pce/Sources/official/whocc-atc-l01bc05.html | P05am | P05am | WHO gemcitabin = L01BC05 (S076) |
 | docs/pce/Sources/official/whocc-atc-l01bb04.html | P05am | P05am | WHO kladribin = L01BB04 (S076) |
 | docs/pce/Sources/official/whocc-atc-l01bb05.html | P05am | P05am | WHO fludarabin = L01BB05 (S076) |
+| docs/pce/Sources/official/com-2025-1023-act.pdf | P05an | P05an | COM(2025) 1023 PDF (S077) |
+| docs/pce/Sources/official/swd-2025-1050-mdr-ivdr-simplification.pdf | P05an | P05an | SWD(2025) 1050 (S078) |
+| docs/pce/Sources/official/gleiss-lutz-com-2025-1023-rule-11.html | P05an | P05an | Gleiss Lutz Rule 11 / AI Omnibus (S079) |
+| docs/pce/Sources/official/eur-lex-com-2025-1023.html | P05an | P05an | EUR-Lex COM 1023 HTML, olvasható Rule 11 (S080) |
+| docs/pce/Outbound/OQ-05-counsel-brief.md | P05f | P05an | Q4 COM javasolt Rule 11; Q1–Q3 pecsét áll |

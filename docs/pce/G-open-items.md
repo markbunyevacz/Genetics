@@ -5,14 +5,14 @@
 | **Dokumentum-ID** | PCE-G-v1.0 |
 | **Dátum** | 2026-08-13 |
 | **Bemenet** | PCE-SPEC-v1.2, A–F melléklet, `src/`, `tests/`, SOURCE-REGISTRY S001–S062 |
-| **Célja** | Az OQ-05 / OQ-06 / OQ-16 / S055 / F-14 tételekhez **döntési javaslat és levezetés**. Ez a melléklet **nem** pecsételi le ezeket a tételeket. |
+| **Célja** | Az OQ-05 / OQ-06 / OQ-16 / S055 / F-14 tételekhez **döntési javaslat és levezetés**. Ez a melléklet **nem** pecsételi le ezeket a tételeket. COM(2025) 1023 = F3-elágazás (§7), nem pecsét. |
 | **Státusz** | S055 / S060 / S062 **LEZÁRVA**. OQ-05 / OQ-06 / OQ-16 / F-14: javaslat a pecsételő felé. |
 
 **Jelölés:** `[V]` verifikált primer forrásból (pin vagy ezen a napon olvasott) · `[S]` másodlagos forrás · `[I]` következtetés · `[E]` becslés · `[A]` feltevés
 
 Ez a melléklet döntési javaslat és levezetés: **nem** zárja az OQ-05 / OQ-06 / OQ-16 pecsétjét, **nem** tartalmaz listaárat, és **nem** Rule 11 határozat.
 
-A bemeneti vázlat 108 tesztet és S001–S055-öt említett. A G pecsét-napján (2026-08-13): unittest **113 OK**. 2026-08-14 (D-44, F2 cső): **124 OK**. 2026-08-14 (D-45, ETAP 0): **134 OK**. 2026-08-15 (D-46, PREPARE-12 ready): **158 OK**. 2026-08-15 (D-47, szoftver-KÉSZ): unittest **165 OK**. 2026-08-15 (D-48, F5 mock pipeline): unittest **184 OK**. 2026-08-15 (D-49, repo-konform hardening): unittest **195 OK**. 2026-08-15 (D-50, checklist-zárás): unittest **211 OK**. 2026-08-15 (D-51, M4 IIa-safe mechanizmus): unittest **228 OK**. 2026-08-16 (D-52, A16/A17 elesett GTM): unittest **231 OK**. 2026-08-16 (D-53, L01BC* ellenpélda + HGVS-kapu): unittest **237 OK**. A SOURCE-REGISTRY S076-ig tart (S060 és S062 **lezárva**; S063–S066 ETAP 0; S067–S069 2026-08-15 index párok; S070–S073 PharmCAT 3.4.0 + warfarin + rec_view; S074 F5 mock L5; S075 WHO L01BC03 tegafur; S076 L01BC*/L01BB* ellenpélda). Az F1+ allow-list **47** top-level kulcs (`ALLOWED_B41_TOP_LEVEL`, plusz `pharmvar_version` és `cpic_data_version`), deny-list **15** (`FORBIDDEN_B41_FIELDS`). A hivatalos forrás-pin **19** fájlnál `ok: true` (2026-08-13); ETAP 0 után **26**; index-pár kör után **41**; szoftver-KÉSZ után **87**; M4 után **88**; D-53 után **92**.
+A bemeneti vázlat 108 tesztet és S001–S055-öt említett. A G pecsét-napján (2026-08-13): unittest **113 OK**. 2026-08-14 (D-44, F2 cső): **124 OK**. 2026-08-14 (D-45, ETAP 0): **134 OK**. 2026-08-15 (D-46, PREPARE-12 ready): **158 OK**. 2026-08-15 (D-47, szoftver-KÉSZ): unittest **165 OK**. 2026-08-15 (D-48, F5 mock pipeline): unittest **184 OK**. 2026-08-15 (D-49, repo-konform hardening): unittest **195 OK**. 2026-08-15 (D-50, checklist-zárás): unittest **211 OK**. 2026-08-15 (D-51, M4 IIa-safe mechanizmus): unittest **228 OK**. 2026-08-16 (D-52, A16/A17 elesett GTM): unittest **231 OK**. 2026-08-16 (D-53, L01BC* ellenpélda + HGVS-kapu): unittest **237 OK**. 2026-08-16 (D-54, COM(2025) 1023 F3-elágazás): unittest **241 OK**. A SOURCE-REGISTRY S080-ig tart (S077–S080 = COM/SWD/Gleiss/EUR-Lex). Az F1+ allow-list **47** top-level kulcs (`ALLOWED_B41_TOP_LEVEL`, plusz `pharmvar_version` és `cpic_data_version`), deny-list **15** (`FORBIDDEN_B41_FIELDS`). A hivatalos forrás-pin D-53 után **92** `ok`; D-54 után **96** `ok`.
 
 ---
 
@@ -159,13 +159,14 @@ A helyes, szűk, eldönthető kérdés:
 
 ## 3.3 Javasolt counsel-kérdés formátum
 
-Három **igen/nem** kérdés, mindegyikhez a kód mint melléklet. A pecsét továbbra is Igen / Nem / Feltétellel (OQ-05 V. szakasz).
+Három **igen/nem** kérdés a **hatályos** Rule 11-re, plusz **Q4** a javaslatra. A pecsét továbbra is Igen / Nem / Feltétellel (OQ-05 V. szakasz) — **csak Q1–Q3**.
 
 | # | Kérdés | Melléklet |
 | --- | --- | --- |
 | **Q1** | A §3.1 szerinti kimenet Rule 11 hatálya alatt áll, vagy Rule 11c Class I? | `tests/test_report.py`, `schema.py` allow-list, példa-lelet |
 | **Q2** | Ha Rule 11 alatt áll: a beteg-specifikus szelekció hiánya elegendő-e az **IIa alatti** besoroláshoz? | ugyanaz |
 | **Q3** | Ha a válasz Q1-re „Class I”: elegendő-e a jelenlegi CI-invariáns-készlet az MDCG Rev.1 „dokumentált határok és függőségek” követelményéhez? | `.github/workflows/ci.yml` |
+| **Q4** | F1+ és L4-live a COM(2025) 1023 **javasolt** Rule 11 alatt? Az A.4.1 tábla illeszkedik-e a critical/serious/non-serious eszkalációhoz? **Nem** pecsételi Q1–Q3-at. | S077/S080; A.4.1 |
 
 ## 3.4 A biztonságos alapértelmezés, amíg nincs pecsét
 
@@ -317,7 +318,7 @@ Támogatás/karbantartás: a licencdíj **15–22%**-a évente. Éves emelés **
 | --- | --- | --- | --- |
 | **S055** | **LEZÁRVA** `[V]` | — | FR-110 kiegészítés a §1.3 szerint, két artefaktum — **kódban megvan** |
 | **OQ-06** | Javaslat kész | RA | `[A]` 2026-10-31-ig: **(a) IIa-safe párlista**, az öt magas pár live-ban kikapcsolva |
-| **OQ-05** | Javaslat kész | Counsel | `[A]` **Class I MDSW**-ként haladni — a legolcsóbb visszafordítható pozíció |
+| **OQ-05** | Javaslat kész | Counsel | `[A]` **Class I MDSW**-ként haladni — a legolcsóbb visszafordítható pozíció. Q4 (COM 1023) **nem** pecsét. |
 | **S060** | **LEZÁRVA** `[V]` | — | Health Canada PRCI: risk=0,09 **és** cél-cella 11 |
 | **S062** | **LEZÁRVA** `[V]` | — | DHCS DDG V2.2: numerátor <11 vagy nevező <20 000. Nem EU-norma. |
 | **OQ-16** | Javaslat kész | DPO | S060/S062 `[V]` háttér. A14 k≥5 / 0,5 % `[ASSUMPTION]` **változatlan**. |
@@ -336,3 +337,53 @@ Támogatás/karbantartás: a licencdíj **15–22%**-a évente. Éves emelés **
 - Egyetlen `[Y*]` érték sem megfigyelt PCE-tranzakció.
 - A DPYD „letális”, CYP2C19 stent-trombózis, CYP2D6 gyermekhalál, HLA-B\*15:02 SJS/TEN halál **nincs** a D.1-ben; az OQ-06 III-javaslat `[I]`, nem `[V]` klinikai kimenet.
 - MDCG 2025-6 / AI Act Class I ↔ magas kockázatú AI: a §3.4 állítás `[I]` a meglévő spec-olvasaton; a 2025-6 PDF **nincs** újrapinelve ebben a körben.
+
+---
+
+# 7. COM(2025) 1023 — F3 elágazás · **nem pecsét, nem 2026-os terv**
+
+A BA 2026-08-16-i kör a pivot indokát és a COM(2025) 1023 státuszát hozta. Ez a szakasz **nem** pecsételi az OQ-05-öt, **nem** billenti a flagokat, **nem** IIa CE-határozat.
+
+## 7.1 Ami `[V]` a pinből
+
+| Állítás | Státusz | Forrás |
+| --- | --- | --- |
+| COM(2025) 1023 final, 2025-12-16, 170 oldal, `%PDF-1.7` | `[V]` | S077 |
+| Javasolt Rule 11: Class I default; critical → III; serious / drive-in-critical → IIb; non-serious / drive-in-serious / inform-in-critical-or-serious → IIa | `[V]` | S080 (EUR-Lex HTML). A S077 PDF pypdf-fel **nem** adja ki a „Rule 11” stringet. |
+| Alkalmazás: HL + 20 nap hatálybalépés; + 6 hónap alkalmazás (COM Art. 5) | `[V]` | S077 p. 128 |
+| Call for evidence a javaslat *előtt*: 2025-09-08 – 10-06 | `[V]` | S077 p. 9 |
+| In-house átadás másik intézménynek, ha public health / patient health / patient safety | `[V]` | S077 rec. (12) |
+| Megtakarítás: „more than €3 billion per year” | `[V]` | S077 |
+| Megtakarítás: „around €3.3 billion per year” (€0,9 mrd + €2,4 mrd) | `[V]` | S078 |
+| Hatályos Rule 11: *„virtually no medical device software is classified as class I”*; *„heavily criticised”* | `[S]` L4 | S079 Gleiss Lutz — iparági konszenzus-olvasat, **nem** Bizottsági tételmondat |
+
+## 7.2 Ami **nem** `[V]` — BA-számok, amiket nem másolunk
+
+| BA-állítás | Ítélet |
+| --- | --- |
+| ~30% adminisztratív tehercsökkenés *összesítve* | **Nem** Bizottsági főszám. A SWD 30%-ot *intézkedés-forgatókönyvekben* használ (pl. kevesebb audit). Ne írd a dossziéba összesített teherként. |
+| Társjogalkotói elfogadás **2027 Q2** | **Nincs** a COM-ban. `[NEEDS VERIFICATION]`. Nem tervezési óra. |
+| Have Your Say 2026-01-07 – **03-18** | A COM a *call for evidence*-t 2025-09-08 – 10-06-ra pineli. A javaslat utáni visszajelzési ablak **nincs** hivatalos oldalként pinelve. Ne írd 03-18-at `[V]`-nek. |
+| NB 13–18 hó felülvizsgálat; 6–12 hó sor elfogadás előtt; 24 hó első kontaktustól tanúsítványig | **Nincs pin.** `[S]` BA-scan. Az F3 **18–36 hó** már a specben van; ez nagyságrend, nem új FR. |
+| IMDRF/SaMD WG/N12 a javasolt Rule 11 *szövege mellett* | A COM Rule 11 **nem** citálja az N12-t a 6.3 mellett. IMDRF a COM-ban recitalszinten van. N12-leképezés `[S]`. |
+| MDCG 2024-7 = „Q&A on Rule 11”, pineld S065-ként | **CORRECTED (E-30).** MDCG 2024-7 = Preliminary Assessment Review (PAR) sablon NB-kijelöléshez (rev.1 2025-01). **Nem** Rule 11 Q&A. S065 = WHO B01AC04 clopidogrel. Operatív Rule 11: S004/S005 + S061. |
+
+## 7.3 Pivot-indok és F3 időzítés
+
+A „gyakorlatilag nincs Class I MDSW a hatályos Rule 11 alatt” **nem túlzás** a Gleiss L4 szerint, és egybevág a spec VC-04 / 11a→IIa default olvasattal (Class I *létezik* 11c-n, a PGx-terápia nem 11c). A 2026-os terv ezért **hatályos Rule 11**.
+
+Az F3 18–36 hó **kalibrált** a BA 24 hónapos NB-kommentárjához, nem pesszimista új szám. A pivot ~24 hónap NB-sort cserélt arra, hogy a felírás-pillanatú riasztás nem mutatható be (NG-07). Ez **nem** `LIVE_CDS` feloldás.
+
+**Elágazás F3-nál:** ha a módosított Rule 11 akkorra alkalmazandó, A.4.1 + Q4 alapján a IIa NB-út újraértékelendő. Ha nem, a hatályos IIa-safe + NB-út áll. A javaslat **nem** 2026-os tanúsítási stratégia.
+
+## 7.4 AI Omnibus vs COM Art. 4
+
+A COM Art. 4 az MDR/IVDR-t az AI Act Annex I A-ból B-be tenné. Gleiss 2026-05-07 `[S]`: az AI Omnibus **nem** viszi át; az MDR/IVDR **marad** A-ban. A Tanács sajtó 403, nincs pin. A spec §4.4 **áll**.
+
+## 7.5 G4 vevő — **nem validált**
+
+Nincs pinelt adat arra, hogy európai laborok fizetnek-e PGx-értelmező szoftverért, vagy házon belül építik. Nincs európai PGx-CDSS árbevétel. Nincs time-to-first-revenue benchmark szabályozott vs nem szabályozott digitális egészségügyi startupokra. A Translational Software bukás **egyforrású `[R]`** (S037). A G4 ≥3 fizető rendszerlicenc **hipotézis** marad. A BA ezt gyenge pontnak nevezte — helyes; ne töltsük ki kitalált számmal.
+
+## 7.6 OQ-05 Q4
+
+A counsel-brief Q4: F1+ és L4-live a *javasolt* Rule 11 alatt; A.4.1 illeszkedik-e. Q1–Q3 pecsét **változatlan**. A counsel egyszer nézi.

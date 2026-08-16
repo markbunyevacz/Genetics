@@ -188,6 +188,40 @@ class FallenGtmRecordTests(unittest.TestCase):
             self.assertNotIn("local first", blob, msg=str(path))
 
 
+class Com1023F3ForkTests(unittest.TestCase):
+    """A18: COM(2025) 1023 is an F3 decision fork, not 2026 Rule 11 strategy (D-54)."""
+
+    def test_spec_has_a18_and_com_proposal(self) -> None:
+        spec = SPEC.read_text(encoding="utf-8")
+        self.assertIn("| A18 |", spec)
+        self.assertIn("COM(2025) 1023", spec)
+        self.assertIn("### 0.3 COM(2025) 1023 — F3 döntési elágazás (A18)", spec)
+        self.assertIn("nem hatályos jog", spec)
+        self.assertIn("döntési elágazás", spec)
+
+    def test_oq05_has_q4_not_seal(self) -> None:
+        brief = (
+            ROOT / "docs" / "pce" / "Outbound" / "OQ-05-counsel-brief.md"
+        ).read_text(encoding="utf-8")
+        self.assertIn("**Q4**", brief)
+        self.assertIn("COM(2025) 1023", brief)
+        self.assertIn("pecsételi Q1–Q3", brief)
+        self.assertIn("MDCG 2024-7 nem melléklet", brief)
+
+    def test_registry_s077_is_com_s065_stays_clopidogrel(self) -> None:
+        registry = (
+            ROOT / "docs" / "pce" / "ProcessArtifacts" / "SOURCE-REGISTRY.md"
+        ).read_text(encoding="utf-8")
+        self.assertIn("| S077 | COM(2025) 1023 final", registry)
+        self.assertIn("| S078 | SWD(2025) 1050", registry)
+        self.assertIn("| S079 | Gleiss Lutz", registry)
+        self.assertIn("| S080 | EUR-Lex HTML — COM(2025) 1023", registry)
+        self.assertIn("| S065 | WHOCC ATC/DDD Index B01AC04", registry)
+        self.assertNotIn("MDCG 2024-7 = Rule 11", registry)
+        self.assertIn("MDCG 2024-7", registry)
+        self.assertIn("PAR-sablon", registry)
+
+
 class MatcherOnHgvsGateTests(unittest.TestCase):
     """FR-250 HGVS/VRS is gated on MATCHER_ON=true — not a separate NOW backlog (D-53)."""
 

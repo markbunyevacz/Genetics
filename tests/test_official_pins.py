@@ -258,6 +258,44 @@ class OfficialPinTests(unittest.TestCase):
         flu = (OFFICIAL / "whocc-atc-l01bb05.html").read_text(encoding="utf-8", errors="replace")
         self.assertIn("Purine analogues", flu)
 
+    def test_com_2025_1023_pins_2026_08_16(self) -> None:
+        manifest = json.loads((OFFICIAL / "MANIFEST.json").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["accessed"], "2026-08-13")
+        by_id = {row["id"]: row for row in manifest["files"]}
+        self.assertGreaterEqual(sum(1 for row in manifest["files"] if row.get("ok")), 96)
+        com = by_id["COM-2025-1023-ACT"]
+        com_bytes = (ROOT / com["path"]).read_bytes()
+        self.assertTrue(com_bytes.startswith(b"%PDF"))
+        self.assertEqual(hashlib.sha256(com_bytes).hexdigest(), com["sha256"])
+        self.assertEqual(len(com_bytes), com["bytes"])
+        self.assertEqual(com["accessed"], "2026-08-16")
+        swd = by_id["SWD-2025-1050"]
+        swd_bytes = (ROOT / swd["path"]).read_bytes()
+        self.assertTrue(swd_bytes.startswith(b"%PDF"))
+        self.assertEqual(hashlib.sha256(swd_bytes).hexdigest(), swd["sha256"])
+        gleiss = (ROOT / by_id["GLEISS-LUTZ-COM-2025-1023"]["path"]).read_text(
+            encoding="utf-8", errors="replace"
+        )
+        self.assertIn("virtually no medical device software is classified as class I", gleiss)
+        self.assertIn("heavily criticised Rule 11", gleiss)
+        self.assertIn("Update (7 May 2026)", gleiss)
+        self.assertIn("remain within the full scope of the AI Act", gleiss)
+        self.assertIn("shall <strong>not</strong> be moved from Section A to Section B of Annex I", gleiss)
+        eur = (ROOT / by_id["EUR-LEX-COM-2025-1023"]["path"]).read_text(
+            encoding="utf-8", errors="replace"
+        )
+        self.assertIn(
+            "classified as class I, unless the output is intended for a disease or condition",
+            eur,
+        )
+        self.assertIn("critical situation", eur)
+        self.assertIn("serious situation", eur)
+        self.assertIn("non-serious situation", eur)
+        row = by_id["EUR-LEX-COM-2025-1023"]
+        raw = (ROOT / row["path"]).read_bytes()
+        self.assertEqual(hashlib.sha256(raw).hexdigest(), row["sha256"])
+        self.assertEqual(len(raw), row["bytes"])
+
 
 if __name__ == "__main__":
     unittest.main()

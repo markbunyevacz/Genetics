@@ -16,17 +16,18 @@ Kérjük, a csatolt v1.2 műszaki specifikáció és az alább **szó szerint** 
 
 ---
 
-## 0. Kérdés (A.8, szűkített) + G Q1–Q3
+## 0. Kérdés (A.8, szűkített) + G Q1–Q4
 
 > Védhető-e az A.1 F1+ pozíció, ha a kimenet a labor-diplotípushoz verziózott CPIC/DPWG/FDA **gén-szintű** szövegkivonatot rendel, **nincs** aktuális-gyógyszer párosítás, **nincs** fenokonverzió-alkalmazás, **nincs** CDS Hooks, és az aláíró a labor orvosa?
 
-A G melléklet szerint a fenti egyetlen kérdés még túl tág. Kérjük **előbb** a három igen/nem kérdést (a pecsét marad Igen/Nem/Feltétellel a V. szakaszban):
+A G melléklet szerint a fenti egyetlen kérdés még túl tág. Kérjük **előbb** a három igen/nem kérdést a **hatályos** Rule 11-re (a pecsét marad Igen/Nem/Feltétellel a V. szakaszban). A **Q4** a COM(2025) 1023 *javaslat*; **nem** pecsételi Q1–Q3-at. A counsel egyszer nézi az anyagot.
 
 | # | Kérdés | Melléklet |
 | --- | --- | --- |
 | **Q1** | Az a kimenet, amely a vizsgált génekre a **teljes, szűretlen**, verziózott guideline-táblát nyomtatja a diplotípus mellé, anélkül hogy ismerné a beteg gyógyszerlistáját — Rule 11 hatálya, vagy Rule 11c Class I? | `tests/test_report.py`; `src/pce_report/schema.py` (`ALLOWED_B41_TOP_LEVEL` = 45, `FORBIDDEN_B41_FIELDS` = 15); példa-lelet |
 | **Q2** | Ha Rule 11 alatt áll: a beteg-specifikus szelekció hiánya elegendő-e az **IIa alatti** besoroláshoz? | ugyanaz |
 | **Q3** | Ha Q1 = Class I: elegendő-e a CI-invariáns-készlet (`LIVE_CDS is False`; `! grep MedicationEntry src/pce_report`; `! grep pce_gateway.pipeline src/pce_report`) az MDCG Rev.1 dokumentált modulhatárhoz? | `.github/workflows/ci.yml` |
+| **Q4** | Mi az F1+ (L4-static) és az L4-live besorolása a COM(2025) 1023 szerinti **javasolt** Rule 11 alatt (alapértelmezés Class I; critical / serious / non-serious)? Az A.4.1 páronkénti súlyossági tábla megfelel-e az ott javasolt eszkalációs logikának? | COM(2025) 1023 PDF (S077); EUR-Lex HTML (S080); A.4.1; G §2.4 / §7 |
 
 Ha a válasz **Q1 = Rule 11 és Q2 = nem**, az F1+ klinikai kimenet IIa pályára esik (REG-010 újra; a forgalomba hozatalhoz Notified Body szükséges).
 
@@ -136,9 +137,28 @@ Kérjük a counsel-t, a minősítést a **MDCG/MDR primerre** és az A.1 szöveg
 
 ---
 
+## IV.b Q4 — javasolt Rule 11 (COM(2025) 1023), nem hatályos jog
+
+A Q1–Q3 a **hatályos** MDR Annex VIII Rule 11 + MDCG 2019-11 Rev.1. A Q4 **külön**: a Bizottság 2025-12-16-i javaslata (COM(2025) 1023 final). Nem alkalmazandó, amíg a Hivatalos Lap + Art. 5 (20 nap + 6 hónap). A 2026-os tanúsítási terv **nem** erre épül (A18).
+
+Kérjük a Q4-et **ugyanabban az ülésben**, mert a counsel egyszer nézi a dossziét.
+
+A javasolt 6.3 Rule 11 szó szerint (S080, EUR-Lex HTML; a pinelt PDF pypdf-fel nem adja ki a „Rule 11” stringet):
+
+> Software which is intended to generate an output that confers a clinical benefit and is used for diagnosis, treatment, prevention, monitoring, prediction, prognosis, compensation or alleviation of a disease or condition is classified as **class I**, unless the output is intended for a disease or condition:
+> – in a **critical situation** … death or an irreversible deterioration … → **class III**;
+> – in a **serious situation** … or to drive clinical management in a critical situation → **class IIb**;
+> – in a **non-serious situation**, or to drive clinical management in a serious situation or to inform clinical management in a critical or serious situation → **class IIa**.
+
+Az A.4.1 tábla (DPYD S=5, CYP2C19–clopidogrel, kodein, HLA-B\*15:02, tiopurin) a dosszié inputja az OQ-06-hoz **és** ehhez a Q4-hez. Nem pecsét.
+
+**Nem** kérjük, hogy a Q4 válasz feloldja a `LIVE_CDS` / `MATCHER_ON` / `IIA_SAFE_BLOCK` lakatot.
+
+---
+
 ## V. Kért kimenet
 
-Kérjük a három közül **egyet** megjelölni. Ha Feltétellel: a feltételek a specbe kerülnek (FR/CI), nem szóbeli.
+Kérjük a három közül **egyet** megjelölni **Q1–Q3-ra**. Ha Feltétellel: a feltételek a specbe kerülnek (FR/CI), nem szóbeli. A **Q4** válasz külön bekezdés; **nem** helyettesíti a lenti pecsétet.
 
 ### Döntés
 
@@ -151,6 +171,12 @@ Feltételek:
 1. .................................................................................................
 2. .................................................................................................
 3. .................................................................................................
+
+### Q4 — javasolt Rule 11 (nem a V. pecsét)
+
+- F1+ (L4-static) a COM(2025) 1023 szerinti javasolt Rule 11 alatt: _______________
+- L4-live ugyanott: _______________
+- Az A.4.1 tábla megfelel-e a critical / serious / non-serious eszkalációnak? Igen / Nem / Feltétellel: _______________
 
 ### A gyártó által kért (nem előre aláírt) nyilatkozat-szöveg
 
@@ -174,6 +200,6 @@ Az alábbi szöveg **csak akkor** használható, ha a fenti döntés IGEN vagy a
 | Aláírás / pecsét | .................................... |
 | Mellékelt dosszié verziója | PCE-SPEC-v1.2 + A melléklet (A.0, A.1, A.1.1, A.1.2, A.4, A.8) |
 
-**Mellékletek:** PCE-SPEC-v1.2; A melléklet; F.1; G §3; MDCG 2019-11 Rev.1 (a counsel saját példánya); `tests/test_report.py`; `src/pce_report/schema.py`; `.github/workflows/ci.yml`. Tandem/punktum/mdxcro **nem** a minősítés primer forrása.
+**Mellékletek:** PCE-SPEC-v1.2; A melléklet; F.1; G §3 + §7; MDCG 2019-11 Rev.1 (a counsel saját példánya); COM(2025) 1023 final PDF + EUR-Lex HTML (S077/S080); `tests/test_report.py`; `src/pce_report/schema.py`; `.github/workflows/ci.yml`. Tandem/punktum/mdxcro **nem** a minősítés primer forrása. **MDCG 2024-7 nem melléklet** — az a PAR-sablon (NB-kijelölés), nem Rule 11 Q&A (E-30).
 
 *Ez az irat gyártói kérés. Nem helyettesíti a counsel független vizsgálatát. OQ-05 a F.6 sor kitöltéséig nyitott.*

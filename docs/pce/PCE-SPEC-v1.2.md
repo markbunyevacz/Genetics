@@ -37,6 +37,7 @@ Kérdés helyett rögzítve. Ha bármelyik hamis, a jelzett szakasz újraírand�
 | A15 | A shadow/HITL validációs esetek megőrzése a **klinikai értékelési / vizsgálati protokoll** szerint (hónapok–évek, havi HITL). Feltétel: a rekord **már anonim** (OQ-16/A12) **vagy** van érvényes FR-115. **Nem** 72 órás puffer. | RA + DPO (OQ-15, OQ-16 C2) | OQ-15; OQ-16 C2 | F1s protokoll | E.5.1; FR-440 |
 | A16 | `[CORRECTED]` Az eredeti koncepció (2026-08-09) 1. fázisának *indoka* — gyors piacra lépés, **nincs** szigorú kórházi szabályozási teher, fizetőképes **longevity / biohacking** központok — **elesett**. A v1.0 G4 már labor/klinikai partnert mért; a v1.2 vevő **SKU-P** (klinika, magánellátó, kórház, ellátóhálózat). A helyettesítő szegmens **nagyobb** MDR / 2008/XXI. / OQ-05–16 terhet hordoz, nem kisebbet. Longevity mint v1 vevőtípus **ki**; vissza csak e sor explicit visszavonásával. | Ügyvezetés | D-52 | rögzítve 2026-08-16 | G4; [Sales/sku-and-buyers.md](Sales/sku-and-buyers.md); A1 |
 | A17 | `[CORRECTED]` **Zero-Knowledge / local-first** architektúra **nincs** a v1.2-ben (`src/`-ben 0 találat). Helyette: intézményi gateway (FR-460), irreverzibilis anonimizálás default (A12), k-anonymity (A13, FR-461). A PII az intézményi zónában marad; a PCE nem ZK-bizonyíték. ZK-re váltás új architektúra + DPIA, nem compile-time flag. | DPO (OQ-16) | D-52 | rögzítve 2026-08-16 | B; E; FR-460; FR-461 |
+| A18 | `[ASSUMPTION]` A 2026-os klinikai stratégia a **hatályos Rule 11** (S004/S005/S020). A COM(2025) 1023 final (2025-12-16) **javaslat**, nem hatályos jog: a javasolt Rule 11 alapértelmezése Class I, a klinikai helyzet súlyossága szerint IIa / IIb / III (S077/S080). Alkalmazás: HL + 20 nap + 6 hónap (COM Art. 5) `[V]`. A társjogalkotói elfogadás dátuma **nincs** a COM-ban. F3 (18–36 hó) **döntési elágazás**, nem `LIVE_CDS` feloldás. | Counsel + RA (OQ-05 Q4, OQ-06) | D-54 | F3 kapu előtt újra | §0.3; §4.1; A.4.1; [G](G-open-items.md) §7 |
 
 **Nem feltevés, hanem verifikált korlát:** a hazai jogi és EESZT-korlátok (§4) nem tárgyalhatók terméktervezéssel.
 
@@ -61,6 +62,22 @@ Nem új termékirány. Annak a rögzítése, hogy a 2026-08-09-es koncepció ké
 | Zero-Knowledge / local-first | Ugyanaz a koncepció; a gitbeli specben sem volt FR | Intézményi gateway + A12/A13 (A17) | Más adatvédelmi modell. Visszavenni = új DPIA, nem flag. |
 
 A ma eladható kimenet: **F1+ statikus, aláírt laborlelet.** A három lakat (`LIVE_CDS=false`, `MATCHER_ON=false`, `IIA_SAFE_BLOCK=true`) ezt tartja. Az eredeti „Ne írj fel clopidogrelt a vényírás pillanatában” demó **F2**, NG-07. Az egész hibrid **A1-en** áll; OQ-05 nyitott.
+
+### 0.3 COM(2025) 1023 — F3 döntési elágazás (A18)
+
+Nem 2026-os stratégiaváltás. A hatályos Rule 11 (S020, MDCG 2019-11 Rev.1) alatt a PGx élő terápiás kimenet **11a → IIa default** marad. A Bizottság 2025-12-16-i javaslata (COM(2025) 1023 final, S077; olvasható Rule 11 szöveg: S080) **nem alkalmazandó**, amíg a Hivatalos Lapban meg nem jelenik, és utána is csak a COM Art. 5 szerinti határidővel (hatálybalépés: közzététel + 20 nap; alkalmazás: + 6 hónap) `[V]`.
+
+A javasolt Annex VIII 6.3 Rule 11 `[V]` (S080): a klinikai hasznot adó szoftver **Class I**, kivéve ha a kimenet
+
+- **kritikus** helyzetben halál / irreverzibilis romlás kockázatával → **III**;
+- **súlyos** helyzetben súlyos romlás / sebészi beavatkozás kockázatával, vagy kritikus helyzetben *drive clinical management* → **IIb**;
+- **nem súlyos** helyzetben, vagy súlyos helyzetben *drive*, vagy kritikus/súlyos helyzetben *inform clinical management* → **IIa**.
+
+Az A.4.1 páronkénti súlyossági tábla (OQ-06) pontosan ezt a skálát kéri inputnak — **pre-pozíció**, nem pecsét. Az IMDRF/SaMD WG/N12-re a COM Rule 11 szövege **nem** hivatkozik; az N12-leképezés `[S]`, nem `[V]`.
+
+**F3 kapu:** 18–36 hó (spec §11). Ha a módosított Rule 11 az F3 CE előtt hatályos és alkalmazandó, a IIa NB-utat A.4.1 + Q4 alapján **újra kell értékelni** (lehet, hogy a NB-sor nem kell). Ha nem, a hatályos IIa-safe + NB-út áll. A 2026-os tanúsítási terv **nem** a javaslatra épül.
+
+A COM Art. 4 az MDR/IVDR-t az AI Act Annex I A szakaszából B-be tenné. A Gleiss Lutz 2026-05-07 frissítése `[S]` (S079): az AI Omnibus megállapodás **nem** valósítja meg ezt a áthelyezést. A dosszié AI Act-olvasata (§4.4) **áll**. A Tanács sajtóközleménye (2026-05-07) ebben a körben **403**, nincs pinelve — ne olvassuk bele az Annex I A-t L1-ként.
 
 ---
 
@@ -145,6 +162,7 @@ Outcome-ok, nem output-ok.
 - Rule **11a**: információ diagnosztikai vagy terápiás döntéshez → **IIa**, kivéve ha a döntés halált / irreverzibilis romlást (III) vagy súlyos romlást / sebészi beavatkozást (IIb) okozhat.
 - `[CORRECTED]` Az IMDRF-leképező tábla **nem** tartalmazza a Class I-et; ez **nem** jelenti, hogy Class I MDSW ne létezne. Rule **11c** („all other software”) Class I; a Rev.1 Annex IV új Class I példát adott. PGx-ajánlást / terápiás információt adó kimenet **11a → IIa default**.
 - Az „a végső döntést az orvos hozza” érvelés az FDA 2022 CDS guidance logikája, az MDR-ben **nem** minősít ki. **NG-07.**
+- **COM(2025) 1023** (A18): javaslat, nem 2026-os Rule 11. A 2026-os terv a **hatályos** Rule 11. F3 = döntési elágazás (§0.3). OQ-05 **Q4** a javasolt szöveget egyszer kérdezi, a Q1–Q3 pecsétjét nem helyettesíti.
 
 Részlet: [A melléklet](A-intended-purpose-and-modules.md).
 
@@ -176,6 +194,7 @@ Részlet: [C melléklet](C-eeszt-f0-checklist.md).
 
 - **MDCG 2025-6 / AIB 2025-1** (2025-06-19) `[V]`: MDAI magas kockázatú az Art. 6(1) szerint, ha (i) biztonsági komponens vagy maga eszköz, **és** (ii) MDR/IVDR szerinti harmadik feles megfelelőségértékelés alá esik. Class I nem MDAI. In-house, intézményen belül, NB nélkül jellemzően nem magas kockázatú.
 - Digital Omnibus: Annex III → 2027-12-02, Annex I → **2028-08-02** `[NEEDS VERIFICATION]` (I-01: Tanács 2026-06-29, EP 2026-06-16; OJ-közzététel ebben a körben nem letöltve). **Tervezési órának megtartjuk.**
+- A COM(2025) 1023 Art. 4 az MDR/IVDR-t Annex I A → B-be tenné. Gleiss Lutz 2026-05-07 `[S]` (S079): az AI Omnibus **nem** viszi át; az MDR/IVDR **marad** az Annex I A szakaszában. Ez **nem** L1 Tanács-pin (403). A §4.4 AI Act-elemzés **áll**.
 - Art. 4 AI literacy **nem** halasztott; 2025-02-02 óta alkalmazandó `[R]`.
 
 ### 4.5 EHDS — (EU) 2025/327 `[V]`
@@ -696,7 +715,7 @@ A 12 vs 14 eltérés **nem** nyitott kérdés: lásd FR-310.
 | **OQ-02** | PREPARE 12 vs PGx-Passport 14 | Klinikai | **LEZÁRVA** (FR-310, VC-02) |
 | **OQ-03** | Melyik partnerlabor vállalja az L3 aláírói felelősséget, milyen áron? | Üzletfejlesztés | **ELŐTERJESZTVE** (F.5). Tárgyalás indul; havidíj + volumensáv. Labor neve / aláírt szerződés nyitott. |
 | **OQ-04** | Magyar Genom Program / BBMRI HU csomópont: partner vagy versenytárs? | Ügyvezetés | Nyitott; hungen.hu nem datált |
-| **OQ-05** | Védhető-e az **A.1 F1+** nem-MDSW-ként? | **Külső counsel** | **ELŐTERJESZTVE** (F.1). Gyártói kérés: feltételes nem-MDSW az A.1.2 + FR-490 mellett. Counsel-formátum: G Q1–Q3. Amíg nincs pecsét: **Class I MDSW**-ként haladni `[A]` (G §3.4) — ne „nem eszköz”-ként. **Nem** counsel-aláírás. |
+| **OQ-05** | Védhető-e az **A.1 F1+** nem-MDSW-ként? | **Külső counsel** | **ELŐTERJESZTVE** (F.1). Gyártói kérés: feltételes nem-MDSW az A.1.2 + FR-490 mellett. Counsel-formátum: G Q1–Q3 **(hatályos Rule 11)** + **Q4** (COM(2025) 1023 javasolt Rule 11; A.4.1). Amíg nincs pecsét: **Class I MDSW**-ként haladni `[A]` (G §3.4) — ne „nem eszköz”-ként. **Nem** counsel-aláírás. Q4 **nem** pecsételi Q1–Q3-at. |
 | **OQ-06** | **Osztály páronként** (A.4.1): Rule 11 IIa / IIb / III és IEC 62304 B / C a DPYD–fluoropirimidin, CYP2C19–clopidogrel, TPMT/NUDT15–tiopurin, CYP2D6–kodein, HLA-B\*15:02–karbamazepin párokra. **Nem** először „melyik Notified Body”. NB csak a választott osztály után. | RA | Nyitott; A.4.1 tábla a dosszié inputja. Gyártói javaslat (G §2.4): **(a) IIa-safe párlista** — az öt magas pár live-ban kikapcsolva. `[A]` ha az RA 2026-10-31-ig nem dönt: (a). |
 | **OQ-15** | Shadow = Art. 62 vizsgálat vagy evaluation? | RA + intézmény | **ELŐTERJESZTVE** (F.2). Gyártói kérés: nem Art. 62, reviewer-vak evaluation. Függ OQ-16-tól. **Nem** RA-határozat. |
 | **OQ-16** | Anonim shadow elég-e, vagy FR-115? | DPO | **ELŐTERJESZTVE** (F.3). Gyártói kérés: anonim default + A14 monitor/drop G3 rovására is. G javaslat (nem lezárt pecsét): k ≥ 11 a `diplotípus × ATC5` cellára (S060 `[V]` cél-cella 11; S062 `[V]` 11 / 20 000, nem EU-jog), `f_min = k/N`. Az A14 k≥5 / 0,5% **marad** `[ASSUMPTION]`. **Nem** DPIA. |
@@ -742,6 +761,8 @@ A csomagok és a **gyártói kérés** a [F mellékletben](F-decision-package.md
 **2026-08-16 (D-52, §10.2 (c)):** A16/A17 — elesett longevity-GTM és Zero-Knowledge/local-first. Nem új FR. OQ-k **nem** pecsét. A14 / flagok változatlanok.
 
 **2026-08-16 (D-53, §10.2 (c)):** FR-250 HGVS/VRS pipa a `MATCHER_ON=true` előfeltételéhez kötve. L01BC*/L01BB* prefix **elvetve** marad (pinelt ellenpélda: gemcitabin / citarabin / fludarabin / kladribin). MANIFEST: top-level `accessed` **2026-08-13**; a sorok a pin napját viselik. OQ-k **nem** pecsét. Flagok változatlanok.
+
+**2026-08-16 (D-54, §10.2 (c)):** A18 — COM(2025) 1023 F3-elágazásként. 2026-os Rule 11 stratégia **változatlan**. OQ-05 **Q4** a counsel-briefbe. OQ-k **nem** pecsét. Flagok változatlanok. A BA „MDCG 2024-7 = Rule 11 Q&A” állítás **hibás** (E-30); S065 marad WHO B01AC04.
 
 Az OQ-05 / OQ-15 / OQ-16 / OQ-01 / OQ-03 / OQ-17 **nem** zárulnak le. ELŐTERJESZTVE / NYITOTT maradnak. OQ-06 nyitott (RA); G §2.4 (a) fallback `[A]` 2026-10-31.
 
@@ -790,10 +811,10 @@ Ha OQ-05 = **NEM**, a már megírt F1+ mag **nem dobandó**: IIa / CE pályára 
 | **F1+** | 3–9 hó | L0–L2 + FR-240 + FR-400-STATIC + FR-410-EDU + FR-490. Matcher **ki**. FR-410-LIVE **ki a leletről**. | Fizető labor, white-label lelet | Nem MDSW **csak ha** OQ-05 igen |
 | **F1s** | F1+-szal párhuzamosan | Gateway (FR-460), shadow (FR-440), HITL (FR-450), izoláció (FR-470); REG-090/091 | G3 metrika, clinical evaluation input | Nem klinikai kimenet; OQ-15 |
 | **F2** | 6–18 hó | In-house élő CDSS: `LIVE_CDS=true` signed release a **már kiépített** `pce_cds` csövön (FR-520/530, FR-410-LIVE a klinikai UI-n); ISO 13485 + 62304 + 14971 | Case study | In-house (REG-011) |
-| **F3** | 18–36 hó | IIa CE; `LIVE_CDS` kapcsoló a már kiépített csövön | CE-jelölt CDSS | **IIa** |
+| **F3** | 18–36 hó | IIa CE; `LIVE_CDS` kapcsoló a már kiépített csövön. **A18 elágazás:** ha a COM(2025) 1023 szerinti Rule 11 ekkorra alkalmazandó, A.4.1 + OQ-05 Q4 alapján a NB-út újraértékelendő. | CE-jelölt CDSS | **IIa** *hatályos* Rule 11 alatt; a javaslat nem 2026-os terv |
 | **F4** | 36+ hó | L5 partner; EESZT-modul; EHDS | Enterprise | IIa |
 
-**Kritikus út:** OQ-05 → F1+ *forgalmazási* hatókör (nem a renderer-kód). OQ-15 → F1s *éles* HIS. A „kapcsoló átbillentése” F3-on **csak** CE/in-house után (FR-470). Az F1+ mag kód F0-ban indul (§10.2).
+**Kritikus út:** OQ-05 → F1+ *forgalmazási* hatókör (nem a renderer-kód). OQ-15 → F1s *éles* HIS. A „kapcsoló átbillentése” F3-on **csak** CE/in-house után (FR-470). Az F1+ mag kód F0-ban indul (§10.2). Az F3 18–36 hó a specben kalibrált sáv, nem pinelt NB-soridő; a BA 24 hónapos iparági kommentárja `[S]`, nem `[V]`.
 
 ### Kompetencia (SFIA)
 
@@ -859,6 +880,7 @@ Váz:
 - T2D PRS + emelkedett glükóz → diabetológiai konzílium (eredeti koncepció kártyája; FR-430 P2, nincs kimenet)
 - Longevity / biohacking mint v1 vevő — **elesett** (A16); ne szivárogjon vissza G4-be
 - Zero-Knowledge / local-first — **elesett** (A17); ne szivárogjon vissza FR-460 helyére
+- Laborok fizetnek-e PGx-értelmező szoftverért (G4 hajlandóság) — **nincs** pinelt EU-adat; a G4 ≥3 fizető rendszerlicenc **hipotézis** marad
 - Engineering ticket-bontás és gold-set annotációs SOP — **következő munka**, nem spec-feladat (§10.2)
 
 ---
@@ -875,6 +897,7 @@ A teljes registry: [SOURCE-REGISTRY](ProcessArtifacts/SOURCE-REGISTRY.md). Korre
 4. `[V]` (EU) 2025/327 EHDS
 5. `[NEEDS VERIFICATION]` Digital Omnibus AI dátumok (I-01)
 6. `[V]` 29/2022. (I. 31.) Korm. r.; 294/2025. (IX. 25.) Korm. r. 4. melléklet; e-egeszsegugy.gov.hu/fejlesztoknek
+6a. `[V]` COM(2025) 1023 final + SWD(2025) 1050 (S077/S078/S080) — **javaslat**, nem 2026-os Rule 11. Gleiss Lutz S079 `[S]` a hatályos Rule 11 „virtually no Class I” olvasathoz.
 
 **Klinikai (PGx-SOTA)**
 

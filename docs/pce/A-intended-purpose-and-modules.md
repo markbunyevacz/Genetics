@@ -168,6 +168,8 @@ A D.1 nem írja a DPYD-ártalmat „halál”-nak. Az RA **páronként** válasz
 
 **OQ-06 kérdése:** melyik **osztály, páronként** — nem „melyik Notified Body”.
 
+**COM(2025) 1023 (A18, nem hatályos):** a javasolt Rule 11 critical / serious / non-serious skálát kér. Ez a tábla **ugyanaz az input** OQ-05 Q4-hez. Nem pecsét, nem 2026-os átsorolás.
+
 **G gyártói javaslat (nem lezárt pecsét, [G](G-open-items.md) §2.4):** az első L4-live kiadáshoz **(a) IIa-safe párlista** — a fenti öt pár élő párosítása **ki**; statikus F1+ szöveg + „élő párosítás nem elérhető”. `[A]` Ha az RA 2026-10-31-ig nem dönt, a fejlesztés (a) szerint halad. `LIVE_CDS` a repóban **false**. A kill-switch **megvan** (`src/pce_cds/policy.py`, `IIA_SAFE_BLOCK=true`). A blokk a pinelt CPIC guideline szerinti **mechanizmus-családot** fedi (nem csak az angol INN-literált): tramadol a kodeinnel, tegafur a fluoropirimidinnel, tioguanin a tiopurinnal, magyar INN-variáns (`klopidogrel`). Bekapcsolás: signed `LIVE_CDS=true`, nem új motor.
 
 
@@ -211,4 +213,4 @@ REG-011. Nem mentesít 2008/XXI. és GDPR alól. Intézményen kívül = F3.
 
 **„nincs CDS Hooks”** = az F1+ *klinikai kimenet / processzus* (`pce_clinical` → 404 `E-ISO-002`). A G5 F2 cső (`pce_cds`) a rendszer része, lakattal; ez **nem** az F1+ lelet, és **nem** pecsételi az OQ-05-öt. Q3 CI-invariánsok (`LIVE_CDS is False`, nincs `MedicationEntry` / `pce_gateway.pipeline` a `pce_report`-ban) változatlanok.
 
-A v1.1 kérdés tágabb volt (gyógyszerajánlás-szöveg általában). A v1.2 szűkít. A G melléklet tovább szűkít Q1–Q3-ra (Rule 11 vs 11c; szelekció hiánya vs IIa alatt; CI-invariánsok vs MDCG modulhatár). A válasz továbbra is **külső counsel**. Csomag: A.1, A.1.1, **A.1.2**, A.4, FR-400-STATIC, FR-410-EDU, FR-470, REG-010, MDCG Rev.1, [G](G-open-items.md) §3, [OQ-05 brief](Outbound/OQ-05-counsel-brief.md).
+A G melléklet tovább szűkít Q1–Q3-ra (hatályos Rule 11 vs 11c; szelekció hiánya vs IIa alatt; CI-invariánsok vs MDCG modulhatár) és **Q4**-re (COM(2025) 1023 javasolt Rule 11 + A.4.1). A Q4 **nem** pecsételi Q1–Q3-at. A válasz továbbra is **külső counsel**. Csomag: A.1, A.1.1, **A.1.2**, A.4, FR-400-STATIC, FR-410-EDU, FR-470, REG-010, MDCG Rev.1, [G](G-open-items.md) §3 + §7, [OQ-05 brief](Outbound/OQ-05-counsel-brief.md).

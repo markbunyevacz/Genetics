@@ -937,6 +937,46 @@
       "bytes": 12681,
       "sha256": "56ca54b5e406770a856fc48515f43e0b30452be536307a4b1f0ec6e1ba6e53b9",
       "content_type": "text/html"
+    },
+    {
+      "id": "COM-2025-1023-ACT",
+      "url": "https://health.ec.europa.eu/document/download/25e7ea7c-cab3-40cf-86d9-d11f5e7744d8_en?filename=md_com_2025-1023_act_en.pdf",
+      "path": "docs/pce/Sources/official/com-2025-1023-act.pdf",
+      "accessed": "2026-08-16",
+      "ok": true,
+      "bytes": 1237906,
+      "sha256": "62ee670667c08070416cc20ebb2d7a7d33f843dbc8b70220284471f70b1d926c",
+      "content_type": "application/pdf"
+    },
+    {
+      "id": "SWD-2025-1050",
+      "url": "https://health.ec.europa.eu/document/download/94299481-f705-4918-9c64-8fd1d2ac2cb5_en?filename=md_swd-2025-1050_en.pdf",
+      "path": "docs/pce/Sources/official/swd-2025-1050-mdr-ivdr-simplification.pdf",
+      "accessed": "2026-08-16",
+      "ok": true,
+      "bytes": 1223548,
+      "sha256": "7102838f20755318666399ec42d21a9fa50b7bac502890251c0012ee3c6a32e8",
+      "content_type": "application/pdf"
+    },
+    {
+      "id": "GLEISS-LUTZ-COM-2025-1023",
+      "url": "https://www.gleisslutz.com/en/know-how/radical-simplification-mdr-and-ivdr-and-broad-inapplicability-ai-act-medical-devices-and-ivds",
+      "path": "docs/pce/Sources/official/gleiss-lutz-com-2025-1023-rule-11.html",
+      "accessed": "2026-08-16",
+      "ok": true,
+      "bytes": 89284,
+      "sha256": "26d1a2d43a9ac98382672c5147f2482025ccfeb016c6a4c3553dc44f3738a023",
+      "content_type": "text/html"
+    },
+    {
+      "id": "EUR-LEX-COM-2025-1023",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:52025PC1023",
+      "path": "docs/pce/Sources/official/eur-lex-com-2025-1023.html",
+      "accessed": "2026-08-16",
+      "ok": true,
+      "bytes": 1218733,
+      "sha256": "cf091819888148a4b7a92b0419b72fb9b9ba0807d6f949ea6727b6d80fd592ee",
+      "content_type": "text/html"
     }
   ]
 }
