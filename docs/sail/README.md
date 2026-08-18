@@ -30,6 +30,7 @@ A BeeAI **Agent Communication Protocol (ACP) 2025-08-29-én beolvadt az A2A-ba**
 - `pce_*` nem importál `sail`-t.
 - `LIVE_CDS`, matcher, F1+ renderer, Outbound/Sales iratok érintetlenek.
 - A CI FR-470 deny-list (`openai` / `anthropic` / `langchain` a klinikai úton) nem vonatkozik erre a sandboxra, és a default SAIL ezeket nem is húzza be.
+- Az OQ-05 protokoll-generátor (`test_sail_*`) kikerüli ezt a fát: a sandbox nem osztályozási evidencia.
 
 ## Mit nem állítunk
 

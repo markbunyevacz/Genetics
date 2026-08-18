@@ -1,7 +1,8 @@
 """Deterministic hash embeddings and in-memory nearest-neighbour store.
 
-No OpenAI, no numpy, no Faiss. SHA-256 projection is a local stand-in for
-semantic vectors so tests run offline. It is not a foundation-model embedding.
+No vendor embedding API, no numpy, no Faiss. SHA-256 projection is a local
+stand-in for semantic vectors so tests run offline. It is not a
+foundation-model embedding.
 """
 
 from __future__ import annotations

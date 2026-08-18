@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """OQ-05 test protocol from the unittest tree. Not a seal.
 
-Walks tests/*.py via AST, maps a frozen claim table onto existing test ids,
+Walks tests/*.py via AST (skips test_sail_* sandbox), maps a frozen claim table onto existing test ids,
 optionally runs those tests, and writes a Hungarian evidence protocol.
 
 This script does not mark OQ-05 closed. Classification remains counsel.
@@ -277,11 +277,20 @@ DELTA_195_241: tuple[tuple[str, str, str], ...] = (
 )
 
 
+def _is_oq05_excluded(path: Path) -> bool:
+    """SAIL sandbox tests are not OQ-05 classification evidence."""
+    return path.name.startswith("test_sail_")
+
+
+def _is_sail_testid(tid: str) -> bool:
+    return tid.split(".", 1)[0].startswith("test_sail_")
+
+
 def discover_tests() -> dict[str, str]:
-    """Return dotted test id → source path for every test_* in tests/."""
+    """Return dotted test id → source path for OQ-05-visible tests/*.py."""
     out: dict[str, str] = {}
     for path in sorted(TESTS.rglob("*.py")):
-        if path.name == "__init__.py":
+        if path.name == "__init__.py" or _is_oq05_excluded(path):
             continue
         rel = path.relative_to(TESTS).as_posix()
         mod = rel[:-3].replace("/", ".")
@@ -295,10 +304,20 @@ def discover_tests() -> dict[str, str]:
     return out
 
 
+def _count_oq05_cases(suite: unittest.TestSuite) -> int:
+    n = 0
+    for item in suite:
+        if isinstance(item, unittest.TestSuite):
+            n += _count_oq05_cases(item)
+        elif not _is_sail_testid(item.id()):
+            n += 1
+    return n
+
+
 def suite_count() -> int:
     loader = unittest.TestLoader()
     suite = loader.discover(str(TESTS), pattern="test_*.py", top_level_dir=str(TESTS))
-    return suite.countTestCases()
+    return _count_oq05_cases(suite)
 
 
 def mapped_ids() -> tuple[str, ...]:
